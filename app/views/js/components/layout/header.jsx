@@ -115,8 +115,19 @@ export function AppHeader({ breadcrumbs = [], variant = "header" }) {
                                     Navigation Menu
                                 </SheetTitle>
                                 <SheetHeader className="flex justify-start text-left">
-                                    {/* <AppLogoIcon className="h-6 w-6 fill-current text-black dark:text-white" /> */}
-                                    logo
+                                    <span className="flex items-center gap-2">
+                                        <img
+                                            src="https://zero.leafphp.dev/assets/img/logo.png"
+                                            className="size-6 mr-4"
+                                            alt=""
+                                        />
+                                        <span className="font-semibold">
+                                            Selll
+                                        </span>
+                                        <small className="italic pr-2">
+                                            by Leaf PHP
+                                        </small>
+                                    </span>
                                 </SheetHeader>
 
                                 <div className="mt-6 flex h-full flex-1 flex-col space-y-4">
@@ -170,7 +181,17 @@ export function AppHeader({ breadcrumbs = [], variant = "header" }) {
                         className="flex items-center space-x-2"
                     >
                         <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-md">
-                            LOGO
+                            <span className="flex items-center gap-2">
+                                <img
+                                    src="https://zero.leafphp.dev/assets/img/logo.png"
+                                    className="size-6 mr-4"
+                                    alt=""
+                                />
+                                <span className="font-semibold text-xl">Selll</span>
+                                <small className="italic pr-2">
+                                    by Leaf PHP
+                                </small>
+                            </span>
                         </div>
                         <div className="ml-1 grid flex-1 text-left text-sm">
                             <span className="mb-0.5 truncate leading-none font-semibold">
@@ -313,7 +334,17 @@ export function AppSidebar({ showEmail }) {
                             href="/dashboard"
                             prefetch
                         >
-                            LOGO
+                            <span className="flex items-center gap-2">
+                                <img
+                                    src="https://zero.leafphp.dev/assets/img/logo.png"
+                                    className="size-6"
+                                    alt=""
+                                />
+                                <span className="font-semibold text-xl">Selll</span>
+                                <small className="italic pr-2">
+                                    by Leaf PHP
+                                </small>
+                            </span>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                 </SidebarMenu>

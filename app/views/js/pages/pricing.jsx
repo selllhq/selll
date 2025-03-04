@@ -14,7 +14,7 @@ const Pricing = ({ auth }) => {
                 <div className="mx-auto grid w-full container gap-y-8 lg:grid-cols-2">
                     <div className="max-w-xl space-y-8">
                         <h1 className="text-4xl !leading-[1.2] text-strong sm:text-5xl">
-                            A great experience is priceless
+                            Start Sellling for free in 2 minutes
                         </h1>
 
                         <p className="max-w-lg text-base leading-normal sm:text-xl">
@@ -178,7 +178,7 @@ const Pricing = ({ auth }) => {
                                 <div className="mt-6 flex items-center gap-3 text-base">
                                     <div className="size-12 overflow-hidden rounded shadow-inner">
                                         <img
-                                            src="https://dxr3k2zm7n01i.cloudfront.net/164b9022-6cde-4b2a-a849-16c98fdc226b/images/marketing/testimonials/brian-dainis.png"
+                                            src="https://pbs.twimg.com/profile_images/1896126751102619648/lEsHUBx3_400x400.jpg"
                                             alt="Sebastian Livingstone"
                                             className="size-full"
                                         />
@@ -189,7 +189,16 @@ const Pricing = ({ auth }) => {
                                             Sebastian Livingstone
                                         </p>
                                         <p className="text-default">
-                                            Digital Creator (<a href="https://osemuix.selll.store" target="_blank" rel="pricing_testimonial" className="text-primary-orange">osemuix.selll.store</a>)
+                                            Digital Creator (
+                                            <a
+                                                href="https://osemuix.selll.store"
+                                                target="_blank"
+                                                rel="pricing_testimonial"
+                                                className="text-primary-orange"
+                                            >
+                                                osemuix.selll.store
+                                            </a>
+                                            )
                                         </p>
                                     </div>
                                 </div>

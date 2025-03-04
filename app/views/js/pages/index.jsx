@@ -13,7 +13,7 @@ const Lander = ({ auth }) => {
             <section className="relative pt-60 bg-[url(/assets/img/bg-vector.svg)] bg-cover bg-[20px_-1000px] bg-rota bg-no-repeat">
                 <div className="max-w-screen-xl mx-auto px-2 sm:px-4 text-center">
                     <h1 className="text-7xl tracking-[-1.44px] font-bold max-w-[766px] mx-auto mt-[14px] mb-6">
-                        Skip the Setup, Start Selling{" "}
+                        Skip the Setup, Start Sellling{" "}
                         <span className="bg-[linear-gradient(315deg,var(--color-primary-orange)_25%,var(--color-primary-red))] bg-clip-text [-webkit-text-fill-color:transparent] inline-block italic pr-2">
                             for free
                         </span>
@@ -26,30 +26,36 @@ const Lander = ({ auth }) => {
                         selling—wherever you are, in just a few clicks.
                     </p>
 
-                    <form
-                        className="my-16 rounded-full p-[6px] max-w-[508px] bg-background w-full border border-gray500 mx-auto flex items-center"
-                        method="get"
-                        action="/auth/register"
-                    >
-                        <div className="flex items-center h-full flex-1 px-3 gap-3">
-                            <label
-                                htmlFor="email"
-                                className="h-6 w-6 grid place-content-center"
-                            >
-                                <MailCheckIcon className="text-gray-400 dark:text-gray-500" />
-                            </label>
-                            <input
-                                type="text"
-                                id="email"
-                                name="email"
-                                className="flex-1 placeholder:text-gray-400 dark:placeholder:text-gray-500 text-black dark:text-gray-300 h-full border-none outline-none text-lg"
-                                placeholder="Enter email to claim your free store"
-                            />
-                        </div>
-                        <Button className="p-4 font-medium rounded-full active:scale-95 transition-all duration-150 ease-in-out border-none bg-primary-orange hover:bg-primary-red/80 text-white flex-shrink-0">
-                            Start Selling
+                    {auth.user ? (
+                        <Button as={Link} href="/dashboard" className="my-10">
+                            Back to Dashboard
                         </Button>
-                    </form>
+                    ) : (
+                        <form
+                            className="my-16 rounded-full p-[6px] max-w-[508px] bg-background w-full border border-gray500 mx-auto flex items-center"
+                            method="get"
+                            action="/auth/register"
+                        >
+                            <div className="flex items-center h-full flex-1 px-3 gap-3">
+                                <label
+                                    htmlFor="email"
+                                    className="h-6 w-6 grid place-content-center"
+                                >
+                                    <MailCheckIcon className="text-gray-400 dark:text-gray-500" />
+                                </label>
+                                <input
+                                    type="text"
+                                    id="email"
+                                    name="email"
+                                    className="flex-1 placeholder:text-gray-400 dark:placeholder:text-gray-500 text-black dark:text-gray-300 h-full border-none outline-none text-lg"
+                                    placeholder="Enter email to claim your free store"
+                                />
+                            </div>
+                            <Button className="p-4 font-medium rounded-full active:scale-95 transition-all duration-150 ease-in-out border-none bg-primary-orange hover:bg-primary-red/80 text-white flex-shrink-0">
+                                Start Selling
+                            </Button>
+                        </form>
+                    )}
 
                     <ul className="flex w-fit mx-auto gap-12 mb-[100px]">
                         <li>
@@ -79,11 +85,22 @@ const Lander = ({ auth }) => {
                     </ul>
 
                     <div className="relative">
-                        <img
-                            src="https://invoice-wise.vercel.app/assets/Dashboard.svg"
-                            alt=""
-                            className="max-w-[947px] w-full mx-auto block rounded-xl"
-                        />
+                        <div class="relative rounded-2xl shadow-lg p-2 h-full border flex flex-col overflow-hidden lg:order-last bg-default w-full max-w-6xl mx-auto">
+                            <div class="w-full px-2 pt-1 pb-3 relative flex items-center gap-1.5 lg:gap-2">
+                                <div class="w-2 h-2 bg-border rounded-full"></div>
+                                <div class="w-2 h-2 bg-border rounded-full"></div>
+                                <div class="w-2 h-2 bg-border rounded-full"></div>
+                            </div>
+                            <div class="h-full w-full aspect-video border overflow-hidden rounded-lg">
+                                <div
+                                    class="relative w-full max-w-full h-full opacity-100"
+                                >
+                                    <div class="relative h-full w-full">
+                                        {/* img here */}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div className="h-96 absolute -bottom-10 w-full left-0 bg-gradient-to-br from-transparent to-background blur-2xl bg-cover"></div>
                     </div>
                 </div>
@@ -146,7 +163,7 @@ const Lander = ({ auth }) => {
 
             <section className="bg-black">
                 <div className="max-w-screen-xl mx-auto px-2 sm:px-4">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-[125px] py-[141px]">
+                    <div className="grid lg:grid-cols-2 items-center gap-[125px] py-[141px]">
                         <div className="h-[595px] bg-[#1f1f1f] rounded-[20px] flex items-center justify-end">
                             <img src="/assets/img/example-store.svg" alt="" />
                         </div>
@@ -176,13 +193,15 @@ const Lander = ({ auth }) => {
                                             />
                                         </div>
                                         <div>
-                                            <h3 className="font-bold text-lg mb-[10px] leading-[21.56px]">
-                                                Invoices
+                                            <h3 className="font-bold text-lg mb-2 leading-[21.56px]">
+                                                Free Website
                                             </h3>
                                             <p className="leading-[22.88px]">
-                                                Use invoiceWise to convert
-                                                unbilled time into professional
-                                                looking invoices.
+                                                No need to pay for a website or
+                                                build one from scratch. Selll
+                                                gives you a beautiful,
+                                                mobile-friendly website for
+                                                free.
                                             </p>
                                         </div>
                                     </div>
@@ -196,13 +215,14 @@ const Lander = ({ auth }) => {
                                             />
                                         </div>
                                         <div>
-                                            <h3 className="font-bold text-lg mb-[10px] leading-[21.56px]">
-                                                Client Management
+                                            <h3 className="font-bold text-lg mb-2 leading-[21.56px]">
+                                                Sales data & Reports
                                             </h3>
                                             <p className="leading-[22.88px]">
-                                                All the invoicing features neede
-                                                is presentAll the invoicing
-                                                features neede is present
+                                                Get insights into your sales,
+                                                track your performance, and make
+                                                data-driven decisions to grow
+                                                your business.
                                             </p>
                                         </div>
                                     </div>
@@ -216,13 +236,14 @@ const Lander = ({ auth }) => {
                                             />
                                         </div>
                                         <div>
-                                            <h3 className="font-bold text-lg mb-[10px] leading-[21.56px]">
-                                                Payment Integration
+                                            <h3 className="font-bold text-lg mb-2 leading-[21.56px]">
+                                                Simple payments
                                             </h3>
                                             <p className="leading-[22.88px]">
-                                                All the invoicing features neede
-                                                is presentAll the invoicing
-                                                features neede is present
+                                                Accept payments from customers
+                                                worldwide with ease. Selll
+                                                supports multiple currencies and
+                                                payment methods.
                                             </p>
                                         </div>
                                     </div>
@@ -282,7 +303,7 @@ const Lander = ({ auth }) => {
                 </div>
             </section>
 
-            <section class="flex justify-center items-center bg-primary-red/80 py-32">
+            <section class="flex justify-center items-center bg-primary-red dark:bg-primary-red/80 py-32">
                 <div class="container">
                     <h2 class="text-3xl lg:text-5xl text-center">
                         Let's get you started in 3 easy steps
@@ -351,7 +372,7 @@ const Lander = ({ auth }) => {
                                     target="_blank"
                                     class="rounded transition-colors duration-100 hover:text-white focus:outline-none focus-visible:shadow-xs-selected"
                                 >
-                                    © {(new Date()).getFullYear()} Leaf PHP
+                                    © {new Date().getFullYear()} Leaf PHP
                                 </a>
                                 <a
                                     href="/privacy"
@@ -370,7 +391,7 @@ const Lander = ({ auth }) => {
                             </nav>
                         </div>
                     </div>
-                    <div class="flex w-full items-end justify-center text-white">
+                    <div class="flex w-full items-end justify-center">
                         <div className="mx-auto w-full container font-bold text-[120px]">
                             <a
                                 href="https://leafphp.dev"
@@ -381,8 +402,12 @@ const Lander = ({ auth }) => {
                                     className="size-36 mr-4"
                                     alt=""
                                 />
-                                <span className="text-[180px] font-semibold">Selll</span>
-                                <small className="italic ml-6">by Leaf PHP</small>
+                                <span className="text-[180px] font-semibold">
+                                    Selll
+                                </span>
+                                <small className="italic ml-6">
+                                    by Leaf PHP
+                                </small>
                             </a>
                         </div>
                     </div>

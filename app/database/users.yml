@@ -9,6 +9,9 @@ columns:
     type: timestamp
     nullable: true
   password: string
+  current_store_id:
+    type: foreignId
+    nullable: true
 
 seeds:
   count: 5
