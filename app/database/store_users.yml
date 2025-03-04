@@ -1,0 +1,16 @@
+columns:
+  role:
+    type: string
+    nullable: true
+
+relationships:
+  - User
+  - Store
+
+seeds:
+  count: 5
+  truncate: true
+  data:
+    name: '@faker.name'
+    identifier: '@faker.uuid'
+    role: '@tick.format:YYYY-MM-DD HH:mm:ss'

@@ -1,0 +1,16 @@
+columns:
+  name: string
+  identifier:
+    type: string
+    unique: true
+
+relationships:
+  - User
+
+seeds:
+  count: 5
+  truncate: true
+  data:
+    name: '@faker.word'
+    identifier: '@faker.words:3'
+    verified_at: '@tick.format:YYYY-MM-DD HH:mm:ss'
