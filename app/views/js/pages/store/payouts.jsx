@@ -2,24 +2,24 @@ import Layout from "@/layouts/app-layout";
 import { Head, Link, router } from "@inertiajs/react";
 import EmptyState from "@/components/layout/empty";
 
-export default function Orders({ orders }) {
+export default function Payouts({ payouts }) {
     return (
         <Layout
             variant="sidebar"
             breadcrumbs={[
                 {
-                    title: "Orders",
-                    href: "/orders",
+                    title: "Payouts",
+                    href: "/payouts",
                 },
             ]}
         >
-            <Head title="Orders" />
+            <Head title="Payouts" />
 
             <div className="py-4 px-4">
-                {orders?.length === 0 ? (
+                {payouts?.length === 0 ? (
                     <EmptyState
-                        title="Waiting for orders..."
-                        description="Your store is ready, share it with your customers to start selling."
+                        title="No payouts sent"
+                        description="Use this feature to send professional payouts to your customers."
                     />
                 ) : (
                     <div>Hello</div>
