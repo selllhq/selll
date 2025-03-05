@@ -1,17 +1,17 @@
 columns:
   name: string
-  description: text
-  identifier:
+  email:
     type: string
     unique: true
-
-relationships:
-  - User
+  phone:
+    type: string
+    nullable: true
+  options: text
 
 seeds:
   count: 5
   truncate: true
   data:
-    name: '@faker.word'
-    identifier: '@faker.words:3'
+    name: '@faker.name'
+    identifier: '@faker.uuid'
     verified_at: '@tick.format:YYYY-MM-DD HH:mm:ss'

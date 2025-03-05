@@ -20,7 +20,8 @@
         "leafs/auth": "v4.x-dev"
     },
     "require-dev": {
-        "fakerphp/faker": "^1.24"
+        "fakerphp/faker": "^1.24",
+        "leafs/date": "^2.2"
     },
     "autoload": {
         "psr-4": {

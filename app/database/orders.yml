@@ -1,17 +1,17 @@
 columns:
-  name: string
-  description: text
-  identifier:
+  status:
     type: string
-    unique: true
+    default: pending
 
 relationships:
-  - User
+  - Store
+  - Customer
+  - Product
 
 seeds:
   count: 5
   truncate: true
   data:
-    name: '@faker.word'
-    identifier: '@faker.words:3'
+    name: '@faker.name'
+    identifier: '@faker.uuid'
     verified_at: '@tick.format:YYYY-MM-DD HH:mm:ss'

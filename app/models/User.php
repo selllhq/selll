@@ -107,10 +107,10 @@ class User extends Model
      */
     public function stores()
     {
-        return $this->belongsToMany(Store::class, StoreUser::class)
-            ->withPivot('role')
+        return $this->belongsToMany(Store::class)
+            // ->withPivot('role')
             ->withTimestamps()
-            ->as('membership');
+            ->as('stores');
     }
 
     /**
@@ -131,7 +131,7 @@ class User extends Model
      */
     public function ownsStore($store)
     {
-        if (is_null($store)) {
+        if ($store === null) {
             return false;
         }
 
@@ -146,7 +146,7 @@ class User extends Model
      */
     public function belongsToStore($store)
     {
-        if (is_null($store)) {
+        if ($store === null) {
             return false;
         }
 

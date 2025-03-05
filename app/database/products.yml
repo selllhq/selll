@@ -1,0 +1,24 @@
+columns:
+  name: string
+  description: text
+  currency: string
+  price: string
+  quantity: string
+  quantity_items: string
+  options:
+    type: text
+    nullable: true
+  images:
+    type: string
+    nullable: true
+
+relationships:
+  - Store
+
+seeds:
+  count: 5
+  truncate: true
+  data:
+    name: '@faker.name'
+    identifier: '@faker.uuid'
+    verified_at: '@tick.format:YYYY-MM-DD HH:mm:ss'

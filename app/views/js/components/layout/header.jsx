@@ -37,12 +37,17 @@ import { cn, getInitials } from "@/utils";
 import { useIsMobile } from "@/utils/use-mobile";
 import { Link, usePage } from "@inertiajs/react";
 import {
+    ArrowDownCircle,
     BookOpen,
     ChevronsUpDown,
-    Folder,
+    HelpCircle,
     LayoutGrid,
+    Mail,
     Menu,
     Search,
+    ShoppingBasket,
+    ShoppingCart,
+    Users,
 } from "lucide-react";
 import {
     Sidebar,
@@ -64,17 +69,42 @@ const mainNavItems = [
         url: "/dashboard",
         icon: LayoutGrid,
     },
+    {
+        title: "Products",
+        url: "/products",
+        icon: ShoppingBasket,
+    },
+    {
+        title: "Orders",
+        url: "/orders",
+        icon: ShoppingCart,
+    },
+    {
+        title: "Customers",
+        url: "/customers",
+        icon: Users,
+    },
+    {
+        title: "Invoices",
+        url: "/invoices",
+        icon: Mail,
+    },
+    {
+        title: "Payouts",
+        url: "/payouts",
+        icon: ArrowDownCircle,
+    },
 ];
 
 const rightNavItems = [
     {
-        title: "Repository",
-        url: "https://github.com/leafsphp/leaf",
-        icon: Folder,
+        title: "Help",
+        url: "mailto:support@selll.app",
+        icon: HelpCircle,
     },
     {
-        title: "Documentation",
-        url: "https://leafphp.dev",
+        title: "Selll Docs",
+        url: "https://docs.selll.app",
         icon: BookOpen,
     },
 ];
@@ -187,7 +217,9 @@ export function AppHeader({ breadcrumbs = [], variant = "header" }) {
                                     className="size-6 mr-4"
                                     alt=""
                                 />
-                                <span className="font-semibold text-xl">Selll</span>
+                                <span className="font-semibold text-xl">
+                                    Selll
+                                </span>
                                 <small className="italic pr-2">
                                     by Leaf PHP
                                 </small>
@@ -340,7 +372,9 @@ export function AppSidebar({ showEmail }) {
                                     className="size-6"
                                     alt=""
                                 />
-                                <span className="font-semibold text-xl">Selll</span>
+                                <span className="font-semibold text-xl">
+                                    Selll
+                                </span>
                                 <small className="italic pr-2">
                                     by Leaf PHP
                                 </small>

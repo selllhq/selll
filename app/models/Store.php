@@ -6,6 +6,8 @@ class Store extends Model
 {
     protected $fillable = [
         'name',
+        'identifier',
+        'description'
     ];
 
     /**
@@ -35,9 +37,23 @@ class Store extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(User::class, StoreUser::class)
-            ->withPivot('role')
+        return $this->belongsToMany(User::class)
             ->withTimestamps()
             ->as('membership');
+    }
+
+    /**
+     * Get all products of a store.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }
