@@ -1,6 +1,9 @@
 columns:
   name: string
   description: text
+  status:
+    type: string
+    default: sandbox # sandbox or live
   identifier:
     type: string
     unique: true

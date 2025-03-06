@@ -3,7 +3,7 @@ import Navbar from "@/components/layout/navbar";
 import Button from "@/components/form/button";
 import { CheckCircle, MailCheckIcon } from "lucide-react";
 
-const Lander = ({ auth }) => {
+const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
     return (
         <>
             <Head title="Selll online for free" />
@@ -85,17 +85,15 @@ const Lander = ({ auth }) => {
                     </ul>
 
                     <div className="relative">
-                        <div class="relative rounded-2xl shadow-lg p-2 h-full border flex flex-col overflow-hidden lg:order-last bg-default w-full max-w-6xl mx-auto">
-                            <div class="w-full px-2 pt-1 pb-3 relative flex items-center gap-1.5 lg:gap-2">
-                                <div class="w-2 h-2 bg-border rounded-full"></div>
-                                <div class="w-2 h-2 bg-border rounded-full"></div>
-                                <div class="w-2 h-2 bg-border rounded-full"></div>
+                        <div className="relative rounded-2xl shadow-lg p-2 h-full border flex flex-col overflow-hidden lg:order-last bg-default w-full max-w-6xl mx-auto">
+                            <div className="w-full px-2 pt-1 pb-3 relative flex items-center gap-1.5 lg:gap-2">
+                                <div className="w-2 h-2 bg-border rounded-full"></div>
+                                <div className="w-2 h-2 bg-border rounded-full"></div>
+                                <div className="w-2 h-2 bg-border rounded-full"></div>
                             </div>
-                            <div class="h-full w-full aspect-video border overflow-hidden rounded-lg">
-                                <div
-                                    class="relative w-full max-w-full h-full opacity-100"
-                                >
-                                    <div class="relative h-full w-full">
+                            <div className="h-full w-full aspect-video border overflow-hidden rounded-lg">
+                                <div className="relative w-full max-w-full h-full opacity-100">
+                                    <div className="relative h-full w-full">
                                         {/* img here */}
                                     </div>
                                 </div>
@@ -106,7 +104,7 @@ const Lander = ({ auth }) => {
                 </div>
             </section>
 
-            <section
+            {/* <section
                 className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-20"
                 data-zero-component="ClientShowcase"
             >
@@ -159,96 +157,67 @@ const Lander = ({ auth }) => {
                         ></path>
                     </svg>
                 </div>
-            </section>
+            </section> */}
 
-            <section className="bg-black">
-                <div className="max-w-screen-xl mx-auto px-2 sm:px-4">
-                    <div className="grid lg:grid-cols-2 items-center gap-[125px] py-[141px]">
-                        <div className="h-[595px] bg-[#1f1f1f] rounded-[20px] flex items-center justify-end">
-                            <img src="/assets/img/example-store.svg" alt="" />
+            <section className="bg-black text-white py-16 mt-32">
+                <div class="container mx-auto px-2 sm:px-4">
+                    <div class="flex flex-wrap sm:flex-nowrap sm:items-center mb-10">
+                        <div class="w-full pb-md sm:w-2/3 lg:w-3/5 sm:pb-0 sm:pr-lg">
+                            <h2 className="text-4xl font-bold">
+                                Instant Storefronts, No Coding Needed
+                            </h2>
                         </div>
-                        <div className="text-white">
-                            <div className="space-y-6 mb-12">
-                                <h2 className="text-4xl font-bold">
-                                    Instant Storefronts, <br /> No Coding Needed
-                                </h2>
+                        <div class="w-full sm:w-1/3 lg:w-2/5">
+                            <p class="richtext text-body-sm text-gray-c text-pretty inline-block">
+                                Add your products, start accepting payments,
+                                track your sales, and more—without the usual
+                                headaches.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="grid lg:grid-cols-3 gap-4">
+                        <div className="bg-primary-red p-4 md:p-10 rounded-2xl overflow-hidden col-span-3 aspect-video flex items-end justify-start">
+                            <div className="max-w-sm">
+                                No complex setup, no developer required. Whether
+                                you're a creator, freelancer, or small business,
+                                Selll makes online selling fast, easy, and
+                                accessible worldwide.
+                            </div>
+                        </div>
+                        <div className="bg-primary-red p-4 md:p-10 rounded-2xl overflow-hidden aspect-video flex items-end justify-start">
+                            <div className="max-w-sm">
+                                <h3 className="text-xl">
+                                    Free Domain + Dashboard
+                                </h3>
                                 <p>
-                                    Set up your personalized online store in
-                                    minutes and start accepting payments, track
-                                    your sales, and more—without the usual
-                                    headaches. No complex setup, no developer
-                                    required. Whether you're a creator,
-                                    freelancer, or small business, Selll makes
-                                    online selling fast, easy, and accessible
-                                    worldwide.
+                                    Get a free <b>.selll.store</b> domain and a
+                                    beautiful dashboard to manage your store.
+                                    Add products, request payouts and more.
                                 </p>
                             </div>
-                            <ul className="space-y-6">
-                                <li>
-                                    <div className="flex gap-5 items-center">
-                                        <div className="grid place-content-center flex-shrink-0 bg-[#262626] h-[71px] w-[71px] rounded-md">
-                                            <img
-                                                src="/assets/icons/receipt.svg"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div>
-                                            <h3 className="font-bold text-lg mb-2 leading-[21.56px]">
-                                                Free Website
-                                            </h3>
-                                            <p className="leading-[22.88px]">
-                                                No need to pay for a website or
-                                                build one from scratch. Selll
-                                                gives you a beautiful,
-                                                mobile-friendly website for
-                                                free.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div className="flex gap-5 items-center">
-                                        <div className="grid place-content-center flex-shrink-0 bg-[#262626] h-[71px] w-[71px] rounded-md">
-                                            <img
-                                                src="/assets/icons/profile-users.svg"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div>
-                                            <h3 className="font-bold text-lg mb-2 leading-[21.56px]">
-                                                Sales data & Reports
-                                            </h3>
-                                            <p className="leading-[22.88px]">
-                                                Get insights into your sales,
-                                                track your performance, and make
-                                                data-driven decisions to grow
-                                                your business.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div className="flex gap-5 items-center">
-                                        <div className="grid place-content-center flex-shrink-0 bg-[#262626] h-[71px] w-[71px] rounded-md">
-                                            <img
-                                                src="/assets/icons/wallet.svg"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div>
-                                            <h3 className="font-bold text-lg mb-2 leading-[21.56px]">
-                                                Simple payments
-                                            </h3>
-                                            <p className="leading-[22.88px]">
-                                                Accept payments from customers
-                                                worldwide with ease. Selll
-                                                supports multiple currencies and
-                                                payment methods.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                        </div>
+                        <div className="bg-primary-red p-4 md:p-10 rounded-2xl overflow-hidden aspect-video flex items-end justify-start">
+                            <div className="max-w-sm">
+                                <h3 className="text-xl">
+                                    Sales data & Reports
+                                </h3>
+                                <p>
+                                    Get insights into your sales, track your
+                                    performance, and make data-driven decisions
+                                    to grow your business.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="bg-primary-red p-4 md:p-10 rounded-2xl overflow-hidden aspect-video flex items-end justify-start">
+                            <div className="max-w-sm">
+                                <h3 className="text-xl">Simple payments</h3>
+                                <p>
+                                    Accept payments from customers worldwide
+                                    with ease. Selll supports multiple
+                                    currencies and payment methods.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -268,91 +237,93 @@ const Lander = ({ auth }) => {
                             <iframe
                                 src="https://www.youtube.com/embed/wvDELSI7fHg?si=SJNoV_HMcjeRWoI8"
                                 title="YouTube video player"
-                                frameborder="0"
+                                frameBorder="0"
                                 className="rounded-2xl w-full h-full aspect-video bg-black/5 dark:bg-white/10"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerpolicy="strict-origin-when-cross-origin"
+                                referrerPolicy="strict-origin-when-cross-origin"
                             ></iframe>
                         </div>
                     </div>
 
-                    <div class="flex flex-col items-center gap-16 w-full text-center">
+                    <div className="flex flex-col items-center gap-16 w-full text-center">
                         <div>
-                            <h3 class="font-medium text-xl sm:text-3xl">
+                            <h3 className="font-medium text-xl sm:text-3xl">
                                 Turn Your Idea into Income—Fast
                             </h3>
-                            <p class="mt-4 text-lg font-normal text-gray-500 dark:text-gray-400">
+                            <p className="mt-4 text-lg font-normal text-muted-foreground">
                                 Skip the complicated setup and start selling
                                 today. Your storefront, payments, and sales—all
                                 in one place.
                             </p>
                         </div>
-                        <div class="font-medium text-[96px] text-primary-orange leading-none">
-                            {Intl.NumberFormat().format(123456)}
-                            <p class="text-lg font-normal text-black dark:text-white">
+                        <div className="font-medium text-[96px] text-primary-orange leading-none">
+                            {Intl.NumberFormat().format(purchases)}
+                            <p className="text-lg font-normal text-black dark:text-white">
                                 Purchases made on Selll stores
                             </p>
                         </div>
-                        <div class="flex justify-center gap-8 text-black dark:text-white">
-                            <div class="font-medium text-[56px] leading-none">
-                                {Intl.NumberFormat().format(1234)}
-                                <p class="text-lg font-normal">Active Stores</p>
+                        <div className="flex justify-center gap-8 text-black dark:text-white">
+                            <div className="font-medium text-[56px] leading-none">
+                                {Intl.NumberFormat().format(activeStores)}
+                                <p className="text-lg font-normal">
+                                    Active Stores
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section class="flex justify-center items-center bg-primary-red dark:bg-primary-red/80 py-32">
-                <div class="container">
-                    <h2 class="text-3xl lg:text-5xl text-center">
+            <section className="flex justify-center items-center bg-primary-red dark:bg-primary-red/80 py-32">
+                <div className="container">
+                    <h2 className="text-3xl lg:text-5xl text-center">
                         Let's get you started in 3 easy steps
                     </h2>
 
-                    <div class="mt-16 grid-container grid gap-x-md gap-y-xl grid-cols-4 sm:items-end md:grid-cols-12">
-                        <div class="grid-images-container w-full h-full hidden sm:flex gap-sm justify-self-end col-span-4 items-end ml-10 order-2 sm:col-span-2 sm:ml-0 sm:order-1 md:col-span-5 lg:col-span-6">
+                    <div className="mt-16 grid-container grid gap-x-md gap-y-xl grid-cols-4 sm:items-end md:grid-cols-12">
+                        <div className="grid-images-container w-full h-full hidden sm:flex gap-sm justify-self-end col-span-4 items-end ml-10 order-2 sm:col-span-2 sm:ml-0 sm:order-1 md:col-span-5 lg:col-span-6">
                             Something
                         </div>
-                        <div class="col-span-4 sm:col-span-2 sm:order-2 md:col-span-7 lg:col-span-6 lg:pl-lg">
-                            <div class="mb-2xl" role="list">
+                        <div className="col-span-4 sm:col-span-2 sm:order-2 md:col-span-7 lg:col-span-6 lg:pl-lg">
+                            <div className="mb-2xl" role="list">
                                 <p
-                                    class="w-full text-left items-center flex text-4xl"
+                                    className="w-full text-left items-center flex text-4xl"
                                     role="listitem"
-                                    tabindex="0"
+                                    tabIndex="0"
                                 >
-                                    <span class="block text-body-lg text-primary-orange w-10 md:w-16">
+                                    <span className="block text-body-lg text-primary-orange w-10 md:w-16">
                                         01
                                     </span>
-                                    <span class="block grow border-b dark:border-b-primary-orange pb-2 md:py-3 transition-color duration-300 text-pretty text-white">
-                                        Add your first product
+                                    <span className="block grow border-b dark:border-b-primary-orange pb-2 md:py-3 transition-color duration-300 text-pretty text-white">
+                                        Create your store
                                     </span>
                                 </p>
                                 <p
-                                    class="w-full text-left items-center flex text-4xl"
+                                    className="w-full text-left items-center flex text-4xl"
                                     role="listitem"
-                                    tabindex="0"
+                                    tabIndex="0"
                                 >
-                                    <span class="block text-body-lg text-primary-orange w-10 md:w-16">
+                                    <span className="block text-body-lg text-primary-orange w-10 md:w-16">
                                         02
                                     </span>
-                                    <span class="block grow border-b dark:border-b-primary-orange pb-2 md:py-3 transition-color duration-300 text-pretty text-white">
-                                        Customize your store
+                                    <span className="block grow border-b dark:border-b-primary-orange pb-2 md:py-3 transition-color duration-300 text-pretty text-white">
+                                        Add your products
                                     </span>
                                 </p>
                                 <p
-                                    class="w-full text-left items-center flex text-4xl"
+                                    className="w-full text-left items-center flex text-4xl"
                                     role="listitem"
-                                    tabindex="0"
+                                    tabIndex="0"
                                 >
-                                    <span class="block text-body-lg text-primary-orange w-10 md:w-16">
+                                    <span className="block text-body-lg text-primary-orange w-10 md:w-16">
                                         03
                                     </span>
-                                    <span class="block grow border-b dark:border-b-primary-orange pb-2 md:py-3 transition-color duration-300 text-pretty border-transparent text-white">
-                                        Set up payments
+                                    <span className="block grow border-b dark:border-b-primary-orange pb-2 md:py-3 transition-color duration-300 text-pretty border-transparent text-white">
+                                        Set up payouts
                                     </span>
                                 </p>
                             </div>
-                            <div class="sm:pl-10 md:pl-16 mt-10">
+                            <div className="sm:pl-10 md:pl-16 mt-10">
                                 <Button as={Link} href="/auth/register">
                                     Let's do it
                                 </Button>
@@ -362,36 +333,36 @@ const Lander = ({ auth }) => {
                 </div>
             </section>
 
-            <footer class="bg-[size:1540px] bg-left-top bg-no-repeat px-6 text-default">
-                <div class="relative mx-auto w-full max-w-xl lg:container">
-                    <div class="pb-10 pt-32">
-                        <div class="grid grid-cols-1 gap-x-12 gap-y-20 lg:grid-cols-2 lg:gap-y-36">
-                            <nav class="col-span-full flex items-center gap-6 sm:gap-10">
+            <footer className="bg-[size:1540px] bg-left-top bg-no-repeat px-6 text-default">
+                <div className="relative mx-auto w-full max-w-xl lg:container">
+                    <div className="pb-10 pt-32">
+                        <div className="grid grid-cols-1 gap-x-12 gap-y-20 lg:grid-cols-2 lg:gap-y-36">
+                            <nav className="col-span-full flex items-center gap-6 sm:gap-10">
                                 <a
                                     href="https://leafphp.dev"
                                     target="_blank"
-                                    class="rounded transition-colors duration-100 hover:text-white focus:outline-none focus-visible:shadow-xs-selected"
+                                    className="rounded transition-colors duration-100 hover:text-white focus:outline-none focus-visible:shadow-xs-selected"
                                 >
                                     © {new Date().getFullYear()} Leaf PHP
                                 </a>
                                 <a
                                     href="/privacy"
                                     target="_blank"
-                                    class="rounded transition-colors duration-100 hover:underline focus:outline-none focus-visible:shadow-xs-selected"
+                                    className="rounded transition-colors duration-100 hover:underline focus:outline-none focus-visible:shadow-xs-selected"
                                 >
                                     Privacy Policy
                                 </a>
                                 <a
                                     href="/terms"
                                     target="_blank"
-                                    class="rounded transition-colors duration-100 hover:underline focus:outline-none focus-visible:shadow-xs-selected"
+                                    className="rounded transition-colors duration-100 hover:underline focus:outline-none focus-visible:shadow-xs-selected"
                                 >
                                     Terms of use
                                 </a>
                             </nav>
                         </div>
                     </div>
-                    <div class="flex w-full items-end justify-center">
+                    <div className="flex w-full items-end justify-center">
                         <div className="mx-auto w-full container font-bold text-[120px]">
                             <a
                                 href="https://leafphp.dev"

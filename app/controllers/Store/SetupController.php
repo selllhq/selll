@@ -25,13 +25,13 @@ class SetupController extends Controller
         if (!$data) {
             return response()
                 ->withFlash('errors', request()->errors())
-                ->redirect('/store/create', 303);
+                ->redirect('/store/new', 303);
         }
 
         if (Store::where('identifier', $data['identifier'])->exists()) {
             return response()
                 ->withFlash('errors', ['identifier' => "{$data['identifier']}.selll.store is already taken, please choose another one"])
-                ->redirect('/store/create', 303);
+                ->redirect('/store/new', 303);
         }
 
         $user = User::find(auth()->id());

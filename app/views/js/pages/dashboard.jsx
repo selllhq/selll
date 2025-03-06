@@ -2,6 +2,7 @@ import Layout from "@/layouts/app-layout";
 import { Head, Link } from "@inertiajs/react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/shared/tabs";
 import dayjs from "dayjs";
+import EmptyState from "@/components/layout/empty";
 
 export default function Dashboard({ auth, products, stores, currentStore }) {
     return (

@@ -9,9 +9,11 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $currentStoreId = auth()->user()->current_store_id;
+
         $stores = User::find(auth()->id())->ownedStores()->get();
-        $currentStore = User::find(auth()->id())->currentStore()->first();
-        $products = Store::find(auth()->user()->current_store_id)->products()->get();
+        $currentStore = $currentStoreId ? Store::find($currentStoreId)->first() : [];
+        $products = $currentStoreId ? Store::find($currentStoreId)->products()->get() : [];
 
         response()->inertia('dashboard', [
             'stores' => $stores,

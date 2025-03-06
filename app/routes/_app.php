@@ -1,6 +1,6 @@
 <?php
 
-app()->inertia('/', 'index');
+app()->get('/', 'HomeController@index');
 app()->inertia('/pricing', 'pricing');
 
 
