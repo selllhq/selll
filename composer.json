@@ -24,7 +24,8 @@
         "leafs/mvc-core": "v4.x-dev",
         "leafs/inertia": "^4.0",
         "leafs/auth": "^4.0",
-        "leafs/stripe": "dev-main"
+        "leafs/stripe": "dev-main",
+        "leafs/cors": "^1.2"
     },
     "autoload": {
         "psr-4": {
