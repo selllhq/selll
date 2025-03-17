@@ -12,7 +12,7 @@ export default function Dashboard({ auth, products = [], stores = [], currentSto
     return (
         <Layout
             variant="sidebar"
-            className="dark:bg-[#141414] -m-4 p-4"
+            className="dark:bg-[#141414] p-4 pt-2"
             breadcrumbs={[
                 {
                     title: "Dashboard",
@@ -36,10 +36,10 @@ export default function Dashboard({ auth, products = [], stores = [], currentSto
                     <div className="space-y-8">
                         <div className="flex items-center justify-between mb-8">
                             <div>
-                                <h2 className="text-4xl font-bold text-white mb-2">
+                                <h2 className="text-4xl font-bold mb-2">
                                     Hello, {auth.user.name.split(" ")[0]}
                                 </h2>
-                                <p className="text-gray-400">
+                                <p className="text-muted-foreground">
                                     Here's everything new with {currentStore?.name}
                                 </p>
                             </div>

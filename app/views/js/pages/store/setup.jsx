@@ -32,7 +32,7 @@ const Setup = ({ auth }) => {
                                 <h2 className="text-4xl font-bold mb-2">
                                     Create Your Store
                                 </h2>
-                                <p className="text-muted-foreground dark:text-gray-400">
+                                <p className="text-muted-foreground">
                                     Let's get you selling in 2 minutes!
                                 </p>
                             </div>
