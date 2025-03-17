@@ -24,9 +24,7 @@ compiled
 .hana
 .alchemy
 hot
-storage/framework
-storage/logs
-storage/database
+storage/
 public/storage
 
 # Logs
