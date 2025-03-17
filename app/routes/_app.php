@@ -13,3 +13,7 @@ app()->inertia('/privacy', 'privacy');
 
 
 app()->inertia('/terms', 'terms');
+
+
+
+app()->inertia('/something', 'something');

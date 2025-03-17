@@ -5,10 +5,10 @@ import InputError from "@/components/form/input-error";
 import Button from "@/components/form/button";
 // import Label from "@/components/form/label";
 
-export default function Register() {
+export default function Register({ request }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: "",
-        email: "",
+        email: request?.email || "",
         password: "",
         confirmPassword: "",
     });
@@ -29,7 +29,7 @@ export default function Register() {
                 <div className="flex flex-col sm:mx-auto sm:w-full mb-5 sm:max-w-md items-center text-black">
                     <Link href="/">
                         <img
-                            src="https://leafphp.dev/logo-circle.png"
+                            src="https://zero.leafphp.dev/assets/img/logo.png"
                             alt="Leaf MVC"
                             className="size-10"
                         />
@@ -40,7 +40,7 @@ export default function Register() {
                     <h2 className="text-sm">Create your account</h2>
                 </div>
 
-                <form onSubmit={submit}  class="space-y-4 w-full">
+                <form onSubmit={submit} class="space-y-4 w-full">
                     <div>
                         <Input
                             id="name"
@@ -117,7 +117,7 @@ export default function Register() {
                     </div>
 
                     <Button
-                        className="cursor-pointer w-full bg-primary dark:bg-black hover:bg-primary-light text-white"
+                        className="cursor-pointer w-full bg-primary-red hover:bg-primary-red/80 text-white"
                         disabled={processing}
                     >
                         Sign Up

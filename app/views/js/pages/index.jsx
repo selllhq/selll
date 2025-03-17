@@ -5,7 +5,7 @@ import { CheckCircle, MailCheckIcon } from "lucide-react";
 
 const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
     return (
-        <>
+        <div>
             <Head title="Selll online for free" />
 
             <Navbar auth={auth} />
@@ -160,7 +160,7 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
             </section> */}
 
             <section className="bg-black text-white py-16 mt-32">
-                <div class="container mx-auto px-2 sm:px-4">
+                <div class="container mx-auto px-2 sm:px-0">
                     <div class="flex flex-wrap sm:flex-nowrap sm:items-center mb-10">
                         <div class="w-full pb-md sm:w-2/3 lg:w-3/5 sm:pb-0 sm:pr-lg">
                             <h2 className="text-4xl font-bold">
@@ -384,7 +384,7 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                     </div>
                 </div>
             </footer>
-        </>
+        </div>
     );
 };
 

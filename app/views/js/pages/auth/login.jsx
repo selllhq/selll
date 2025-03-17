@@ -28,7 +28,7 @@ export default function Login() {
                 <div className="flex flex-col sm:mx-auto sm:w-full mb-5 sm:max-w-md items-center text-black">
                     <Link href="/">
                         <img
-                            src="https://leafphp.dev/logo-circle.png"
+                            src="https://zero.leafphp.dev/assets/img/logo.png"
                             alt="Leaf MVC"
                             className="size-10"
                         />
@@ -80,7 +80,7 @@ export default function Login() {
                     </div>
 
                     <Button
-                        className="cursor-pointer w-full bg-primary dark:bg-black hover:bg-primary-light text-white"
+                        className="cursor-pointer w-full bg-primary-red hover:bg-primary-red/80 text-white"
                         disabled={processing}
                     >
                         Log in
