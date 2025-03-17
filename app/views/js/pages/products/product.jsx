@@ -2,11 +2,16 @@ import Layout from "@/layouts/app-layout";
 import { Head, Link, router } from "@inertiajs/react";
 import Button from "@/components/form/button";
 import EmptyState from "@/components/layout/empty";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/shared/card";
+import { Package, Store, TrendingUp, Clock, ExternalLink, Share2 } from "lucide-react";
+import { Badge } from "@/components/shared/badge";
+import dayjs from "dayjs";
 
 export default function Products({ product, currentStore, orders }) {
     return (
         <Layout
             variant="sidebar"
+            className="bg-[#141414] -m-4 p-4"
             breadcrumbs={[
                 {
                     title: "Products",
@@ -20,77 +25,115 @@ export default function Products({ product, currentStore, orders }) {
         >
             <Head title={`${product?.name} from ${currentStore?.name}`} />
 
-            <div className="py-4 px-4">
-                <div className="flex items-center justify-between">
-                    <h1 className="text-3xl font-semibold">{product?.name}</h1>
-                    <Button
-                        as="a"
-                        variant="outline"
-                        href={`https://${currentStore.identifier}.selll.store/products/${product.id}`}
-                        className="btn btn-primary"
-                        target="_blank"
-                        rel="selll-dashboard"
-                    >
-                        Preview
-                    </Button>
+            <div className="py-4 px-4 space-y-8">
+                <div className="flex items-center justify-between mb-8">
+                    <div>
+                        <h1 className="text-4xl font-bold text-white mb-2">{product?.name}</h1>
+                        <p className="text-gray-400">{product?.description || 'No description provided'}</p>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                        <Button variant="outline" className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C]" asChild>
+                            <Link href={`https://${currentStore?.identifier}.selll.store/products/${product.id}`} target="_blank" className="flex items-center gap-2">
+                                <Store className="h-4 w-4" />
+                                View in Store
+                            </Link>
+                        </Button>
+                        <Button className="bg-primary-orange hover:bg-primary-orange/90" asChild>
+                            <Link href={`/products/${product.id}/edit`} className="flex items-center gap-2">
+                                <Package className="h-4 w-4" />
+                                Edit Product
+                            </Link>
+                        </Button>
+                    </div>
                 </div>
-                <div className="mt-4 space-y-4">
-                    <div className="md:flex">
-                        <div></div>
-                        <div className="space-y-4">
-                            <div>
-                                <h3 className="text-xl">Description</h3>
-                                <p className="text-muted-foreground">
-                                    {product?.description}
-                                </p>
-                            </div>
-                            <div>
-                                <h3 className="text-xl">Shareable URL</h3>
-                                <a
-                                    target="_blank"
-                                    rel="selll-dashboard"
-                                    href={`https://${currentStore.identifier}.selll.store/products/${product.id}`}
-                                    className="text-muted-foreground hover:text-primary-red hover:underline"
-                                >{`https://${currentStore.identifier}.selll.store/products/${product.id}`}</a>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div className="bg-sidebar p-4 rounded-lg">
-                        <h3 className="mb-2 text-xl">Product Details</h3>
-                        <div className="flex">
-                            <div className="w-full max-w-48 space-y-2">
-                                <p>Price</p>
-                                <p>In stock</p>
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                    <Card>
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle>Price</CardTitle>
+                            <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                <TrendingUp className="h-5 w-5 text-primary-orange" />
                             </div>
-                            <div className="space-y-2">
-                                <p className="text-muted-foreground">
-                                    {Intl.NumberFormat("en-US", {
+                        </CardHeader>
+                        <CardContent>
+                            <div>
+                                <div className="text-4xl font-bold mb-2">
+                                    {new Intl.NumberFormat("en-US", {
                                         style: "currency",
-                                        currency: product.currency,
+                                        currency: product.currency || "USD",
                                     }).format(product.price)}
-                                </p>
-                                <p className="text-muted-foreground">
-                                    {product.quantity === "unlimited"
-                                        ? "Unlimited"
-                                        : product.quantity_items}
-                                </p>
+                                </div>
+                                <div className="text-sm text-gray-400">
+                                    {product.sales || 0} sales
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </CardContent>
+                    </Card>
 
-                    <div className="bg-sidebar p-4 rounded-lg">
-                        <h3 className="mb-2 text-xl">Product Orders</h3>
+                    <Card>
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle>Stock Status</CardTitle>
+                            <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                <Package className="h-5 w-5 text-primary-orange" />
+                            </div>
+                        </CardHeader>
+                        <CardContent>
+                            <div>
+                                <div className="text-4xl font-bold mb-2">
+                                    {product.quantity === "unlimited" ? "∞" : product.quantity_items}
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <Badge
+                                        variant={product.quantity === "unlimited" || parseInt(product.quantity_items) > 10 ? "success" : parseInt(product.quantity_items) > 0 ? "warning" : "default"}
+                                    >
+                                        {product.quantity === "unlimited" ? "Unlimited" : parseInt(product.quantity_items) > 0 ? `${product.quantity_items} in stock` : "Out of Stock"}
+                                    </Badge>
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </div>
+
+                <Card className="col-span-4">
+                    <CardHeader>
+                        <CardTitle>Recent Orders</CardTitle>
+                        <CardDescription>Latest orders for this product</CardDescription>
+                    </CardHeader>
+                    <CardContent>
                         {orders?.length === 0 ? (
                             <EmptyState
-                                title="Waiting for orders..."
-                                description="Your product is ready, share it with your customers to start selling."
+                                icon={Package}
+                                title="No orders yet"
+                                description="Share your product with customers to start receiving orders."
                             />
                         ) : (
-                            <div>Hello</div>
+                            <div className="space-y-4">
+                                {orders.map((order) => (
+                                    <div key={order.id} className="flex items-center justify-between p-4 bg-[#2C2C2C] rounded-lg">
+                                        <div>
+                                            <div className="font-medium">{order.customer_name}</div>
+                                            <div className="text-sm text-gray-400">{dayjs(order.created_at).format("MMM D, YYYY")}</div>
+                                        </div>
+                                        <div className="text-right">
+                                            <div className="font-medium">
+                                                {new Intl.NumberFormat("en-US", {
+                                                    style: "currency",
+                                                    currency: product.currency || "USD",
+                                                }).format(order.amount)}
+                                            </div>
+                                            <Badge
+                                                variant={order.status === "completed" ? "success" : order.status === "pending" ? "warning" : "default"}
+                                            >
+                                                {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                                            </Badge>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         )}
-                    </div>
-                </div>
+                    </CardContent>
+                </Card>
             </div>
         </Layout>
     );
