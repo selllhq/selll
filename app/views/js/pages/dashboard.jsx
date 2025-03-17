@@ -1,6 +1,5 @@
 import Layout from "@/layouts/app-layout";
 import { Head, Link } from "@inertiajs/react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/shared/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/shared/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/shared/avatar";
 import dayjs from "dayjs";
