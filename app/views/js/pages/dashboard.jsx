@@ -12,7 +12,7 @@ export default function Dashboard({ auth, products = [], stores = [], currentSto
     return (
         <Layout
             variant="sidebar"
-            className="bg-[#141414] -m-4 p-4"
+            className="dark:bg-[#141414] -m-4 p-4"
             breadcrumbs={[
                 {
                     title: "Dashboard",

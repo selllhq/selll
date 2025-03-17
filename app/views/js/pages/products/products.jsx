@@ -30,7 +30,7 @@ export default function Products({ auth, products, currentStore }) {
     return (
         <Layout
             variant="sidebar"
-            className="bg-[#141414] -m-4 p-4"
+            className="dark:bg-[#141414] -m-4 p-4"
             breadcrumbs={[
                 {
                     title: "Products",

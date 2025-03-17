@@ -21,11 +21,12 @@ export function slugify(text) {
     return text
         .toString()
         .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[\u0300-\u036f]/g, "") // Remove diacritics
         .toLowerCase()
         .trim()
-        .replace(/[^a-z0-9 ]/g, "")
-        .replace(/\s+/g, "-");
+        .replace(/[^a-z0-9\s-]/g, "") // Keep alphanumeric, spaces and hyphens
+        .replace(/[\s_]+/g, "-") // Replace spaces and underscores with hyphens
+        .replace(/^-+|-+$/g, ""); // Remove leading/trailing hyphens
 }
 
 export function useAuth() {

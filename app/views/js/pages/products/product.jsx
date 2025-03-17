@@ -3,7 +3,7 @@ import { Head, Link, router } from "@inertiajs/react";
 import Button from "@/components/form/button";
 import EmptyState from "@/components/layout/empty";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/shared/card";
-import { Package, Store, TrendingUp, Clock, ExternalLink, Share2 } from "lucide-react";
+import { Package, Store, TrendingUp } from "lucide-react";
 import { Badge } from "@/components/shared/badge";
 import dayjs from "dayjs";
 

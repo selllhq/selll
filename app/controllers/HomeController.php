@@ -12,8 +12,8 @@ class HomeController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $currentStore = $user->currentStore;
-        
+        $currentStore = $user?->currentStore;
+
         if (!$currentStore) {
             return response()->inertia('dashboard', [
                 'auth' => ['user' => $user],

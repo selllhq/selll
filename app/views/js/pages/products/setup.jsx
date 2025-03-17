@@ -47,7 +47,7 @@ const Setup = ({ auth }) => {
         <>
             <Head title="Create a new product" />
 
-            <div className="h-screen w-full bg-[#141414] flex">
+            <div className="h-screen w-full dark:bg-[#141414] flex">
                 <div className="w-[60%] overflow-y-auto">
                     <div className="max-w-2xl mx-auto px-4 md:px-8 py-20 relative">
                         <div className="flex items-center justify-between mb-8">
