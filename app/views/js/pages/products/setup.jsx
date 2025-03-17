@@ -47,19 +47,19 @@ const Setup = ({ auth }) => {
         <>
             <Head title="Create a new product" />
 
-            <div className="h-screen w-full dark:bg-[#141414] flex">
-                <div className="w-[60%] overflow-y-auto">
+            <div className="h-screen w-full bg-white dark:bg-[#141414] flex">
+                <div className="w-[60%] overflow-y-auto border-r border-gray-100 dark:border-[#2C2C2C]">
                     <div className="max-w-2xl mx-auto px-4 md:px-8 py-20 relative">
                         <div className="flex items-center justify-between mb-8">
                             <div>
-                                <h2 className="text-4xl font-bold text-white mb-2">Create New Product</h2>
-                                <p className="text-gray-400">Add a new product to your store</p>
+                                <h2 className="text-4xl font-bold mb-2">Create New Product</h2>
+                                <p className="text-gray-500 dark:text-gray-400">Add a new product to your store</p>
                             </div>
                             <Button
                                 as={Link}
                                 href="/products"
                                 variant="outline"
-                                className="bg-[#2C2C2C] hover:bg-[#3C3C3C] border-0 rounded-full h-12 w-12"
+                                className="bg-gray-100 hover:bg-gray-200 dark:bg-[#2C2C2C] dark:hover:bg-[#3C3C3C] border-0 rounded-full h-12 w-12"
                             >
                                 <X className="h-4 w-4" />
                             </Button>
@@ -72,7 +72,7 @@ const Setup = ({ auth }) => {
                                         {images.map((image, index) => (
                                             <div
                                                 key={index}
-                                                className="aspect-square rounded-lg bg-[#2C2C2C] relative overflow-hidden"
+                                                className="aspect-square rounded-lg bg-gray-100 dark:bg-[#2C2C2C] relative overflow-hidden"
                                             >
                                                 <img
                                                     src={URL.createObjectURL(image)}
@@ -89,7 +89,7 @@ const Setup = ({ auth }) => {
                                             </div>
                                         ))}
                                         {images.length < 8 && (
-                                            <label className="aspect-square rounded-lg bg-[#2C2C2C] flex flex-col items-center justify-center cursor-pointer hover:bg-[#3C3C3C] transition-colors gap-2">
+                                            <label className="aspect-square rounded-lg bg-gray-100 dark:bg-[#2C2C2C] flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200 dark:hover:bg-[#3C3C3C] transition-colors gap-2">
                                                 <input
                                                     type="file"
                                                     accept="image/*"
@@ -97,9 +97,9 @@ const Setup = ({ auth }) => {
                                                     onChange={handleImageUpload}
                                                     className="hidden"
                                                 />
-                                                <ImagePlus className="h-8 w-8 text-gray-400" />
+                                                <ImagePlus className="h-8 w-8 text-gray-400 dark:text-gray-500" />
                                                 {images.length >= 4 && (
-                                                    <span className="text-xs text-gray-400">{8 - images.length} remaining</span>
+                                                    <span className="text-xs text-gray-500 dark:text-gray-400">{8 - images.length} remaining</span>
                                                 )}
                                             </label>
                                         )}
@@ -110,7 +110,7 @@ const Setup = ({ auth }) => {
                                     <Label htmlFor="name">Product Name</Label>
                                     <Input
                                         id="name"
-                                        className="block w-full bg-[#2C2C2C] border-0 focus:ring-primary-orange/20"
+                                        className="block w-full bg-gray-100 dark:bg-[#2C2C2C] border-0 focus:ring-primary-orange/20 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
                                         value={data.name}
                                         onChange={(e) =>
                                             setData("name", e.target.value)
@@ -129,7 +129,7 @@ const Setup = ({ auth }) => {
                                     <Input
                                         id="description"
                                         as="textarea"
-                                        className="block w-full min-h-20 bg-[#2C2C2C] border-0"
+                                        className="block w-full min-h-20 bg-gray-100 dark:bg-[#2C2C2C] border-0 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
                                         value={data.description}
                                         onChange={(e) =>
                                             setData("description", e.target.value)
@@ -148,24 +148,24 @@ const Setup = ({ auth }) => {
                                     <div className="flex gap-2">
                                         <Input
                                             as="select"
-                                            className="block w-24 pr-0 bg-[#2C2C2C] border-0 focus:ring-primary-orange/20"
+                                            className="block w-24 pr-0 bg-gray-100 dark:bg-[#2C2C2C] border-0 focus:ring-primary-orange/20 text-gray-900 dark:text-white"
                                             value={data.currency}
                                             onChange={(e) =>
                                                 setData("currency", e.target.value)
                                             }
                                         >
-                                            <option value="USD">USD ($)</option>
-                                            <option value="GHS">GHS (₵)</option>
-                                            <option value="NGN">NGN (₦)</option>
-                                            <option value="EUR">EUR (€)</option>
-                                            <option value="GBP">GBP (£)</option>
+                                            <option className="text-gray-900 dark:text-white" value="USD">USD ($)</option>
+                                            <option className="text-gray-900 dark:text-white" value="GHS">GHS (₵)</option>
+                                            <option className="text-gray-900 dark:text-white" value="NGN">NGN (₦)</option>
+                                            <option className="text-gray-900 dark:text-white" value="EUR">EUR (€)</option>
+                                            <option className="text-gray-900 dark:text-white" value="GBP">GBP (£)</option>
                                         </Input>
                                         <Input
                                             id="price"
                                             type="number"
                                             min="0"
                                             step="0.01"
-                                            className="block w-full bg-[#2C2C2C] border-0 focus:ring-primary-orange/20"
+                                            className="block w-full bg-gray-100 dark:bg-[#2C2C2C] border-0 focus:ring-primary-orange/20 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
                                             value={data.price}
                                             onChange={(e) =>
                                                 setData("price", e.target.value)
@@ -185,7 +185,7 @@ const Setup = ({ auth }) => {
                                     <div className="flex gap-2">
                                         <Input
                                             as="select"
-                                            className={cn("block pr-0 bg-[#2C2C2C] border-0 focus:ring-primary-orange/20", {
+                                            className={cn("block pr-0 bg-gray-100 dark:bg-[#2C2C2C] border-0 focus:ring-primary-orange/20 text-gray-900 dark:text-white", {
                                                 "w-24": data.quantity === "limited",
                                                 "w-full": data.quantity === "unlimited",
                                             })}
@@ -194,15 +194,15 @@ const Setup = ({ auth }) => {
                                                 setData("quantity", e.target.value)
                                             }
                                         >
-                                            <option value="unlimited">Unlimited</option>
-                                            <option value="limited">Limited</option>
+                                            <option className="text-gray-900 dark:text-white" value="unlimited">Unlimited</option>
+                                            <option className="text-gray-900 dark:text-white" value="limited">Limited</option>
                                         </Input>
                                         {data.quantity === "limited" && (
                                             <Input
                                                 id="quantity_items"
                                                 type="number"
                                                 min="1"
-                                                className="block w-full bg-[#2C2C2C] border-0 focus:ring-primary-orange/20"
+                                                className="block w-full bg-gray-100 dark:bg-[#2C2C2C] border-0 focus:ring-primary-orange/20 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
                                                 value={data.quantity_items}
                                                 onChange={(e) =>
                                                     setData("quantity_items", e.target.value)
@@ -233,12 +233,12 @@ const Setup = ({ auth }) => {
                             </form>
                     </div>
                 </div>
-                <div className="w-[40%] fixed right-0 top-0 h-screen overflow-y-auto bg-[#1A1A1A] border-l border-[#2C2C2C] p-8">
-                    <div className="text-sm font-medium text-gray-400 mb-4">Live Preview</div>
+                <div className="w-[40%] fixed right-0 top-0 h-screen overflow-y-auto bg-gray-50 dark:bg-[#1A1A1A] border-l border-gray-100 dark:border-[#2C2C2C] p-8">
+                    <div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">Live Preview</div>
                     <div className="space-y-4">
-                        <div className="bg-[#2C2C2C] rounded-lg overflow-hidden shadow-lg">
+                        <div className="bg-white dark:bg-[#2C2C2C] rounded-lg overflow-hidden shadow-lg border border-gray-100 dark:border-[#2C2C2C]">
                             {/* Product Preview */}
-                            <div className="aspect-[4/3] bg-[#1A1A1A] relative group">
+                            <div className="aspect-[4/3] bg-gray-100 dark:bg-[#1A1A1A] relative group">
                                 {images.length > 0 ? (
                                     <img
                                         src={URL.createObjectURL(images[0])}
@@ -262,16 +262,16 @@ const Setup = ({ auth }) => {
 
                             <div className="p-4 space-y-4">
                                 <div>
-                                    <h3 className="text-lg font-medium text-white">
+                                    <h3 className="text-lg font-medium">
                                         {data.name || "Product Name"}
                                     </h3>
-                                    <p className="text-sm text-gray-400 line-clamp-2 mt-1">
+                                    <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 mt-1">
                                         {data.description || "Product description will appear here"}
                                     </p>
                                 </div>
 
                                 <div className="flex items-center justify-between">
-                                    <div className="text-xl font-bold text-white">
+                                    <div className="text-xl font-bold">
                                         {data.currency === "USD" && "$"}
                                         {data.currency === "GHS" && "₵"}
                                         {data.currency === "NGN" && "₦"}
@@ -280,7 +280,7 @@ const Setup = ({ auth }) => {
                                         {data.price || "0.00"}
                                     </div>
 
-                                    <div className="text-sm text-gray-400">
+                                    <div className="text-sm text-gray-500 dark:text-gray-400">
                                         {data.quantity === "limited" ?
                                             `${data.quantity_items || 0} in stock` :
                                             "Unlimited stock"}
@@ -297,8 +297,8 @@ const Setup = ({ auth }) => {
                             </div>
                         </div>
 
-                        <div className="bg-[#2C2C2C] rounded-lg p-4">
-                            <div className="text-sm text-gray-400">
+                        <div className="bg-white dark:bg-[#2C2C2C] rounded-lg p-4 border border-gray-100 dark:border-[#2C2C2C]">
+                            <div className="text-sm text-gray-500 dark:text-gray-400">
                                 This is how your product will appear to customers on your store page.
                                 The preview updates in real-time as you make changes to your product details.
                             </div>
