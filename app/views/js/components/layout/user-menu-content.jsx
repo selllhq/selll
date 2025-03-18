@@ -11,7 +11,7 @@ import {
     AvatarImage,
 } from "@/components/shared/avatar";
 import { Link } from "@inertiajs/react";
-import { LogOut, Settings } from "lucide-react";
+import { LogOut, Settings, Store } from "lucide-react";
 import { getInitials } from "@/utils";
 
 export function UserMenuContent({ user, showEmail = false }) {
@@ -41,6 +41,18 @@ export function UserMenuContent({ user, showEmail = false }) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
+                <DropdownMenuItem asChild>
+                    <Link
+                        className="block w-full"
+                        href="/store/customize"
+                        as="button"
+                        prefetch
+                        onClick={cleanup}
+                    >
+                        <Store className="mr-2" />
+                        Customize Store
+                    </Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                     <Link
                         className="block w-full"

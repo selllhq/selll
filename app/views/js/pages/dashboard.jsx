@@ -58,9 +58,17 @@ export default function Dashboard({ auth, products = [], stores = [], currentSto
                         </div>
 
                         {dayjs(currentStore?.created_at).isAfter(dayjs().subtract(30, "minutes")) && (
-                            <div className="bg-primary-orange/10 text-primary-orange p-4 rounded-xl">
+                            <div className="bg-primary-orange/10 text-primary-orange p-4 rounded-xl mb-4">
                                 Your store was created just now. Get started by
                                 <Link href="/products/new" className="font-medium underline mx-1">adding your first product</Link>.
+                            </div>
+                        )}
+
+                        {currentStore?.config === null && (
+                            <div className="bg-primary-orange/10 text-primary-orange p-4 rounded-xl">
+                                Your store hasn't been customized yet. 
+                                <Link href="/store/customize" className="font-medium underline mx-1">Customize your store</Link>
+                                to match your brand.
                             </div>
                         )}
 

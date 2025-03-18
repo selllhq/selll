@@ -39,4 +39,46 @@ class SetupController extends Controller
 
         return response()->redirect('/dashboard');
     }
+
+    public function showCustomize()
+    {
+        response()->inertia('store/customize', [
+            'store' => User::find(auth()->id())->currentStore()->first(),
+            'errors' => flash()->display('errors') ?? [],
+        ]);
+    }
+
+    public function customize()
+    {
+        $data = request()->validate([
+            'show_hero' => 'optional|boolean',
+            'hero_image' => 'optional|string',
+            'hero_title' => 'optional|string',
+            'hero_description' => 'optional|string',
+            'hero_content_alignment' => 'optional|string',
+            'show_store_name' => 'boolean',
+            'show_store_logo' => 'boolean',
+            'show_store_description' => 'boolean',
+            'show_store_information_in_popup' => 'boolean',
+            'show_product_price' => 'boolean',
+            'show_product_description' => 'boolean',
+            'theme_color' => 'string',
+            'background_color' => 'string',
+            'text_color' => 'string',
+            'border_color' => 'string',
+            'open_product_in_popup' => 'boolean',
+        ]);
+
+        if (!$data) {
+            return response()
+                ->withFlash('errors', request()->errors())
+                ->redirect('/store/customize', 303);
+        }
+
+        $store = Store::find(auth()->user()->current_store_id);
+        $store->config = json_encode($data);
+        $store->save();
+
+        return response()->redirect('/dashboard', 303);
+    }
 }
