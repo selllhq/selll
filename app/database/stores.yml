@@ -7,6 +7,9 @@ columns:
   identifier:
     type: string
     unique: true
+  currency:
+    type: string
+    default: USD
   config:
     type: text
     nullable: true

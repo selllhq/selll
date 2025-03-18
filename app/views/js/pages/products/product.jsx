@@ -61,7 +61,7 @@ export default function Products({ product, currentStore, orders }) {
                                 <div className="text-4xl font-bold mb-2">
                                     {new Intl.NumberFormat("en-US", {
                                         style: "currency",
-                                        currency: product.currency || "USD",
+                                        currency: currentStore?.currency,
                                     }).format(product.price)}
                                 </div>
                                 <div className="text-sm text-gray-400">
@@ -119,7 +119,7 @@ export default function Products({ product, currentStore, orders }) {
                                             <div className="font-medium">
                                                 {new Intl.NumberFormat("en-US", {
                                                     style: "currency",
-                                                    currency: product.currency || "USD",
+                                                    currency: currentStore?.currency,
                                                 }).format(order.amount)}
                                             </div>
                                             <Badge

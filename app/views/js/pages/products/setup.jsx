@@ -1,5 +1,5 @@
 import { Link, Head, useForm } from "@inertiajs/react";
-import { ImagePlus, Package, X } from "lucide-react";
+import { ImagePlus, Package, X, Store } from "lucide-react";
 import { slugify } from "@/utils";
 import Button from "@/components/form/button";
 import InputError from "@/components/form/input-error";
@@ -8,6 +8,7 @@ import Label from "@/components/form/label";
 import { Card, CardContent } from "@/components/shared/card";
 import { cn } from "@/utils";
 import { useState } from "react";
+import Layout from "@/layouts/app-layout";
 
 const Setup = ({ auth }) => {
     const [images, setImages] = useState([]);
@@ -44,12 +45,31 @@ const Setup = ({ auth }) => {
     };
 
     return (
-        <>
+        <Layout
+            variant="sidebar"
+            className="dark:bg-[#141414]"
+            breadcrumbs={[
+                {
+                    title: "Dashboard",
+                    href: "/dashboard",
+                },
+                {
+                    title: "Products",
+                    href: "/products",
+                    icon: Package,
+                },
+                {
+                    title: "Create Product",
+                    href: "/products/setup",
+                    icon: Package,
+                },
+            ]}
+        >
             <Head title="Create a new product" />
 
             <div className="h-screen w-full bg-white dark:bg-[#141414] flex">
                 <div className="w-[60%] overflow-y-auto border-r border-gray-100 dark:border-[#2C2C2C]">
-                    <div className="max-w-2xl mx-auto px-4 md:px-8 py-20 relative">
+                    <div className="max-w-2xl px-6 py-6 relative">
                         <div className="flex items-center justify-between mb-8">
                             <div>
                                 <h2 className="text-4xl font-bold mb-2">Create New Product</h2>
@@ -306,7 +326,7 @@ const Setup = ({ auth }) => {
                     </div>
                 </div>
             </div>
-        </>
+        </Layout>
     );
 };
 

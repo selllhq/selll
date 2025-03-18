@@ -311,8 +311,7 @@ export default function Products({ auth, products, currentStore }) {
                                                         {
                                                             style: "currency",
                                                             currency:
-                                                                product.currency ||
-                                                                "USD",
+                                                                currentStore?.currency,
                                                         },
                                                     ).format(product.price)}
                                                 </div>

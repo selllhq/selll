@@ -1,7 +1,6 @@
 columns:
   name: string
   description: text
-  currency: string
   price: string
   quantity: string
   quantity_items: string
