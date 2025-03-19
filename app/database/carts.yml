@@ -4,6 +4,9 @@ columns:
   billing_session_id:
     type: string
     nullable: true
+  store_url:
+    type: string
+    nullable: true
   status:
     type: string
     default: pending

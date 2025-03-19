@@ -3,6 +3,7 @@
 namespace App\Controllers\Api;
 
 use App\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Store;
 
 class BillingController extends Controller
@@ -31,6 +32,7 @@ class BillingController extends Controller
         $cart = $customer->cart()->create([
             'items' => json_encode($items),
             'total' => $cartTotal,
+            'store_url' => request()->get('store_url'),
         ]);
 
         $session = billing()->charge([
@@ -46,6 +48,7 @@ class BillingController extends Controller
             ]
         ]);
 
+        $cart = Cart::find($cart->id);
         $cart->billing_session_id = $session->id;
         $cart->save();
 

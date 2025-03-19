@@ -4,7 +4,6 @@ namespace App\Controllers\Billing;
 
 use App\Controllers\Controller;
 use App\Models\Cart;
-use App\Models\Customer;
 
 class BillingCallbacksController extends Controller
 {
@@ -18,7 +17,7 @@ class BillingCallbacksController extends Controller
 
         if ($userCart->status === 'completed') {
             return response()->redirect(
-                "http://{$userCart->customer->store->identifier}.localhost:5050/order?order_id={$userCart->orders->first()->id}&status=past"
+                "{$userCart->store_url}/order?order_id={$userCart->order->id}&status=past"
             );
         }
 
@@ -35,7 +34,7 @@ class BillingCallbacksController extends Controller
         }
 
         return response()->redirect(
-            "http://{$userCart->customer->store->identifier}.localhost:5050/order?order_id=" . ($order->id ?? '')
+            "{$userCart->store_url}/order?order_id=" . ($order->id ?? '')
         );
     }
 }
