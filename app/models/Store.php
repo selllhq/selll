@@ -42,6 +42,11 @@ class Store extends Model
             ->as('membership');
     }
 
+    /**
+     * Get all customers of a store.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function customer()
     {
         return $this->hasMany(Customer::class);
@@ -57,8 +62,13 @@ class Store extends Model
         return $this->hasMany(Product::class);
     }
 
-    public function orders()
+    /**
+     * Get all carts of a store.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function carts()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Cart::class);
     }
 }

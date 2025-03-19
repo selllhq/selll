@@ -6,14 +6,9 @@ class Customer extends Model
 {
     protected $fillable = ['name', 'email', 'phone'];
 
-    public function orders()
+    public function carts()
     {
-        return $this->hasMany(Order::class);
-    }
-
-    public function cart()
-    {
-        return $this->hasOne(Cart::class);
+        return $this->hasMany(Cart::class);
     }
 
     public function store()

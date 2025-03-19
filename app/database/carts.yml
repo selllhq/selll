@@ -13,3 +13,4 @@ columns:
 
 relationships:
   - Customer
+  - Store

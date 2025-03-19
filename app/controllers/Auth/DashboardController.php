@@ -15,6 +15,7 @@ class DashboardController extends Controller
         $stores = User::find(auth()->id())->ownedStores()->get();
         $currentStore = $currentStoreId ? Store::find($currentStoreId)->first() : [];
         $products = $currentStoreId ? Store::find($currentStoreId)->products()->get() : [];
+        $orders = $currentStore->carts->get();
 
         dispatch(SendInvoiceJob::class);
 
@@ -22,6 +23,7 @@ class DashboardController extends Controller
             'stores' => $stores,
             'currentStore' => $currentStore,
             'products' => $products,
+            'orders' => $orders
         ]);
     }
 }
