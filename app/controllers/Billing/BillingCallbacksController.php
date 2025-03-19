@@ -15,26 +15,24 @@ class BillingCallbacksController extends Controller
             return response()->markup('Invalid session ID');
         }
 
-        if ($userCart->status === 'completed') {
+        if ($userCart->status !== 'pending') {
             return response()->redirect(
-                "{$userCart->store_url}/order?order_id={$userCart->order->id}&status=past"
+                "{$userCart->store_url}/order?order_id={$userCart->id}&status=past"
             );
         }
 
         if (billing()->isSuccess()) {
-            $order = $userCart->customer->orders()->create([
-                'store_id' => $userCart->customer->store_id,
-                'cart_id' => $userCart->id,
-            ]);
-            $userCart->status = 'completed';
-            $userCart->save();
+            $userCart->status = 'paid';
+
+            // notify store of successful payment
         } else {
             $userCart->status = 'failed';
-            $userCart->save();
         }
 
+        $userCart->save();
+
         return response()->redirect(
-            "{$userCart->store_url}/order?order_id=" . ($order->id ?? '')
+            "{$userCart->store_url}/order?order_id=" . ($userCart->id ?? '')
         );
     }
 }

@@ -29,9 +29,10 @@ class BillingController extends Controller
             ];
         }, $cartData);
 
-        $cart = $customer->cart()->create([
+        $cart = $customer->carts()->create([
             'items' => json_encode($items),
             'total' => $cartTotal,
+            'store_id' => $store->id,
             'store_url' => request()->get('store_url'),
         ]);
 
