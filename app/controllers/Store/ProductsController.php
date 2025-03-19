@@ -54,7 +54,7 @@ class ProductsController extends Controller
         response()->inertia('products/product', [
             'product' => $currentStore->products()->find($id),
             'currentStore' => $currentStore->first(),
-            'orders' => $currentStore->orders()->get(),
+            'orders' => $currentStore->carts()->get(),
         ]);
     }
 }
