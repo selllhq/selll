@@ -11,12 +11,14 @@ class ProductsController extends Controller
     {
         $currentStore = Store::find(auth()->user()->current_store_id);
         $products = $currentStore->products()->get();
+        $orders = $currentStore->carts()->with('customer')->latest()->get();
 
         if (!$currentStore) {
             return response()->redirect('/store/create', 303);
         }
 
         response()->inertia('products/products', [
+            'orders' => $orders,
             'products' => $products,
             'currentStore' => $currentStore->first(),
         ]);

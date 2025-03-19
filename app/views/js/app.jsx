@@ -1,11 +1,16 @@
 import '../css/app.css';
 
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
 import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from '@leafphp/vite-plugin/inertia-helpers';
 import { initializeTheme } from './utils/app-mode';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Selll';
+
+dayjs.extend(relativeTime);
 
 createInertiaApp({
   title: (title) => `${title} - ${appName}`,

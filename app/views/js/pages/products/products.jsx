@@ -12,8 +12,9 @@ import {
 import { ShoppingBag, TrendingUp, Store, Package, Search } from "lucide-react";
 import Button from "@/components/form/button";
 import Input from "@/components/form/input";
+import dayjs from "dayjs";
 
-export default function Products({ auth, products, currentStore }) {
+export default function Products({ auth, orders = [], products, currentStore }) {
     const [search, setSearch] = useState("");
     const [filter, setFilter] = useState("all");
 
@@ -66,7 +67,8 @@ export default function Products({ auth, products, currentStore }) {
                                 text: "Add Your First Product",
                                 icon: Package,
                                 href: "/products/new",
-                                className: "bg-primary-orange hover:bg-primary-orange/90"
+                                className:
+                                    "bg-primary-orange hover:bg-primary-orange/90",
                             }}
                         />
                     </div>
@@ -114,7 +116,7 @@ export default function Products({ auth, products, currentStore }) {
 
                         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mt-8">
                             <Card>
-                                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
                                     <CardTitle>Total Products</CardTitle>
                                     <div className="bg-[#2C2C2C] p-2 rounded-lg">
                                         <ShoppingBag className="h-5 w-5 text-primary-orange" />
@@ -123,11 +125,23 @@ export default function Products({ auth, products, currentStore }) {
                                 <CardContent>
                                     <div>
                                         <div className="text-4xl font-bold mb-2">
-                                            {products?.length}
+                                            {products.length.toLocaleString()}
                                         </div>
                                         <div className="flex items-center gap-1 text-emerald-500">
                                             <span className="text-sm">
-                                                ↑ 4.3%
+                                                ↑{" "}
+                                                {products
+                                                    .filter((product) =>
+                                                        dayjs(
+                                                            product.created_at,
+                                                        ).isAfter(
+                                                            dayjs().subtract(
+                                                                1,
+                                                                "month",
+                                                            ),
+                                                        ),
+                                                    )
+                                                    .length.toLocaleString()}
                                             </span>
                                             <span className="text-sm text-gray-500">
                                                 from last month
@@ -138,7 +152,7 @@ export default function Products({ auth, products, currentStore }) {
                             </Card>
 
                             <Card>
-                                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
                                     <CardTitle>Total Sales</CardTitle>
                                     <div className="bg-[#2C2C2C] p-2 rounded-lg">
                                         <TrendingUp className="h-5 w-5 text-primary-orange" />
@@ -147,11 +161,60 @@ export default function Products({ auth, products, currentStore }) {
                                 <CardContent>
                                     <div>
                                         <div className="text-4xl font-bold mb-2">
-                                            $2,500.00
+                                            {new Intl.NumberFormat("en-US", {
+                                                style: "currency",
+                                                currency:
+                                                    currentStore?.currency,
+                                            }).format(
+                                                orders
+                                                    .filter(
+                                                        (order) =>
+                                                            order.status ===
+                                                            "paid",
+                                                    )
+                                                    .reduce(
+                                                        (acc, order) =>
+                                                            acc +
+                                                            Number(order.total),
+                                                        0,
+                                                    ),
+                                            )}
                                         </div>
                                         <div className="flex items-center gap-1 text-emerald-500">
                                             <span className="text-sm">
-                                                ↑ 12.5%
+                                                ↑{" "}
+                                                {new Intl.NumberFormat(
+                                                    "en-US",
+                                                    {
+                                                        style: "currency",
+                                                        currency:
+                                                            currentStore?.currency,
+                                                        minimumFractionDigits: 0,
+                                                    },
+                                                ).format(
+                                                    orders
+                                                        .filter(
+                                                            (order) =>
+                                                                order.status ===
+                                                                    "paid" &&
+                                                                dayjs(
+                                                                    order.created_at,
+                                                                ).isAfter(
+                                                                    dayjs().subtract(
+                                                                        1,
+                                                                        "month",
+                                                                    ),
+                                                                ),
+                                                        )
+                                                        .reduce(
+                                                            (acc, order) =>
+                                                                acc +
+                                                                Number(
+                                                                    order.total,
+                                                                ),
+                                                            0,
+                                                        ),
+                                                )}
                                             </span>
                                             <span className="text-sm text-gray-500">
                                                 from last month

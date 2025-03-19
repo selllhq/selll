@@ -47,7 +47,7 @@ class Store extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function customer()
+    public function customers()
     {
         return $this->hasMany(Customer::class);
     }

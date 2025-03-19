@@ -16,7 +16,7 @@ class BillingController extends Controller
         $cartTotal = 0;
         $store = Store::find($storeId);
 
-        $customer = $store->customer()->where($customerData)->firstOrCreate($customerData);
+        $customer = $store->customers()->where($customerData)->firstOrCreate($customerData);
 
         $items = array_map(function ($cartItem) use ($store, &$cartTotal) {
             $item = $store->products()->find($cartItem['id']);
