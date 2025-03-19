@@ -42,6 +42,11 @@ class Store extends Model
             ->as('membership');
     }
 
+    public function customer()
+    {
+        return $this->hasMany(Customer::class);
+    }
+
     /**
      * Get all products of a store.
      *

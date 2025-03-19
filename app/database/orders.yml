@@ -1,12 +1,9 @@
 columns:
-  status:
-    type: string
-    default: pending
 
 relationships:
   - Store
   - Customer
-  - Product
+  - Cart
 
 seeds:
   count: 5

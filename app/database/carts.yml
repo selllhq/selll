@@ -1,0 +1,12 @@
+columns:
+  items: text
+  total: string
+  billing_session_id:
+    type: string
+    nullable: true
+  status:
+    type: string
+    default: pending
+
+relationships:
+  - Customer

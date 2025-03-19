@@ -2,11 +2,12 @@ columns:
   name: string
   email:
     type: string
-    unique: true
   phone:
     type: string
     nullable: true
-  options: text
+
+relationships:
+  - Store
 
 seeds:
   count: 5
