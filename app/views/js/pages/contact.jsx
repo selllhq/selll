@@ -30,10 +30,19 @@ const Contact = ({ auth }) => {
         e.preventDefault();
         setIsSubmitting(true);
         
-        // Simulate form submission
+        // Create mailto link with form data
+        const subject = `Contact Form Submission from ${formData.fullName}`;
+        const body = `Name: ${formData.fullName}\nEmail: ${formData.companyEmail}\nPhone: ${formData.phoneNumber}\n\nMessage:\n${formData.message}`;
+        
+        // Open mailto link after brief delay to show loading state
         setTimeout(() => {
             setIsSubmitting(false);
             setSubmitSuccess(true);
+            
+            // Open mailto link
+            window.location.href = `mailto:support@selll.online?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            
+            // Reset form
             setFormData({
                 fullName: '',
                 companyEmail: '',
@@ -45,7 +54,7 @@ const Contact = ({ auth }) => {
             setTimeout(() => {
                 setSubmitSuccess(false);
             }, 5000);
-        }, 1500);
+        }, 1000);
     };
 
     return (
@@ -82,8 +91,8 @@ const Contact = ({ auth }) => {
                                         </div>
                                         <div>
                                             <p className="text-sm text-gray-500 dark:text-gray-400">Email us at</p>
-                                            <a href="mailto:sales@selll.online" className="text-gray-900 dark:text-white hover:text-primary-orange transition-colors">
-                                                sales@selll.online
+                                            <a href="mailto:support@selll.online" className="text-gray-900 dark:text-white hover:text-primary-orange transition-colors">
+                                                support@selll.online
                                             </a>
                                         </div>
                                     </div>

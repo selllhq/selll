@@ -32,7 +32,6 @@ const Faqs = ({ auth }) => {
 
     const categories = [
         { id: "general", name: "General", icon: HelpCircle },
-        { id: "account", name: "Account & Setup", icon: Users },
         { id: "products", name: "Products", icon: ShoppingBag },
         { id: "payments", name: "Payments", icon: CreditCard },
         { id: "store", name: "Store Customization", icon: Store },
@@ -53,7 +52,7 @@ const Faqs = ({ auth }) => {
             {
                 id: "how-much-does-it-cost",
                 question: "How much does Selll cost?",
-                answer: "Selll offers a free plan that allows you to create a store and start selling right away. We also offer premium plans with additional features starting at $9.99/month. There are no setup fees or hidden charges. You only pay a small transaction fee on sales."
+                answer: "You can start selling online for free with Selll's Starter plan, you don't have to pay anything until you're ready to scale. Our premium plans offer additional features and tools for growing your business for $20 per month."
             },
             {
                 id: "technical-knowledge",
@@ -71,28 +70,6 @@ const Faqs = ({ auth }) => {
                 answer: "We offer 24/7 customer support via email and chat. Our support team is always ready to help you with any questions or issues you might have. Premium plans also include priority support and dedicated account managers."
             },
         ],
-        account: [
-            {
-                id: "create-account",
-                question: "How do I create a Selll account?",
-                answer: "Creating a Selll account is simple. Just visit our homepage, enter your email address, and follow the signup process. You'll be asked to provide some basic information about your business, and then you can start setting up your store right away."
-            },
-            {
-                id: "multiple-stores",
-                question: "Can I manage multiple stores with one account?",
-                answer: "Yes, with our premium plans, you can create and manage multiple stores from a single Selll account. This is perfect for businesses with different brands or product lines that require separate storefronts."
-            },
-            {
-                id: "delete-account",
-                question: "How do I delete my account?",
-                answer: "You can delete your account by going to Account Settings and selecting the 'Delete Account' option. Please note that this action is irreversible and will permanently delete all your store data, products, and sales history."
-            },
-            {
-                id: "change-email",
-                question: "Can I change my email address?",
-                answer: "Yes, you can change your email address in your Account Settings. After updating your email, you'll need to verify the new address before the change takes effect."
-            },
-        ],
         products: [
             {
                 id: "add-products",
@@ -102,7 +79,7 @@ const Faqs = ({ auth }) => {
             {
                 id: "product-limit",
                 question: "Is there a limit to how many products I can add?",
-                answer: "Free accounts can add up to 10 products. Premium plans allow for unlimited products, making them suitable for businesses with larger inventories."
+                answer: "At the moment, there is no limit to the number of products you can add. However, we recommend keeping your store organized so customers can easily find what they're looking for."
             },
             {
                 id: "product-categories",
@@ -114,11 +91,11 @@ const Faqs = ({ auth }) => {
                 question: "How do I set up product variants like sizes and colors?",
                 answer: "When creating or editing a product, you'll find a 'Variants' section where you can add different options like sizes, colors, or materials. You can set specific prices and inventory levels for each variant combination."
             },
-            {
-                id: "bulk-import",
-                question: "Can I import products in bulk?",
-                answer: "Yes, Selll supports bulk product imports via CSV files. This feature is available on all premium plans and makes it easy to migrate from another platform or add multiple products at once."
-            },
+            // {
+            //     id: "bulk-import",
+            //     question: "Can I import products in bulk?",
+            //     answer: "Yes, Selll supports bulk product imports via CSV files. This feature is available on all premium plans and makes it easy to migrate from another platform or add multiple products at once."
+            // },
         ],
         payments: [
             {
@@ -282,144 +259,192 @@ const Faqs = ({ auth }) => {
 
             <Navbar auth={auth} />
 
-            <div className="py-32">
-                <div className="mx-auto container">
-                    <div class="flex flex-col gap-6 py-4 lg:py-8">
-                        <h2 class="text-3xl leading-tight tracking-tight md:text-4xl lg:text-6xl">
+            <div className="py-20 md:py-32 bg-white dark:bg-background relative overflow-hidden">
+                <div className="mx-auto container px-4 sm:px-6 relative z-10">
+                    <div className="flex flex-col gap-6 py-4 lg:py-8 text-center max-w-3xl mx-auto">
+                        <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-primary-orange/10 text-primary-orange text-sm font-medium mb-4 mx-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M12 16v-4" />
+                                <path d="M12 8h.01" />
+                            </svg>
+                            <span>Frequently Asked Questions</span>
+                        </div>
+
+                        <h2 className="text-3xl leading-tight tracking-tight md:text-4xl lg:text-5xl text-gray-900 dark:text-white font-medium">
                             Everything You Need to Know
                         </h2>
-                        <p class="max-w-[600px] tracking-[-0.32px] text-muted-foreground">
+
+                        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
                             Selll and Leaf have compiled a list of frequently asked questions to help you get started selling your products online.
                         </p>
                     </div>
 
-                    <div className="mt-16 grid grid-cols-1 lg:grid-cols-4 gap-8">
-                        {/* Category Sidebar */}
-                        <div className="lg:col-span-1">
-                            <div className="sticky top-24 space-y-2">
-                                <h3 className="text-lg font-medium text-white mb-4">Categories</h3>
-                                <div className="space-y-1">
-                                    {categories.map((category) => {
-                                        const Icon = category.icon;
-                                        return (
-                                            <button
-                                                key={category.id}
-                                                onClick={() => setActiveCategory(category.id)}
-                                                className={cn(
-                                                    "flex items-center w-full px-4 py-2 text-sm rounded-lg transition-colors",
+                    <div className="mt-16 max-w-7xl mx-auto">
+                        {/* Category Tabs */}
+                        <div className="mb-12 relative">
+                            <div className="flex overflow-x-auto hide-scrollbar pb-2 gap-2 justify-center flex-wrap">
+                                {categories.map((category) => {
+                                    const Icon = category.icon;
+                                    return (
+                                        <button
+                                            key={category.id}
+                                            onClick={() => setActiveCategory(category.id)}
+                                            className={cn(
+                                                "inline-flex items-center py-3 px-5 text-sm font-medium whitespace-nowrap transition-all rounded-full",
+                                                activeCategory === category.id
+                                                    ? "bg-primary-orange text-white shadow-lg shadow-primary-orange/20 dark:shadow-primary-orange/10"
+                                                    : "bg-gray-100 dark:bg-[#1A1A1A] text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-[#2C2C2C] border border-gray-200 dark:border-gray-800"
+                                            )}
+                                        >
+                                            <Icon className={cn(
+                                                "h-4 w-4 mr-2 flex-shrink-0")}
+                                            />
+                                            <span>{category.name}</span>
+                                            {faqs[category.id]?.length > 0 && (
+                                                <span className={cn(
+                                                    "ml-2 text-xs rounded-full px-2 py-0.5",
                                                     activeCategory === category.id
-                                                        ? "bg-[#2C2C2C] text-white"
-                                                        : "text-gray-400 hover:bg-[#2C2C2C]/50 hover:text-white"
-                                                )}
-                                            >
-                                                <Icon className="h-4 w-4 mr-2 flex-shrink-0" />
-                                                <span>{category.name}</span>
-                                                <span className="ml-auto bg-[#141414] text-gray-500 text-xs rounded-full px-2 py-0.5">
-                                                    {faqs[category.id]?.length || 0}
+                                                        ? "bg-white/20"
+                                                        : "bg-gray-200 dark:bg-[#141414] text-gray-600 dark:text-gray-400"
+                                                )}>
+                                                    {faqs[category.id]?.length}
                                                 </span>
-                                            </button>
-                                        );
-                                    })}
-                                </div>
+                                            )}
+                                        </button>
+                                    );
+                                })}
                             </div>
                         </div>
 
-                        {/* FAQ Content */}
-                        <div className="lg:col-span-3">
-                            <div className="bg-[#1A1A1A] rounded-xl p-6 shadow-sm">
-                                <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
+                        <div className="p-2 max-w-4xl mx-auto">
+                            <div className="flex items-center justify-between mb-6">
+                                <div className="flex items-center">
                                     {categories.find(c => c.id === activeCategory)?.icon &&
                                         React.createElement(categories.find(c => c.id === activeCategory)?.icon, {
                                             className: "h-5 w-5 mr-2 text-primary-orange"
                                         })}
-                                    {categories.find(c => c.id === activeCategory)?.name || "General"} Questions
-                                </h2>
+                                    <h2 className="text-xl font-medium text-gray-900 dark:text-white">
+                                        {categories.find(c => c.id === activeCategory)?.name || "General"} Questions
+                                    </h2>
+                                </div>
+                                <div className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-[#1A1A1A] px-2 py-1 rounded-full">
+                                    {faqs[activeCategory]?.length || 0} questions
+                                </div>
+                            </div>
 
-                                <div className="space-y-4">
-                                    {faqs[activeCategory]?.map((faq) => (
+                            <div className="space-y-2">
+                                {faqs[activeCategory]?.map((faq) => (
+                                    <div
+                                        key={faq.id}
+                                        className={cn(
+                                            "border-b border-gray-200 dark:border-[#2C2C2C] overflow-hidden transition-all",
+                                            openQuestions[faq.id] ? "bg-transparent" : "bg-transparent"
+                                        )}
+                                    >
+                                        <button
+                                            className="flex items-center justify-between w-full py-4 text-left"
+                                            onClick={() => toggleQuestion(faq.id)}
+                                            aria-expanded={openQuestions[faq.id]}
+                                            aria-controls={`faq-${faq.id}-content`}
+                                        >
+                                            <h3 className="text-base font-medium text-gray-900 dark:text-white pr-4">{faq.question}</h3>
+                                            <ChevronDown
+                                                className={cn(
+                                                    "h-4 w-4 text-gray-500 dark:text-gray-400 transition-transform",
+                                                    openQuestions[faq.id] ? "transform rotate-180 text-primary-orange" : ""
+                                                )}
+                                            />
+                                        </button>
                                         <div
-                                            key={faq.id}
+                                            id={`faq-${faq.id}-content`}
                                             className={cn(
-                                                "border border-[#2C2C2C] rounded-lg overflow-hidden transition-all",
-                                                openQuestions[faq.id] ? "bg-[#2C2C2C]/30" : "bg-transparent"
+                                                "transition-all duration-300 ease-in-out overflow-hidden",
+                                                openQuestions[faq.id] ? "max-h-96" : "max-h-0"
                                             )}
                                         >
-                                            <button
-                                                className="flex items-center justify-between w-full p-4 text-left"
-                                                onClick={() => toggleQuestion(faq.id)}
-                                            >
-                                                <h3 className="text-base font-medium text-white">{faq.question}</h3>
-                                                <ChevronDown
-                                                    className={cn(
-                                                        "h-5 w-5 text-gray-400 transition-transform",
-                                                        openQuestions[faq.id] ? "transform rotate-180" : ""
-                                                    )}
-                                                />
-                                            </button>
                                             {openQuestions[faq.id] && (
-                                                <div className="px-4 pb-4 pt-0">
-                                                    <p className="text-gray-400">{faq.answer}</p>
+                                                <div className="pb-4 pt-0">
+                                                    <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{faq.answer}</p>
                                                 </div>
                                             )}
                                         </div>
-                                    ))}
-                                </div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <section className="relative overflow-hidden py-20">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary-orange/10 to-primary-orange/5 dark:from-primary-orange/20 dark:to-primary-orange/10 z-0"></div>
-                
-                <div className="relative z-10 mx-auto container py-16 md:py-20 flex flex-col md:flex-row items-center justify-between gap-10">
-                    <div className="text-center md:text-left md:max-w-md">
-                        <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Still have questions?</h3>
-                        <p className="text-gray-600 dark:text-gray-300 mb-8 text-lg">
+            <section className="relative overflow-hidden py-24 bg-[#141414]">
+                {/* Background elements */}
+                <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-5"></div>
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-orange/20 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-orange/20 to-transparent"></div>
+                <div className="absolute -left-20 -top-20 size-96 rounded-full bg-primary-orange/10 blur-3xl"></div>
+                <div className="absolute -right-20 -bottom-20 size-96 rounded-full bg-primary-orange/10 blur-3xl"></div>
+
+                <div className="relative z-10 mx-auto container px-4 sm:px-6 py-16">
+                    <div className="max-w-3xl mx-auto text-center">
+                        <h3 className="text-4xl font-bold text-white mb-6">Still have questions?</h3>
+                        <p className="text-gray-300 mb-10 text-lg max-w-xl mx-auto">
                             Our support team is here to help you with any questions you might have about Selll's platform and services.
                         </p>
-                        <div className="flex flex-col sm:flex-row gap-4">
-                            <Button
-                                as={Link}
-                                href="/contact"
-                                className="bg-primary-orange hover:bg-primary-orange/90 text-white font-medium px-6 py-2.5"
-                            >
-                                Contact Support
-                            </Button>
-                            <Button
-                                as="a"
-                                href="https://docs.selll.online"
-                                target="_blank"
-                                variant="outline"
-                                className="border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 font-medium px-6 py-2.5"
-                            >
-                                Browse Documentation
-                            </Button>
-                        </div>
-                    </div>
-                    
-                    <div className="hidden md:block relative">
-                        <div className="absolute -top-6 -right-6 size-24 rounded-full bg-primary-orange/20 blur-xl"></div>
-                        <div className="relative bg-white dark:bg-[#2C2C2C] rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-800 max-w-sm">
-                            <div className="flex items-center gap-3 mb-4">
-                                <div className="size-10 rounded-full bg-primary-orange/20 flex items-center justify-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary-orange">
-                                        <circle cx="12" cy="12" r="10"/>
-                                        <path d="M12 16v-4"/>
-                                        <path d="M12 8h.01"/>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+                            <div className="bg-[#1A1A1A] rounded-xl p-6 border border-[#2C2C2C] hover:border-primary-orange/40 transition-colors group">
+                                <div className="size-14 rounded-full bg-primary-orange/10 flex items-center justify-center mx-auto mb-5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary-orange">
+                                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                                     </svg>
                                 </div>
-                                <h4 className="font-medium text-gray-900 dark:text-white">Quick Support</h4>
+                                <h4 className="font-medium text-white text-lg mb-3">Contact Support</h4>
+                                <p className="text-gray-400 mb-5">Get help from our dedicated support team within 24 hours.</p>
+                                <Button
+                                    as={Link}
+                                    href="/contact"
+                                    className="w-full bg-[#2C2C2C] hover:bg-primary-orange text-white font-medium py-2.5 transition-colors group-hover:bg-primary-orange/90 flex items-center justify-center"
+                                >
+                                    <span>Contact Support</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2">
+                                        <path d="M5 12h14" />
+                                        <path d="m12 5 7 7-7 7" />
+                                    </svg>
+                                </Button>
                             </div>
-                            <p className="text-gray-600 dark:text-gray-300 mb-4">Get answers to your questions within 24 hours from our dedicated support team.</p>
-                            <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
-                                    <path d="M12 6v6l4 2"/>
-                                </svg>
-                                <span>Average response time: 4 hours</span>
+
+                            <div className="bg-[#1A1A1A] rounded-xl p-6 border border-[#2C2C2C] hover:border-primary-orange/40 transition-colors group">
+                                <div className="size-14 rounded-full bg-primary-orange/10 flex items-center justify-center mx-auto mb-5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary-orange">
+                                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                                    </svg>
+                                </div>
+                                <h4 className="font-medium text-white text-lg mb-3">Browse Documentation</h4>
+                                <p className="text-gray-400 mb-5">Find detailed guides and tutorials in our comprehensive documentation.</p>
+                                <Button
+                                    as="a"
+                                    href="https://docs.selll.online"
+                                    target="_blank"
+                                    className="w-full bg-[#2C2C2C] hover:bg-primary-orange text-white font-medium py-2.5 transition-colors group-hover:bg-primary-orange/90 flex items-center justify-center"
+                                >
+                                    <span>View Documentation</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                                        <path d="M15 3h6v6" />
+                                        <path d="m10 14 11-11" />
+                                    </svg>
+                                </Button>
                             </div>
+                        </div>
+
+                        <div className="mt-10 flex items-center justify-center gap-2 text-sm text-gray-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+                                <path d="M12 6v6l4 2" />
+                            </svg>
+                            <span>Average response time: 4 hours</span>
                         </div>
                     </div>
                 </div>

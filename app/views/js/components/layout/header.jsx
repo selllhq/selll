@@ -99,12 +99,12 @@ const mainNavItems = [
 const rightNavItems = [
     {
         title: "Help",
-        url: "mailto:support@selll.app",
+        url: "mailto:support@selll.online",
         icon: HelpCircle,
     },
     {
         title: "Selll Docs",
-        url: "https://docs.selll.app",
+        url: "https://docs.selll.online",
         icon: BookOpen,
     },
 ];
