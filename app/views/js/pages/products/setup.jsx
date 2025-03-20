@@ -50,10 +50,6 @@ const Setup = ({ auth }) => {
             className="dark:bg-[#141414]"
             breadcrumbs={[
                 {
-                    title: "Dashboard",
-                    href: "/dashboard",
-                },
-                {
                     title: "Products",
                     href: "/products",
                     icon: Package,

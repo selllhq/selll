@@ -84,11 +84,11 @@ const mainNavItems = [
         url: "/customers",
         icon: Users,
     },
-    {
-        title: "Invoices",
-        url: "/invoices",
-        icon: Mail,
-    },
+    // {
+    //     title: "Invoices",
+    //     url: "/invoices",
+    //     icon: Mail,
+    // },
     {
         title: "Payouts",
         url: "/payouts",

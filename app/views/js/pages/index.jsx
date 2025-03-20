@@ -160,15 +160,15 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
             </section> */}
 
             <section className="bg-black text-white py-16 mt-32">
-                <div class="container mx-auto px-2 sm:px-0">
-                    <div class="flex flex-wrap sm:flex-nowrap sm:items-center mb-10">
-                        <div class="w-full pb-md sm:w-2/3 lg:w-3/5 sm:pb-0 sm:pr-lg">
+                <div className="container mx-auto px-2 sm:px-0">
+                    <div className="flex flex-wrap sm:flex-nowrap sm:items-center mb-10">
+                        <div className="w-full pb-md sm:w-2/3 lg:w-3/5 sm:pb-0 sm:pr-lg">
                             <h2 className="text-4xl font-bold">
                                 Instant Storefronts, No Coding Needed
                             </h2>
                         </div>
-                        <div class="w-full sm:w-1/3 lg:w-2/5">
-                            <p class="richtext text-body-sm text-gray-c text-pretty inline-block">
+                        <div className="w-full sm:w-1/3 lg:w-2/5">
+                            <p className="richtext text-body-sm text-gray-c text-pretty inline-block">
                                 Add your products, start accepting payments,
                                 track your sales, and more—without the usual
                                 headaches.

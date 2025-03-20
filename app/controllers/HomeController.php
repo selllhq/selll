@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\Order;
+use App\Models\Cart;
 use App\Models\Store;
 
 class HomeController extends Controller
@@ -10,8 +10,8 @@ class HomeController extends Controller
     public function index()
     {
         response()->inertia('index', [
-            'activeStores' => Store::where('status', 'live')->count(),
-            'purchases' => Order::count(),
+            'activeStores' => Store::count(),
+            'purchases' => Cart::where('status', 'paid')->count(),
         ]);
     }
 }

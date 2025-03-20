@@ -10,6 +10,9 @@ columns:
   images:
     type: string
     nullable: true
+  physical:
+    type: boolean
+    default: false
 
 relationships:
   - Store
