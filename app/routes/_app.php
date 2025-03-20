@@ -16,4 +16,4 @@ app()->inertia('/terms', 'terms');
 
 
 
-app()->inertia('/something', 'something');
+app()->inertia('/contact', 'contact');
