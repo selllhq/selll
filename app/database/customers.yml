@@ -5,6 +5,18 @@ columns:
   phone:
     type: string
     nullable: true
+  address:
+    type: string
+    nullable: true
+  city:
+    type: string
+    nullable: true
+  country:
+    type: string
+    nullable: true
+  notes:
+    type: text
+    nullable: true
 
 relationships:
   - Store

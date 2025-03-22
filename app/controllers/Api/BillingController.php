@@ -16,7 +16,7 @@ class BillingController extends Controller
         $cartTotal = 0;
         $store = Store::find($storeId);
 
-        $customer = $store->customers()->where($customerData)->firstOrCreate($customerData);
+        $customer = $store->customers()->where('email', $customerData['email'])->firstOrCreate($customerData);
 
         $items = array_map(function ($cartItem) use ($store, &$cartTotal) {
             $item = $store->products()->find($cartItem['id']);
@@ -37,7 +37,7 @@ class BillingController extends Controller
         ]);
 
         $session = billing()->charge([
-            'amount' => $cartTotal,
+            'amount' => $cartTotal * 100,
             'currency' => $store->currency,
             'description' => 'Purchase of items in cart',
             'customer' => $customer->email,
