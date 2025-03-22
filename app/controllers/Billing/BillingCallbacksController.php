@@ -22,10 +22,10 @@ class BillingCallbacksController extends Controller
         }
 
         if (billing()->isSuccess()) {
-            $userCart->status = 'paid';
-
             // notify store of successful payment
+            $userCart->status = 'paid';
         } else {
+            // notify store of failed payment
             $userCart->status = 'failed';
         }
 

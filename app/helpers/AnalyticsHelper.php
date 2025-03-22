@@ -15,6 +15,7 @@ class AnalyticsHelper
         $midyearRevenueList = db()
             ->select('carts', 'SUM(total) as revenue, DATE_FORMAT(created_at, "%Y-%m") as month')
             ->where('store_id', $currentStoreId)
+            ->where('status', 'paid')
             ->where('created_at', '>=', date('Y-m-01', strtotime('-5 months')))
             ->groupBy('month')
             ->get();
