@@ -1,0 +1,15 @@
+columns:
+  quantity: integer
+
+relationships:
+  - Customer
+  - Product
+  - Cart
+
+seeds:
+  count: 5
+  truncate: true
+  data:
+    name: '@faker.name'
+    identifier: '@faker.uuid'
+    verified_at: '@tick.format:YYYY-MM-DD HH:mm:ss'
