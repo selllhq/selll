@@ -1,3 +1,4 @@
+import { Link } from "@inertiajs/react";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -24,7 +25,7 @@ export function Breadcrumbs({ breadcrumbs }) {
                                                 {item.title}
                                             </BreadcrumbPage>
                                         ) : (
-                                            <BreadcrumbLink href={item.href}>
+                                            <BreadcrumbLink as={Link} href={item.href}>
                                                 {item.title}
                                             </BreadcrumbLink>
                                         )}

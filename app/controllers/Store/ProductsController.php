@@ -37,7 +37,6 @@ class ProductsController extends Controller
             request()->get([
                 'name',
                 'description',
-                'currency',
                 'price',
                 'quantity',
                 'quantity_items',
