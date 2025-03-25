@@ -9,7 +9,7 @@ class StoresController extends Controller
 {
     public function show($store)
     {
-        $store = Store::where('identifier', $store)->with(['owner'])->first();
+        $store = Store::where('slug', $store)->with(['owner'])->first();
 
         if (! $store) {
             return response()->json([

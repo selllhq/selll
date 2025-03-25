@@ -10,8 +10,9 @@ import { Card, CardContent } from "@/components/shared/card";
 const Setup = ({ auth }) => {
     const { data, setData, post, errors, processing } = useForm({
         name: `${auth.user.name}'s Store`,
-        identifier: slugify(auth.user.name),
+        slug: slugify(auth.user.name),
         description: "",
+        currency: "USD",
     });
 
     const submit = (e) => {
@@ -58,15 +59,15 @@ const Setup = ({ auth }) => {
                             </div>
 
                             <div className="space-y-3">
-                                <Label htmlFor="identifier" className="text-sm block mb-1">Store URL</Label>
+                                <Label htmlFor="slug" className="text-sm block mb-1">Store URL</Label>
                                 <div className="relative">
                                     <Input
-                                        id="identifier"
+                                        id="slug"
                                         className="block w-full dark:bg-[#2C2C2C] dark:border-0 focus:ring-primary-orange/20 pr-24"
-                                        value={data.identifier}
+                                        value={data.slug}
                                         onChange={(e) =>
                                             setData(
-                                                "identifier",
+                                                "slug",
                                                 slugify(e.target.value),
                                             )
                                         }
@@ -81,7 +82,7 @@ const Setup = ({ auth }) => {
                                 </div>
                                 <InputError
                                     className="mt-2"
-                                    message={errors.identifier}
+                                    message={errors.slug}
                                 />
                             </div>
 
@@ -103,6 +104,36 @@ const Setup = ({ auth }) => {
                                 <InputError
                                     className="mt-2"
                                     message={errors.description}
+                                />
+                            </div>
+                            
+                            <div className="space-y-3">
+                                <Label htmlFor="currency" className="text-sm block mb-1">
+                                    Store Currency
+                                </Label>
+                                <Input
+                                    id="currency"
+                                    as="select"
+                                    className="block w-full dark:bg-[#2C2C2C] dark:border-0 focus:ring-primary-orange/20"
+                                    value={data.currency}
+                                    onChange={(e) => setData("currency", e.target.value)}
+                                    required
+                                >
+                                    <option value="USD">USD - US Dollar</option>
+                                    <option value="EUR">EUR - Euro</option>
+                                    <option value="GBP">GBP - British Pound</option>
+                                    <option value="NGN">NGN - Nigerian Naira</option>
+                                    <option value="GHS">GHS - Ghanaian Cedi</option>
+                                    <option value="KES">KES - Kenyan Shilling</option>
+                                    <option value="ZAR">ZAR - South African Rand</option>
+                                    <option value="CAD">CAD - Canadian Dollar</option>
+                                </Input>
+                                <p className="text-xs text-muted-foreground mt-1">
+                                    This currency will be used for all transactions in your store.
+                                </p>
+                                <InputError
+                                    className="mt-2"
+                                    message={errors.currency}
                                 />
                             </div>
 
@@ -152,7 +183,7 @@ const Setup = ({ auth }) => {
                                         </div>
                                         <div className="text-white font-medium break-all bg-[#2C2C2C] p-2 rounded-lg mt-1">
                                             https://
-                                            {data.identifier || "yourstore"}
+                                            {data.slug || "yourstore"}
                                             .selll.store
                                         </div>
                                     </div>
@@ -174,6 +205,14 @@ const Setup = ({ auth }) => {
                                             </div>
                                         </div>
                                     )}
+                                    <div>
+                                        <div className="text-sm text-gray-400">
+                                            Currency:
+                                        </div>
+                                        <div className="text-white font-medium">
+                                            {data.currency}
+                                        </div>
+                                    </div>
                                 </div>
                             </CardContent>
                         </Card>

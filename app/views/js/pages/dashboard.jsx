@@ -87,7 +87,7 @@ export default function Dashboard({
                                     asChild
                                 >
                                     <Link
-                                        href={`https://${currentStore?.identifier}.selll.store`}
+                                        href={`https://${currentStore?.slug}.selll.store`}
                                         target="_blank"
                                         className="flex items-center gap-2"
                                     >

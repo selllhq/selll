@@ -9,15 +9,15 @@ import {
     CardTitle,
     CardDescription,
 } from "@/components/shared/card";
-import { 
-    Users, 
+import {
+    Users,
     User,
     Mail,
-    ShoppingBag, 
-    TrendingUp, 
-    Store, 
-    Package, 
-    Search, 
+    ShoppingBag,
+    TrendingUp,
+    Store,
+    Package,
+    Search,
     ShoppingCart,
     Calendar,
     MapPin,
@@ -39,9 +39,9 @@ export default function Customers({ auth, customers = [], currentStore, orders =
     const totalSpent = orders
         .filter(order => order.status === "paid")
         .reduce((acc, order) => acc + Number(order.total), 0);
-    
-    const averageSpentPerCustomer = customers.length > 0 
-        ? totalSpent / customers.length 
+
+    const averageSpentPerCustomer = customers.length > 0
+        ? totalSpent / customers.length
         : 0;
 
     const filteredCustomers = customers?.filter((customer) => {
@@ -85,7 +85,7 @@ export default function Customers({ auth, customers = [], currentStore, orders =
         const totalSpent = customerOrders
             .filter(order => order.status === "paid")
             .reduce((acc, order) => acc + Number(order.total), 0);
-        const lastOrderDate = customerOrders.length > 0 
+        const lastOrderDate = customerOrders.length > 0
             ? customerOrders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0].created_at
             : null;
 
@@ -120,7 +120,7 @@ export default function Customers({ auth, customers = [], currentStore, orders =
                             button={{
                                 text: "View Your Store",
                                 icon: Store,
-                                href: `https://${currentStore?.identifier}.selll.store`,
+                                href: `https://${currentStore?.slug}.selll.store`,
                                 className:
                                     "bg-primary-orange hover:bg-primary-orange/90",
                             }}
@@ -157,7 +157,7 @@ export default function Customers({ auth, customers = [], currentStore, orders =
                                     asChild
                                 >
                                     <Link
-                                        href={`https://${currentStore?.identifier}.selll.store`}
+                                        href={`https://${currentStore?.slug}.selll.store`}
                                         target="_blank"
                                         className="flex items-center gap-2"
                                     >
@@ -430,7 +430,7 @@ export default function Customers({ auth, customers = [], currentStore, orders =
                             <div className="space-y-4">
                                 {filteredCustomers.map((customer) => {
                                     const stats = getCustomerStats(customer.id);
-                                    
+
                                     return (
                                         <div
                                             key={customer.id}
@@ -467,7 +467,7 @@ export default function Customers({ auth, customers = [], currentStore, orders =
                                                         ).format(stats.totalSpent)}
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div className="mt-3">
                                                     <div className="flex items-center gap-2">
                                                         <Mail className="h-4 w-4 text-gray-500 flex-shrink-0" />
@@ -476,7 +476,7 @@ export default function Customers({ auth, customers = [], currentStore, orders =
                                                         </span>
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div className="flex items-center justify-between mt-4">
                                                     <div className="flex items-center gap-1">
                                                         <div className="flex items-center gap-1">
@@ -487,13 +487,13 @@ export default function Customers({ auth, customers = [], currentStore, orders =
                                                             {stats.totalOrdersCount}
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <div className="flex items-center gap-1">
                                                         <Clock className="h-4 w-4 text-primary-orange" />
                                                         <span className="text-xs text-white">Last Order</span>
                                                         <div className="bg-[#2C2C2C] rounded-md px-2 py-0.5 text-xs font-medium text-white">
-                                                            {stats.lastOrderDate 
-                                                                ? dayjs(stats.lastOrderDate).fromNow() 
+                                                            {stats.lastOrderDate
+                                                                ? dayjs(stats.lastOrderDate).fromNow()
                                                                 : "Never"}
                                                         </div>
                                                     </div>

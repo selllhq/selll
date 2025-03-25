@@ -18,7 +18,7 @@ class SetupController extends Controller
     {
         $data = request()->validate([
             'name' => 'string',
-            'identifier' => 'string',
+            'slug' => 'string',
             'description' => 'min:10',
         ]);
 
@@ -28,9 +28,9 @@ class SetupController extends Controller
                 ->redirect('/store/new', 303);
         }
 
-        if (Store::where('identifier', $data['identifier'])->exists()) {
+        if (Store::where('slug', $data['slug'])->exists()) {
             return response()
-                ->withFlash('errors', ['identifier' => "{$data['identifier']}.selll.store is already taken, please choose another one"])
+                ->withFlash('errors', ['slug' => "{$data['slug']}.selll.store is already taken, please choose another one"])
                 ->redirect('/store/new', 303);
         }
 

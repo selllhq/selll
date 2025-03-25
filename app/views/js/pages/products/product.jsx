@@ -34,7 +34,7 @@ export default function Products({ product, currentStore, orders }) {
 
                     <div className="flex items-center gap-3">
                         <Button variant="outline" className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C]" asChild>
-                            <Link href={`https://${currentStore?.identifier}.selll.store/products/${product.id}`} target="_blank" className="flex items-center gap-2">
+                            <Link href={`https://${currentStore?.slug}.selll.store/products/${product.id}`} target="_blank" className="flex items-center gap-2">
                                 <Store className="h-4 w-4" />
                                 View in Store
                             </Link>

@@ -91,7 +91,7 @@ export default function Products({ auth, orders = [], products, currentStore }) 
                                     asChild
                                 >
                                     <Link
-                                        href={`https://${currentStore?.identifier}.selll.store`}
+                                        href={`https://${currentStore?.slug}.selll.store`}
                                         target="_blank"
                                         className="flex items-center gap-2"
                                     >
@@ -389,7 +389,7 @@ export default function Products({ auth, orders = [], products, currentStore }) 
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     window.open(
-                                                        `https://${currentStore?.identifier}.selll.store/products/${product.id}`,
+                                                        `https://${currentStore?.slug}.selll.store/products/${product.id}`,
                                                         "_blank",
                                                     );
                                                 }}

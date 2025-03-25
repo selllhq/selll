@@ -9,12 +9,12 @@ import {
     CardTitle,
     CardDescription,
 } from "@/components/shared/card";
-import { 
-    ShoppingBag, 
-    TrendingUp, 
-    Store, 
-    Package, 
-    Search, 
+import {
+    ShoppingBag,
+    TrendingUp,
+    Store,
+    Package,
+    Search,
     ShoppingCart,
     Clock,
     CheckCircle,
@@ -42,7 +42,7 @@ export default function Orders({ auth, orders = [], currentStore, products = [] 
             order.id?.toString().includes(search) ||
             order.customer?.name?.toLowerCase().includes(search.toLowerCase()) ||
             order.customer?.email?.toLowerCase().includes(search.toLowerCase()) ||
-            order.products?.some(product => 
+            order.products?.some(product =>
                 product.name?.toLowerCase().includes(search.toLowerCase())
             );
 
@@ -117,7 +117,7 @@ export default function Orders({ auth, orders = [], currentStore, products = [] 
                             button={{
                                 text: "View Your Store",
                                 icon: Store,
-                                href: `https://${currentStore?.identifier}.selll.store`,
+                                href: `https://${currentStore?.slug}.selll.store`,
                                 className:
                                     "bg-primary-orange hover:bg-primary-orange/90",
                             }}
@@ -154,7 +154,7 @@ export default function Orders({ auth, orders = [], currentStore, products = [] 
                                     asChild
                                 >
                                     <Link
-                                        href={`https://${currentStore?.identifier}.selll.store`}
+                                        href={`https://${currentStore?.slug}.selll.store`}
                                         target="_blank"
                                         className="flex items-center gap-2"
                                     >

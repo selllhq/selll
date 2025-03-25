@@ -29,28 +29,23 @@ const Contact = ({ auth }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setIsSubmitting(true);
-        
-        // Create mailto link with form data
+
         const subject = `Contact Form Submission from ${formData.fullName}`;
         const body = `Name: ${formData.fullName}\nEmail: ${formData.companyEmail}\nPhone: ${formData.phoneNumber}\n\nMessage:\n${formData.message}`;
-        
-        // Open mailto link after brief delay to show loading state
+
         setTimeout(() => {
             setIsSubmitting(false);
             setSubmitSuccess(true);
-            
-            // Open mailto link
+
             window.location.href = `mailto:support@selll.online?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            
-            // Reset form
+
             setFormData({
                 fullName: '',
                 companyEmail: '',
                 phoneNumber: '',
                 message: ''
             });
-            
-            // Reset success message after 5 seconds
+
             setTimeout(() => {
                 setSubmitSuccess(false);
             }, 5000);
@@ -60,7 +55,7 @@ const Contact = ({ auth }) => {
     return (
         <>
             <Head title="Talk to Our Sales Team" />
-            
+
             <Navbar auth={auth} />
 
             <div className="pb-10 pt-20 h-[calc(100vh-90px)] flex justify-center items-center bg-white dark:bg-[#141414]">
@@ -72,7 +67,7 @@ const Contact = ({ auth }) => {
                                 <h2 className="text-4xl font-medium mb-6 text-gray-900 dark:text-white">
                                     Talk to our sales team
                                 </h2>
-                                
+
                                 <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
                                     Selll is here to help you reach customers from all over the world. If
                                     you'll be processing high volumes monthly, need bulk discounts,
@@ -83,7 +78,7 @@ const Contact = ({ auth }) => {
 
                             <div className="mt-12">
                                 <p className="text-base text-gray-800 dark:text-white mb-6">Provide your contact information to reach out.</p>
-                                
+
                                 <div className="space-y-4">
                                     <div className="flex items-start gap-3">
                                         <div className="mt-1">
@@ -96,7 +91,7 @@ const Contact = ({ auth }) => {
                                             </a>
                                         </div>
                                     </div>
-                                    
+
                                     <div className="flex items-start gap-3">
                                         <div className="mt-1">
                                             <Phone className="h-5 w-5 text-gray-500 dark:text-gray-400" />
@@ -111,17 +106,17 @@ const Contact = ({ auth }) => {
                                 </div>
                             </div>
                         </div>
-                        
+
                         {/* Right Column - Contact Form */}
                         <div>
                             <h3 className="text-xl font-medium text-gray-900 dark:text-white mb-6">Tell us how we can help</h3>
-                            
+
                             {submitSuccess ? (
                                 <div className="bg-green-900/20 border border-green-800 text-green-300 p-4 rounded mb-6">
                                     <p>Thank you for reaching out! Our team will contact you shortly.</p>
                                 </div>
                             ) : null}
-                            
+
                             <form onSubmit={handleSubmit} className="space-y-6">
                                 <div>
                                     <Label htmlFor="fullName" className="text-gray-600 dark:text-gray-400 mb-2">
@@ -138,7 +133,7 @@ const Contact = ({ auth }) => {
                                         required
                                     />
                                 </div>
-                                
+
                                 <div>
                                     <Label htmlFor="companyEmail" className="text-gray-600 dark:text-gray-400 mb-2">
                                         Company email
@@ -154,7 +149,7 @@ const Contact = ({ auth }) => {
                                         required
                                     />
                                 </div>
-                                
+
                                 <div>
                                     <Label htmlFor="phoneNumber" className="text-gray-600 dark:text-gray-400 mb-2">
                                         Phone number
@@ -170,7 +165,7 @@ const Contact = ({ auth }) => {
                                         required
                                     />
                                 </div>
-                                
+
                                 <div>
                                     <Label htmlFor="message" className="text-gray-600 dark:text-gray-400 mb-2">
                                         How can we help?
@@ -187,7 +182,7 @@ const Contact = ({ auth }) => {
                                         required
                                     />
                                 </div>
-                                
+
                                 <Button
                                     type="submit"
                                     disabled={isSubmitting}

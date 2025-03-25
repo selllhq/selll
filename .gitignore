@@ -12,6 +12,11 @@ node_modules
 build
 dist
 compiled
+.fly
+Dockerfile
+.dockerignore
+fly-deploy.yml
+fly.toml
 
 # System/Editor
 .fleet

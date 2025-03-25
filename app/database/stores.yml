@@ -4,7 +4,7 @@ columns:
   status:
     type: string
     default: sandbox # sandbox or live
-  identifier:
+  slug:
     type: string
     unique: true
   currency:
@@ -22,5 +22,5 @@ seeds:
   truncate: true
   data:
     name: '@faker.word'
-    identifier: '@faker.words:3'
+    slug: '@faker.words:3'
     verified_at: '@tick.format:YYYY-MM-DD HH:mm:ss'
