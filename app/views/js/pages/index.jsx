@@ -39,15 +39,15 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                             <div className="flex items-center h-full flex-1 px-3 gap-3">
                                 <label
                                     htmlFor="email"
-                                    className="h-6 w-6 grid place-content-center"
+                                    className="size-4 grid place-content-center"
                                 >
-                                    <MailCheckIcon className="text-gray-400 dark:text-gray-500" />
+                                    <MailCheckIcon className="text-gray-400 dark:text-gray-500 size-4" />
                                 </label>
                                 <input
                                     type="text"
                                     id="email"
                                     name="email"
-                                    className="flex-1 placeholder:text-gray-400 dark:placeholder:text-gray-500 text-black dark:text-gray-300 h-full border-none outline-none text-lg"
+                                    className="flex-1 placeholder:text-sm placeholder:text-gray-400 dark:placeholder:text-gray-500 text-black dark:text-gray-300 h-full border-none outline-none text-lg"
                                     placeholder="Enter email to claim your free store"
                                 />
                             </div>

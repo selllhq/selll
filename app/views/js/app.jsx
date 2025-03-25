@@ -13,18 +13,18 @@ const appName = import.meta.env.VITE_APP_NAME || 'Selll';
 dayjs.extend(relativeTime);
 
 createInertiaApp({
-  title: (title) => `${title} - ${appName}`,
-  resolve: (name) =>
-    resolvePageComponent(
-      `./pages/${name}.jsx`,
-      import.meta.glob('./pages/**/*.jsx')
-    ),
-  setup({ el, App, props }) {
-    createRoot(el).render(<App {...props} />);
-  },
-  progress: {
-    color: '#3eaf7c',
-  },
+    title: (title) => `${title} - ${appName}`,
+    resolve: (name) =>
+        resolvePageComponent(
+            `./pages/${name}.jsx`,
+            import.meta.glob("./pages/**/*.jsx"),
+        ),
+    setup({ el, App, props }) {
+        createRoot(el).render(<App {...props} />);
+    },
+    progress: {
+        color: "#ec504b",
+    },
 });
 
 // This will set light / dark mode on page load...
