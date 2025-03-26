@@ -11,6 +11,7 @@ class Product extends Model
         'price',
         'quantity',
         'quantity_items',
+        'images'
     ];
 
     public function store()

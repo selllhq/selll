@@ -33,6 +33,12 @@ class ProductsController extends Controller
 
     public function store()
     {
+        $uploaded = request()->upload(
+            'images',
+            StoragePath('app/public/products/' . auth()->user()->current_store_id),
+            ['rename' => true]
+        );
+
         Store::find(auth()->user()->current_store_id)->products()->create(
             request()->get([
                 'name',
@@ -40,6 +46,7 @@ class ProductsController extends Controller
                 'price',
                 'quantity',
                 'quantity_items',
+                'images'
             ])
         );
 

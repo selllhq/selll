@@ -31,8 +31,9 @@ const Setup = ({ auth, currentStore }) => {
         price: '',
         quantity: 'unlimited',
         quantity_items: '',
+        images: [],
     });
-    
+
     // Get currency limits based on store's currency
     const currencyLimits = CURRENCY_LIMITS[currentStore?.currency] || CURRENCY_LIMITS.USD;
     const currencySymbol = {
@@ -58,6 +59,8 @@ const Setup = ({ auth, currentStore }) => {
         const newImages = files.slice(0, remainingSlots);
         setImages([...images, ...newImages]);
 
+        setData('images', [...images, ...newImages]);
+
         if (files.length > remainingSlots) {
             alert(
                 `Added ${remainingSlots} more image${remainingSlots === 1 ? '' : 's'}. You can add up to 8 images to showcase your product effectively.`,
@@ -65,7 +68,6 @@ const Setup = ({ auth, currentStore }) => {
         }
     };
 
-    // Validate price based on currency limits
     useEffect(() => {
         if (data.price) {
             const price = parseFloat(data.price);
@@ -83,19 +85,34 @@ const Setup = ({ auth, currentStore }) => {
 
     const submit = (e) => {
         e.preventDefault();
-        
-        // Validate price before submission
+
         const price = parseFloat(data.price);
+
         if (price < currencyLimits.min || price > currencyLimits.max) {
-            return; // Don't submit if price is invalid
+            return;
         }
 
-        post('/products/new');
+        const formData = new FormData();
+
+        formData.append('name', data.name);
+        formData.append('description', data.description);
+        formData.append('price', data.price);
+        formData.append('quantity', data.quantity);
+
+        if (data.quantity === 'limited') {
+            formData.append('quantity_items', data.quantity_items);
+        }
+
+        images.forEach((image, index) => {
+            formData.append('images[]', image);
+        });
+
+        post('/products/new', formData);
     };
 
     return (
-        <div className="flex h-screen w-full">
-            <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex flex-col md:flex-row h-screen w-full">
+            <div className="flex-1 min-w-0 flex flex-col overflow-hidden order-2 md:order-1">
                 <Layout
                     variant="sidebar"
                     className="dark:bg-[#141414] flex-1 flex flex-col"
@@ -147,14 +164,14 @@ const Setup = ({ auth, currentStore }) => {
                                                 />
                                                 <button
                                                     type="button"
-                                                    onClick={() =>
-                                                        setImages(
-                                                            images.filter(
-                                                                (_, i) =>
-                                                                    i !== index,
-                                                            ),
-                                                        )
-                                                    }
+                                                    onClick={() => {
+                                                        const filteredImages = images.filter(
+                                                            (_, i) => i !== index
+                                                        );
+                                                        setImages(filteredImages);
+                                                        // Also update the form data
+                                                        setData('images', filteredImages);
+                                                    }}
                                                     className="absolute top-2 right-2 p-1.5 rounded-full bg-black/50 hover:bg-black/70 transition-colors"
                                                 >
                                                     <X className="h-4 w-4" />
@@ -346,7 +363,7 @@ const Setup = ({ auth, currentStore }) => {
                     </div>
                 </Layout>
             </div>
-            <div className="w-[600px] h-screen overflow-y-auto bg-gray-50 dark:bg-[#1A1A1A] border-l border-gray-100 dark:border-[#2C2C2C] p-8">
+            <div className="w-full md:w-[40%] lg:w-[35%] xl:w-[600px] h-[50vh] md:h-screen overflow-y-auto bg-gray-50 dark:bg-[#1A1A1A] border-t md:border-t-0 md:border-l border-gray-100 dark:border-[#2C2C2C] p-4 md:p-8 order-1 md:order-2 flex-shrink-0">
                 <div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">
                     Live Preview
                 </div>

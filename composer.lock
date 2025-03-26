@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e4ad15a461bd20a10fb0103824740dde",
+    "content-hash": "58dd9a212f7b9ca07f588e822d76bb30",
     "packages": [
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -2170,16 +2170,16 @@
         },
         {
             "name": "leafs/leaf",
-            "version": "v4.0",
+            "version": "v4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/leaf.git",
-                "reference": "350d33e7c95a62dd7bd9f07ab77afaa33cff01a1"
+                "reference": "1b4e1c91e3ce17edb101a2b34209b1ef593cbcd2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/leaf/zipball/350d33e7c95a62dd7bd9f07ab77afaa33cff01a1",
-                "reference": "350d33e7c95a62dd7bd9f07ab77afaa33cff01a1",
+                "url": "https://api.github.com/repos/leafsphp/leaf/zipball/1b4e1c91e3ce17edb101a2b34209b1ef593cbcd2",
+                "reference": "1b4e1c91e3ce17edb101a2b34209b1ef593cbcd2",
                 "shasum": ""
             },
             "require": {
@@ -2226,7 +2226,7 @@
             ],
             "support": {
                 "issues": "https://github.com/leafsphp/leaf/issues",
-                "source": "https://github.com/leafsphp/leaf/tree/v4.0"
+                "source": "https://github.com/leafsphp/leaf/tree/v4.1"
             },
             "funding": [
                 {
@@ -2238,7 +2238,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-03-07T13:10:12+00:00"
+            "time": "2025-03-25T23:58:26+00:00"
         },
         {
             "name": "leafs/logger",
