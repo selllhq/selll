@@ -33,22 +33,26 @@ class ProductsController extends Controller
 
     public function store()
     {
-        $uploaded = request()->upload(
-            'images',
-            StoragePath('app/public/products/' . auth()->user()->current_store_id),
-            ['rename' => true]
-        );
+        $data = request()->get([
+            'name',
+            'description',
+            'price',
+            'quantity',
+            'quantity_items',
+        ]);
 
-        Store::find(auth()->user()->current_store_id)->products()->create(
-            request()->get([
-                'name',
-                'description',
-                'price',
-                'quantity',
-                'quantity_items',
-                'images'
-            ])
-        );
+        $data['images'] = json_encode(array_map(
+            function ($item) {
+                return $item['url'];
+            },
+            request()->upload(
+                'images',
+                StoragePath('app/public/products/' . auth()->user()->current_store_id),
+                ['rename' => true]
+            )
+        ));
+
+        Store::find(auth()->user()->current_store_id)->products()->create($data);
 
         return response()->redirect('/products', 303);
     }
