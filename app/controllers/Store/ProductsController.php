@@ -67,4 +67,76 @@ class ProductsController extends Controller
             'orders' => $currentStore->carts()->get(),
         ]);
     }
+
+    public function edit($id)
+    {
+        $currentStore = Store::find(auth()->user()->current_store_id);
+
+        response()->inertia('products/edit', [
+            'product' => $currentStore->products()->find($id),
+            'currentStore' => $currentStore->first(),
+        ]);
+    }
+
+    public function update($id)
+    {
+        $data = request()->get([
+            'name',
+            'description',
+            'price',
+            'quantity',
+            'quantity_items',
+            'existing_images',
+            'images_to_delete',
+        ]);
+        
+        $product = Store::find(auth()->user()->current_store_id)->products()->find($id);
+        
+        // Handle image updates
+        $currentImages = [];
+        
+        // Process existing images that weren't deleted
+        if (isset($data['existing_images']) && !empty($data['existing_images'])) {
+            $currentImages = json_decode($data['existing_images'], true);
+        } elseif ($product->images) {
+            // If no existing_images were provided but the product has images, use those
+            try {
+                $currentImages = json_decode($product->images, true);
+            } catch (\Exception $e) {
+                // If images can't be decoded, treat as empty array
+                $currentImages = [];
+            }
+        }
+
+        if (isset($data['images_to_delete']) && !empty($data['images_to_delete'])) {
+            $currentImages = array_filter($currentImages, function($image) use ($data) {
+                return !in_array($image, $data['images_to_delete']);
+            });
+        }
+
+        $uploadedImages = [];
+
+        if (request()->get('images')) {
+            $uploadedImages = array_map(
+                function ($item) {
+                    return $item['url'];
+                },
+                request()->upload(
+                    'images',
+                    StoragePath('app/public/products/' . auth()->user()->current_store_id),
+                    ['rename' => true]
+                )
+            );
+        }
+        
+        $allImages = array_merge($currentImages, $uploadedImages);
+        $data['images'] = json_encode($allImages);
+        
+        unset($data['existing_images']);
+        unset($data['images_to_delete']);
+        
+        $product->update($data);
+        
+        return response()->redirect("/products/{$product->id}", 303);
+    }
 }

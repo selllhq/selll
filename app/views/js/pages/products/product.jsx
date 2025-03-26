@@ -3,15 +3,33 @@ import { Head, Link, router } from "@inertiajs/react";
 import Button from "@/components/form/button";
 import EmptyState from "@/components/layout/empty";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/shared/card";
-import { Package, Store, TrendingUp } from "lucide-react";
+import { Package, Store, TrendingUp, Image as ImageIcon } from "lucide-react";
 import { Badge } from "@/components/shared/badge";
 import dayjs from "dayjs";
+import { useState } from "react";
 
 export default function Products({ product, currentStore, orders }) {
+    // Helper function to parse JSON images
+    const parseProductImages = (imageData) => {
+        let parsedImages = [];
+        try {
+            if (typeof imageData === 'string') {
+                parsedImages = JSON.parse(imageData);
+            } else if (Array.isArray(imageData)) {
+                parsedImages = imageData;
+            }
+        } catch (e) {
+            console.error('Error parsing product images:', e);
+        }
+        return parsedImages;
+    };
+    
+    const productImages = parseProductImages(product.images);
+    const [activeImage, setActiveImage] = useState(productImages.length > 0 ? 0 : null);
     return (
         <Layout
             variant="sidebar"
-            className="bg-[#141414] -m-4 p-4"
+            className="bg-white dark:bg-[#141414] -m-4 p-0"
             breadcrumbs={[
                 {
                     title: "Products",
@@ -25,21 +43,21 @@ export default function Products({ product, currentStore, orders }) {
         >
             <Head title={`${product?.name} from ${currentStore?.name}`} />
 
-            <div className="py-4 px-4 space-y-8">
-                <div className="flex items-center justify-between mb-8">
+            <div className="py-6 px-8 space-y-10 w-full">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 w-full">
                     <div>
-                        <h1 className="text-4xl font-bold text-white mb-2">{product?.name}</h1>
-                        <p className="text-gray-400">{product?.description || 'No description provided'}</p>
+                        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">{product?.name}</h1>
+                        <p className="text-gray-600 dark:text-gray-400">{product?.description || 'No description provided'}</p>
                     </div>
 
-                    <div className="flex items-center gap-3">
-                        <Button variant="outline" className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C]" asChild>
+                    <div className="flex flex-wrap items-center gap-3">
+                        <Button variant="outline" className="bg-gray-100 dark:bg-[#2C2C2C] border-0 text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-[#3C3C3C] transition-colors" asChild>
                             <Link href={`https://${currentStore?.slug}.selll.store/products/${product.id}`} target="_blank" className="flex items-center gap-2">
                                 <Store className="h-4 w-4" />
                                 View in Store
                             </Link>
                         </Button>
-                        <Button className="bg-primary-orange hover:bg-primary-orange/90" asChild>
+                        <Button className="bg-primary-orange hover:bg-primary-orange/90 transition-all shadow-md hover:shadow-lg" asChild>
                             <Link href={`/products/${product.id}/edit`} className="flex items-center gap-2">
                                 <Package className="h-4 w-4" />
                                 Edit Product
@@ -47,44 +65,135 @@ export default function Products({ product, currentStore, orders }) {
                         </Button>
                     </div>
                 </div>
+                
+                {/* Product Image Gallery */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10 w-full">
+                    <div className="md:col-span-1 lg:col-span-2">
+                        <div className="aspect-square w-full h-[400px] relative">
+                            {productImages.length > 0 ? (
+                                <div className="bg-white dark:bg-[#2C2C2C] rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800 transition-all h-full w-full">
+                                    <img 
+                                        src={productImages[activeImage]} 
+                                        alt={product.name} 
+                                        className="w-full h-full object-contain p-4"
+                                    />
+                                </div>
+                            ) : (
+                                <div className="bg-white dark:bg-[#2C2C2C] rounded-xl overflow-hidden flex flex-col items-center justify-center p-8 h-full w-full border border-gray-100 dark:border-gray-800 shadow-sm">
+                                    <ImageIcon className="h-16 w-16 text-gray-400 dark:text-gray-500 mb-4" />
+                                    <p className="text-gray-600 dark:text-gray-400 text-center">No product images available</p>
+                                </div>
+                            )}
+                        </div>
+                        
+                        {productImages.length > 1 && (
+                            <div className="flex mt-4 gap-3 overflow-x-auto pb-2">
+                                {productImages.map((image, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => setActiveImage(index)}
+                                        className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border ${index === activeImage ? 'ring-2 ring-primary-orange border-primary-orange' : 'border-gray-200 dark:border-gray-700 opacity-70 hover:opacity-100'} transition-all`}
+                                    >
+                                        <img 
+                                            src={image} 
+                                            alt={`${product.name} thumbnail ${index + 1}`} 
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                    
+                    <div className="space-y-4">
+                        <Card className="border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow transition-all">
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                <CardTitle className="dark:text-white">Price</CardTitle>
+                                <div className="bg-gray-100 dark:bg-[#2C2C2C] p-2 rounded-lg">
+                                    <TrendingUp className="h-5 w-5 text-primary-orange" />
+                                </div>
+                            </CardHeader>
+                            <CardContent>
+                                <div>
+                                    <div className="text-4xl font-bold mb-2 text-primary-orange">
+                                        {new Intl.NumberFormat("en-US", {
+                                            style: "currency",
+                                            currency: currentStore?.currency,
+                                        }).format(product.price)}
+                                    </div>
+                                    <div className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-2">
+                                        <span className="inline-flex items-center justify-center bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full text-xs">
+                                            {product.sales || 0} sales
+                                        </span>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
 
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                    <Card>
+                        <Card className="border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow transition-all">
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                <CardTitle className="dark:text-white">Stock Status</CardTitle>
+                                <div className="bg-gray-100 dark:bg-[#2C2C2C] p-2 rounded-lg">
+                                    <Package className="h-5 w-5 text-primary-orange" />
+                                </div>
+                            </CardHeader>
+                            <CardContent>
+                                <div>
+                                    <div className="text-4xl font-bold mb-2 dark:text-white">
+                                        {product.quantity === "unlimited" ? "∞" : product.quantity_items}
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <Badge
+                                            className="px-3 py-1 text-xs font-medium rounded-full shadow-sm"
+                                            variant={product.quantity === "unlimited" || parseInt(product.quantity_items) > 10 ? "success" : parseInt(product.quantity_items) > 0 ? "warning" : "default"}
+                                        >
+                                            {product.quantity === "unlimited" ? "Unlimited" : parseInt(product.quantity_items) > 0 ? `${product.quantity_items} in stock` : "Out of Stock"}
+                                        </Badge>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </div>
+
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 w-full hidden">
+                    <Card className="border border-gray-100 dark:border-gray-800 shadow-sm">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle>Price</CardTitle>
-                            <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                            <CardTitle className="dark:text-white">Price</CardTitle>
+                            <div className="bg-gray-100 dark:bg-[#2C2C2C] p-2 rounded-lg">
                                 <TrendingUp className="h-5 w-5 text-primary-orange" />
                             </div>
                         </CardHeader>
                         <CardContent>
                             <div>
-                                <div className="text-4xl font-bold mb-2">
+                                <div className="text-4xl font-bold mb-2 dark:text-white">
                                     {new Intl.NumberFormat("en-US", {
                                         style: "currency",
                                         currency: currentStore?.currency,
                                     }).format(product.price)}
                                 </div>
-                                <div className="text-sm text-gray-400">
+                                <div className="text-sm text-gray-600 dark:text-gray-400">
                                     {product.sales || 0} sales
                                 </div>
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card>
+                    <Card className="border border-gray-100 dark:border-gray-800 shadow-sm">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle>Stock Status</CardTitle>
-                            <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                            <CardTitle className="dark:text-white">Stock Status</CardTitle>
+                            <div className="bg-gray-100 dark:bg-[#2C2C2C] p-2 rounded-lg">
                                 <Package className="h-5 w-5 text-primary-orange" />
                             </div>
                         </CardHeader>
                         <CardContent>
                             <div>
-                                <div className="text-4xl font-bold mb-2">
+                                <div className="text-4xl font-bold mb-2 dark:text-white">
                                     {product.quantity === "unlimited" ? "∞" : product.quantity_items}
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <Badge
+                                        className="px-3 py-1 text-xs font-medium rounded-full shadow-sm"
                                         variant={product.quantity === "unlimited" || parseInt(product.quantity_items) > 10 ? "success" : parseInt(product.quantity_items) > 0 ? "warning" : "default"}
                                     >
                                         {product.quantity === "unlimited" ? "Unlimited" : parseInt(product.quantity_items) > 0 ? `${product.quantity_items} in stock` : "Out of Stock"}
@@ -95,12 +204,12 @@ export default function Products({ product, currentStore, orders }) {
                     </Card>
                 </div>
 
-                <Card className="col-span-4">
+                <Card className="w-full border border-gray-100 dark:border-gray-800 shadow-sm bg-white dark:bg-[#2C2C2C]">
                     <CardHeader>
-                        <CardTitle>Recent Orders</CardTitle>
-                        <CardDescription>Latest orders for this product</CardDescription>
+                        <CardTitle className="text-black dark:text-white">Recent Orders</CardTitle>
+                        <CardDescription className="dark:text-gray-400">Latest orders for this product</CardDescription>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="text-gray-600 dark:text-gray-400">
                         {orders?.length === 0 ? (
                             <EmptyState
                                 icon={Package}
@@ -110,19 +219,20 @@ export default function Products({ product, currentStore, orders }) {
                         ) : (
                             <div className="space-y-4">
                                 {orders.map((order) => (
-                                    <div key={order.id} className="flex items-center justify-between p-4 bg-[#2C2C2C] rounded-lg">
+                                    <div key={order.id} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-[#2C2C2C] rounded-lg border border-gray-100 dark:border-gray-800 hover:shadow-sm transition-all">
                                         <div>
-                                            <div className="font-medium">{order.customer_name}</div>
-                                            <div className="text-sm text-gray-400">{dayjs(order.created_at).format("MMM D, YYYY")}</div>
+                                            <div className="font-medium text-gray-900 dark:text-white">{order.customer_name}</div>
+                                            <div className="text-sm text-gray-600 dark:text-gray-400">{dayjs(order.created_at).format("MMM D, YYYY")}</div>
                                         </div>
                                         <div className="text-right">
-                                            <div className="font-medium">
+                                            <div className="font-medium text-primary-orange">
                                                 {new Intl.NumberFormat("en-US", {
                                                     style: "currency",
                                                     currency: currentStore?.currency,
                                                 }).format(order.amount)}
                                             </div>
                                             <Badge
+                                                className="px-3 py-1 text-xs font-medium rounded-full shadow-sm"
                                                 variant={order.status === "completed" ? "success" : order.status === "pending" ? "warning" : "default"}
                                             >
                                                 {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
