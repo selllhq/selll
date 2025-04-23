@@ -1,0 +1,29 @@
+# fly.toml app configuration file generated for selll on 2025-03-22T21:20:36Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'selll'
+primary_region = 'lhr'
+
+[build]
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[env]
+  APP_ENV = 'production'
+  DB_CONNECTION='pgsql'
+  DB_DATABASE='main'
+  DB_PORT='5432'
+  DB_OPTIONS='--endpoint=ep-dawn-mode-abzkqtho'
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
