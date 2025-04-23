@@ -58,7 +58,7 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                         //         Start Selling
                         //     </Button>
                         // </form>
-                        <Button className="my-10" onClick={() => document.getElementById("waitlist-email").focus()}>
+                        <Button className="my-10 bg-primary-red hover:bg-primary-red/80" onClick={() => document.getElementById("waitlist-email").focus()}>
                             Join waitlist
                         </Button>
                     )}

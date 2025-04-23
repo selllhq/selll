@@ -89,9 +89,9 @@ const Navbar = ({
                                 <Button asChild variant="outline" size="sm">
                                     <Link href="/auth/login">Login</Link>
                                 </Button>
-                                <Button asChild size="sm" className="bg-primary-red hover:bg-primary-red/80 text-white">
+                                {/* <Button asChild size="sm" className="bg-primary-red hover:bg-primary-red/80 text-white">
                                     <Link href="/auth/register">Sign up</Link>
-                                </Button>
+                                </Button> */}
                             </>
                         )}
                     </div>
@@ -150,11 +150,11 @@ const Navbar = ({
                                                 Login
                                             </Link>
                                         </Button>
-                                        <Button asChild>
+                                        {/* <Button asChild>
                                             <Link href="/auth/register">
                                                 Sign up
                                             </Link>
-                                        </Button>
+                                        </Button> */}
                                     </div>
                                 </div>
                             </SheetContent>

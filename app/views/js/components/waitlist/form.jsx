@@ -45,7 +45,7 @@ const WaitlistForm = () => {
                             />
 
                             <Button
-                                className="bg-primary-red"
+                                className="bg-primary-red hover:bg-primary-red/80"
                                 loading={processing}
                                 disabled={processing}
                             >

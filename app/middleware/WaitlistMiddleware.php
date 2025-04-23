@@ -10,6 +10,11 @@ class WaitlistMiddleware extends Middleware
     {
         $allowedPaths = [
             '/',
+            '/pricing',
+            '/privacy',
+            '/terms',
+            '/faqs',
+            '/contact',
             '/auth/login',
             '/waitlist',
             '/waitlist/invite',
@@ -17,6 +22,10 @@ class WaitlistMiddleware extends Middleware
         ];
 
         $path = request()->getPathInfo();
+
+        if (strpos($path, '/api/') === 0) {
+            return;
+        }
 
         if (
             !auth()->user() &&

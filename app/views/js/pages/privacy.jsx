@@ -5,20 +5,20 @@ const Privacy = ({ auth }) => {
     return (
         <>
             <Head title="Privacy Policy" />
-            
+
             <Navbar auth={auth} />
-            
+
             <div className="pb-20 pt-40 bg-white dark:bg-[#141414]">
                 <div className="container mx-auto max-w-4xl px-6">
                     <h1 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">Privacy Policy</h1>
-                    
+
                     <div className="space-y-8 text-gray-700 dark:text-gray-300">
                         <section>
                             <p className="mb-6">
                                 At Selll, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform. Please read this policy carefully. By using Selll, you consent to the data practices described in this statement.
                             </p>
                         </section>
-                        
+
                         <section>
                             <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">1. Information We Collect</h2>
                             <p className="mb-3">
@@ -31,7 +31,7 @@ const Privacy = ({ auth }) => {
                                 <li>Usage data (such as how you interact with our platform, IP address, browser type, and device information)</li>
                             </ul>
                         </section>
-                        
+
                         <section>
                             <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">2. How We Use Your Information</h2>
                             <p className="mb-3">
@@ -47,7 +47,7 @@ const Privacy = ({ auth }) => {
                                 <li>Detect, investigate, and prevent fraudulent transactions and other illegal activities</li>
                             </ul>
                         </section>
-                        
+
                         <section>
                             <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">3. Sharing of Your Information</h2>
                             <p className="mb-3">
@@ -63,21 +63,21 @@ const Privacy = ({ auth }) => {
                                 We do not sell your personal information to third parties for their marketing purposes.
                             </p>
                         </section>
-                        
+
                         <section>
                             <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">4. Data Security</h2>
                             <p className="mb-3">
                                 We implement appropriate security measures to protect your personal information. However, no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security.
                             </p>
                         </section>
-                        
+
                         <section>
                             <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">5. Cookies and Tracking Technologies</h2>
                             <p className="mb-3">
                                 We use cookies and similar tracking technologies to track activity on our platform and hold certain information. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent.
                             </p>
                         </section>
-                        
+
                         <section>
                             <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">6. Your Data Protection Rights</h2>
                             <p className="mb-3">
@@ -92,21 +92,21 @@ const Privacy = ({ auth }) => {
                                 <li>Withdraw consent at any time</li>
                             </ul>
                         </section>
-                        
+
                         <section>
                             <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">7. Children's Privacy</h2>
                             <p className="mb-3">
                                 Our platform is not intended for children under 16 years of age. We do not knowingly collect personal information from children under 16. If you are a parent or guardian and believe your child has provided us with personal information, please contact us.
                             </p>
                         </section>
-                        
+
                         <section>
                             <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">8. Changes to This Privacy Policy</h2>
                             <p className="mb-3">
                                 We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date.
                             </p>
                         </section>
-                        
+
                         <section>
                             <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">9. Contact Us</h2>
                             <p className="mb-3">
@@ -114,13 +114,13 @@ const Privacy = ({ auth }) => {
                             </p>
                         </section>
                     </div>
-                    
+
                     <div className="mt-12 pt-6 border-t border-gray-200 dark:border-gray-800 text-sm text-gray-500 dark:text-gray-400">
-                        <p>Last updated: March 20, 2025</p>
+                        <p>Last updated: April 23, 2025</p>
                     </div>
                 </div>
             </div>
-            
+
             <footer className="bg-background border-t border-gray-200 dark:border-gray-800 px-12 text-default">
                 <div className="relative mx-auto w-full container">
                     <div className="py-8">
