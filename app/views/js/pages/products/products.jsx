@@ -17,7 +17,7 @@ import dayjs from "dayjs";
 export default function Products({ auth, orders = [], products, currentStore }) {
     const [search, setSearch] = useState("");
     const [filter, setFilter] = useState("all");
-    
+
     // Helper function to parse JSON images
     const parseProductImages = (imageData) => {
         let parsedImages = [];
@@ -60,7 +60,7 @@ export default function Products({ auth, orders = [], products, currentStore }) 
 
     return (
         <Layout
-            variant="sidebar"
+            variant="header"
             className="dark:bg-[#141414] p-4 pt-2"
             breadcrumbs={[
                 {
@@ -338,7 +338,7 @@ export default function Products({ auth, orders = [], products, currentStore }) 
                                         <div className="aspect-[4/3] bg-[#1A1A1A] relative group">
                                             {(() => {
                                                 const parsedImages = parseProductImages(product.images);
-                                                
+
                                                 return (
                                                     <>
                                                         {parsedImages.length > 0 ? (

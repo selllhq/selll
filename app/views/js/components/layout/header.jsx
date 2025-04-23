@@ -1,5 +1,3 @@
-// This file contains the main navigation for your sidebar/header
-
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { Icon } from "@/components/shared/icon";
 import {
@@ -123,8 +121,8 @@ export function AppHeader({ breadcrumbs = [], variant = "header" }) {
 
     return (
         <>
-            <div className="border-sidebar-border/80 border-b">
-                <div className="mx-auto flex h-16 items-center px-4 md:max-w-7xl">
+            <div className="fixed top-0 w-full border-sidebar-border/80 border-b bg-background">
+                <div className="mx-auto flex h-16 justify-between items-center px-4 md:max-w-7xl">
                     {/* Mobile Menu */}
                     <div className="lg:hidden">
                         <Sheet>
@@ -210,11 +208,11 @@ export function AppHeader({ breadcrumbs = [], variant = "header" }) {
                         prefetch
                         className="flex items-center space-x-2"
                     >
-                        <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-md">
+                        <div className="dark:text-sidebar-primary-foreground flex items-center justify-center rounded-md">
                             <span className="flex items-center gap-2">
                                 <img
                                     src="https://zero.leafphp.dev/assets/img/logo.png"
-                                    className="size-6 mr-4"
+                                    className="size-6 mr-0"
                                     alt=""
                                 />
                                 <span className="font-semibold text-xl">
@@ -225,14 +223,8 @@ export function AppHeader({ breadcrumbs = [], variant = "header" }) {
                                 </small>
                             </span>
                         </div>
-                        <div className="ml-1 grid flex-1 text-left text-sm">
-                            <span className="mb-0.5 truncate leading-none font-semibold">
-                                {import.meta.env.VITE_APP_NAME ?? "Leaf MVC"}
-                            </span>
-                        </div>
                     </Link>
 
-                    {/* Desktop Navigation */}
                     <div className="ml-6 hidden h-full items-center space-x-6 lg:flex">
                         <NavigationMenu className="flex h-full items-stretch">
                             <NavigationMenuList className="flex h-full items-stretch space-x-2">
@@ -241,23 +233,37 @@ export function AppHeader({ breadcrumbs = [], variant = "header" }) {
                                         key={index}
                                         className="relative flex h-full items-center"
                                     >
-                                        <Link
-                                            href={item.url}
-                                            className={cn(
-                                                navigationMenuTriggerStyle(),
-                                                page.url === item.url &&
-                                                    activeItemStyles,
-                                                "h-9 cursor-pointer px-3",
-                                            )}
-                                        >
-                                            {item.icon && (
-                                                <Icon
-                                                    name={item.icon}
-                                                    className="mr-2 h-4 w-4"
-                                                />
-                                            )}
-                                            {item.title}
-                                        </Link>
+                                        {auth?.user?.current_store_id ||
+                                        index == 0 ? (
+                                            <Link
+                                                href={item.url}
+                                                className={cn(
+                                                    navigationMenuTriggerStyle(),
+                                                    page.url === item.url &&
+                                                        activeItemStyles,
+                                                    "h-9 cursor-pointer px-3",
+                                                )}
+                                            >
+                                                {item.icon && (
+                                                    <Icon
+                                                        name={item.icon}
+                                                        className="mr-2 h-4 w-4"
+                                                    />
+                                                )}
+                                                {item.title}
+                                            </Link>
+                                        ) : (
+                                            <span className="flex h-full items-center py-2 px-3 text-muted-foreground cursor-not-allowed">
+                                                {item.icon && (
+                                                    <Icon
+                                                        name={item.icon}
+                                                        className="mr-2 h-4 w-4"
+                                                    />
+                                                )}
+                                                {item.title}
+                                            </span>
+                                        )}
+
                                         {page.url === item.url && (
                                             <div className="absolute bottom-0 left-0 h-0.5 w-full translate-y-px bg-black dark:bg-white"></div>
                                         )}
@@ -267,7 +273,7 @@ export function AppHeader({ breadcrumbs = [], variant = "header" }) {
                         </NavigationMenu>
                     </div>
 
-                    <div className="ml-auto flex items-center space-x-2">
+                    <div className="flex items-center space-x-2">
                         <div className="relative flex items-center space-x-1">
                             <Button
                                 variant="ghost"

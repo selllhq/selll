@@ -37,8 +37,7 @@ const Customize = ({ auth, store }) => {
 
     return (
         <Layout
-            variant="sidebar"
-            className="dark:bg-[#141414]"
+            variant="header"
             breadcrumbs={[
                 {
                     title: "Dashboard",

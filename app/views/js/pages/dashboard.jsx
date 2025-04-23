@@ -38,8 +38,8 @@ export default function Dashboard({
 }) {
     return (
         <Layout
-            variant="sidebar"
-            className="dark:bg-[#141414] p-4 pt-2"
+            variant="header"
+            className="p-4 pt-2"
             breadcrumbs={[
                 {
                     title: "Dashboard",
@@ -86,14 +86,14 @@ export default function Dashboard({
                                     className="bg-primary-orange hover:bg-primary-orange/90"
                                     asChild
                                 >
-                                    <Link
+                                    <a
                                         href={`https://${currentStore?.slug}.selll.store`}
                                         target="_blank"
                                         className="flex items-center gap-2"
                                     >
                                         <Store className="h-4 w-4" />
                                         View Store
-                                    </Link>
+                                    </a>
                                 </Button>
                             </div>
                         </div>

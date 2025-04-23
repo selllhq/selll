@@ -24,4 +24,9 @@ class StoresController extends Controller
     {
         return response()->json(Store::find($storeId)->products()->get() ?? []);
     }
+
+    public function showOrders($storeId, $orderId)
+    {
+        return response()->json(Store::find($storeId)->carts()->find($orderId) ?? []);
+    }
 }

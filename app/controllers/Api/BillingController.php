@@ -20,12 +20,12 @@ class BillingController extends Controller
 
         $items = array_map(function ($cartItem) use ($store, &$cartTotal) {
             $item = $store->products()->find($cartItem['id']);
-            $cartTotal += $item->price * $cartItem['quantity'];
+            $cartTotal += ((int) $item->price * $cartItem['quantity']);
 
             return [
                 'item' => $item->name,
                 'quantity' => $cartItem['quantity'],
-                'amount' => $item->price,
+                'amount' => $item->price * 100,
             ];
         }, $cartData);
 
@@ -50,12 +50,12 @@ class BillingController extends Controller
         ]);
 
         $cart = Cart::find($cart->id);
-        $cart->billing_session_id = $session->id;
+        $cart->billing_session_id = $session->id();
         $cart->save();
 
         response()->json([
-            'id' => $session->id,
-            'url' => $session->url,
+            'id' => $session->id(),
+            'url' => $session->url(),
         ]);
     }
 }

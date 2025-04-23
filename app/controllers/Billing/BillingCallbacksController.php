@@ -21,7 +21,7 @@ class BillingCallbacksController extends Controller
             );
         }
 
-        if (billing()->isSuccess()) {
+        if (billing()->callback()->isSuccessful()) {
             // notify store of successful payment
             $userCart->status = 'paid';
         } else {

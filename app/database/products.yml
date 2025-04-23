@@ -8,7 +8,7 @@ columns:
     type: text
     nullable: true
   images:
-    type: string
+    type: text
     nullable: true
   physical:
     type: boolean

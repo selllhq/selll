@@ -24,46 +24,47 @@ const CURRENCY_LIMITS = {
 
 const Setup = ({ auth, currentStore }) => {
     const [images, setImages] = useState([]);
-    const [priceError, setPriceError] = useState('');
+    const [priceError, setPriceError] = useState("");
     const { data, setData, post, errors, processing } = useForm({
-        name: '',
-        description: '',
-        price: '',
-        quantity: 'unlimited',
-        quantity_items: '',
+        name: "",
+        description: "",
+        price: "",
+        quantity: "unlimited",
+        quantity_items: "",
         images: [],
     });
 
     // Get currency limits based on store's currency
-    const currencyLimits = CURRENCY_LIMITS[currentStore?.currency] || CURRENCY_LIMITS.USD;
+    const currencyLimits =
+        CURRENCY_LIMITS[currentStore?.currency] || CURRENCY_LIMITS.USD;
     const currencySymbol = {
-        USD: '$',
-        GHS: '₵',
-        NGN: '₦',
-        EUR: '€',
-        GBP: '£',
-        KES: 'KSh',
-        ZAR: 'R',
-        CAD: 'C$'
-    }[currentStore?.currency || 'USD'];
+        USD: "$",
+        GHS: "₵",
+        NGN: "₦",
+        EUR: "€",
+        GBP: "£",
+        KES: "KSh",
+        ZAR: "R",
+        CAD: "C$",
+    }[currentStore?.currency || "USD"];
 
     const handleImageUpload = (e) => {
         const files = Array.from(e.target.files);
         const remainingSlots = 8 - images.length;
 
         if (remainingSlots <= 0) {
-            alert('You\'ve reached the maximum of 8 product images.');
+            alert("You've reached the maximum of 8 product images.");
             return;
         }
 
         const newImages = files.slice(0, remainingSlots);
         setImages([...images, ...newImages]);
 
-        setData('images', [...images, ...newImages]);
+        setData("images", [...images, ...newImages]);
 
         if (files.length > remainingSlots) {
             alert(
-                `Added ${remainingSlots} more image${remainingSlots === 1 ? '' : 's'}. You can add up to 8 images to showcase your product effectively.`,
+                `Added ${remainingSlots} more image${remainingSlots === 1 ? "" : "s"}. You can add up to 8 images to showcase your product effectively.`,
             );
         }
     };
@@ -72,14 +73,18 @@ const Setup = ({ auth, currentStore }) => {
         if (data.price) {
             const price = parseFloat(data.price);
             if (price < currencyLimits.min) {
-                setPriceError(`Minimum price is ${currencySymbol}${currencyLimits.min}`);
+                setPriceError(
+                    `Minimum price is ${currencySymbol}${currencyLimits.min}`,
+                );
             } else if (price > currencyLimits.max) {
-                setPriceError(`Maximum price is ${currencySymbol}${currencyLimits.max}`);
+                setPriceError(
+                    `Maximum price is ${currencySymbol}${currencyLimits.max}`,
+                );
             } else {
-                setPriceError('');
+                setPriceError("");
             }
         } else {
-            setPriceError('');
+            setPriceError("");
         }
     }, [data.price, currencyLimits]);
 
@@ -94,44 +99,44 @@ const Setup = ({ auth, currentStore }) => {
 
         const formData = new FormData();
 
-        formData.append('name', data.name);
-        formData.append('description', data.description);
-        formData.append('price', data.price);
-        formData.append('quantity', data.quantity);
+        formData.append("name", data.name);
+        formData.append("description", data.description);
+        formData.append("price", data.price);
+        formData.append("quantity", data.quantity);
 
-        if (data.quantity === 'limited') {
-            formData.append('quantity_items', data.quantity_items);
+        if (data.quantity === "limited") {
+            formData.append("quantity_items", data.quantity_items);
         }
 
         images.forEach((image, index) => {
-            formData.append('images[]', image);
+            formData.append("images[]", image);
         });
 
-        post('/products/new', formData);
+        post("/products/new", formData);
     };
 
     return (
-        <div className="flex flex-col md:flex-row h-screen w-full">
-            <div className="flex-1 min-w-0 flex flex-col overflow-hidden order-2 md:order-1">
-                <Layout
-                    variant="sidebar"
-                    className="dark:bg-[#141414] flex-1 flex flex-col"
-                    breadcrumbs={[
-                        {
-                            title: "Products",
-                            href: "/products",
-                            icon: Package,
-                        },
-                        {
-                            title: "Create Product",
-                            href: "/products/setup",
-                            icon: Package,
-                        },
-                    ]}
-                >
-                    <Head title="Create a new product" />
+        <Layout
+            variant="header"
+            className="dark:bg-[#141414] flex-1 flex flex-col"
+            breadcrumbs={[
+                {
+                    title: "Products",
+                    href: "/products",
+                    icon: Package,
+                },
+                {
+                    title: "Create Product",
+                    href: "/products/setup",
+                    icon: Package,
+                },
+            ]}
+        >
+            <Head title="Create a new product" />
 
-                    <div className="flex-1 overflow-y-auto bg-white dark:bg-[#141414]">
+            <div className="flex flex-col md:flex-row h-screen w-full">
+                <div className="flex-1 min-w-0 flex flex-col overflow-hidden order-2 md:order-1">
+                    <div className="flex-1 overflow-y-auto">
                         <div className="max-w-2xl px-6 py-6 relative">
                             <div className="flex items-center justify-between mb-8">
                                 <div>
@@ -165,12 +170,19 @@ const Setup = ({ auth, currentStore }) => {
                                                 <button
                                                     type="button"
                                                     onClick={() => {
-                                                        const filteredImages = images.filter(
-                                                            (_, i) => i !== index
+                                                        const filteredImages =
+                                                            images.filter(
+                                                                (_, i) =>
+                                                                    i !== index,
+                                                            );
+                                                        setImages(
+                                                            filteredImages,
                                                         );
-                                                        setImages(filteredImages);
                                                         // Also update the form data
-                                                        setData('images', filteredImages);
+                                                        setData(
+                                                            "images",
+                                                            filteredImages,
+                                                        );
                                                     }}
                                                     className="absolute top-2 right-2 p-1.5 rounded-full bg-black/50 hover:bg-black/70 transition-colors"
                                                 >
@@ -246,7 +258,9 @@ const Setup = ({ auth, currentStore }) => {
                                     <div>
                                         <div className="relative">
                                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                <span className="text-gray-500 dark:text-gray-400">{currencySymbol}</span>
+                                                <span className="text-gray-500 dark:text-gray-400">
+                                                    {currencySymbol}
+                                                </span>
                                             </div>
                                             <Input
                                                 id="price"
@@ -254,12 +268,19 @@ const Setup = ({ auth, currentStore }) => {
                                                 min={currencyLimits.min}
                                                 max={currencyLimits.max}
                                                 step="0.01"
-                                                className={cn("block w-full pl-8 bg-gray-100 dark:bg-[#2C2C2C] border-0 focus:ring-primary-orange/20 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400", {
-                                                    "border-red-500 focus:ring-red-500": priceError
-                                                })}
+                                                className={cn(
+                                                    "block w-full pl-8 bg-gray-100 dark:bg-[#2C2C2C] border-0 focus:ring-primary-orange/20 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400",
+                                                    {
+                                                        "border-red-500 focus:ring-red-500":
+                                                            priceError,
+                                                    },
+                                                )}
                                                 value={data.price}
                                                 onChange={(e) =>
-                                                    setData("price", e.target.value)
+                                                    setData(
+                                                        "price",
+                                                        e.target.value,
+                                                    )
                                                 }
                                                 required
                                                 placeholder="0.00"
@@ -279,7 +300,10 @@ const Setup = ({ auth, currentStore }) => {
                                         }
                                     />
                                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                        {currentStore?.currency} price limits: {currencySymbol}{currencyLimits.min} - {currencySymbol}{currencyLimits.max.toLocaleString()}
+                                        {currentStore?.currency} price limits:{" "}
+                                        {currencySymbol}
+                                        {currencyLimits.min} - {currencySymbol}
+                                        {currencyLimits.max.toLocaleString()}
                                     </p>
                                 </div>
 
@@ -361,82 +385,84 @@ const Setup = ({ auth, currentStore }) => {
                             </form>
                         </div>
                     </div>
-                </Layout>
-            </div>
-            <div className="w-full md:w-[40%] lg:w-[35%] xl:w-[600px] h-[50vh] md:h-screen overflow-y-auto bg-gray-50 dark:bg-[#1A1A1A] border-t md:border-t-0 md:border-l border-gray-100 dark:border-[#2C2C2C] p-4 md:p-8 order-1 md:order-2 flex-shrink-0">
-                <div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">
-                    Live Preview
                 </div>
-                <div className="space-y-4">
-                    <div className="bg-white dark:bg-[#2C2C2C] rounded-lg overflow-hidden shadow-lg border border-gray-100 dark:border-[#2C2C2C]">
-                        {/* Product Preview */}
-                        <div className="aspect-[4/3] bg-gray-100 dark:bg-[#1A1A1A] relative group">
-                            {images.length > 0 ? (
-                                <img
-                                    src={URL.createObjectURL(images[0])}
-                                    alt="Product preview"
-                                    className="w-full h-full object-cover"
-                                />
-                            ) : (
-                                <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-gray-500">
-                                    <Package className="w-12 h-12" />
-                                    <p className="text-sm text-center">
-                                        Add photos to showcase your product
+                <div className="w-full md:w-[40%] lg:w-[35%] xl:w-[600px] h-[50vh] md:h-screen overflow-y-auto bg-gray-50 dark:bg-[#1A1A1A] border-t md:border-t-0 md:border-l border-gray-100 dark:border-[#2C2C2C] p-4 md:p-8 order-1 md:order-2 flex-shrink-0">
+                    <div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">
+                        Live Preview
+                    </div>
+                    <div className="space-y-4">
+                        <div className="bg-white dark:bg-[#2C2C2C] rounded-lg overflow-hidden shadow-lg border border-gray-100 dark:border-[#2C2C2C]">
+                            {/* Product Preview */}
+                            <div className="aspect-[4/3] bg-gray-100 dark:bg-[#1A1A1A] relative group">
+                                {images.length > 0 ? (
+                                    <img
+                                        src={URL.createObjectURL(images[0])}
+                                        alt="Product preview"
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-gray-500">
+                                        <Package className="w-12 h-12" />
+                                        <p className="text-sm text-center">
+                                            Add photos to showcase your product
+                                        </p>
+                                    </div>
+                                )}
+
+                                {/* Image count badge */}
+                                {images.length > 1 && (
+                                    <div className="absolute bottom-2 right-2 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
+                                        +{images.length - 1} more
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="p-4 space-y-4">
+                                <div>
+                                    <h3 className="text-lg font-medium">
+                                        {data.name || "Product Name"}
+                                    </h3>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 mt-1">
+                                        {data.description ||
+                                            "Product description will appear here"}
                                     </p>
                                 </div>
-                            )}
 
-                            {/* Image count badge */}
-                            {images.length > 1 && (
-                                <div className="absolute bottom-2 right-2 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
-                                    +{images.length - 1} more
+                                <div className="flex items-center justify-between">
+                                    <div className="text-xl font-bold">
+                                        {currencySymbol}
+                                        {data.price || "0.00"}
+                                    </div>
+
+                                    <div className="text-sm text-gray-500 dark:text-gray-400">
+                                        {data.quantity === "limited"
+                                            ? `${data.quantity_items || 0} in stock`
+                                            : "Unlimited stock"}
+                                    </div>
                                 </div>
-                            )}
+
+                                <button
+                                    type="button"
+                                    className="w-full bg-primary-orange hover:bg-primary-orange/90 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+                                    disabled
+                                >
+                                    Buy Now
+                                </button>
+                            </div>
                         </div>
 
-                        <div className="p-4 space-y-4">
-                            <div>
-                                <h3 className="text-lg font-medium">
-                                    {data.name || "Product Name"}
-                                </h3>
-                                <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 mt-1">
-                                    {data.description ||
-                                        "Product description will appear here"}
-                                </p>
+                        <div className="bg-white dark:bg-[#2C2C2C] rounded-lg p-4 border border-gray-100 dark:border-[#2C2C2C]">
+                            <div className="text-sm text-gray-500 dark:text-gray-400">
+                                This is how your product will appear to
+                                customers on your store page. The preview
+                                updates in real-time as you make changes to your
+                                product details.
                             </div>
-
-                            <div className="flex items-center justify-between">
-                                <div className="text-xl font-bold">
-                                    {currencySymbol}{data.price || "0.00"}
-                                </div>
-
-                                <div className="text-sm text-gray-500 dark:text-gray-400">
-                                    {data.quantity === "limited"
-                                        ? `${data.quantity_items || 0} in stock`
-                                        : "Unlimited stock"}
-                                </div>
-                            </div>
-
-                            <button
-                                type="button"
-                                className="w-full bg-primary-orange hover:bg-primary-orange/90 text-white font-medium py-2 px-4 rounded-lg transition-colors"
-                                disabled
-                            >
-                                Buy Now
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className="bg-white dark:bg-[#2C2C2C] rounded-lg p-4 border border-gray-100 dark:border-[#2C2C2C]">
-                        <div className="text-sm text-gray-500 dark:text-gray-400">
-                            This is how your product will appear to customers on
-                            your store page. The preview updates in real-time as
-                            you make changes to your product details.
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </Layout>
     );
 };
 

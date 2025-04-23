@@ -37,6 +37,7 @@
 | routes in your application.
 |
 */
+app()->use(\App\Middleware\WaitlistMiddleware::class);
 // app()->use(ExampleMiddleware::class);
 
 /*

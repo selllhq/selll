@@ -6,10 +6,12 @@ import {
     SidebarTrigger,
 } from "../components/layout/sidebar";
 import { AppHeader } from "../components/layout/header";
+import { cn } from "@/utils";
 
 export default function AppLayout({
     children,
     breadcrumbs,
+    className,
     variant = "sidebar",
     ...props
 }) {
@@ -29,10 +31,13 @@ export default function AppLayout({
 
     if (variant === "header") {
         return (
-            <div className="flex min-h-screen w-full flex-col">
+            <div className="flex min-h-screen w-full dark:bg-[#141414] flex-col">
                 <AppHeader breadcrumbs={breadcrumbs} />
                 <main
-                    className="mx-auto flex h-full w-full max-w-7xl flex-1 flex-col gap-4 rounded-xl"
+                    className={cn(
+                        "mx-auto max-w-7xl flex h-full w-full flex-1 flex-col gap-4 rounded-xl mt-20",
+                        className,
+                    )}
                     {...props}
                 >
                     {children}

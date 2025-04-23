@@ -22,7 +22,8 @@
         "leafs/auth": "^4.0",
         "leafs/stripe": "dev-main",
         "leafs/cors": "^1.2",
-        "leafs/mvc-core": "v4.x-dev"
+        "leafs/mvc-core": "v4.x-dev",
+        "leafs/billing": "dev-main"
     },
     "require-dev": {
         "fakerphp/faker": "^1.24"
