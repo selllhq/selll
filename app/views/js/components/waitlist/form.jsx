@@ -32,7 +32,7 @@ const WaitlistForm = () => {
                             onSubmit={submit}
                         >
                             <Input
-                                id="email"
+                                id="waitlist-email"
                                 type="email"
                                 className="block w-full sm:w-80 border-0 outline-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-primary"
                                 value={data.email}
@@ -44,7 +44,11 @@ const WaitlistForm = () => {
                                 placeholder="Email address"
                             />
 
-                            <Button loading={processing} disabled={processing}>
+                            <Button
+                                className="bg-primary-red"
+                                loading={processing}
+                                disabled={processing}
+                            >
                                 Join Waitlist
                             </Button>
                         </form>
