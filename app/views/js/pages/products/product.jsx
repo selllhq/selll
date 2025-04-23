@@ -23,13 +23,13 @@ export default function Products({ product, currentStore, orders }) {
         }
         return parsedImages;
     };
-    
+
     const productImages = parseProductImages(product.images);
     const [activeImage, setActiveImage] = useState(productImages.length > 0 ? 0 : null);
     return (
         <Layout
-            variant="sidebar"
-            className="bg-white dark:bg-[#141414] -m-4 p-0"
+            variant="header"
+            className="-m-4 p-0"
             breadcrumbs={[
                 {
                     title: "Products",
@@ -65,16 +65,16 @@ export default function Products({ product, currentStore, orders }) {
                         </Button>
                     </div>
                 </div>
-                
+
                 {/* Product Image Gallery */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10 w-full">
                     <div className="md:col-span-1 lg:col-span-2">
                         <div className="aspect-square w-full h-[400px] relative">
                             {productImages.length > 0 ? (
                                 <div className="bg-white dark:bg-[#2C2C2C] rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800 transition-all h-full w-full">
-                                    <img 
-                                        src={productImages[activeImage]} 
-                                        alt={product.name} 
+                                    <img
+                                        src={productImages[activeImage]}
+                                        alt={product.name}
                                         className="w-full h-full object-contain p-4"
                                     />
                                 </div>
@@ -85,7 +85,7 @@ export default function Products({ product, currentStore, orders }) {
                                 </div>
                             )}
                         </div>
-                        
+
                         {productImages.length > 1 && (
                             <div className="flex mt-4 gap-3 overflow-x-auto pb-2">
                                 {productImages.map((image, index) => (
@@ -94,9 +94,9 @@ export default function Products({ product, currentStore, orders }) {
                                         onClick={() => setActiveImage(index)}
                                         className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border ${index === activeImage ? 'ring-2 ring-primary-orange border-primary-orange' : 'border-gray-200 dark:border-gray-700 opacity-70 hover:opacity-100'} transition-all`}
                                     >
-                                        <img 
-                                            src={image} 
-                                            alt={`${product.name} thumbnail ${index + 1}`} 
+                                        <img
+                                            src={image}
+                                            alt={`${product.name} thumbnail ${index + 1}`}
                                             className="w-full h-full object-cover"
                                         />
                                     </button>
@@ -104,7 +104,7 @@ export default function Products({ product, currentStore, orders }) {
                             </div>
                         )}
                     </div>
-                    
+
                     <div className="space-y-4">
                         <Card className="border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow transition-all">
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

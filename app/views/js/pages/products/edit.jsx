@@ -27,7 +27,7 @@ const EditProduct = ({ auth, currentStore, product }) => {
     const [existingImages, setExistingImages] = useState([]);
     const [newImages, setNewImages] = useState([]);
     const [imagesToDelete, setImagesToDelete] = useState([]);
-    
+
     const { data, setData, post, errors, processing } = useForm({
         name: product?.name || '',
         description: product?.description || '',
@@ -87,7 +87,7 @@ const EditProduct = ({ auth, currentStore, product }) => {
             );
         }
     };
-    
+
     const handleRemoveExistingImage = (index) => {
         const imageToRemove = existingImages[index];
         const updatedExistingImages = existingImages.filter((_, i) => i !== index);
@@ -95,7 +95,7 @@ const EditProduct = ({ auth, currentStore, product }) => {
         setImagesToDelete([...imagesToDelete, imageToRemove]);
         setData('images_to_delete', [...imagesToDelete, imageToRemove]);
     };
-    
+
     const handleRemoveNewImage = (index) => {
         const updatedNewImages = newImages.filter((_, i) => i !== index);
         setNewImages(updatedNewImages);
@@ -136,12 +136,12 @@ const EditProduct = ({ auth, currentStore, product }) => {
         if (data.quantity === 'limited') {
             formData.append('quantity_items', data.quantity_items);
         }
-        
+
         // Add existing images that weren't deleted
         if (existingImages.length > 0) {
             formData.append('existing_images', JSON.stringify(existingImages));
         }
-        
+
         // Add images to delete
         if (imagesToDelete.length > 0) {
             formData.append('images_to_delete', JSON.stringify(imagesToDelete));
@@ -159,8 +159,8 @@ const EditProduct = ({ auth, currentStore, product }) => {
         <div className="flex flex-col md:flex-row h-screen w-full">
             <div className="flex-1 min-w-0 flex flex-col overflow-hidden order-2 md:order-1">
                 <Layout
-                    variant="sidebar"
-                    className="dark:bg-[#141414] flex-1 flex flex-col"
+                    variant="header"
+                    className="flex-1 flex flex-col"
                     breadcrumbs={[
                         {
                             title: "Products",
@@ -215,7 +215,7 @@ const EditProduct = ({ auth, currentStore, product }) => {
                                                 </button>
                                             </div>
                                         ))}
-                                        
+
                                         {/* Newly uploaded images */}
                                         {newImages.map((image, index) => (
                                             <div
@@ -236,7 +236,7 @@ const EditProduct = ({ auth, currentStore, product }) => {
                                                 </button>
                                             </div>
                                         ))}
-                                        
+
                                         {(existingImages.length + newImages.length) < 8 && (
                                             <label className="aspect-square rounded-lg bg-gray-100 dark:bg-[#2C2C2C] flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200 dark:hover:bg-[#3C3C3C] transition-colors gap-2">
                                                 <input

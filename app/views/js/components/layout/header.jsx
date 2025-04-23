@@ -121,8 +121,8 @@ export function AppHeader({ breadcrumbs = [], variant = "header" }) {
 
     return (
         <>
-            <div className="fixed top-0 w-full border-sidebar-border/80 border-b bg-background">
-                <div className="mx-auto flex h-16 justify-between items-center px-4 md:max-w-7xl">
+            <div className="fixed top-0 z-50 w-full border-sidebar-border/80 border-b bg-background">
+                <div className="mx-auto flex h-16 md:justify-between items-center px-4 md:max-w-7xl">
                     {/* Mobile Menu */}
                     <div className="lg:hidden">
                         <Sheet>
@@ -273,7 +273,7 @@ export function AppHeader({ breadcrumbs = [], variant = "header" }) {
                         </NavigationMenu>
                     </div>
 
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-2 ml-auto md:ml-0">
                         <div className="relative flex items-center space-x-1">
                             <Button
                                 variant="ghost"

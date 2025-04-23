@@ -5,7 +5,7 @@ import EmptyState from "@/components/layout/empty";
 export default function Invoices({ invoices }) {
     return (
         <Layout
-            variant="sidebar"
+            variant="header"
             breadcrumbs={[
                 {
                     title: "Invoices",

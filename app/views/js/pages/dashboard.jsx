@@ -49,7 +49,7 @@ export default function Dashboard({
         >
             <Head title="Dashboard" />
 
-            <div className="py-4 px-4">
+            <div className="md:py-4 md:px-4">
                 {stores?.length === 0 ? (
                     <EmptyState
                         title="Welcome to Selll"
@@ -61,21 +61,21 @@ export default function Dashboard({
                     />
                 ) : (
                     <div className="space-y-8">
-                        <div className="flex items-center justify-between mb-8">
+                        <div className="md:flex items-center justify-between mb-8">
                             <div>
-                                <h2 className="text-4xl font-bold mb-2">
+                                <h2 className="text-2xl md:text-4xl font-bold md:mb-2">
                                     Hello, {auth.user.name.split(" ")[0]}
                                 </h2>
-                                <p className="text-muted-foreground">
+                                <p className="text-muted-foreground text-sm md:text-base">
                                     Here's everything new with{" "}
                                     {currentStore?.name}
                                 </p>
                             </div>
 
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-3 mt-2 md:mt-0">
                                 <Button
                                     variant="outline"
-                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C]"
+                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] w-full md:w-auto"
                                     asChild
                                 >
                                     <Link href="/products/new">
@@ -83,7 +83,7 @@ export default function Dashboard({
                                     </Link>
                                 </Button>
                                 <Button
-                                    className="bg-primary-orange hover:bg-primary-orange/90"
+                                    className="bg-primary-red hover:bg-primary-red/90 w-full md:w-auto"
                                     asChild
                                 >
                                     <a
@@ -319,7 +319,7 @@ export default function Dashboard({
                             </Card>
                         </div>
 
-                        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7 mt-8">
+                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 mt-8">
                             <Card className="col-span-4">
                                 <CardHeader>
                                     <CardTitle>Revenue Over Time</CardTitle>
@@ -416,7 +416,7 @@ export default function Dashboard({
                                                     <Store className="h-5 w-5 text-primary-orange" />
                                                 </div>
                                                 <div>
-                                                    <p className="text-sm font-medium text-white">
+                                                    <p className="text-sm font-medium dark:text-white">
                                                         Store Views
                                                     </p>
                                                     <p className="text-sm text-gray-500">
@@ -435,7 +435,7 @@ export default function Dashboard({
                                                     <TrendingUp className="h-5 w-5 text-primary-orange" />
                                                 </div>
                                                 <div>
-                                                    <p className="text-sm font-medium text-white">
+                                                    <p className="text-sm font-medium dark:text-white">
                                                         Conversion Rate
                                                     </p>
                                                     <p className="text-sm text-gray-500">
@@ -454,7 +454,7 @@ export default function Dashboard({
                                                     <ArrowUpRight className="h-5 w-5 text-primary-orange" />
                                                 </div>
                                                 <div>
-                                                    <p className="text-sm font-medium text-white">
+                                                    <p className="text-sm font-medium dark:text-white">
                                                         Avg. Order Value
                                                     </p>
                                                     <p className="text-sm text-gray-500">

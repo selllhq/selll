@@ -21,6 +21,7 @@ export default function Profile({ auth }) {
 
     return (
         <Layout
+            variant="header"
             breadcrumbs={[
                 {
                     title: "Profile settings",

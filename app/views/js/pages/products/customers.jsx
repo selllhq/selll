@@ -27,9 +27,6 @@ import {
 import Button from "@/components/form/button";
 import Input from "@/components/form/input";
 import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-
-dayjs.extend(relativeTime);
 
 export default function Customers({ auth, customers = [], currentStore, orders = [] }) {
     const [search, setSearch] = useState("");
@@ -99,8 +96,8 @@ export default function Customers({ auth, customers = [], currentStore, orders =
 
     return (
         <Layout
-            variant="sidebar"
-            className="dark:bg-[#141414] p-4 pt-2"
+            variant="header"
+            className="p-4 pt-2"
             breadcrumbs={[
                 {
                     title: "Customers",
