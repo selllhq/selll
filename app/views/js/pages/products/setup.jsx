@@ -118,7 +118,7 @@ const Setup = ({ auth, currentStore }) => {
     return (
         <Layout
             variant="header"
-            className="dark:bg-[#141414] flex-1 flex flex-col"
+            className="max-h-screen h-full overflow-hidden mt-0"
             breadcrumbs={[
                 {
                     title: "Products",
@@ -134,10 +134,10 @@ const Setup = ({ auth, currentStore }) => {
         >
             <Head title="Create a new product" />
 
-            <div className="flex flex-col md:flex-row h-screen w-full">
-                <div className="flex-1 min-w-0 flex flex-col overflow-hidden order-2 md:order-1">
-                    <div className="flex-1 overflow-y-auto">
-                        <div className="max-w-2xl px-6 py-6 relative">
+            <div className="flex flex-col md:flex-row h-full w-full overflow-hidden pt-28">
+                <div className="flex-1 min-w-0 flex flex-col order-2 md:order-1">
+                    <div className="flex-1 overflow-y-auto pb-6">
+                        <div className="max-w-2xl px-6 py-20 relative">
                             <div className="flex items-center justify-between mb-8">
                                 <div>
                                     <h2 className="text-4xl font-bold mb-2">
@@ -149,7 +149,7 @@ const Setup = ({ auth, currentStore }) => {
                                 </div>
                             </div>
 
-                            <form onSubmit={submit} className="space-y-10 pb-8">
+                            <form onSubmit={submit} className="space-y-10 pb-16 md:pb-8">
                                 <div className="space-y-3">
                                     <Label htmlFor="images">
                                         Product Images
@@ -370,7 +370,7 @@ const Setup = ({ auth, currentStore }) => {
                                     />
                                 </div>
 
-                                <div className="flex justify-end gap-4 pt-8">
+                                <div className="flex gap-4 pt-8">
                                     <Button
                                         type="submit"
                                         className="bg-primary-orange hover:bg-primary-orange/90 min-w-[160px]"
@@ -386,7 +386,7 @@ const Setup = ({ auth, currentStore }) => {
                         </div>
                     </div>
                 </div>
-                <div className="w-full md:w-[40%] lg:w-[35%] xl:w-[600px] h-[50vh] md:h-screen overflow-y-auto bg-gray-50 dark:bg-[#1A1A1A] border-t md:border-t-0 md:border-l border-gray-100 dark:border-[#2C2C2C] p-4 md:p-8 order-1 md:order-2 flex-shrink-0">
+                <div className="w-full md:w-[40%] lg:w-[35%] xl:w-[600px] h-auto max-h-[50vh] md:max-h-screen overflow-y-auto bg-gray-50 dark:bg-[#1A1A1A] border-t md:border-t-0 md:border-l border-gray-100 dark:border-[#2C2C2C] p-4 md:p-8 order-1 md:order-2 flex-shrink-0 sticky top-0">
                     <div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">
                         Live Preview
                     </div>

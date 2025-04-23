@@ -89,12 +89,12 @@ class ProductsController extends Controller
             'existing_images',
             'images_to_delete',
         ]);
-        
+
         $product = Store::find(auth()->user()->current_store_id)->products()->find($id);
-        
+
         // Handle image updates
         $currentImages = [];
-        
+
         // Process existing images that weren't deleted
         if (isset($data['existing_images']) && !empty($data['existing_images'])) {
             $currentImages = json_decode($data['existing_images'], true);
@@ -109,7 +109,7 @@ class ProductsController extends Controller
         }
 
         if (isset($data['images_to_delete']) && !empty($data['images_to_delete'])) {
-            $currentImages = array_filter($currentImages, function($image) use ($data) {
+            $currentImages = array_filter($currentImages, function ($image) use ($data) {
                 return !in_array($image, $data['images_to_delete']);
             });
         }
@@ -128,15 +128,15 @@ class ProductsController extends Controller
                 )
             );
         }
-        
+
         $allImages = array_merge($currentImages, $uploadedImages);
         $data['images'] = json_encode($allImages);
-        
+
         unset($data['existing_images']);
         unset($data['images_to_delete']);
-        
+
         $product->update($data);
-        
+
         return response()->redirect("/products/{$product->id}", 303);
     }
 }

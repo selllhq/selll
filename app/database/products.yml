@@ -8,11 +8,15 @@ columns:
     type: text
     nullable: true
   images:
-    type: text
+    type: json
+    nullable: true
+  categories:
+    type: json
     nullable: true
   physical:
     type: boolean
     default: false
+    nullable: true
 
 relationships:
   - Store
