@@ -1,13 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Layout from "@/layouts/app-layout";
-import { Head, Link, router, useForm } from "@inertiajs/react";
+import { Head, router, useForm } from "@inertiajs/react";
 import EmptyState from "@/components/layout/empty";
 import {
     Card,
     CardContent,
     CardHeader,
     CardTitle,
-    CardDescription,
     CardFooter,
 } from "@/components/shared/card";
 import {
@@ -16,49 +15,61 @@ import {
     DollarSign,
     Calendar,
     Clock,
-    ArrowDownCircle,
     ArrowUpCircle,
-    CheckCircle,
     XCircle,
-    AlertCircle,
     Search,
-    Filter,
-    ChevronDown,
-    Download,
     Plus,
-    Store,
     BanknoteIcon,
-    TrendingUp,
 } from "lucide-react";
 import Button from "@/components/form/button";
 import Input from "@/components/form/input";
 import Label from "@/components/form/label";
 import * as Dialog from "@radix-ui/react-dialog";
-import * as Tabs from "@radix-ui/react-tabs";
 import dayjs from "dayjs";
+import { StatusBadge } from "@/components/shared/badge";
 
-export default function Payouts({ auth, payouts = [], orders = [], currentStore }) {
+export default function Payouts({
+    auth,
+    payouts = [],
+    orders = [],
+    currentStore,
+}) {
     const [search, setSearch] = useState("");
     const [filter, setFilter] = useState("all");
     const [showRequestDialog, setShowRequestDialog] = useState(false);
 
     // Calculate total available balance from completed orders that haven't been paid out
-    const completedOrders = orders.filter(order => order.status === "paid" && !order.payout_id);
-    const availableBalance = completedOrders.reduce((acc, order) => acc + Number(order.total), 0);
+    const completedOrders = orders.filter(
+        (order) => order.status === "paid" && !order.payout_id,
+    );
+    const availableBalance = completedOrders.reduce(
+        (acc, order) => acc + Number(order.total),
+        0,
+    );
 
     // Calculate total paid out amount
-    const totalPaidOut = payouts.reduce((acc, payout) => acc + Number(payout.amount), 0);
+    const totalPaidOut = payouts.reduce(
+        (acc, payout) => acc + Number(payout.amount),
+        0,
+    );
 
     // Calculate pending payout amount (payouts with status "pending")
-    const pendingPayouts = payouts.filter(payout => payout.status === "pending");
-    const pendingAmount = pendingPayouts.reduce((acc, payout) => acc + Number(payout.amount), 0);
+    const pendingPayouts = payouts.filter(
+        (payout) => payout.status === "pending",
+    );
+    const pendingAmount = pendingPayouts.reduce(
+        (acc, payout) => acc + Number(payout.amount),
+        0,
+    );
 
     // Filter payouts based on search and filter
-    const filteredPayouts = payouts.filter(payout => {
+    const filteredPayouts = payouts.filter((payout) => {
         const matchesSearch =
             payout.reference?.toLowerCase().includes(search.toLowerCase()) ||
             payout.status?.toLowerCase().includes(search.toLowerCase()) ||
-            payout.payment_method?.toLowerCase().includes(search.toLowerCase()) ||
+            payout.payment_method
+                ?.toLowerCase()
+                .includes(search.toLowerCase()) ||
             String(payout.amount).includes(search);
 
         if (!matchesSearch) return false;
@@ -96,39 +107,8 @@ export default function Payouts({ auth, payouts = [], orders = [], currentStore 
         });
     };
 
-    // Get status badge color
-    const getStatusColor = (status) => {
-        switch (status) {
-            case "completed":
-                return "bg-emerald-500/10 text-emerald-500";
-            case "pending":
-                return "bg-amber-500/10 text-amber-500";
-            case "failed":
-                return "bg-red-500/10 text-red-500";
-            default:
-                return "bg-gray-500/10 text-gray-500";
-        }
-    };
-
-    // Get status icon
-    const getStatusIcon = (status) => {
-        switch (status) {
-            case "completed":
-                return <CheckCircle className="h-4 w-4" />;
-            case "pending":
-                return <Clock className="h-4 w-4" />;
-            case "failed":
-                return <XCircle className="h-4 w-4" />;
-            default:
-                return <AlertCircle className="h-4 w-4" />;
-        }
-    };
-
     return (
-        <Layout
-            variant="header"
-            className="p-2 pt-2 mt-5 md:mt-20"
-        >
+        <Layout variant="header" className="p-2 pt-2 mt-5 md:mt-20">
             <Head title="Payouts" />
 
             <div className="space-y-8 py-4 px-4">
@@ -422,14 +402,7 @@ export default function Payouts({ auth, payouts = [], orders = [], currentStore 
                                             </div>
                                         </div>
 
-                                        <div
-                                            className={`flex items-center gap-2 px-2 py-1 rounded-full ${getStatusColor(payout.status)}`}
-                                        >
-                                            {getStatusIcon(payout.status)}
-                                            <span className="text-xs font-medium capitalize">
-                                                {payout.status}
-                                            </span>
-                                        </div>
+                                        <StatusBadge status={payout.status} />
                                     </div>
                                 </div>
                             </div>

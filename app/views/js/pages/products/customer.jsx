@@ -1,6 +1,5 @@
 import Layout from "@/layouts/app-layout";
 import { Head, Link } from "@inertiajs/react";
-import { useState } from "react";
 import {
     Card,
     CardContent,
@@ -11,21 +10,21 @@ import {
 import {
     User,
     Mail,
-    ShoppingBag,
-    TrendingUp,
     ShoppingCart,
     Calendar,
     MapPin,
     Phone,
-    Clock,
-    ArrowLeft,
-    CreditCard,
-    Package,
     CheckCircle,
     XCircle,
     AlertCircle,
+    CreditCard,
+    Package,
+    ShoppingBag,
+    TrendingUp,
 } from "lucide-react";
 import dayjs from "dayjs";
+import { formatCurrency } from "@/utils/store";
+import { getInitials } from "@/utils";
 
 export default function CustomerDetail({
     customer,
@@ -49,16 +48,8 @@ export default function CustomerDetail({
               )[0].created_at
             : null;
 
-    // Calculate average order value
     const averageOrderValue =
         completedOrdersCount > 0 ? totalSpent / completedOrdersCount : 0;
-
-    const formatCurrency = (amount) => {
-        return new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: currentStore?.currency || "USD",
-        }).format(amount);
-    };
 
     const getOrderStatusIcon = (status) => {
         switch (status) {
@@ -71,15 +62,6 @@ export default function CustomerDetail({
             default:
                 return <AlertCircle className="h-4 w-4 text-gray-500" />;
         }
-    };
-
-    const getInitials = (name = "?") => {
-        return name
-            .split(" ")
-            .map((part) => part[0])
-            .join("")
-            .toUpperCase()
-            .substring(0, 2);
     };
 
     return (
@@ -162,7 +144,10 @@ export default function CustomerDetail({
                                             Total Spent
                                         </span>
                                         <span className="text-2xl font-bold text-primary-orange">
-                                            {formatCurrency(totalSpent)}
+                                            {formatCurrency(
+                                                totalSpent,
+                                                currentStore?.currency,
+                                            )}
                                         </span>
                                     </div>
                                     <div className="h-10 w-10 rounded-full bg-[#2C2C2C] flex items-center justify-center">
@@ -216,7 +201,10 @@ export default function CustomerDetail({
                                             Average Order
                                         </span>
                                         <span className="text-2xl font-bold">
-                                            {formatCurrency(averageOrderValue)}
+                                            {formatCurrency(
+                                                averageOrderValue,
+                                                currentStore?.currency,
+                                            )}
                                         </span>
                                     </div>
                                     <div className="h-10 w-10 rounded-full bg-[#2C2C2C] flex items-center justify-center">
@@ -305,6 +293,7 @@ export default function CustomerDetail({
                                                             <p className="font-bold text-primary-orange">
                                                                 {formatCurrency(
                                                                     order.total,
+                                                                    currentStore?.currency,
                                                                 )}
                                                             </p>
                                                         </div>

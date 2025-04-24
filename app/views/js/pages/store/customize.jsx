@@ -1,4 +1,4 @@
-import { Link, Head, useForm } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import { Store, LayoutDashboard, Palette, Image } from "lucide-react";
 import Button from "@/components/form/button";
 import InputError from "@/components/form/input-error";
@@ -9,7 +9,7 @@ import { cn } from "@/utils";
 import Layout from "@/layouts/app-layout";
 import * as Tabs from "@radix-ui/react-tabs";
 
-const Customize = ({ auth, store }) => {
+const Customize = ({ store }) => {
     const storeConfig = JSON.parse(store?.config ?? '{}');
     const { data, setData, post, errors, processing } = useForm({
         show_hero: storeConfig?.show_hero ?? false,

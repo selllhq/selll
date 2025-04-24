@@ -7,17 +7,14 @@ import {
     CardContent,
     CardHeader,
     CardTitle,
-    CardDescription,
 } from "@/components/shared/card";
 import {
     Table,
     TableHeader,
     TableBody,
-    TableFooter,
     TableHead,
     TableRow,
     TableCell,
-    TableCaption,
 } from "@/components/shared/table";
 import {
     Users,
@@ -26,33 +23,28 @@ import {
     ShoppingBag,
     TrendingUp,
     Store,
-    Package,
     Search,
     ShoppingCart,
-    Calendar,
-    MapPin,
     Phone,
-    Clock,
-    ArrowUpDown,
-    ChevronDown,
-    MoreHorizontal
 } from "lucide-react";
 import Button from "@/components/form/button";
 import Input from "@/components/form/input";
 import dayjs from "dayjs";
 
-export default function Customers({ auth, customers = [], currentStore, orders = [] }) {
+export default function Customers({
+    customers = [],
+    currentStore,
+    orders = [],
+}) {
     const [search, setSearch] = useState("");
     const [filter, setFilter] = useState("all");
 
-    // Calculate customer metrics
     const totalSpent = orders
-        .filter(order => order.status === "paid")
+        .filter((order) => order.status === "paid")
         .reduce((acc, order) => acc + Number(order.total), 0);
 
-    const averageSpentPerCustomer = customers.length > 0
-        ? totalSpent / customers.length
-        : 0;
+    const averageSpentPerCustomer =
+        customers.length > 0 ? totalSpent / customers.length : 0;
 
     const filteredCustomers = customers?.filter((customer) => {
         const matchesSearch =
@@ -66,9 +58,13 @@ export default function Customers({ auth, customers = [], currentStore, orders =
         }
 
         // Get customer's orders
-        const customerOrders = orders.filter(order => order.customer_id === customer.id);
+        const customerOrders = orders.filter(
+            (order) => order.customer_id === customer.id,
+        );
         const totalOrdersCount = customerOrders.length;
-        const completedOrdersCount = customerOrders.filter(order => order.status === "paid").length;
+        const completedOrdersCount = customerOrders.filter(
+            (order) => order.status === "paid",
+        ).length;
 
         switch (filter) {
             case "repeat":
@@ -79,31 +75,43 @@ export default function Customers({ auth, customers = [], currentStore, orders =
                 return totalOrdersCount === 0;
             case "high_value":
                 // Customers who have spent more than average
-                return customerOrders
-                    .filter(order => order.status === "paid")
-                    .reduce((acc, order) => acc + Number(order.total), 0) > averageSpentPerCustomer;
+                return (
+                    customerOrders
+                        .filter((order) => order.status === "paid")
+                        .reduce((acc, order) => acc + Number(order.total), 0) >
+                    averageSpentPerCustomer
+                );
             default:
                 return true;
         }
     });
 
-    // Get customer's order stats
     const getCustomerStats = (customerId) => {
-        const customerOrders = orders.filter(order => order.customer_id === customerId);
+        const customerOrders = orders.filter(
+            (order) => order.customer_id === customerId,
+        );
+
         const totalOrdersCount = customerOrders.length;
-        const completedOrdersCount = customerOrders.filter(order => order.status === "paid").length;
         const totalSpent = customerOrders
-            .filter(order => order.status === "paid")
+            .filter((order) => order.status === "paid")
             .reduce((acc, order) => acc + Number(order.total), 0);
-        const lastOrderDate = customerOrders.length > 0
-            ? customerOrders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0].created_at
-            : null;
+
+        const completedOrdersCount = customerOrders.filter(
+            (order) => order.status === "paid",
+        ).length;
+
+        const lastOrderDate =
+            customerOrders.length > 0
+                ? customerOrders.sort(
+                      (a, b) => new Date(b.created_at) - new Date(a.created_at),
+                  )[0].created_at
+                : null;
 
         return {
             totalOrdersCount,
             completedOrdersCount,
             totalSpent,
-            lastOrderDate
+            lastOrderDate,
         };
     };
 
@@ -228,7 +236,8 @@ export default function Customers({ auth, customers = [], currentStore, orders =
                                             {new Intl.NumberFormat("en-US", {
                                                 style: "currency",
                                                 currency:
-                                                    currentStore?.currency || "USD",
+                                                    currentStore?.currency ||
+                                                    "USD",
                                             }).format(totalSpent)}
                                         </div>
                                         <div className="flex items-center gap-1 text-emerald-500">
@@ -239,7 +248,8 @@ export default function Customers({ auth, customers = [], currentStore, orders =
                                                     {
                                                         style: "currency",
                                                         currency:
-                                                            currentStore?.currency || "USD",
+                                                            currentStore?.currency ||
+                                                            "USD",
                                                         minimumFractionDigits: 0,
                                                     },
                                                 ).format(
@@ -247,7 +257,7 @@ export default function Customers({ auth, customers = [], currentStore, orders =
                                                         .filter(
                                                             (order) =>
                                                                 order.status ===
-                                                                "paid" &&
+                                                                    "paid" &&
                                                                 dayjs(
                                                                     order.created_at,
                                                                 ).isAfter(
@@ -286,19 +296,41 @@ export default function Customers({ auth, customers = [], currentStore, orders =
                                     <div>
                                         <div className="text-4xl font-bold mb-2">
                                             {customers
-                                                .filter(customer => {
-                                                    const customerOrders = orders.filter(order => order.customer_id === customer.id);
-                                                    return customerOrders.length > 1;
+                                                .filter((customer) => {
+                                                    const customerOrders =
+                                                        orders.filter(
+                                                            (order) =>
+                                                                order.customer_id ===
+                                                                customer.id,
+                                                        );
+                                                    return (
+                                                        customerOrders.length >
+                                                        1
+                                                    );
                                                 })
-                                                .length
-                                                .toLocaleString()}
+                                                .length.toLocaleString()}
                                         </div>
                                         <div className="flex items-center gap-1 text-emerald-500">
                                             <span className="text-sm">
-                                                {Math.round((customers.filter(customer => {
-                                                    const customerOrders = orders.filter(order => order.customer_id === customer.id);
-                                                    return customerOrders.length > 1;
-                                                }).length / customers.length) * 100)}%
+                                                {Math.round(
+                                                    (customers.filter(
+                                                        (customer) => {
+                                                            const customerOrders =
+                                                                orders.filter(
+                                                                    (order) =>
+                                                                        order.customer_id ===
+                                                                        customer.id,
+                                                                );
+                                                            return (
+                                                                customerOrders.length >
+                                                                1
+                                                            );
+                                                        },
+                                                    ).length /
+                                                        customers.length) *
+                                                        100,
+                                                )}
+                                                %
                                             </span>
                                             <span className="text-sm text-gray-500">
                                                 of all customers
@@ -321,7 +353,8 @@ export default function Customers({ auth, customers = [], currentStore, orders =
                                             {new Intl.NumberFormat("en-US", {
                                                 style: "currency",
                                                 currency:
-                                                    currentStore?.currency || "USD",
+                                                    currentStore?.currency ||
+                                                    "USD",
                                             }).format(averageSpentPerCustomer)}
                                         </div>
                                         <div className="flex items-center gap-1 text-emerald-500">
@@ -403,12 +436,12 @@ export default function Customers({ auth, customers = [], currentStore, orders =
                                 {filter === "all"
                                     ? "All Customers"
                                     : filter === "repeat"
-                                        ? "Repeat Customers"
-                                        : filter === "single"
-                                            ? "One-time Customers"
-                                            : filter === "high_value"
-                                                ? "High-value Customers"
-                                                : "Customers with No Purchases"}{" "}
+                                      ? "Repeat Customers"
+                                      : filter === "single"
+                                        ? "One-time Customers"
+                                        : filter === "high_value"
+                                          ? "High-value Customers"
+                                          : "Customers with No Purchases"}{" "}
                                 ({filteredCustomers.length})
                             </h3>
 
@@ -441,32 +474,65 @@ export default function Customers({ auth, customers = [], currentStore, orders =
                                 <Table>
                                     <TableHeader className="bg-[#1A1A1A]">
                                         <TableRow className="hover:bg-[#1A1A1A] border-[#2C2C2C]">
-                                            <TableHead className="text-white">Customer</TableHead>
-                                            <TableHead className="text-white">Contact</TableHead>
-                                            <TableHead className="text-white">Orders</TableHead>
-                                            <TableHead className="text-white">Last Order</TableHead>
-                                            <TableHead className="text-white text-right">Total Spent</TableHead>
+                                            <TableHead className="text-white">
+                                                Customer
+                                            </TableHead>
+                                            <TableHead className="text-white">
+                                                Contact
+                                            </TableHead>
+                                            <TableHead className="text-white">
+                                                Orders
+                                            </TableHead>
+                                            <TableHead className="text-white">
+                                                Last Order
+                                            </TableHead>
+                                            <TableHead className="text-white text-right">
+                                                Total Spent
+                                            </TableHead>
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
                                         {filteredCustomers.map((customer) => {
-                                            const stats = getCustomerStats(customer.id);
-                                            
+                                            const stats = getCustomerStats(
+                                                customer.id,
+                                            );
+
                                             return (
-                                                <TableRow 
-                                                    key={customer.id} 
+                                                <TableRow
+                                                    key={customer.id}
                                                     className="hover:bg-[#1A1A1A] border-[#2C2C2C] cursor-pointer"
-                                                    onClick={() => router.visit(`/customers/${customer.id}`)}
+                                                    onClick={() =>
+                                                        router.visit(
+                                                            `/customers/${customer.id}`,
+                                                        )
+                                                    }
                                                 >
                                                     <TableCell>
                                                         <div className="flex items-center gap-3">
                                                             <div className="h-10 w-10 rounded-md bg-[#2C2C2C] flex items-center justify-center text-primary-orange font-medium text-lg flex-shrink-0">
-                                                                {customer.name?.split(' ').map(n => n[0]).join('').toUpperCase()}
+                                                                {customer.name
+                                                                    ?.split(" ")
+                                                                    .map(
+                                                                        (n) =>
+                                                                            n[0],
+                                                                    )
+                                                                    .join("")
+                                                                    .toUpperCase()}
                                                             </div>
                                                             <div>
-                                                                <p className="font-medium text-white">{customer.name}</p>
+                                                                <p className="font-medium text-white">
+                                                                    {
+                                                                        customer.name
+                                                                    }
+                                                                </p>
                                                                 <p className="text-xs text-gray-400">
-                                                                    Customer since {dayjs(customer.created_at).format("MMM D, YYYY")}
+                                                                    Customer
+                                                                    since{" "}
+                                                                    {dayjs(
+                                                                        customer.created_at,
+                                                                    ).format(
+                                                                        "MMM D, YYYY",
+                                                                    )}
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -475,14 +541,17 @@ export default function Customers({ auth, customers = [], currentStore, orders =
                                                         <div className="flex items-center gap-2">
                                                             <Mail className="h-4 w-4 text-gray-500 flex-shrink-0" />
                                                             <span className="text-xs text-gray-400 truncate max-w-[150px]">
-                                                                {customer.email || "No email provided"}
+                                                                {customer.email ||
+                                                                    "No email provided"}
                                                             </span>
                                                         </div>
                                                         {customer.phone && (
                                                             <div className="flex items-center gap-2 mt-1">
                                                                 <Phone className="h-4 w-4 text-gray-500 flex-shrink-0" />
                                                                 <span className="text-xs text-gray-400">
-                                                                    {customer.phone}
+                                                                    {
+                                                                        customer.phone
+                                                                    }
                                                                 </span>
                                                             </div>
                                                         )}
@@ -490,11 +559,17 @@ export default function Customers({ auth, customers = [], currentStore, orders =
                                                     <TableCell>
                                                         <div className="flex items-center gap-2">
                                                             <div className="bg-[#2C2C2C] rounded-md px-2 py-0.5 text-xs font-medium text-white">
-                                                                {stats.totalOrdersCount}
+                                                                {
+                                                                    stats.totalOrdersCount
+                                                                }
                                                             </div>
-                                                            {stats.completedOrdersCount > 0 && (
+                                                            {stats.completedOrdersCount >
+                                                                0 && (
                                                                 <div className="bg-[#2C2C2C] rounded-md px-2 py-0.5 text-xs font-medium text-green-500">
-                                                                    {stats.completedOrdersCount} paid
+                                                                    {
+                                                                        stats.completedOrdersCount
+                                                                    }{" "}
+                                                                    paid
                                                                 </div>
                                                             )}
                                                         </div>
@@ -502,12 +577,18 @@ export default function Customers({ auth, customers = [], currentStore, orders =
                                                     <TableCell>
                                                         <div className="text-sm text-gray-300">
                                                             {stats.lastOrderDate
-                                                                ? dayjs(stats.lastOrderDate).fromNow()
+                                                                ? dayjs(
+                                                                      stats.lastOrderDate,
+                                                                  ).fromNow()
                                                                 : "Never"}
                                                         </div>
                                                         {stats.lastOrderDate && (
                                                             <div className="text-xs text-gray-500">
-                                                                {dayjs(stats.lastOrderDate).format("MMM D, YYYY")}
+                                                                {dayjs(
+                                                                    stats.lastOrderDate,
+                                                                ).format(
+                                                                    "MMM D, YYYY",
+                                                                )}
                                                             </div>
                                                         )}
                                                     </TableCell>
@@ -517,9 +598,13 @@ export default function Customers({ auth, customers = [], currentStore, orders =
                                                                 "en-US",
                                                                 {
                                                                     style: "currency",
-                                                                    currency: currentStore?.currency || "USD",
+                                                                    currency:
+                                                                        currentStore?.currency ||
+                                                                        "USD",
                                                                 },
-                                                            ).format(stats.totalSpent)}
+                                                            ).format(
+                                                                stats.totalSpent,
+                                                            )}
                                                         </div>
                                                     </TableCell>
                                                 </TableRow>

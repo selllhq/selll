@@ -1,5 +1,5 @@
 import Layout from "@/layouts/app-layout";
-import { Head, Link, router } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 import EmptyState from "@/components/layout/empty";
 
 export default function Invoices({ invoices }) {

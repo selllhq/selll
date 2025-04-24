@@ -1,28 +1,15 @@
-import { Link, Head, useForm } from "@inertiajs/react";
-import { ImagePlus, Package, X, Store, AlertCircle } from "lucide-react";
-import { slugify } from "@/utils";
+import { Head, useForm } from "@inertiajs/react";
+import { ImagePlus, Package, AlertCircle } from "lucide-react";
 import Button from "@/components/form/button";
 import InputError from "@/components/form/input-error";
 import Input from "@/components/form/input";
 import Label from "@/components/form/label";
-import { Card, CardContent } from "@/components/shared/card";
 import { cn } from "@/utils";
 import { useState, useEffect } from "react";
 import Layout from "@/layouts/app-layout";
+import { CURRENCY_LIMITS, CURRENCY_SYMBOLS } from "@/utils/store";
 
-// Currency-specific price limits
-const CURRENCY_LIMITS = {
-    NGN: { min: 50, max: 10000000 },
-    KES: { min: 1, max: 150000 }, // For M-Pesa customer wallets
-    GHS: { min: 1, max: 100000 },
-    USD: { min: 0.5, max: 999999.99 }, // Stripe default
-    EUR: { min: 0.5, max: 999999.99 }, // Stripe default
-    GBP: { min: 0.5, max: 999999.99 }, // Stripe default
-    ZAR: { min: 0.5, max: 999999.99 }, // Stripe default
-    CAD: { min: 0.5, max: 999999.99 }, // Stripe default
-};
-
-const Setup = ({ auth, currentStore }) => {
+const Setup = ({ currentStore }) => {
     const [images, setImages] = useState([]);
     const [priceError, setPriceError] = useState("");
     const { data, setData, post, errors, processing } = useForm({
@@ -34,19 +21,9 @@ const Setup = ({ auth, currentStore }) => {
         images: [],
     });
 
-    // Get currency limits based on store's currency
     const currencyLimits =
         CURRENCY_LIMITS[currentStore?.currency] || CURRENCY_LIMITS.USD;
-    const currencySymbol = {
-        USD: "$",
-        GHS: "₵",
-        NGN: "₦",
-        EUR: "€",
-        GBP: "£",
-        KES: "KSh",
-        ZAR: "R",
-        CAD: "C$",
-    }[currentStore?.currency || "USD"];
+    const currencySymbol = CURRENCY_SYMBOLS[currentStore?.currency || "USD"];
 
     const handleImageUpload = (e) => {
         const files = Array.from(e.target.files);
@@ -58,8 +35,8 @@ const Setup = ({ auth, currentStore }) => {
         }
 
         const newImages = files.slice(0, remainingSlots);
-        setImages([...images, ...newImages]);
 
+        setImages([...images, ...newImages]);
         setData("images", [...images, ...newImages]);
 
         if (files.length > remainingSlots) {
@@ -149,47 +126,38 @@ const Setup = ({ auth, currentStore }) => {
                                 </div>
                             </div>
 
-                            <form onSubmit={submit} className="space-y-10 pb-16 md:pb-8">
+                            <form
+                                onSubmit={submit}
+                                className="space-y-10 pb-16 md:pb-8"
+                            >
                                 <div className="space-y-3">
                                     <Label htmlFor="images">
                                         Product Images
                                     </Label>
+
                                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
                                         {images.map((image, index) => (
-                                            <div
+                                            <PreviewImage
                                                 key={index}
-                                                className="aspect-square rounded-lg bg-gray-100 dark:bg-[#2C2C2C] relative overflow-hidden"
-                                            >
-                                                <img
-                                                    src={URL.createObjectURL(
-                                                        image,
-                                                    )}
-                                                    alt={`Preview ${index + 1}`}
-                                                    className="w-full h-full object-cover"
-                                                />
-                                                <button
-                                                    type="button"
-                                                    onClick={() => {
-                                                        const filteredImages =
-                                                            images.filter(
-                                                                (_, i) =>
-                                                                    i !== index,
-                                                            );
-                                                        setImages(
-                                                            filteredImages,
+                                                alt={`Product image ${index + 1}`}
+                                                image={image}
+                                                onRemove={() => {
+                                                    const filteredImages =
+                                                        images.filter(
+                                                            (_, i) =>
+                                                                i !== index,
                                                         );
-                                                        // Also update the form data
-                                                        setData(
-                                                            "images",
-                                                            filteredImages,
-                                                        );
-                                                    }}
-                                                    className="absolute top-2 right-2 p-1.5 rounded-full bg-black/50 hover:bg-black/70 transition-colors"
-                                                >
-                                                    <X className="h-4 w-4" />
-                                                </button>
-                                            </div>
+
+                                                    setImages(filteredImages);
+
+                                                    setData(
+                                                        "images",
+                                                        filteredImages,
+                                                    );
+                                                }}
+                                            />
                                         ))}
+
                                         {images.length < 8 && (
                                             <label className="aspect-square rounded-lg bg-gray-100 dark:bg-[#2C2C2C] flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200 dark:hover:bg-[#3C3C3C] transition-colors gap-2">
                                                 <input
@@ -386,6 +354,7 @@ const Setup = ({ auth, currentStore }) => {
                         </div>
                     </div>
                 </div>
+
                 <div className="w-full md:w-[40%] lg:w-[35%] xl:w-[600px] h-auto max-h-[50vh] md:max-h-screen overflow-y-auto bg-gray-50 dark:bg-[#1A1A1A] border-t md:border-t-0 md:border-l border-gray-100 dark:border-[#2C2C2C] p-4 md:p-8 order-1 md:order-2 flex-shrink-0 sticky top-0">
                     <div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">
                         Live Preview

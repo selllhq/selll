@@ -7,31 +7,16 @@ import {
     CardContent,
     CardHeader,
     CardTitle,
-    CardDescription,
 } from "@/components/shared/card";
 import { ShoppingBag, TrendingUp, Store, Package, Search } from "lucide-react";
 import Button from "@/components/form/button";
 import Input from "@/components/form/input";
 import dayjs from "dayjs";
+import { parseProductImages } from "@/utils/store";
 
-export default function Products({ auth, orders = [], products, currentStore }) {
+export default function Products({ orders = [], products, currentStore }) {
     const [search, setSearch] = useState("");
     const [filter, setFilter] = useState("all");
-
-    // Helper function to parse JSON images
-    const parseProductImages = (imageData) => {
-        let parsedImages = [];
-        try {
-            if (typeof imageData === 'string') {
-                parsedImages = JSON.parse(imageData);
-            } else if (Array.isArray(imageData)) {
-                parsedImages = imageData;
-            }
-        } catch (e) {
-            console.error('Error parsing product images:', e);
-        }
-        return parsedImages;
-    };
 
     const filteredProducts = products?.filter((product) => {
         const matchesSearch =
@@ -337,29 +322,41 @@ export default function Products({ auth, orders = [], products, currentStore }) 
                                     >
                                         <div className="aspect-[4/3] bg-[#1A1A1A] relative group">
                                             {(() => {
-                                                const parsedImages = parseProductImages(product.images);
+                                                const parsedImages =
+                                                    parseProductImages(
+                                                        product.images,
+                                                    );
 
                                                 return (
                                                     <>
-                                                        {parsedImages.length > 0 ? (
+                                                        {parsedImages.length >
+                                                        0 ? (
                                                             <img
-                                                                src={parsedImages[0]}
-                                                                alt={product.name}
+                                                                src={
+                                                                    parsedImages[0]
+                                                                }
+                                                                alt={
+                                                                    product.name
+                                                                }
                                                                 className="w-full h-full object-cover"
                                                             />
                                                         ) : (
                                                             <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-gray-500">
                                                                 <Package className="w-12 h-12" />
                                                                 <p className="text-sm text-center">
-                                                                    Add photos to showcase
+                                                                    Add photos
+                                                                    to showcase
                                                                     your product
                                                                 </p>
                                                             </div>
                                                         )}
 
-                                                        {parsedImages.length > 1 && (
+                                                        {parsedImages.length >
+                                                            1 && (
                                                             <div className="absolute bottom-2 right-2 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
-                                                                +{parsedImages.length - 1}{" "}
+                                                                +
+                                                                {parsedImages.length -
+                                                                    1}{" "}
                                                                 more
                                                             </div>
                                                         )}

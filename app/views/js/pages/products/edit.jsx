@@ -1,71 +1,37 @@
-import { Link, Head, useForm } from "@inertiajs/react";
-import { ImagePlus, Package, X, Store, AlertCircle } from "lucide-react";
-import { slugify } from "@/utils";
+import { Head, useForm } from "@inertiajs/react";
+import { ImagePlus, Package, AlertCircle } from "lucide-react";
 import Button from "@/components/form/button";
 import InputError from "@/components/form/input-error";
 import Input from "@/components/form/input";
 import Label from "@/components/form/label";
-import { Card, CardContent } from "@/components/shared/card";
 import { cn } from "@/utils";
 import { useState, useEffect } from "react";
 import Layout from "@/layouts/app-layout";
+import { CURRENCY_LIMITS, CURRENCY_SYMBOLS, parseProductImages } from "@/utils/store";
+import PreviewImage from "@/components/products/preview-image";
 
-// Currency-specific price limits
-const CURRENCY_LIMITS = {
-    NGN: { min: 50, max: 10000000 },
-    KES: { min: 1, max: 150000 }, // For M-Pesa customer wallets
-    GHS: { min: 1, max: 100000 },
-    USD: { min: 0.5, max: 999999.99 }, // Stripe default
-    EUR: { min: 0.5, max: 999999.99 }, // Stripe default
-    GBP: { min: 0.5, max: 999999.99 }, // Stripe default
-    ZAR: { min: 0.5, max: 999999.99 }, // Stripe default
-    CAD: { min: 0.5, max: 999999.99 }, // Stripe default
-};
-
-const EditProduct = ({ auth, currentStore, product }) => {
-    const [priceError, setPriceError] = useState('');
+const EditProduct = ({ currentStore, product }) => {
+    const [priceError, setPriceError] = useState("");
     const [existingImages, setExistingImages] = useState([]);
     const [newImages, setNewImages] = useState([]);
     const [imagesToDelete, setImagesToDelete] = useState([]);
 
     const { data, setData, post, errors, processing } = useForm({
-        name: product?.name || '',
-        description: product?.description || '',
-        price: product?.price || '',
-        quantity: product?.quantity || 'unlimited',
-        quantity_items: product?.quantity_items || '',
+        name: product?.name || "",
+        description: product?.description || "",
+        price: product?.price || "",
+        quantity: product?.quantity || "unlimited",
+        quantity_items: product?.quantity_items || "",
         images: [],
         images_to_delete: [],
     });
 
-    // Get currency limits based on store's currency
-    const currencyLimits = CURRENCY_LIMITS[currentStore?.currency] || CURRENCY_LIMITS.USD;
-    const currencySymbol = {
-        USD: '$',
-        GHS: '₵',
-        NGN: '₦',
-        EUR: '€',
-        GBP: '£',
-        KES: 'KSh',
-        ZAR: 'R',
-        CAD: 'C$'
-    }[currentStore?.currency || 'USD'];
+    const currencyLimits =
+        CURRENCY_LIMITS[currentStore?.currency] || CURRENCY_LIMITS.USD;
+    const currencySymbol = CURRENCY_SYMBOLS[currentStore?.currency || "USD"];
 
-    // Parse existing product images on component mount
     useEffect(() => {
-        if (product?.images) {
-            try {
-                let parsedImages = [];
-                if (typeof product.images === 'string') {
-                    parsedImages = JSON.parse(product.images);
-                } else if (Array.isArray(product.images)) {
-                    parsedImages = product.images;
-                }
-                setExistingImages(parsedImages);
-            } catch (e) {
-                console.error('Error parsing product images:', e);
-            }
-        }
+        setExistingImages(parseProductImages(product.images));
     }, [product]);
 
     const handleImageUpload = (e) => {
@@ -73,47 +39,55 @@ const EditProduct = ({ auth, currentStore, product }) => {
         const remainingSlots = 8 - (existingImages.length + newImages.length);
 
         if (remainingSlots <= 0) {
-            alert('You\'ve reached the maximum of 8 product images.');
+            alert("You've reached the maximum of 8 product images.");
             return;
         }
 
         const uploadedImages = files.slice(0, remainingSlots);
         setNewImages([...newImages, ...uploadedImages]);
-        setData('images', [...newImages, ...uploadedImages]);
+        setData("images", [...newImages, ...uploadedImages]);
 
         if (files.length > remainingSlots) {
             alert(
-                `Added ${remainingSlots} more image${remainingSlots === 1 ? '' : 's'}. You can add up to 8 images to showcase your product effectively.`,
+                `Added ${remainingSlots} more image${remainingSlots === 1 ? "" : "s"}. You can add up to 8 images to showcase your product effectively.`,
             );
         }
     };
 
     const handleRemoveExistingImage = (index) => {
         const imageToRemove = existingImages[index];
-        const updatedExistingImages = existingImages.filter((_, i) => i !== index);
+        const updatedExistingImages = existingImages.filter(
+            (_, i) => i !== index,
+        );
+
         setExistingImages(updatedExistingImages);
         setImagesToDelete([...imagesToDelete, imageToRemove]);
-        setData('images_to_delete', [...imagesToDelete, imageToRemove]);
+        setData("images_to_delete", [...imagesToDelete, imageToRemove]);
     };
 
     const handleRemoveNewImage = (index) => {
         const updatedNewImages = newImages.filter((_, i) => i !== index);
+
         setNewImages(updatedNewImages);
-        setData('images', updatedNewImages);
+        setData("images", updatedNewImages);
     };
 
     useEffect(() => {
         if (data.price) {
             const price = parseFloat(data.price);
             if (price < currencyLimits.min) {
-                setPriceError(`Minimum price is ${currencySymbol}${currencyLimits.min}`);
+                setPriceError(
+                    `Minimum price is ${currencySymbol}${currencyLimits.min}`,
+                );
             } else if (price > currencyLimits.max) {
-                setPriceError(`Maximum price is ${currencySymbol}${currencyLimits.max}`);
+                setPriceError(
+                    `Maximum price is ${currencySymbol}${currencyLimits.max}`,
+                );
             } else {
-                setPriceError('');
+                setPriceError("");
             }
         } else {
-            setPriceError('');
+            setPriceError("");
         }
     }, [data.price, currencyLimits]);
 
@@ -128,28 +102,25 @@ const EditProduct = ({ auth, currentStore, product }) => {
 
         const formData = new FormData();
 
-        formData.append('name', data.name);
-        formData.append('description', data.description);
-        formData.append('price', data.price);
-        formData.append('quantity', data.quantity);
+        formData.append("name", data.name);
+        formData.append("description", data.description);
+        formData.append("price", data.price);
+        formData.append("quantity", data.quantity);
 
-        if (data.quantity === 'limited') {
-            formData.append('quantity_items', data.quantity_items);
+        if (data.quantity === "limited") {
+            formData.append("quantity_items", data.quantity_items);
         }
 
-        // Add existing images that weren't deleted
         if (existingImages.length > 0) {
-            formData.append('existing_images', JSON.stringify(existingImages));
+            formData.append("existing_images", JSON.stringify(existingImages));
         }
 
-        // Add images to delete
         if (imagesToDelete.length > 0) {
-            formData.append('images_to_delete', JSON.stringify(imagesToDelete));
+            formData.append("images_to_delete", JSON.stringify(imagesToDelete));
         }
 
-        // Add new images
         newImages.forEach((image, index) => {
-            formData.append('images[]', image);
+            formData.append("images[]", image);
         });
 
         post(`/products/${product.id}/edit`, formData);
@@ -199,56 +170,28 @@ const EditProduct = ({ auth, currentStore, product }) => {
                                         Product Images
                                     </Label>
                                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
-                                        {/* Existing images */}
                                         {existingImages.map((image, index) => (
-                                            <div
+                                            <PreviewImage
                                                 key={`existing-${index}`}
-                                                className="aspect-square rounded-lg bg-gray-100 dark:bg-[#2C2C2C] relative overflow-hidden"
-                                            >
-                                                <img
-                                                    src={image}
-                                                    alt={`Product image ${index + 1}`}
-                                                    className="w-full h-full object-cover"
-                                                />
-                                                <button
-                                                    type="button"
-                                                    onClick={() =>
-                                                        handleRemoveExistingImage(
-                                                            index,
-                                                        )
-                                                    }
-                                                    className="absolute top-2 right-2 p-1.5 rounded-full bg-black/50 hover:bg-black/70 transition-colors"
-                                                >
-                                                    <X className="h-4 w-4 text-white" />
-                                                </button>
-                                            </div>
+                                                alt={`Product image ${index + 1}`}
+                                                image={image}
+                                                onRemove={() =>
+                                                    handleRemoveExistingImage(
+                                                        index,
+                                                    )
+                                                }
+                                            />
                                         ))}
 
-                                        {/* Newly uploaded images */}
                                         {newImages.map((image, index) => (
-                                            <div
+                                            <PreviewImage
                                                 key={`new-${index}`}
-                                                className="aspect-square rounded-lg bg-gray-100 dark:bg-[#2C2C2C] relative overflow-hidden"
-                                            >
-                                                <img
-                                                    src={URL.createObjectURL(
-                                                        image,
-                                                    )}
-                                                    alt={`New image ${index + 1}`}
-                                                    className="w-full h-full object-cover"
-                                                />
-                                                <button
-                                                    type="button"
-                                                    onClick={() =>
-                                                        handleRemoveNewImage(
-                                                            index,
-                                                        )
-                                                    }
-                                                    className="absolute top-2 right-2 p-1.5 rounded-full bg-black/50 hover:bg-black/70 transition-colors"
-                                                >
-                                                    <X className="h-4 w-4 text-white" />
-                                                </button>
-                                            </div>
+                                                alt={`New image ${index + 1}`}
+                                                image={image}
+                                                onRemove={() =>
+                                                    handleRemoveNewImage(index)
+                                                }
+                                            />
                                         ))}
 
                                         {existingImages.length +
