@@ -15,10 +15,7 @@ import {
 import { Package, Store, TrendingUp, Image as ImageIcon, ShoppingCart, User, Calendar, Clock, CheckCircle, XCircle, AlertCircle, Eye } from "lucide-react";
 import { Badge } from "@/components/shared/badge";
 import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import { useState } from "react";
-
-dayjs.extend(relativeTime);
 
 export default function Products({ product, currentStore, orders }) {
     // Helper function to parse JSON images
@@ -35,8 +32,7 @@ export default function Products({ product, currentStore, orders }) {
         }
         return parsedImages;
     };
-    
-    // Get order status badge
+
     const getStatusBadge = (status) => {
         switch (status) {
             case "completed":
@@ -262,10 +258,10 @@ export default function Products({ product, currentStore, orders }) {
                                 <p className="text-sm text-gray-500 dark:text-gray-400">Latest orders for this product</p>
                             </div>
                         </div>
-                        
+
                         {orders?.length > 0 && (
-                            <Button 
-                                variant="outline" 
+                            <Button
+                                variant="outline"
                                 className="bg-white dark:bg-[#2C2C2C] border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#3C3C3C] transition-all"
                                 asChild
                             >
@@ -276,7 +272,7 @@ export default function Products({ product, currentStore, orders }) {
                             </Button>
                         )}
                     </div>
-                    
+
                     {orders?.length === 0 ? (
                         <div className="bg-white dark:bg-[#2C2C2C] rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm p-8">
                             <EmptyState
@@ -294,10 +290,10 @@ export default function Products({ product, currentStore, orders }) {
                                 <div className="w-[15%] text-right">Amount</div>
                                 <div className="w-[10%] text-center">Action</div>
                             </div>
-                            
+
                             <div className="divide-y divide-gray-100 dark:divide-gray-800">
                                 {orders.map((order, index) => (
-                                    <div 
+                                    <div
                                         key={order.id}
                                         className={`px-6 py-4 flex items-center hover:bg-gray-50 dark:hover:bg-[#222222] transition-colors cursor-pointer ${index === orders.length - 1 ? 'rounded-b-xl' : ''}`}
                                         onClick={() => router.visit(`/orders/${order.id}`)}
@@ -314,7 +310,7 @@ export default function Products({ product, currentStore, orders }) {
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <div className="w-[25%]">
                                             <div className="flex flex-col">
                                                 <span className="text-sm font-medium text-gray-900 dark:text-white">
@@ -325,11 +321,11 @@ export default function Products({ product, currentStore, orders }) {
                                                 </span>
                                             </div>
                                         </div>
-                                        
+
                                         <div className="w-[20%]">
                                             {getStatusBadge(order.status)}
                                         </div>
-                                        
+
                                         <div className="w-[15%] text-right">
                                             <span className="font-bold text-primary-orange">
                                                 {new Intl.NumberFormat("en-US", {
@@ -338,7 +334,7 @@ export default function Products({ product, currentStore, orders }) {
                                                 }).format(order.amount)}
                                             </span>
                                         </div>
-                                        
+
                                         <div className="w-[10%] flex justify-center">
                                             <Button
                                                 variant="ghost"
