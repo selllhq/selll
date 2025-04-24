@@ -29,21 +29,21 @@ export default function Products({ product, currentStore, orders }) {
     return (
         <Layout
             variant="header"
-            className="-m-4 p-0"
+            className="my-4 py-0"
             breadcrumbs={[
                 {
                     title: "Products",
                     href: "/products",
                 },
                 {
-                    title: "Products",
+                    title: product?.name,
                     href: `/products/${product.id}`,
                 },
             ]}
         >
             <Head title={`${product?.name} from ${currentStore?.name}`} />
 
-            <div className="py-6 px-8 space-y-10 w-full">
+            <div className="py-6 px-4 mt-28 space-y-10 w-full">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 w-full">
                     <div>
                         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">{product?.name}</h1>
@@ -52,10 +52,10 @@ export default function Products({ product, currentStore, orders }) {
 
                     <div className="flex flex-wrap items-center gap-3">
                         <Button variant="outline" className="bg-gray-100 dark:bg-[#2C2C2C] border-0 text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-[#3C3C3C] transition-colors" asChild>
-                            <Link href={`https://${currentStore?.slug}.selll.store/products/${product.id}`} target="_blank" className="flex items-center gap-2">
+                            <a href={`https://${currentStore?.slug}.selll.store/products/${product.id}`} target="_blank" className="flex items-center gap-2">
                                 <Store className="h-4 w-4" />
                                 View in Store
-                            </Link>
+                            </a>
                         </Button>
                         <Button className="bg-primary-orange hover:bg-primary-orange/90 transition-all shadow-md hover:shadow-lg" asChild>
                             <Link href={`/products/${product.id}/edit`} className="flex items-center gap-2">
