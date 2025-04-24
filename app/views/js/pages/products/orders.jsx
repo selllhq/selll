@@ -10,6 +10,16 @@ import {
     CardDescription,
 } from "@/components/shared/card";
 import {
+    Table,
+    TableHeader,
+    TableBody,
+    TableFooter,
+    TableHead,
+    TableRow,
+    TableCell,
+    TableCaption,
+} from "@/components/shared/table";
+import {
     ShoppingBag,
     TrendingUp,
     Store,
@@ -20,7 +30,11 @@ import {
     CheckCircle,
     XCircle,
     Calendar,
-    User
+    User,
+    ArrowUpDown,
+    ChevronDown,
+    MoreHorizontal,
+    Eye
 } from "lucide-react";
 import Button from "@/components/form/button";
 import Input from "@/components/form/input";
@@ -411,85 +425,105 @@ export default function Orders({ auth, orders = [], currentStore, products = [] 
                                 className="mt-6"
                             />
                         ) : (
-                            <div className="space-y-4">
-                                {filteredOrders.map((order) => (
-                                    <div
-                                        key={order.id}
-                                        className="bg-[#2C2C2C] rounded-lg overflow-hidden shadow-lg cursor-pointer hover:bg-[#2C2C2C]/90 transition-colors"
-                                        onClick={() =>
-                                            router.visit(
-                                                `/orders/${order.id}`,
-                                            )
-                                        }
-                                    >
-                                        <div className="p-4">
-                                            <div className="flex items-center justify-between mb-4">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="bg-[#1A1A1A] p-2 rounded-lg">
-                                                        <ShoppingCart className="h-5 w-5 text-primary-orange" />
+                            <div className="rounded-md border border-[#2C2C2C] overflow-hidden">
+                                <Table>
+                                    <TableHeader className="bg-[#1A1A1A]">
+                                        <TableRow className="hover:bg-[#1A1A1A] border-[#2C2C2C]">
+                                            <TableHead className="text-white">Order</TableHead>
+                                            <TableHead className="text-white">Customer</TableHead>
+                                            <TableHead className="text-white">Products</TableHead>
+                                            <TableHead className="text-white">Date</TableHead>
+                                            <TableHead className="text-white">Status</TableHead>
+                                            <TableHead className="text-white text-right">Total</TableHead>
+                                            <TableHead className="text-white w-[50px]"></TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {filteredOrders.map((order) => (
+                                            <TableRow 
+                                                key={order.id} 
+                                                className="hover:bg-[#2C2C2C] border-[#2C2C2C] cursor-pointer"
+                                                onClick={() => router.visit(`/orders/${order.id}`)}
+                                            >
+                                                <TableCell>
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="bg-[#1A1A1A] p-2 rounded-lg">
+                                                            <ShoppingCart className="h-5 w-5 text-primary-orange" />
+                                                        </div>
+                                                        <div>
+                                                            <p className="font-medium text-white">Order #{order.id}</p>
+                                                        </div>
                                                     </div>
-                                                    <div>
-                                                        <h3 className="text-lg font-medium text-white">
-                                                            Order #{order.id}
-                                                        </h3>
-                                                        <p className="text-sm text-gray-400">
-                                                            {dayjs(order.created_at).format("MMM D, YYYY [at] h:mm A")}
-                                                        </p>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <div className="flex items-center gap-2">
+                                                        <User className="h-4 w-4 text-gray-400" />
+                                                        <span className="text-sm text-gray-300 truncate max-w-[150px]">
+                                                            {order.customer?.name || "Anonymous Customer"}
+                                                        </span>
                                                     </div>
-                                                </div>
-                                                <div className="flex items-center gap-3">
+                                                </TableCell>
+                                                <TableCell>
+                                                    <div className="flex flex-wrap gap-1 max-w-[200px]">
+                                                        {order.products?.slice(0, 2).map((product, index) => (
+                                                            <div key={index} className="bg-[#1A1A1A] rounded-md px-2 py-0.5 text-xs text-gray-300 truncate max-w-[100px]">
+                                                                {product.name}
+                                                            </div>
+                                                        ))}
+                                                        {order.products?.length > 2 && (
+                                                            <div className="bg-[#1A1A1A] rounded-md px-2 py-0.5 text-xs text-gray-300">
+                                                                +{order.products.length - 2} more
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                    <div className="text-xs text-gray-400 mt-1">
+                                                        {order.products?.length || 0} {order.products?.length === 1 ? "product" : "products"}
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <div className="text-sm text-gray-300">
+                                                        {dayjs(order.created_at).format("MMM D, YYYY")}
+                                                    </div>
+                                                    <div className="text-xs text-gray-400">
+                                                        {dayjs(order.created_at).format("h:mm A")}
+                                                    </div>
+                                                    <div className="text-xs text-gray-500">
+                                                        {dayjs(order.created_at).fromNow()}
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell>
                                                     {getStatusBadge(order.status)}
-                                                    <div className="text-xl font-bold text-white">
+                                                </TableCell>
+                                                <TableCell className="text-right">
+                                                    <div className="font-bold text-white">
                                                         {new Intl.NumberFormat(
                                                             "en-US",
                                                             {
                                                                 style: "currency",
-                                                                currency:
-                                                                    currentStore?.currency || "USD",
+                                                                currency: currentStore?.currency || "USD",
                                                             },
                                                         ).format(order.total)}
                                                     </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="flex items-start justify-between">
-                                                <div className="space-y-2">
-                                                    <div className="flex items-center gap-2">
-                                                        <User className="h-4 w-4 text-gray-400" />
-                                                        <span className="text-sm text-gray-300">
-                                                            {order.customer?.name || "Anonymous Customer"}
-                                                        </span>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <div className="flex justify-center">
+                                                        <Button 
+                                                            variant="ghost" 
+                                                            size="sm" 
+                                                            className="h-8 w-8 p-0 text-gray-400 hover:text-white"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                router.visit(`/orders/${order.id}`);
+                                                            }}
+                                                        >
+                                                            <Eye className="h-4 w-4" />
+                                                        </Button>
                                                     </div>
-                                                    <div className="flex items-center gap-2">
-                                                        <Package className="h-4 w-4 text-gray-400" />
-                                                        <span className="text-sm text-gray-300">
-                                                            {order.products?.length || 0} {order.products?.length === 1 ? "product" : "products"}
-                                                        </span>
-                                                    </div>
-                                                    <div className="flex items-center gap-2">
-                                                        <Calendar className="h-4 w-4 text-gray-400" />
-                                                        <span className="text-sm text-gray-300">
-                                                            {dayjs(order.created_at).fromNow()}
-                                                        </span>
-                                                    </div>
-                                                </div>
-
-                                                <div className="flex flex-wrap gap-2 max-w-md">
-                                                    {order.products?.slice(0, 3).map((product, index) => (
-                                                        <div key={index} className="bg-[#1A1A1A] rounded-md px-2 py-1 text-xs text-gray-300">
-                                                            {product.name}
-                                                        </div>
-                                                    ))}
-                                                    {order.products?.length > 3 && (
-                                                        <div className="bg-[#1A1A1A] rounded-md px-2 py-1 text-xs text-gray-300">
-                                                            +{order.products.length - 3} more
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
                             </div>
                         )}
                     </div>

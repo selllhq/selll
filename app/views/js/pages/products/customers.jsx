@@ -10,6 +10,16 @@ import {
     CardDescription,
 } from "@/components/shared/card";
 import {
+    Table,
+    TableHeader,
+    TableBody,
+    TableFooter,
+    TableHead,
+    TableRow,
+    TableCell,
+    TableCaption,
+} from "@/components/shared/table";
+import {
     Users,
     User,
     Mail,
@@ -22,7 +32,10 @@ import {
     Calendar,
     MapPin,
     Phone,
-    Clock
+    Clock,
+    ArrowUpDown,
+    ChevronDown,
+    MoreHorizontal
 } from "lucide-react";
 import Button from "@/components/form/button";
 import Input from "@/components/form/input";
@@ -424,81 +437,96 @@ export default function Customers({ auth, customers = [], currentStore, orders =
                                 className="mt-6"
                             />
                         ) : (
-                            <div className="space-y-4">
-                                {filteredCustomers.map((customer) => {
-                                    const stats = getCustomerStats(customer.id);
-
-                                    return (
-                                        <div
-                                            key={customer.id}
-                                            className="bg-[#1A1A1A] rounded-lg overflow-hidden cursor-pointer hover:bg-[#1A1A1A]/90 transition-colors"
-                                            onClick={() =>
-                                                router.visit(
-                                                    `/customers/${customer.id}`,
-                                                )
-                                            }
-                                        >
-                                            <div className="px-5 py-4">
-                                                <div className="flex items-center justify-between">
-                                                    <div className="flex items-center gap-3">
-                                                        <div className="h-10 w-10 rounded-md bg-[#2C2C2C] flex items-center justify-center text-primary-orange font-medium text-lg flex-shrink-0">
-                                                            {customer.name?.split(' ').map(n => n[0]).join('').toUpperCase()}
+                            <div className="rounded-md border border-[#2C2C2C] overflow-hidden">
+                                <Table>
+                                    <TableHeader className="bg-[#1A1A1A]">
+                                        <TableRow className="hover:bg-[#1A1A1A] border-[#2C2C2C]">
+                                            <TableHead className="text-white">Customer</TableHead>
+                                            <TableHead className="text-white">Contact</TableHead>
+                                            <TableHead className="text-white">Orders</TableHead>
+                                            <TableHead className="text-white">Last Order</TableHead>
+                                            <TableHead className="text-white text-right">Total Spent</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {filteredCustomers.map((customer) => {
+                                            const stats = getCustomerStats(customer.id);
+                                            
+                                            return (
+                                                <TableRow 
+                                                    key={customer.id} 
+                                                    className="hover:bg-[#1A1A1A] border-[#2C2C2C] cursor-pointer"
+                                                    onClick={() => router.visit(`/customers/${customer.id}`)}
+                                                >
+                                                    <TableCell>
+                                                        <div className="flex items-center gap-3">
+                                                            <div className="h-10 w-10 rounded-md bg-[#2C2C2C] flex items-center justify-center text-primary-orange font-medium text-lg flex-shrink-0">
+                                                                {customer.name?.split(' ').map(n => n[0]).join('').toUpperCase()}
+                                                            </div>
+                                                            <div>
+                                                                <p className="font-medium text-white">{customer.name}</p>
+                                                                <p className="text-xs text-gray-400">
+                                                                    Customer since {dayjs(customer.created_at).format("MMM D, YYYY")}
+                                                                </p>
+                                                            </div>
                                                         </div>
-                                                        <div>
-                                                            <h3 className="text-base font-medium text-white">
-                                                                {customer.name}
-                                                            </h3>
-                                                            <p className="text-xs text-gray-400">
-                                                                Customer since {dayjs(customer.created_at).format("MMM D, YYYY")}
-                                                            </p>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <div className="flex items-center gap-2">
+                                                            <Mail className="h-4 w-4 text-gray-500 flex-shrink-0" />
+                                                            <span className="text-xs text-gray-400 truncate max-w-[150px]">
+                                                                {customer.email || "No email provided"}
+                                                            </span>
                                                         </div>
-                                                    </div>
-                                                    <div className="text-lg font-bold text-primary-orange">
-                                                        {new Intl.NumberFormat(
-                                                            "en-US",
-                                                            {
-                                                                style: "currency",
-                                                                currency:
-                                                                    currentStore?.currency || "USD",
-                                                            },
-                                                        ).format(stats.totalSpent)}
-                                                    </div>
-                                                </div>
-
-                                                <div className="mt-3">
-                                                    <div className="flex items-center gap-2">
-                                                        <Mail className="h-4 w-4 text-gray-500 flex-shrink-0" />
-                                                        <span className="text-xs text-gray-400 truncate">
-                                                            {customer.email || "No email provided"}
-                                                        </span>
-                                                    </div>
-                                                </div>
-
-                                                <div className="flex items-center justify-between mt-4">
-                                                    <div className="flex items-center gap-1">
-                                                        <div className="flex items-center gap-1">
-                                                            <ShoppingCart className="h-4 w-4 text-primary-orange" />
-                                                            <span className="text-xs text-white">Orders</span>
+                                                        {customer.phone && (
+                                                            <div className="flex items-center gap-2 mt-1">
+                                                                <Phone className="h-4 w-4 text-gray-500 flex-shrink-0" />
+                                                                <span className="text-xs text-gray-400">
+                                                                    {customer.phone}
+                                                                </span>
+                                                            </div>
+                                                        )}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <div className="flex items-center gap-2">
+                                                            <div className="bg-[#2C2C2C] rounded-md px-2 py-0.5 text-xs font-medium text-white">
+                                                                {stats.totalOrdersCount}
+                                                            </div>
+                                                            {stats.completedOrdersCount > 0 && (
+                                                                <div className="bg-[#2C2C2C] rounded-md px-2 py-0.5 text-xs font-medium text-green-500">
+                                                                    {stats.completedOrdersCount} paid
+                                                                </div>
+                                                            )}
                                                         </div>
-                                                        <div className="bg-[#2C2C2C] rounded-md px-2 py-0.5 text-xs font-medium text-white">
-                                                            {stats.totalOrdersCount}
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="flex items-center gap-1">
-                                                        <Clock className="h-4 w-4 text-primary-orange" />
-                                                        <span className="text-xs text-white">Last Order</span>
-                                                        <div className="bg-[#2C2C2C] rounded-md px-2 py-0.5 text-xs font-medium text-white">
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <div className="text-sm text-gray-300">
                                                             {stats.lastOrderDate
                                                                 ? dayjs(stats.lastOrderDate).fromNow()
                                                                 : "Never"}
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
+                                                        {stats.lastOrderDate && (
+                                                            <div className="text-xs text-gray-500">
+                                                                {dayjs(stats.lastOrderDate).format("MMM D, YYYY")}
+                                                            </div>
+                                                        )}
+                                                    </TableCell>
+                                                    <TableCell className="text-right">
+                                                        <div className="font-bold text-primary-orange">
+                                                            {new Intl.NumberFormat(
+                                                                "en-US",
+                                                                {
+                                                                    style: "currency",
+                                                                    currency: currentStore?.currency || "USD",
+                                                                },
+                                                            ).format(stats.totalSpent)}
+                                                        </div>
+                                                    </TableCell>
+                                                </TableRow>
+                                            );
+                                        })}
+                                    </TableBody>
+                                </Table>
                             </div>
                         )}
                     </div>
