@@ -3,10 +3,22 @@ import { Head, Link, router } from "@inertiajs/react";
 import Button from "@/components/form/button";
 import EmptyState from "@/components/layout/empty";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/shared/card";
-import { Package, Store, TrendingUp, Image as ImageIcon } from "lucide-react";
+import {
+    Table,
+    TableHeader,
+    TableBody,
+    TableFooter,
+    TableHead,
+    TableRow,
+    TableCell,
+} from "@/components/shared/table";
+import { Package, Store, TrendingUp, Image as ImageIcon, ShoppingCart, User, Calendar, Clock, CheckCircle, XCircle, AlertCircle, Eye } from "lucide-react";
 import { Badge } from "@/components/shared/badge";
 import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { useState } from "react";
+
+dayjs.extend(relativeTime);
 
 export default function Products({ product, currentStore, orders }) {
     // Helper function to parse JSON images
@@ -22,6 +34,41 @@ export default function Products({ product, currentStore, orders }) {
             console.error('Error parsing product images:', e);
         }
         return parsedImages;
+    };
+    
+    // Get order status badge
+    const getStatusBadge = (status) => {
+        switch (status) {
+            case "completed":
+            case "paid":
+                return (
+                    <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-500 border border-emerald-200 dark:border-emerald-900/30">
+                        <CheckCircle className="w-3.5 h-3.5 mr-1.5" />
+                        {status.charAt(0).toUpperCase() + status.slice(1)}
+                    </div>
+                );
+            case "pending":
+                return (
+                    <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-amber-500/10 text-amber-500 border border-amber-200 dark:border-amber-900/30">
+                        <Clock className="w-3.5 h-3.5 mr-1.5" />
+                        Pending
+                    </div>
+                );
+            case "cancelled":
+                return (
+                    <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-500/10 text-red-500 border border-red-200 dark:border-red-900/30">
+                        <XCircle className="w-3.5 h-3.5 mr-1.5" />
+                        Cancelled
+                    </div>
+                );
+            default:
+                return (
+                    <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-500/10 text-gray-500 border border-gray-200 dark:border-gray-700">
+                        <AlertCircle className="w-3.5 h-3.5 mr-1.5" />
+                        {status.charAt(0).toUpperCase() + status.slice(1)}
+                    </div>
+                );
+        }
     };
 
     const productImages = parseProductImages(product.images);
@@ -204,46 +251,113 @@ export default function Products({ product, currentStore, orders }) {
                     </Card>
                 </div>
 
-                <Card className="w-full border border-gray-100 dark:border-gray-800 shadow-sm bg-white dark:bg-[#2C2C2C]">
-                    <CardHeader>
-                        <CardTitle className="text-black dark:text-white">Recent Orders</CardTitle>
-                        <CardDescription className="dark:text-gray-400">Latest orders for this product</CardDescription>
-                    </CardHeader>
-                    <CardContent className="text-gray-600 dark:text-gray-400">
-                        {orders?.length === 0 ? (
+                <div className="w-full">
+                    <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center gap-3">
+                            <div className="bg-primary-orange/10 p-3 rounded-full">
+                                <ShoppingCart className="h-5 w-5 text-primary-orange" />
+                            </div>
+                            <div>
+                                <h2 className="text-xl font-bold text-gray-900 dark:text-white">Recent Orders</h2>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">Latest orders for this product</p>
+                            </div>
+                        </div>
+                        
+                        {orders?.length > 0 && (
+                            <Button 
+                                variant="outline" 
+                                className="bg-white dark:bg-[#2C2C2C] border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#3C3C3C] transition-all"
+                                asChild
+                            >
+                                <Link href="/orders" className="flex items-center gap-2">
+                                    <ShoppingCart className="h-4 w-4" />
+                                    View All Orders
+                                </Link>
+                            </Button>
+                        )}
+                    </div>
+                    
+                    {orders?.length === 0 ? (
+                        <div className="bg-white dark:bg-[#2C2C2C] rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm p-8">
                             <EmptyState
                                 icon={Package}
                                 title="No orders yet"
                                 description="Share your product with customers to start receiving orders."
                             />
-                        ) : (
-                            <div className="space-y-4">
-                                {orders.map((order) => (
-                                    <div key={order.id} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-[#2C2C2C] rounded-lg border border-gray-100 dark:border-gray-800 hover:shadow-sm transition-all">
-                                        <div>
-                                            <div className="font-medium text-gray-900 dark:text-white">{order.customer_name}</div>
-                                            <div className="text-sm text-gray-600 dark:text-gray-400">{dayjs(order.created_at).format("MMM D, YYYY")}</div>
+                        </div>
+                    ) : (
+                        <div className="bg-white dark:bg-[#2C2C2C] rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden">
+                            <div className="px-6 py-4 bg-gray-50 dark:bg-[#1A1A1A] border-b border-gray-100 dark:border-gray-800 flex items-center justify-between text-xs uppercase font-medium text-gray-500 dark:text-gray-400">
+                                <div className="w-[30%]">Customer</div>
+                                <div className="w-[25%]">Date</div>
+                                <div className="w-[20%]">Status</div>
+                                <div className="w-[15%] text-right">Amount</div>
+                                <div className="w-[10%] text-center">Action</div>
+                            </div>
+                            
+                            <div className="divide-y divide-gray-100 dark:divide-gray-800">
+                                {orders.map((order, index) => (
+                                    <div 
+                                        key={order.id}
+                                        className={`px-6 py-4 flex items-center hover:bg-gray-50 dark:hover:bg-[#222222] transition-colors cursor-pointer ${index === orders.length - 1 ? 'rounded-b-xl' : ''}`}
+                                        onClick={() => router.visit(`/orders/${order.id}`)}
+                                    >
+                                        <div className="w-[30%]">
+                                            <div className="flex items-center gap-3">
+                                                <div className="h-9 w-9 rounded-full bg-gray-100 dark:bg-[#3C3C3C] flex items-center justify-center text-gray-500 dark:text-gray-400">
+                                                    <User className="h-4 w-4" />
+                                                </div>
+                                                <div>
+                                                    <p className="font-medium text-gray-900 dark:text-white">
+                                                        {order.customer_name || "Anonymous Customer"}
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="text-right">
-                                            <div className="font-medium text-primary-orange">
+                                        
+                                        <div className="w-[25%]">
+                                            <div className="flex flex-col">
+                                                <span className="text-sm font-medium text-gray-900 dark:text-white">
+                                                    {dayjs(order.created_at).format("MMM D, YYYY")}
+                                                </span>
+                                                <span className="text-xs text-gray-500 dark:text-gray-400">
+                                                    {dayjs(order.created_at).fromNow()}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="w-[20%]">
+                                            {getStatusBadge(order.status)}
+                                        </div>
+                                        
+                                        <div className="w-[15%] text-right">
+                                            <span className="font-bold text-primary-orange">
                                                 {new Intl.NumberFormat("en-US", {
                                                     style: "currency",
-                                                    currency: currentStore?.currency,
+                                                    currency: currentStore?.currency || "USD",
                                                 }).format(order.amount)}
-                                            </div>
-                                            <Badge
-                                                className="px-3 py-1 text-xs font-medium rounded-full shadow-sm"
-                                                variant={order.status === "completed" ? "success" : order.status === "pending" ? "warning" : "default"}
+                                            </span>
+                                        </div>
+                                        
+                                        <div className="w-[10%] flex justify-center">
+                                            <Button
+                                                variant="ghost"
+                                                size="sm"
+                                                className="h-8 w-8 p-0 rounded-full bg-gray-100 dark:bg-[#3C3C3C] text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-[#4C4C4C]"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    router.visit(`/orders/${order.id}`);
+                                                }}
                                             >
-                                                {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
-                                            </Badge>
+                                                <Eye className="h-4 w-4" />
+                                            </Button>
                                         </div>
                                     </div>
                                 ))}
                             </div>
-                        )}
-                    </CardContent>
-                </Card>
+                        </div>
+                    )}
+                </div>
             </div>
         </Layout>
     );
