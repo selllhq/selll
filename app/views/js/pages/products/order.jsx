@@ -47,6 +47,194 @@ export default function Order({ auth, order, currentStore }) {
             currency: currentStore?.currency || "USD",
         }).format(amount);
     };
+    
+    const handlePrint = () => {
+        // Create a new window for printing
+        const printWindow = window.open('', '_blank');
+        
+        // Generate the print content
+        const printContent = `
+            <html>
+            <head>
+                <title>Order #${order?.id} - ${currentStore?.name}</title>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        line-height: 1.6;
+                        color: #333;
+                        max-width: 800px;
+                        margin: 0 auto;
+                        padding: 20px;
+                    }
+                    .header {
+                        text-align: center;
+                        margin-bottom: 30px;
+                        border-bottom: 1px solid #eee;
+                        padding-bottom: 20px;
+                    }
+                    .store-name {
+                        font-size: 24px;
+                        font-weight: bold;
+                        margin: 0;
+                    }
+                    .order-info {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 20px;
+                    }
+                    .order-id {
+                        font-size: 18px;
+                        font-weight: bold;
+                    }
+                    .order-date, .order-status {
+                        color: #666;
+                    }
+                    .section {
+                        margin-bottom: 30px;
+                    }
+                    .section-title {
+                        font-size: 18px;
+                        margin-bottom: 10px;
+                        border-bottom: 1px solid #eee;
+                        padding-bottom: 5px;
+                    }
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-bottom: 20px;
+                    }
+                    th, td {
+                        padding: 10px;
+                        text-align: left;
+                        border-bottom: 1px solid #eee;
+                    }
+                    th {
+                        background-color: #f9f9f9;
+                    }
+                    .text-right {
+                        text-align: right;
+                    }
+                    .customer-info {
+                        display: flex;
+                        justify-content: space-between;
+                    }
+                    .customer-info div {
+                        flex: 1;
+                    }
+                    .total-row {
+                        font-weight: bold;
+                    }
+                    .footer {
+                        margin-top: 40px;
+                        text-align: center;
+                        font-size: 12px;
+                        color: #999;
+                    }
+                    @media print {
+                        body {
+                            padding: 0;
+                            margin: 0;
+                        }
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="header">
+                    <p class="store-name">${currentStore?.name}</p>
+                </div>
+                
+                <div class="order-info">
+                    <div>
+                        <p class="order-id">Order #${order?.id}</p>
+                        <p class="order-date">Placed on ${dayjs(order?.created_at).format('MMMM D, YYYY [at] h:mm A')}</p>
+                    </div>
+                    <div>
+                        <p class="order-status">Status: ${order?.status.charAt(0).toUpperCase() + order?.status.slice(1)}</p>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2 class="section-title">Order Items</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th class="text-right">Price</th>
+                                <th class="text-right">Quantity</th>
+                                <th class="text-right">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${order?.items?.map(item => {
+                                const product = item.product || {};
+                                const price = product.price || 0;
+                                const quantity = item.quantity || 1;
+                                const total = price * quantity;
+                                
+                                return `
+                                    <tr>
+                                        <td>${product.name}</td>
+                                        <td class="text-right">${formatCurrency(price)}</td>
+                                        <td class="text-right">${quantity}</td>
+                                        <td class="text-right">${formatCurrency(total)}</td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" class="text-right">Subtotal</td>
+                                <td class="text-right">${formatCurrency(order?.items?.reduce((acc, item) => {
+                                    const price = item.product?.price || 0;
+                                    const quantity = item.quantity || 1;
+                                    return acc + (price * quantity);
+                                }, 0) || 0)}</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td colspan="3" class="text-right">Total</td>
+                                <td class="text-right">${formatCurrency(order?.total || 0)}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                
+                <div class="section">
+                    <h2 class="section-title">Customer Information</h2>
+                    <div class="customer-info">
+                        <div>
+                            <p><strong>Name:</strong> ${order?.customer?.name || 'N/A'}</p>
+                            <p><strong>Email:</strong> ${order?.customer?.email || 'N/A'}</p>
+                            <p><strong>Phone:</strong> ${order?.customer?.phone || 'N/A'}</p>
+                        </div>
+                        <div>
+                            <p><strong>Address:</strong> ${order?.customer?.address || 'N/A'}</p>
+                            <p><strong>Customer since:</strong> ${order?.customer?.created_at ? dayjs(order.customer.created_at).format('MMMM D, YYYY') : 'N/A'}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer">
+                    <p>Thank you for your business!</p>
+                    <p>Printed on ${dayjs().format('MMMM D, YYYY [at] h:mm A')}</p>
+                    <p>Powered by Selll</p>
+                </div>
+            </body>
+            </html>
+        `;
+        
+        // Write the content to the new window
+        printWindow.document.write(printContent);
+        printWindow.document.close();
+        
+        // Wait for content to load before printing
+        printWindow.onload = function() {
+            printWindow.print();
+            // Close the window after printing (optional)
+            // printWindow.onafterprint = function() {
+            //     printWindow.close();
+            // };
+        };
+    };
 
     const getStatusBadge = (status) => {
         switch (status) {
@@ -144,6 +332,7 @@ export default function Order({ auth, order, currentStore }) {
                                     variant="outline"
                                     size="sm"
                                     className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C]"
+                                    onClick={handlePrint}
                                 >
                                     <Printer className="h-4 w-4 mr-2" />
                                     Print
@@ -162,8 +351,8 @@ export default function Order({ auth, order, currentStore }) {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="md:col-span-2 space-y-6">
-                            <Card>
+                        <div className="md:col-span-2 h-full flex flex-col">
+                            <Card className="flex-1 flex flex-col h-full">
                                 <CardHeader>
                                     <CardTitle className="flex items-center gap-2">
                                         <Package className="h-5 w-5 text-primary-orange" />
@@ -177,134 +366,98 @@ export default function Order({ auth, order, currentStore }) {
                                         in this order
                                     </CardDescription>
                                 </CardHeader>
-                                <CardContent>
-                                    <div className="rounded-md border border-[#2C2C2C] overflow-hidden">
-                                        <Table>
-                                            <TableHeader className="bg-[#1A1A1A]">
-                                                <TableRow className="hover:bg-[#1A1A1A] border-[#2C2C2C]">
-                                                    <TableHead className="text-white">
-                                                        Product
-                                                    </TableHead>
-                                                    <TableHead className="text-white text-right">
-                                                        Price
-                                                    </TableHead>
-                                                    <TableHead className="text-white text-center">
-                                                        Quantity
-                                                    </TableHead>
-                                                    <TableHead className="text-white text-right">
-                                                        Total
-                                                    </TableHead>
-                                                </TableRow>
-                                            </TableHeader>
-                                            <TableBody>
-                                                {orderItems.map(
-                                                    (item, index) => {
-                                                        const product =
-                                                            item.product || {};
-                                                        const price =
-                                                            product.price || 0;
-                                                        const quantity =
-                                                            item.quantity || 1;
-                                                        const total =
-                                                            price * quantity;
-
-                                                        return (
-                                                            <TableRow
-                                                                key={index}
-                                                                className="hover:bg-[#1A1A1A] border-[#2C2C2C]"
-                                                            >
-                                                                <TableCell>
-                                                                    <div className="flex items-center gap-3">
-                                                                        <div className="h-12 w-12 rounded-md bg-[#2C2C2C] flex items-center justify-center overflow-hidden">
-                                                                            {product.images &&
-                                                                            product
-                                                                                .images
-                                                                                .length >
-                                                                                0 ? (
-                                                                                <img
-                                                                                    src={
-                                                                                        product
-                                                                                            .images[0]
-                                                                                    }
-                                                                                    alt={
-                                                                                        product.name
-                                                                                    }
-                                                                                    className="h-full w-full object-cover"
-                                                                                />
-                                                                            ) : (
-                                                                                <Package className="h-6 w-6 text-gray-500" />
-                                                                            )}
-                                                                        </div>
-                                                                        <div>
-                                                                            <p className="font-medium text-white">
-                                                                                {
-                                                                                    product.name
-                                                                                }
-                                                                            </p>
-                                                                            {product.description && (
-                                                                                <p className="text-xs text-gray-400 line-clamp-1">
-                                                                                    {
-                                                                                        product.description
-                                                                                    }
-                                                                                </p>
-                                                                            )}
-                                                                        </div>
+                                <CardContent className="flex-1 flex flex-col h-full">
+                                    {orderItems.length === 0 ? (
+                                        <div className="flex-1 flex flex-col items-center justify-center border border-[#2C2C2C] rounded-md bg-[#1A1A1A] p-8">
+                                            <Package className="h-12 w-12 text-gray-500 mb-4" />
+                                            <p className="text-gray-400 text-lg">No items in this order</p>
+                                        </div>
+                                    ) : (
+                                        <div className="rounded-md border border-[#2C2C2C] overflow-hidden h-full flex flex-col">
+                                            <div className="grid grid-cols-4 bg-[#1A1A1A] p-4 border-b border-[#2C2C2C]">
+                                                <div className="col-span-1 font-medium text-white">Product</div>
+                                                <div className="col-span-1 font-medium text-white text-right">Price</div>
+                                                <div className="col-span-1 font-medium text-white text-center">Quantity</div>
+                                                <div className="col-span-1 font-medium text-white text-right">Total</div>
+                                            </div>
+                                            
+                                            <div className="flex-1 flex flex-col">
+                                                {orderItems.map((item, index) => {
+                                                    const product = item.product || {};
+                                                    const price = product.price || 0;
+                                                    const quantity = item.quantity || 1;
+                                                    const total = price * quantity;
+                                                    
+                                                    return (
+                                                        <div 
+                                                            key={index}
+                                                            className="grid grid-cols-4 p-4 border-b border-[#2C2C2C] hover:bg-[#1A1A1A] transition-colors"
+                                                        >
+                                                            <div className="col-span-1">
+                                                                <div className="flex items-center gap-3">
+                                                                    <div className="h-12 w-12 rounded-md bg-[#2C2C2C] flex items-center justify-center overflow-hidden">
+                                                                        {product.images && product.images.length > 0 ? (
+                                                                            <img
+                                                                                src={product.images[0]}
+                                                                                alt={product.name}
+                                                                                className="h-full w-full object-cover"
+                                                                            />
+                                                                        ) : (
+                                                                            <Package className="h-6 w-6 text-gray-500" />
+                                                                        )}
                                                                     </div>
-                                                                </TableCell>
-                                                                <TableCell className="text-right">
-                                                                    {formatCurrency(
-                                                                        price,
-                                                                    )}
-                                                                </TableCell>
-                                                                <TableCell className="text-center">
-                                                                    {quantity}
-                                                                </TableCell>
-                                                                <TableCell className="text-right font-medium">
-                                                                    {formatCurrency(
-                                                                        total,
-                                                                    )}
-                                                                </TableCell>
-                                                            </TableRow>
-                                                        );
-                                                    },
+                                                                    <div>
+                                                                        <p className="font-medium text-white">
+                                                                            {product.name}
+                                                                        </p>
+                                                                        {product.description && (
+                                                                            <p className="text-xs text-gray-400 line-clamp-1">
+                                                                                {product.description}
+                                                                            </p>
+                                                                        )}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-span-1 text-right self-center">
+                                                                {formatCurrency(price)}
+                                                            </div>
+                                                            <div className="col-span-1 text-center self-center">
+                                                                {quantity}
+                                                            </div>
+                                                            <div className="col-span-1 text-right font-medium self-center">
+                                                                {formatCurrency(total)}
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })}
+                                                
+                                                {/* Spacer to push the footer down when few items */}
+                                                {orderItems.length < 3 && (
+                                                    <div className="flex-1"></div>
                                                 )}
-                                            </TableBody>
-                                            <TableFooter className="bg-[#1A1A1A]">
-                                                <TableRow className="border-[#2C2C2C]">
-                                                    <TableCell
-                                                        colSpan={3}
-                                                        className="text-right font-medium"
-                                                    >
-                                                        Subtotal
-                                                    </TableCell>
-                                                    <TableCell className="text-right font-medium">
-                                                        {formatCurrency(
-                                                            subtotal,
-                                                        )}
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow className="border-[#2C2C2C]">
-                                                    <TableCell
-                                                        colSpan={3}
-                                                        className="text-right font-medium"
-                                                    >
-                                                        Total
-                                                    </TableCell>
-                                                    <TableCell className="text-right font-bold text-primary-orange">
-                                                        {formatCurrency(
-                                                            order?.total || 0,
-                                                        )}
-                                                    </TableCell>
-                                                </TableRow>
-                                            </TableFooter>
-                                        </Table>
-                                    </div>
+                                            </div>
+                                            
+                                            <div className="mt-auto bg-[#1A1A1A] border-t border-[#2C2C2C]">
+                                                <div className="grid grid-cols-4 p-4 border-b border-[#2C2C2C]">
+                                                    <div className="col-span-3 text-right font-medium">Subtotal</div>
+                                                    <div className="col-span-1 text-right font-medium">
+                                                        {formatCurrency(subtotal)}
+                                                    </div>
+                                                </div>
+                                                <div className="grid grid-cols-4 p-4">
+                                                    <div className="col-span-3 text-right font-medium">Total</div>
+                                                    <div className="col-span-1 text-right font-bold text-primary-orange">
+                                                        {formatCurrency(order?.total || 0)}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
                                 </CardContent>
                             </Card>
                         </div>
 
-                        {/* Customer information */}
-                        <div className="space-y-6">
+                        <div className="space-y-6 h-full flex flex-col">
                             <Card>
                                 <CardHeader>
                                     <CardTitle className="flex items-center gap-2">
