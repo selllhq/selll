@@ -83,7 +83,7 @@ export default function Dashboard({
                                     </Link>
                                 </Button>
                                 <Button
-                                    className="bg-primary-red hover:bg-primary-red/90 w-full md:w-auto"
+                                    className="bg-primary-red hover:bg-primary-red/90 text-white w-full md:w-auto"
                                     asChild
                                 >
                                     <a

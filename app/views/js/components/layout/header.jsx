@@ -122,7 +122,7 @@ export function AppHeader({ breadcrumbs = [], variant = "header" }) {
     return (
         <>
             <div className="fixed top-0 z-50 w-full border-sidebar-border/80 border-b bg-background">
-                <div className="mx-auto flex h-16 md:justify-between items-center px-4 md:max-w-7xl">
+                <div className="mx-auto flex h-16 md:justify-between items-center px-4">
                     {/* Mobile Menu */}
                     <div className="lg:hidden">
                         <Sheet>

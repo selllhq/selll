@@ -1,5 +1,5 @@
 import Layout from "@/layouts/app-layout";
-import { Head, router } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import { useState } from "react";
 import EmptyState from "@/components/layout/empty";
 import {
@@ -24,6 +24,10 @@ import {
     XCircle,
     User,
     Eye,
+    Store,
+    ShoppingBag,
+    TrendingUp,
+    Search,
 } from "lucide-react";
 import Button from "@/components/form/button";
 import Input from "@/components/form/input";

@@ -8,6 +8,7 @@ import { cn } from "@/utils";
 import { useState, useEffect } from "react";
 import Layout from "@/layouts/app-layout";
 import { CURRENCY_LIMITS, CURRENCY_SYMBOLS } from "@/utils/store";
+import PreviewImage from "@/components/products/preview-image";
 
 const Setup = ({ currentStore }) => {
     const [images, setImages] = useState([]);
