@@ -52,8 +52,8 @@ const Customize = ({ auth, store }) => {
         >
             <Head title="Customize Store" />
 
-            <div className="flex h-[calc(100vh-4rem)]">
-                <div className="w-[60%] overflow-y-auto border-r dark:border-[#2C2C2C] p-6">
+            <div className="flex h-[calc(100vh-5rem)]">
+                <div className="w-[60%] overflow-y-auto border-r dark:border-[#2C2C2C] p-6 pt-20">
                     <div>
                         <div className="mb-8">
                             <h2 className="text-2xl font-medium mb-2">Store Customization</h2>
