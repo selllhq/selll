@@ -137,7 +137,7 @@ export function AppHeader({ breadcrumbs = [], variant = "header" }) {
                             </SheetTrigger>
                             <SheetContent
                                 side="left"
-                                className="flex h-full w-64 flex-col items-stretch justify-between bg-neutral-50"
+                                className="flex h-full w-64 flex-col items-stretch justify-between bg-background"
                             >
                                 <SheetTitle className="sr-only">
                                     Navigation Menu
