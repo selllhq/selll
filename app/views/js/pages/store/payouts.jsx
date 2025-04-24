@@ -127,17 +127,7 @@ export default function Payouts({ auth, payouts = [], orders = [], currentStore 
     return (
         <Layout
             variant="header"
-            className="p-4 pt-2 mt-5 md:mt-10"
-            breadcrumbs={[
-                {
-                    title: "Dashboard",
-                    href: "/dashboard",
-                },
-                {
-                    title: "Payouts",
-                    href: "/store/payouts",
-                },
-            ]}
+            className="p-2 pt-2 mt-5 md:mt-20"
         >
             <Head title="Payouts" />
 

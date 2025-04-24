@@ -107,7 +107,7 @@ export default function Customers({ auth, customers = [], currentStore, orders =
         >
             <Head title="Customers" />
 
-            <div>
+            <div className="md:mt-5">
                 {customers?.length === 0 ? (
                     <div className="h-[calc(100vh-8rem)] flex items-center justify-center">
                         <EmptyState
@@ -124,13 +124,13 @@ export default function Customers({ auth, customers = [], currentStore, orders =
                         />
                     </div>
                 ) : (
-                    <div className="space-y-8 py-4 px-4">
+                    <div className="space-y-8 py-4">
                         <div className="md:flex items-center justify-between">
                             <div>
-                                <h2 className="text-4xl font-bold text-white mb-2">
+                                <h2 className="text-2xl md:text-4xl font-bold md:mb-2">
                                     Customers
                                 </h2>
-                                <p className="text-gray-400">
+                                <p className="text-muted-foreground text-sm md:text-base">
                                     Manage and track your store's customers
                                 </p>
                             </div>
@@ -234,7 +234,7 @@ export default function Customers({ auth, customers = [], currentStore, orders =
                                                         .filter(
                                                             (order) =>
                                                                 order.status ===
-                                                                    "paid" &&
+                                                                "paid" &&
                                                                 dayjs(
                                                                     order.created_at,
                                                                 ).isAfter(
@@ -386,16 +386,16 @@ export default function Customers({ auth, customers = [], currentStore, orders =
                         </div>
 
                         <div className="flex items-center justify-between mb-6">
-                            <h3 className="text-lg font-medium text-white">
+                            <h3 className="text-lg font-medium">
                                 {filter === "all"
                                     ? "All Customers"
                                     : filter === "repeat"
-                                      ? "Repeat Customers"
-                                      : filter === "single"
-                                        ? "One-time Customers"
-                                        : filter === "high_value"
-                                          ? "High-value Customers"
-                                          : "Customers with No Purchases"}{" "}
+                                        ? "Repeat Customers"
+                                        : filter === "single"
+                                            ? "One-time Customers"
+                                            : filter === "high_value"
+                                                ? "High-value Customers"
+                                                : "Customers with No Purchases"}{" "}
                                 ({filteredCustomers.length})
                             </h3>
 
