@@ -184,7 +184,8 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                     </div>
 
                     <div className="grid lg:grid-cols-3 gap-6">
-                        <div className="bg-[linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.9)),url('/assets/img/screenshots/customize.jpg')] ring-2 ring-muted-foreground/30 bg-center bg-cover p-4 md:p-10 rounded-2xl overflow-hidden col-span-3 aspect-video flex items-end justify-start">
+                        <div className="bg-primary-red ring-2 ring-muted-foreground/30 bg-center bg-cover p-4 md:p-10 rounded-2xl overflow-hidden col-span-3 aspect-video flex flex-col items-start gap-8">
+                            <img src="/assets/img/screenshots/customize.jpg" className="rounded-xl" alt="" />
                             <div className="max-w-sm">
                                 No complex setup, no developer required. Whether
                                 you're a creator, freelancer, or small business,
@@ -192,7 +193,8 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                                 accessible worldwide.
                             </div>
                         </div>
-                        <div className="bg-[linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.9)),url('/assets/img/screenshots/store.jpg')] ring-2 ring-muted-foreground/30 bg-center bg-cover p-4 md:p-10 rounded-2xl overflow-hidden aspect-video flex items-end justify-start">
+                        <div className="bg-primary-red ring-2 ring-muted-foreground/30 bg-center bg-cover p-4 md:p-10 rounded-2xl overflow-hidden flex flex-col items-start gap-4">
+                            <img src="/assets/img/screenshots/store.jpg" className="rounded-md h-[210px]" alt="" />
                             <div className="max-w-sm">
                                 <h3 className="text-xl">
                                     Free Domain + Dashboard
@@ -204,7 +206,8 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                                 </p>
                             </div>
                         </div>
-                        <div className="bg-[linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.9)),url('/assets/img/screenshots/order.jpg')] ring-2 ring-muted-foreground/30 bg-center bg-cover p-4 md:p-10 rounded-2xl overflow-hidden aspect-video flex items-end justify-start">
+                        <div className="bg-primary-red ring-2 ring-muted-foreground/30 bg-center bg-cover p-4 md:p-10 rounded-2xl overflow-hidden flex flex-col items-start gap-4">
+                            <img src="/assets/img/screenshots/order.jpg" className="rounded-md h-[210px]" alt="" />
                             <div className="max-w-sm">
                                 <h3 className="text-xl">
                                     Sales data & Reports
@@ -216,7 +219,8 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                                 </p>
                             </div>
                         </div>
-                        <div className="bg-[linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.9)),url('/assets/img/screenshots/customer.jpg')] ring-2 ring-muted-foreground/30 bg-center bg-cover p-4 md:p-10 rounded-2xl overflow-hidden aspect-video flex items-end justify-start">
+                        <div className="bg-primary-red ring-2 ring-muted-foreground/30 bg-center bg-cover p-4 md:p-10 rounded-2xl overflow-hidden flex flex-col items-start gap-4">
+                            <img src="/assets/img/screenshots/customer.jpg" className="rounded-md h-[210px]" alt="" />
                             <div className="max-w-sm">
                                 <h3 className="text-xl">Simple payments</h3>
                                 <p>
