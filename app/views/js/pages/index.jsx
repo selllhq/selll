@@ -1,7 +1,7 @@
 import { Head, Link } from "@inertiajs/react";
 import Navbar from "@/components/layout/navbar";
 import Button from "@/components/form/button";
-import { CheckCircle, MailCheckIcon } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import WaitlistForm from "@/components/waitlist/form";
 
 const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
@@ -15,14 +15,14 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
 
             <section className="relative pt-60 bg-[url(/assets/img/bg-vector.svg)] bg-cover bg-[20px_-1000px] bg-rota bg-no-repeat">
                 <div className="max-w-screen-xl mx-auto px-2 sm:px-4 text-center">
-                    <h1 className="text-7xl tracking-[-1.44px] font-bold max-w-[766px] mx-auto mt-[14px] mb-6">
+                    <h1 className="text-4xl md:text-7xl tracking-[-1.44px] font-bold max-w-[766px] mx-auto mt-[14px] mb-6">
                         Skip the Setup, Start Sellling{" "}
                         <span className="bg-[linear-gradient(315deg,var(--color-primary-orange)_25%,var(--color-primary-red))] bg-clip-text [-webkit-text-fill-color:transparent] inline-block italic pr-2">
                             for free
                         </span>
                     </h1>
 
-                    <p className="max-w-[667px] mx-auto text-xl text-gray-500 dark:text-gray-300">
+                    <p className="max-w-[667px] mx-auto md:text-xl text-gray-500 dark:text-gray-300">
                         No complex setup. No Stripe account required. No
                         technical headaches. Just create your storefront, add
                         your products, share your link, and start
@@ -63,7 +63,7 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                         </Button>
                     )}
 
-                    <ul className="flex w-fit mx-auto gap-12 mb-[100px]">
+                    <ul className="hidden md:flex w-fit mx-auto gap-12 mb-[100px]">
                         <li>
                             <p className="flex items-center gap-[10px] text-sm font-medium">
                                 <CheckCircle className="text-primary-orange" />
@@ -106,7 +106,7 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="h-96 absolute -bottom-10 w-full left-0 bg-gradient-to-br from-transparent to-background blur-2xl bg-cover"></div>
+                        <div className="h-36 md:h-96 absolute -bottom-10 w-full left-0 bg-gradient-to-br from-transparent to-background blur-2xl bg-cover"></div>
                     </div>
                 </div>
             </section>
@@ -170,7 +170,7 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                 <div className="container mx-auto px-2 sm:px-0">
                     <div className="flex flex-wrap sm:flex-nowrap sm:items-center mb-10">
                         <div className="w-full pb-md sm:w-2/3 lg:w-3/5 sm:pb-0 sm:pr-lg">
-                            <h2 className="text-4xl font-bold">
+                            <h2 className="text-3xl md:text-4xl font md:font-bold mb-2 md:mb-0">
                                 Instant Storefronts, No Coding Needed
                             </h2>
                         </div>
@@ -184,7 +184,7 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                     </div>
 
                     <div className="grid lg:grid-cols-3 gap-6">
-                        <div className="bg-primary-red ring-2 ring-muted-foreground/30 bg-center bg-cover p-4 md:p-10 rounded-2xl overflow-hidden col-span-3 aspect-video flex flex-col items-start gap-8">
+                        <div className="bg-primary-red ring-2 ring-muted-foreground/30 bg-center bg-cover p-4 md:p-10 rounded-2xl overflow-hidden md:col-span-3 md:aspect-video flex flex-col items-start gap-8">
                             <img src="/assets/img/screenshots/customize.jpg" className="rounded-xl" alt="" />
                             <div className="max-w-sm">
                                 No complex setup, no developer required. Whether
@@ -262,7 +262,7 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                             <h3 className="font-medium text-xl sm:text-3xl">
                                 Turn Your Idea into Income—Fast
                             </h3>
-                            <p className="mt-4 text-lg font-normal text-muted-foreground">
+                            <p className="mt-2 md:mt-4 md:text-lg font-normal text-muted-foreground">
                                 Skip the complicated setup and start selling
                                 today. Your storefront, payments, and sales—all
                                 in one place.
@@ -303,10 +303,10 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                                     role="listitem"
                                     tabIndex="0"
                                 >
-                                    <span className="block text-body-lg text-primary-orange w-10 md:w-16">
+                                    <span className="hidden md:block text-body-lg text-primary-orange w-10 md:w-16">
                                         01
                                     </span>
-                                    <span className="block grow border-b dark:border-b-primary-orange pb-2 md:py-3 transition-color duration-300 text-pretty text-white">
+                                    <span className="block grow border-b dark:border-b-primary-orange px-6 md:px-0 pb-2 md:py-3 transition-color duration-300 text-pretty text-white">
                                         Create your store
                                     </span>
                                 </p>
@@ -315,10 +315,10 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                                     role="listitem"
                                     tabIndex="0"
                                 >
-                                    <span className="block text-body-lg text-primary-orange w-10 md:w-16">
+                                    <span className="hidden md:block text-body-lg text-primary-orange w-10 md:w-16">
                                         02
                                     </span>
-                                    <span className="block grow border-b dark:border-b-primary-orange pb-2 md:py-3 transition-color duration-300 text-pretty text-white">
+                                    <span className="block grow border-b dark:border-b-primary-orange px-6 md:px-0 pb-2 md:py-3 transition-color duration-300 text-pretty text-white">
                                         Add your products
                                     </span>
                                 </p>
@@ -327,16 +327,16 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                                     role="listitem"
                                     tabIndex="0"
                                 >
-                                    <span className="block text-body-lg text-primary-orange w-10 md:w-16">
+                                    <span className="hidden md:block text-body-lg text-primary-orange w-10 md:w-16">
                                         03
                                     </span>
-                                    <span className="block grow border-b dark:border-b-primary-orange pb-2 md:py-3 transition-color duration-300 text-pretty border-transparent text-white">
+                                    <span className="block grow border-b dark:border-b-primary-orange px-6 md:px-0 pb-2 md:py-3 transition-color duration-300 text-pretty border-transparent text-white">
                                         Set up payouts
                                     </span>
                                 </p>
                             </div>
-                            <div className="sm:pl-10 md:pl-16 mt-10">
-                                <Button as={Link} href="/auth/register">
+                            <div className="px-6 sm:px-0 sm:pl-10 md:pl-16 mt-10">
+                                <Button as={Link} href="/auth/register" className="w-full md:w-max">
                                     Let's do it
                                 </Button>
                             </div>
@@ -375,20 +375,20 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                         </div>
                     </div>
                     <div className="flex w-full items-end justify-center">
-                        <div className="mx-auto w-full container font-bold text-[120px]">
+                        <div className="mx-auto w-full container font-bold text-xl md:text-[120px]">
                             <a
                                 href="https://leafphp.dev"
                                 className="flex items-center gap-2"
                             >
                                 <img
                                     src="https://zero.leafphp.dev/assets/img/logo.png"
-                                    className="size-36 mr-4"
+                                    className="size-10 md:size-36 mr-2 md:mr-4"
                                     alt=""
                                 />
-                                <span className="text-[180px] font-semibold">
+                                <span className="text-5xl md:text-[180px] font-semibold">
                                     Selll
                                 </span>
-                                <small className="italic ml-6">
+                                <small className="italic ml-3 md:ml-6">
                                     by Leaf PHP
                                 </small>
                             </a>

@@ -55,12 +55,15 @@ const Navbar = ({
     auth,
 }) => {
     return (
-        <header className="py-4 fixed top-0 left-0 w-full bg-background shadow-xs dark:shadow-primary-orange/20 z-50 backdrop-blur-2xl backdrop-opacity-20 flex justify-center items-center">
+        <header className="py-4 px-4 md:px-0 fixed top-0 left-0 w-full bg-background shadow-xs dark:shadow-primary-orange/20 z-50 backdrop-blur-2xl backdrop-opacity-20 flex justify-center items-center">
             <div className="container">
                 {/* Desktop Menu */}
                 <nav className="hidden justify-between lg:flex">
                     <div className="flex items-center gap-6">
-                        <Link href={logo.url} className="flex items-center gap-2">
+                        <Link
+                            href={logo.url}
+                            className="flex items-center gap-2"
+                        >
                             <img
                                 src={logo.src}
                                 className="size-5"
@@ -96,17 +99,19 @@ const Navbar = ({
                         )}
                     </div>
                 </nav>
+
                 {/* Mobile Menu */}
                 <div className="block lg:hidden">
                     <div className="flex items-center justify-between">
-                        <a href={logo.url} className="flex items-center gap-2">
+                        <a href={logo.url} className="flex items-center gap-1">
                             <img
                                 src={logo.src}
-                                className="w-8"
+                                className="w-3"
                                 alt={logo.alt}
                             />
                             <span className="text-lg font-semibold">
                                 {logo.title}
+                                <small className="italic ml-1">by Leaf PHP</small>
                             </span>
                         </a>
                         <Sheet>
