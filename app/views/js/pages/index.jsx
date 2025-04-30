@@ -58,7 +58,14 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                         //         Start Selling
                         //     </Button>
                         // </form>
-                        <Button className="my-10 bg-primary-red hover:bg-primary-red/80" onClick={() => document.getElementById("waitlist-email").focus()}>
+                        <Button
+                            className="my-10 bg-primary-red hover:bg-primary-red/80"
+                            onClick={() =>
+                                document
+                                    .getElementById("waitlist-email")
+                                    .focus()
+                            }
+                        >
                             Join waitlist
                         </Button>
                     )}
@@ -100,8 +107,18 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                             <div className="h-full w-full aspect-video border overflow-hidden rounded-lg">
                                 <div className="relative w-full max-w-full h-full opacity-100">
                                     <div className="relative h-full w-full">
-                                        <img width="1885" alt="image" className="w-full h-full hidden dark:block" src="/assets/img/screenshots/dash-dark.jpg" />
-                                        <img width="1883" alt="image" className="w-full h-full block dark:hidden" src="/assets/img/screenshots/dash-light.jpg" />
+                                        <img
+                                            width="1885"
+                                            alt="image"
+                                            className="w-full h-full hidden dark:block"
+                                            src="/assets/img/screenshots/dash-dark.jpg"
+                                        />
+                                        <img
+                                            width="1883"
+                                            alt="image"
+                                            className="w-full h-full block dark:hidden"
+                                            src="/assets/img/screenshots/dash-light.jpg"
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -185,7 +202,11 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
 
                     <div className="grid lg:grid-cols-3 gap-6">
                         <div className="bg-primary-red ring-2 ring-muted-foreground/30 bg-center bg-cover p-4 md:p-10 rounded-2xl overflow-hidden md:col-span-3 md:aspect-video flex flex-col items-start gap-8">
-                            <img src="/assets/img/screenshots/customize.jpg" className="rounded-xl" alt="" />
+                            <img
+                                src="/assets/img/screenshots/customize.jpg"
+                                className="rounded-xl"
+                                alt=""
+                            />
                             <div className="max-w-sm">
                                 No complex setup, no developer required. Whether
                                 you're a creator, freelancer, or small business,
@@ -194,10 +215,14 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                             </div>
                         </div>
                         <div className="bg-primary-red ring-2 ring-muted-foreground/30 bg-center bg-cover p-4 md:p-10 rounded-2xl overflow-hidden flex flex-col items-start gap-4">
-                            <img src="/assets/img/screenshots/store.jpg" className="rounded-md h-[210px]" alt="" />
+                            <img
+                                src="/assets/img/screenshots/store.jpg"
+                                className="rounded-md h-[210px]"
+                                alt=""
+                            />
                             <div className="max-w-sm">
                                 <h3 className="text-xl">
-                                    Free Domain + Dashboard
+                                    Your Store, Your Domain, Your Control
                                 </h3>
                                 <p>
                                     Get a free <b>.selll.store</b> domain and a
@@ -207,10 +232,14 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                             </div>
                         </div>
                         <div className="bg-primary-red ring-2 ring-muted-foreground/30 bg-center bg-cover p-4 md:p-10 rounded-2xl overflow-hidden flex flex-col items-start gap-4">
-                            <img src="/assets/img/screenshots/order.jpg" className="rounded-md h-[210px]" alt="" />
+                            <img
+                                src="/assets/img/screenshots/order.jpg"
+                                className="rounded-md h-[210px]"
+                                alt=""
+                            />
                             <div className="max-w-sm">
                                 <h3 className="text-xl">
-                                    Sales data & Reports
+                                    Track Sales with Built-In Analytics
                                 </h3>
                                 <p>
                                     Get insights into your sales, track your
@@ -220,9 +249,15 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                             </div>
                         </div>
                         <div className="bg-primary-red ring-2 ring-muted-foreground/30 bg-center bg-cover p-4 md:p-10 rounded-2xl overflow-hidden flex flex-col items-start gap-4">
-                            <img src="/assets/img/screenshots/customer.jpg" className="rounded-md h-[210px]" alt="" />
+                            <img
+                                src="/assets/img/screenshots/customer.jpg"
+                                className="rounded-md h-[210px]"
+                                alt=""
+                            />
                             <div className="max-w-sm">
-                                <h3 className="text-xl">Simple payments</h3>
+                                <h3 className="text-xl">
+                                    Get Paid, Anywhere in the World
+                                </h3>
                                 <p>
                                     Accept payments from customers worldwide
                                     with ease. Selll supports multiple
@@ -253,22 +288,26 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 referrerPolicy="strict-origin-when-cross-origin"
                             ></iframe> */}
-                            <img src="/assets/img/screenshots/product.jpg" alt="image" className="rounded-2xl w-full h-full" />
+                            <img
+                                src="/assets/img/screenshots/product.jpg"
+                                alt="image"
+                                className="rounded-2xl w-full h-full"
+                            />
                         </div>
                     </div>
 
                     <div className="flex flex-col items-center gap-16 w-full text-center">
                         <div>
                             <h3 className="font-medium text-xl sm:text-3xl">
-                                Turn Your Idea into Income—Fast
+                                Turn Your Idea into Income — Fast
                             </h3>
                             <p className="mt-2 md:mt-4 md:text-lg font-normal text-muted-foreground">
-                                Skip the complicated setup and start selling
-                                today. Your storefront, payments, and sales—all
-                                in one place.
+                                Skip the complexity. Selll gives you everything
+                                you need to launch, get paid, and grow — all in
+                                one place.
                             </p>
                         </div>
-                        <div className="font-medium text-[96px] text-primary-orange leading-none">
+                        {/* <div className="font-medium text-[96px] text-primary-orange leading-none">
                             {Intl.NumberFormat().format(purchases)}
                             <p className="text-lg font-normal text-black dark:text-white">
                                 Purchases made on Selll stores
@@ -281,7 +320,7 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                                     Active Stores
                                 </p>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>
@@ -294,7 +333,11 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
 
                     <div className="mt-16 grid-container grid gap-x-12 gap-y-xl grid-cols-4 sm:items-center md:grid-cols-12">
                         <div className="grid-images-container w-full h-full hidden sm:flex gap-sm justify-self-end col-span-4 items-end ml-10 order-2 sm:col-span-2 sm:ml-0 sm:order-1 md:col-span-5 lg:col-span-6">
-                            <img src="/assets/img/screenshots/orders.jpg" alt="" className="rounded-2xl" />
+                            <img
+                                src="/assets/img/screenshots/orders.jpg"
+                                alt=""
+                                className="rounded-2xl"
+                            />
                         </div>
                         <div className="col-span-4 sm:col-span-2 sm:order-2 md:col-span-7 lg:col-span-6 lg:pl-lg">
                             <div className="mb-2xl" role="list">
@@ -336,7 +379,11 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                                 </p>
                             </div>
                             <div className="px-6 sm:px-0 sm:pl-10 md:pl-16 mt-10">
-                                <Button as={Link} href="/auth/register" className="w-full md:w-max">
+                                <Button
+                                    as={Link}
+                                    href="/auth/register"
+                                    className="w-full md:w-max"
+                                >
                                     Let's do it
                                 </Button>
                             </div>

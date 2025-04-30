@@ -8,11 +8,9 @@ import {
     ShoppingBag,
     CreditCard,
     Store,
-    Truck,
     Shield,
     Wallet,
     HelpCircle,
-    BarChart,
     Globe,
 } from "lucide-react";
 import Footer from "@/components/layout/footer";
@@ -33,8 +31,8 @@ const Faqs = ({ auth }) => {
         { id: "products", name: "Products", icon: ShoppingBag },
         { id: "payments", name: "Payments", icon: CreditCard },
         { id: "store", name: "Store Customization", icon: Store },
-        { id: "shipping", name: "Shipping & Delivery", icon: Truck },
-        { id: "analytics", name: "Analytics & Reports", icon: BarChart },
+        // { id: "shipping", name: "Shipping & Delivery", icon: Truck },
+        // { id: "analytics", name: "Analytics & Reports", icon: BarChart },
         { id: "international", name: "International Selling", icon: Globe },
         { id: "security", name: "Security & Privacy", icon: Shield },
         { id: "payouts", name: "Payouts", icon: Wallet },
@@ -50,22 +48,22 @@ const Faqs = ({ auth }) => {
             {
                 id: "how-much-does-it-cost",
                 question: "How much does Selll cost?",
-                answer: "You can start selling online for free with Selll's Starter plan, you don't have to pay anything until you're ready to scale. Our premium plans offer additional features and tools for growing your business for $20 per month.",
+                answer: "You can start selling online for free with Selll's Starter plan, you don't have to pay anything until you're ready to scale.",
             },
             {
                 id: "technical-knowledge",
                 question: "Do I need technical knowledge to use Selll?",
                 answer: "Not at all! Selll is designed to be user-friendly and requires no coding or technical skills. Our intuitive interface makes it easy to set up your store, add products, and start selling in minutes.",
             },
-            {
-                id: "sell-physical-digital",
-                question: "Can I sell both physical and digital products?",
-                answer: "Yes, Selll supports both physical and digital products. You can easily set up your store to sell physical items with shipping options or digital downloads that customers can access immediately after purchase.",
-            },
+            // {
+            //     id: "sell-physical-digital",
+            //     question: "Can I sell both physical and digital products?",
+            //     answer: "Yes, Selll supports both physical and digital products. Selll collects the necessary information for each type of product, so you can easily manage inventory, shipping on your physical products, and delivery for your digital products.",
+            // },
             {
                 id: "customer-support",
                 question: "What kind of customer support does Selll offer?",
-                answer: "We offer 24/7 customer support via email and chat. Our support team is always ready to help you with any questions or issues you might have. Premium plans also include priority support and dedicated account managers.",
+                answer: "We offer 12 hours of customer support via email and chat for all users. Our support team is available to help you with any questions or issues you may have. Premium plans will also include priority support for faster response times.",
             },
         ],
         products: [
@@ -82,14 +80,14 @@ const Faqs = ({ auth }) => {
             {
                 id: "product-categories",
                 question: "Can I organize my products into categories?",
-                answer: "Yes, you can create custom categories and subcategories to organize your products. This helps customers navigate your store and find what they're looking for more easily.",
+                answer: "Yes, you can create custom categories to organize your products. This helps customers navigate your store and find what they're looking for more easily.",
             },
-            {
-                id: "product-variants",
-                question:
-                    "How do I set up product variants like sizes and colors?",
-                answer: "When creating or editing a product, you'll find a 'Variants' section where you can add different options like sizes, colors, or materials. You can set specific prices and inventory levels for each variant combination.",
-            },
+            // {
+            //     id: "product-variants",
+            //     question:
+            //         "How do I set up product variants like sizes and colors?",
+            //     answer: "When creating or editing a product, you'll find a 'Variants' section where you can add different options like sizes, colors, or materials. You can set specific prices and inventory levels for each variant combination.",
+            // },
             // {
             //     id: "bulk-import",
             //     question: "Can I import products in bulk?",
@@ -105,7 +103,7 @@ const Faqs = ({ auth }) => {
             {
                 id: "transaction-fees",
                 question: "What are the transaction fees?",
-                answer: "Selll charges a small transaction fee of 2.9% + $0.30 per transaction on the free plan. Premium plans have reduced transaction fees starting at 2.5% + $0.30. There are no hidden fees or monthly charges beyond your subscription plan.",
+                answer: "Selll charges a small transaction fee of 2% per transaction in addition to the payment processor fees which vary by provider, but range from 2% to 3%. Premium plans will have lower transaction fees once you reach a certain sales threshold.",
             },
             {
                 id: "payment-security",
@@ -115,19 +113,19 @@ const Faqs = ({ auth }) => {
             {
                 id: "refund-process",
                 question: "How do I process refunds?",
-                answer: "You can process refunds directly from your Selll dashboard. Go to the Orders section, find the order you want to refund, and click the 'Refund' button. You can choose to refund the full amount or a partial amount.",
+                answer: "Refunds are handled by our account managers. You can initiate a refund directly from the order details page in your dashboard. The refund will be processed through the original payment method used by the customer.",
             },
         ],
         store: [
             {
                 id: "customize-store",
                 question: "How can I customize my store's appearance?",
-                answer: "Selll offers a range of customization options. You can choose from various themes, customize colors and fonts, add your logo, and arrange content blocks to create a unique store that matches your brand identity.",
+                answer: "Selll offers a range of customization options. You can choose different colours, layouts, and even how products are displayed. We are working on adding more themes and templates to make it even easier to create a unique look for your store.",
             },
             {
                 id: "custom-domain",
                 question: "Can I use my own domain name?",
-                answer: "Yes, all Selll plans allow you to connect your own custom domain. Free plans get a yourbusiness.selll.io subdomain, while premium plans can use fully custom domains like yourbusiness.com.",
+                answer: "Not yet, but we are working on this feature for our premium plans. For now, your store will be hosted on a Selll subdomain (e.g., yourstore.selll.store). Once custom domains are available, you will be able to connect your own domain easily.",
             },
             {
                 id: "mobile-friendly",
@@ -140,28 +138,28 @@ const Faqs = ({ auth }) => {
                 answer: "Selll includes built-in SEO features that allow you to customize page titles, meta descriptions, URLs, and image alt tags. We also automatically generate sitemaps and use proper HTML structure to help your store rank better in search results.",
             },
         ],
-        shipping: [
-            {
-                id: "shipping-options",
-                question: "What shipping options can I offer?",
-                answer: "Selll allows you to set up various shipping options including flat rate, weight-based, price-based, and location-based shipping. You can also offer free shipping based on certain conditions like minimum order value.",
-            },
-            {
-                id: "shipping-labels",
-                question: "Can I print shipping labels directly from Selll?",
-                answer: "Yes, premium plans include integrated shipping label printing. You can generate and print shipping labels for major carriers directly from your dashboard, saving you time and reducing errors.",
-            },
-            {
-                id: "international-shipping",
-                question: "Can I ship internationally?",
-                answer: "Yes, Selll supports international shipping. You can define shipping zones and set specific rates for different countries or regions. You can also display shipping costs in local currencies to provide a better customer experience.",
-            },
-            {
-                id: "order-tracking",
-                question: "How do customers track their orders?",
-                answer: "When you fulfill an order and add a tracking number, customers automatically receive an email with their tracking information. They can also log in to their account on your store to view order status and tracking details.",
-            },
-        ],
+        // shipping: [
+        //     {
+        //         id: "shipping-options",
+        //         question: "What shipping options can I offer?",
+        //         answer: "Selll allows you to set up various shipping options including flat rate, weight-based, price-based, and location-based shipping. You can also offer free shipping based on certain conditions like minimum order value.",
+        //     },
+        //     {
+        //         id: "shipping-labels",
+        //         question: "Can I print shipping labels directly from Selll?",
+        //         answer: "Yes, premium plans include integrated shipping label printing. You can generate and print shipping labels for major carriers directly from your dashboard, saving you time and reducing errors.",
+        //     },
+        //     {
+        //         id: "international-shipping",
+        //         question: "Can I ship internationally?",
+        //         answer: "Yes, Selll supports international shipping. You can define shipping zones and set specific rates for different countries or regions. You can also display shipping costs in local currencies to provide a better customer experience.",
+        //     },
+        //     {
+        //         id: "order-tracking",
+        //         question: "How do customers track their orders?",
+        //         answer: "When you fulfill an order and add a tracking number, customers automatically receive an email with their tracking information. They can also log in to their account on your store to view order status and tracking details.",
+        //     },
+        // ],
         analytics: [
             {
                 id: "sales-reports",
@@ -188,24 +186,18 @@ const Faqs = ({ auth }) => {
             {
                 id: "multi-currency",
                 question: "Can I sell in multiple currencies?",
-                answer: "Yes, premium plans support multi-currency selling. You can display prices in your customers' local currencies, which helps increase conversion rates and provides a better shopping experience for international customers.",
+                answer: "For now, Selll only allows you to select one currency for your store. This currency however can be changed at any time and is not locked to your country. We are working on adding multi-currency support in the future.",
             },
             {
                 id: "language-translation",
                 question: "Can my store be available in multiple languages?",
-                answer: "Yes, with our premium plans, you can create a multilingual store. This allows you to reach customers in different countries and provide them with a localized shopping experience in their preferred language.",
+                answer: "Not yet, but we are working on adding multi-language support in the future. For now, your store will be in English, but you can customize product descriptions and other content in any language.",
             },
             {
                 id: "international-taxes",
                 question:
                     "How does Selll handle international taxes and duties?",
-                answer: "Selll automatically calculates the appropriate taxes based on your customer's location. For premium plans, we also provide tools to help you manage and display import duties and taxes, ensuring transparency for your international customers.",
-            },
-            {
-                id: "international-compliance",
-                question:
-                    "How can I ensure my store complies with international regulations?",
-                answer: "Selll helps you stay compliant with major international regulations like GDPR, CCPA, and VAT requirements. Our system automatically applies the necessary legal notices and tax calculations based on where your customers are located.",
+                answer: "All taxes and duties are automatically calculated based on the customer's location, and are handled by our checkout payment processors.",
             },
         ],
         security: [
@@ -225,11 +217,11 @@ const Faqs = ({ auth }) => {
                 question: "Does Selll offer fraud protection?",
                 answer: "Yes, all Selll stores come with basic fraud detection tools. Premium plans include advanced fraud protection features that automatically flag suspicious orders based on various risk indicators, helping you prevent chargebacks and fraud losses.",
             },
-            {
-                id: "gdpr-compliance",
-                question: "Is Selll GDPR compliant?",
-                answer: "Yes, Selll is fully GDPR compliant. We provide the necessary tools and features to help you collect, store, and process customer data in accordance with GDPR requirements, including consent management and data export capabilities.",
-            },
+            // {
+            //     id: "gdpr-compliance",
+            //     question: "Is Selll GDPR compliant?",
+            //     answer: "Yes, Selll is fully GDPR compliant. We provide the necessary tools and features to help you collect, store, and process customer data in accordance with GDPR requirements, including consent management and data export capabilities.",
+            // },
         ],
         payouts: [
             {
@@ -240,17 +232,17 @@ const Faqs = ({ auth }) => {
             {
                 id: "payout-methods",
                 question: "What payout methods are available?",
-                answer: "Selll supports payouts via bank transfer, PayPal, and mobile money services in supported countries. You can select your preferred payout method in your account settings.",
+                answer: "Selll supports payouts via bank transfer, Wise, and mobile money services in supported countries. Note that some payout methods come with additional fees not covered by Selll.",
             },
             {
                 id: "minimum-payout",
                 question: "Is there a minimum payout amount?",
-                answer: "Yes, the minimum payout amount is $20 for bank transfers and $5 for PayPal and mobile money transfers. If your available balance is below the minimum, it will roll over to the next payout period.",
+                answer: "Yes, the minimum payout amount is $20 for bank transfers and $5 for Wise and mobile money transfers. If your available balance is below the minimum, it will roll over to the next payout period.",
             },
             {
                 id: "payout-fees",
                 question: "Are there any fees for payouts?",
-                answer: "Standard payouts to bank accounts in your local currency are free. International transfers and currency conversions may incur a small fee depending on your bank and location. PayPal payouts may be subject to PayPal's standard fees.",
+                answer: "Standard payouts to bank accounts in your local currency may incur fees depending on your bank. For Wise and mobile money transfers, there may be additional fees charged by the service provider. Selll does not charge any additional fees for processing payouts.",
             },
         ],
     };

@@ -111,13 +111,13 @@ const Privacy = ({ auth }) => {
                         <section>
                             <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">9. Contact Us</h2>
                             <p className="mb-3">
-                                If you have any questions about this Privacy Policy, please contact us at <a href="mailto:legal@selll.online" className="text-primary-orange hover:underline">legal@selll.online</a> or visit our <Link href="/contact" className="text-primary-orange hover:underline">contact page</Link>.
+                                If you have any questions about this Privacy Policy, please contact us at <a href="mailto:support@selll.online" className="text-primary-orange hover:underline">support@selll.online</a> or visit our <Link href="/contact" className="text-primary-orange hover:underline">contact page</Link>.
                             </p>
                         </section>
                     </div>
 
                     <div className="mt-12 pt-6 border-t border-gray-200 dark:border-gray-800 text-sm text-gray-500 dark:text-gray-400">
-                        <p>Last updated: April 23, 2025</p>
+                        <p>Last updated: April 30, 2025</p>
                     </div>
                 </div>
             </div>

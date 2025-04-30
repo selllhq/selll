@@ -158,7 +158,7 @@ const Pricing = ({ auth }) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="mx-auto max-w-2xl py-20 text-xl font-medium">
+                        {/* <div className="mx-auto max-w-2xl py-20 text-xl font-medium">
                             <blockquote className="relative">
                                 <span className="absolute -left-2 top-0">
                                     “
@@ -204,7 +204,7 @@ const Pricing = ({ auth }) => {
                                     </div>
                                 </div>
                             </blockquote>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>

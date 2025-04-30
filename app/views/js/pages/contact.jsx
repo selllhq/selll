@@ -4,7 +4,7 @@ import Navbar from "@/components/layout/navbar";
 import Button from "@/components/form/button";
 import Input from "@/components/form/input";
 import Label from "@/components/form/label";
-import { Mail, Phone } from "lucide-react";
+import { Instagram, Mail, Phone, Twitter } from "lucide-react";
 import Footer from "@/components/layout/footer";
 
 const Contact = ({ auth }) => {
@@ -103,6 +103,42 @@ const Contact = ({ auth }) => {
 
                                     <div className="flex items-start gap-3">
                                         <div className="mt-1">
+                                            <Instagram className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                                                Follow us on Instagram
+                                            </p>
+                                            <a
+                                                target="_blank"
+                                                href="https://instagram.com/myselllonline"
+                                                className="text-gray-900 dark:text-white hover:text-primary-orange transition-colors"
+                                            >
+                                                @myselllonline
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-start gap-3">
+                                        <div className="mt-1">
+                                            <Twitter className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                                                Keep in touch on X
+                                            </p>
+                                            <a
+                                                target="_blank"
+                                                href="https://twitter.com/myselllonline"
+                                                className="text-gray-900 dark:text-white hover:text-primary-orange transition-colors"
+                                            >
+                                                @myselllonline
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    {/* <div className="flex items-start gap-3">
+                                        <div className="mt-1">
                                             <Phone className="h-5 w-5 text-gray-500 dark:text-gray-400" />
                                         </div>
                                         <div>
@@ -116,12 +152,11 @@ const Contact = ({ auth }) => {
                                                 +1-555-123-4567
                                             </a>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
 
-                        {/* Right Column - Contact Form */}
                         <div>
                             <h3 className="text-xl font-medium text-gray-900 dark:text-white mb-6">
                                 Tell us how we can help
@@ -209,7 +244,7 @@ const Contact = ({ auth }) => {
                                         onChange={handleChange}
                                         rows="4"
                                         className="bg-gray-100 dark:bg-[#2C2C2C] dark:border-[#3C3C3C] text-gray-900 dark:text-white focus-visible:ring-primary-orange min-h-[100px] resize-none"
-                                        placeholder="I'm interested in Selll for Cloud. Let me know more about..."
+                                        placeholder="I'm interested in Selll for my business. Let me know more about..."
                                         required
                                     />
                                 </div>
