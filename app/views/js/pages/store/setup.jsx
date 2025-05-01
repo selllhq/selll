@@ -39,9 +39,14 @@ const Setup = ({ auth }) => {
                             </div>
                         </div>
 
-                        <form onSubmit={submit} className="space-y-10 pb-8">
-                            <div className="space-y-3">
-                                <Label htmlFor="name" className="text-sm block mb-1">Store Name</Label>
+                        <form onSubmit={submit} className="space-y-6 pb-8">
+                            <div className="space-y-2">
+                                <Label
+                                    htmlFor="name"
+                                    className="text-sm block mb-1"
+                                >
+                                    Store Name
+                                </Label>
                                 <Input
                                     id="name"
                                     className="block w-full dark:bg-[#2C2C2C] dark:border-0 focus:ring-primary-orange/20"
@@ -52,14 +57,26 @@ const Setup = ({ auth }) => {
                                     required
                                     placeholder="My Super Store"
                                 />
-                                <InputError
-                                    className="mt-2"
-                                    message={errors.name}
-                                />
+                                {errors?.name ? (
+                                    <InputError
+                                        className="mt-2"
+                                        message={errors.name}
+                                    />
+                                ) : (
+                                    <small className="text-xs text-muted-foreground mt-1 block">
+                                        This name will appear on receipts,
+                                        invoices, and other communication.
+                                    </small>
+                                )}
                             </div>
 
-                            <div className="space-y-3">
-                                <Label htmlFor="slug" className="text-sm block mb-1">Store URL</Label>
+                            <div className="space-y-2">
+                                <Label
+                                    htmlFor="slug"
+                                    className="text-sm block mb-1"
+                                >
+                                    Store URL
+                                </Label>
                                 <div className="relative">
                                     <Input
                                         id="slug"
@@ -74,7 +91,7 @@ const Setup = ({ auth }) => {
                                         required
                                         placeholder="myshopurl"
                                     />
-                                    <div className="absolute top-0 right-0 px-4 h-full inline-flex items-center min-w-fit rounded-e-lg bg-[#3C3C3C] text-gray-400">
+                                    <div className="absolute top-0 right-0 px-4 h-full inline-flex items-center min-w-fit rounded-e-lg text-muted-foreground">
                                         <span className="text-sm">
                                             .selll.store
                                         </span>
@@ -86,8 +103,11 @@ const Setup = ({ auth }) => {
                                 />
                             </div>
 
-                            <div className="space-y-3">
-                                <Label htmlFor="description" className="text-sm block mb-1">
+                            <div className="space-y-2">
+                                <Label
+                                    htmlFor="description"
+                                    className="text-sm block mb-1"
+                                >
                                     Store Description
                                 </Label>
                                 <Input
@@ -106,9 +126,12 @@ const Setup = ({ auth }) => {
                                     message={errors.description}
                                 />
                             </div>
-                            
-                            <div className="space-y-3">
-                                <Label htmlFor="currency" className="text-sm block mb-1">
+
+                            <div className="space-y-2">
+                                <Label
+                                    htmlFor="currency"
+                                    className="text-sm block mb-1"
+                                >
                                     Store Currency
                                 </Label>
                                 <Input
@@ -116,25 +139,43 @@ const Setup = ({ auth }) => {
                                     as="select"
                                     className="block w-full dark:bg-[#2C2C2C] dark:border-0 focus:ring-primary-orange/20"
                                     value={data.currency}
-                                    onChange={(e) => setData("currency", e.target.value)}
+                                    onChange={(e) =>
+                                        setData("currency", e.target.value)
+                                    }
                                     required
                                 >
                                     <option value="USD">USD - US Dollar</option>
                                     <option value="EUR">EUR - Euro</option>
-                                    <option value="GBP">GBP - British Pound</option>
-                                    <option value="NGN">NGN - Nigerian Naira</option>
-                                    <option value="GHS">GHS - Ghanaian Cedi</option>
-                                    <option value="KES">KES - Kenyan Shilling</option>
-                                    <option value="ZAR">ZAR - South African Rand</option>
-                                    <option value="CAD">CAD - Canadian Dollar</option>
+                                    <option value="GBP">
+                                        GBP - British Pound
+                                    </option>
+                                    <option value="NGN">
+                                        NGN - Nigerian Naira
+                                    </option>
+                                    <option value="GHS">
+                                        GHS - Ghanaian Cedi
+                                    </option>
+                                    <option value="KES">
+                                        KES - Kenyan Shilling
+                                    </option>
+                                    <option value="ZAR">
+                                        ZAR - South African Rand
+                                    </option>
+                                    <option value="CAD">
+                                        CAD - Canadian Dollar
+                                    </option>
                                 </Input>
-                                <p className="text-xs text-muted-foreground mt-1">
-                                    This currency will be used for all transactions in your store.
-                                </p>
-                                <InputError
-                                    className="mt-2"
-                                    message={errors.currency}
-                                />
+                                {errors?.currency ? (
+                                    <InputError
+                                        className="mt-2"
+                                        message={errors.currency}
+                                    />
+                                ) : (
+                                    <p className="text-xs text-muted-foreground mt-1">
+                                        This currency will be used for all
+                                        transactions in your store.
+                                    </p>
+                                )}
                             </div>
 
                             <Button

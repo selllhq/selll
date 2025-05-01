@@ -11,6 +11,7 @@ export default function Register({ request }) {
         email: request?.email || "",
         password: "",
         confirmPassword: "",
+        invite: request?.invite || "",
     });
 
     const submit = (e) => {

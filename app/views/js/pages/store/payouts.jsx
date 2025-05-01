@@ -28,17 +28,11 @@ import * as Dialog from "@radix-ui/react-dialog";
 import dayjs from "dayjs";
 import { StatusBadge } from "@/components/shared/badge";
 
-export default function Payouts({
-    auth,
-    payouts = [],
-    orders = [],
-    currentStore,
-}) {
+export default function Payouts({ payouts = [], orders = [], currentStore }) {
     const [search, setSearch] = useState("");
     const [filter, setFilter] = useState("all");
     const [showRequestDialog, setShowRequestDialog] = useState(false);
 
-    // Calculate total available balance from completed orders that haven't been paid out
     const completedOrders = orders.filter(
         (order) => order.status === "paid" && !order.payout_id,
     );
@@ -47,13 +41,11 @@ export default function Payouts({
         0,
     );
 
-    // Calculate total paid out amount
     const totalPaidOut = payouts.reduce(
         (acc, payout) => acc + Number(payout.amount),
         0,
     );
 
-    // Calculate pending payout amount (payouts with status "pending")
     const pendingPayouts = payouts.filter(
         (payout) => payout.status === "pending",
     );
@@ -62,7 +54,6 @@ export default function Payouts({
         0,
     );
 
-    // Filter payouts based on search and filter
     const filteredPayouts = payouts.filter((payout) => {
         const matchesSearch =
             payout.reference?.toLowerCase().includes(search.toLowerCase()) ||
@@ -72,7 +63,9 @@ export default function Payouts({
                 .includes(search.toLowerCase()) ||
             String(payout.amount).includes(search);
 
-        if (!matchesSearch) return false;
+        if (!matchesSearch) {
+            return false;
+        }
 
         switch (filter) {
             case "pending":
@@ -86,7 +79,6 @@ export default function Payouts({
         }
     });
 
-    // Form for requesting a payout
     const { data, setData, post, processing, errors, reset } = useForm({
         amount: availableBalance,
         payment_method: "bank_transfer",
@@ -96,9 +88,9 @@ export default function Payouts({
         notes: "",
     });
 
-    // Handle payout request submission
     const handleSubmit = (e) => {
         e.preventDefault();
+
         post("/store/payouts/request", {
             onSuccess: () => {
                 setShowRequestDialog(false);

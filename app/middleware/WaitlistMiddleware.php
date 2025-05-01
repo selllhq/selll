@@ -17,7 +17,7 @@ class WaitlistMiddleware extends Middleware
             '/contact',
             '/auth/login',
             '/waitlist',
-            '/waitlist/invite',
+            '/admin/waitlist/invite',
             '/billing/webhook'
         ];
 
