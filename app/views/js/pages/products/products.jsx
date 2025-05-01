@@ -76,7 +76,7 @@ export default function Products({ orders = [], products, currentStore }) {
                     <div className="space-y-8 py-4 px-4">
                         <div className="md:flex items-center justify-between">
                             <div>
-                                <h2 className="text-4xl font-bold text-white mb-2">
+                                <h2 className="text-4xl font-bold mb-2">
                                     Products
                                 </h2>
                                 <p className="text-gray-400">

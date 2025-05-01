@@ -13,7 +13,7 @@ class DashboardController extends Controller
         $currentStoreId = auth()->user()->current_store_id;
 
         $stores = User::find(auth()->id())->ownedStores()->get();
-        $currentStore = $currentStoreId ? Store::find($currentStoreId)->first() : [];
+        $currentStore = $currentStoreId ? Store::find($currentStoreId) : [];
 
         $products = $currentStoreId ? $currentStore->products()->get() : [];
         $customers = $currentStoreId ? $currentStore->customers()->get() : [];

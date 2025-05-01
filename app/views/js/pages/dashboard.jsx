@@ -363,7 +363,7 @@ export default function Dashboard({
                                                     </AvatarFallback>
                                                 </Avatar>
                                                 <div className="ml-4 space-y-1">
-                                                    <p className="text-sm font-medium leading-none text-white">
+                                                    <p className="text-sm font-medium leading-none">
                                                         {order.customer.name}
                                                     </p>
                                                     <p className="text-sm text-gray-500">
