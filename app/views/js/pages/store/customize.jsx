@@ -1,13 +1,10 @@
 import { Head, useForm } from "@inertiajs/react";
-import { Store, LayoutDashboard, Palette, Image } from "lucide-react";
+import { Store, LayoutDashboard, Palette, Image, Mail } from "lucide-react";
 import Button from "@/components/form/button";
-import InputError from "@/components/form/input-error";
-import Input from "@/components/form/input";
-import Label from "@/components/form/label";
-import { Switch } from "@/components/form/switch";
 import { cn } from "@/utils";
 import Layout from "@/layouts/app-layout";
 import * as Tabs from "@radix-ui/react-tabs";
+import { LayoutTab, HeroTab, ThemeTab, ContactTab } from "./tabs";
 
 const Customize = ({ store }) => {
     const storeConfig = JSON.parse(store?.config ?? "{}");
@@ -17,6 +14,8 @@ const Customize = ({ store }) => {
         hero_title: storeConfig?.hero_title ?? "",
         hero_description: storeConfig?.hero_description ?? "",
         hero_content_alignment: storeConfig?.hero_content_alignment ?? "center",
+        show_hero_button: storeConfig?.show_hero_button ?? false,
+        hero_button_text: storeConfig?.hero_button_text ?? "Shop Now",
         show_store_name: storeConfig?.show_store_name ?? true,
         show_store_logo: storeConfig?.show_store_logo ?? true,
         show_store_description: storeConfig?.show_store_description ?? true,
@@ -29,6 +28,13 @@ const Customize = ({ store }) => {
         text_color: storeConfig?.text_color ?? "#FFFFFF",
         border_color: storeConfig?.border_color ?? "#2C2C2C",
         open_product_in_popup: storeConfig?.open_product_in_popup ?? true,
+        show_contact_info: storeConfig?.show_contact_info ?? true,
+        contact_email: storeConfig?.contact_email ?? "",
+        contact_phone: storeConfig?.contact_phone ?? "",
+        facebook_url: storeConfig?.facebook_url ?? "",
+        twitter_url: storeConfig?.twitter_url ?? "",
+        instagram_url: storeConfig?.instagram_url ?? "",
+        contact_address: storeConfig?.contact_address ?? "",
     });
 
     const submit = (e) => {
@@ -104,6 +110,17 @@ const Customize = ({ store }) => {
                                         <Palette className="w-4 h-4" />
                                         Theme
                                     </Tabs.Trigger>
+                                    <Tabs.Trigger
+                                        value="contact"
+                                        className={cn(
+                                            "flex items-center gap-2 px-4 py-2 text-sm font-medium text-muted-foreground",
+                                            "border-b-2 border-transparent",
+                                            "hover:text-secondary-foreground data-[state=active]:text-secondary-foreground data-[state=active]:border-primary-orange",
+                                        )}
+                                    >
+                                        <Mail className="w-4 h-4" />
+                                        Contact
+                                    </Tabs.Trigger>
                                 </Tabs.List>
 
                                 <div className="mt-6">
@@ -111,493 +128,28 @@ const Customize = ({ store }) => {
                                         value="layout"
                                         className="space-y-6"
                                     >
-                                        <div className="space-y-6">
-                                            <div>
-                                                <Label>Display Settings</Label>
-                                                <div className="mt-4 space-y-4">
-                                                    <div className="flex items-center justify-between">
-                                                        <div>
-                                                            <h3 className="font-medium">
-                                                                Show Store Name
-                                                            </h3>
-                                                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                                                                Display your
-                                                                store name in
-                                                                the header
-                                                            </p>
-                                                        </div>
-                                                        <Switch
-                                                            checked={
-                                                                data.show_store_name
-                                                            }
-                                                            onCheckedChange={(
-                                                                checked,
-                                                            ) =>
-                                                                setData(
-                                                                    "show_store_name",
-                                                                    checked,
-                                                                )
-                                                            }
-                                                        />
-                                                    </div>
-
-                                                    <div className="flex items-center justify-between">
-                                                        <div>
-                                                            <h3 className="font-medium">
-                                                                Show Store Logo
-                                                            </h3>
-                                                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                                                                Display your
-                                                                store logo in
-                                                                the header
-                                                            </p>
-                                                        </div>
-                                                        <Switch
-                                                            checked={
-                                                                data.show_store_logo
-                                                            }
-                                                            onCheckedChange={(
-                                                                checked,
-                                                            ) =>
-                                                                setData(
-                                                                    "show_store_logo",
-                                                                    checked,
-                                                                )
-                                                            }
-                                                        />
-                                                    </div>
-
-                                                    <div className="flex items-center justify-between">
-                                                        <div>
-                                                            <h3 className="font-medium">
-                                                                Show Store
-                                                                Description
-                                                            </h3>
-                                                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                                                                Display your
-                                                                store
-                                                                description on
-                                                                the homepage
-                                                            </p>
-                                                        </div>
-                                                        <Switch
-                                                            checked={
-                                                                data.show_store_description
-                                                            }
-                                                            onCheckedChange={(
-                                                                checked,
-                                                            ) =>
-                                                                setData(
-                                                                    "show_store_description",
-                                                                    checked,
-                                                                )
-                                                            }
-                                                        />
-                                                    </div>
-
-                                                    <div className="flex items-center justify-between">
-                                                        <div>
-                                                            <h3 className="font-medium">
-                                                                Store
-                                                                Information in
-                                                                Popup
-                                                            </h3>
-                                                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                                                                Show store
-                                                                information in a
-                                                                popup instead of
-                                                                the footer
-                                                            </p>
-                                                        </div>
-                                                        <Switch
-                                                            checked={
-                                                                data.show_store_information_in_popup
-                                                            }
-                                                            onCheckedChange={(
-                                                                checked,
-                                                            ) =>
-                                                                setData(
-                                                                    "show_store_information_in_popup",
-                                                                    checked,
-                                                                )
-                                                            }
-                                                        />
-                                                    </div>
-
-                                                    <div className="flex items-center justify-between">
-                                                        <div>
-                                                            <h3 className="font-medium">
-                                                                Show Product
-                                                                Prices
-                                                            </h3>
-                                                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                                                                Display product
-                                                                prices in the
-                                                                catalog
-                                                            </p>
-                                                        </div>
-                                                        <Switch
-                                                            checked={
-                                                                data.show_product_price
-                                                            }
-                                                            onCheckedChange={(
-                                                                checked,
-                                                            ) =>
-                                                                setData(
-                                                                    "show_product_price",
-                                                                    checked,
-                                                                )
-                                                            }
-                                                        />
-                                                    </div>
-
-                                                    <div className="flex items-center justify-between">
-                                                        <div>
-                                                            <h3 className="font-medium">
-                                                                Show Product
-                                                                Descriptions
-                                                            </h3>
-                                                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                                                                Display product
-                                                                descriptions in
-                                                                the catalog
-                                                            </p>
-                                                        </div>
-                                                        <Switch
-                                                            checked={
-                                                                data.show_product_description
-                                                            }
-                                                            onCheckedChange={(
-                                                                checked,
-                                                            ) =>
-                                                                setData(
-                                                                    "show_product_description",
-                                                                    checked,
-                                                                )
-                                                            }
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <LayoutTab data={data} setData={setData} errors={errors} />
                                     </Tabs.Content>
 
                                     <Tabs.Content
                                         value="hero"
                                         className="space-y-6"
                                     >
-                                        <div className="space-y-6">
-                                            <div>
-                                                <Label>Hero Section</Label>
-                                                <div className="mt-4 space-y-4">
-                                                    <div className="flex items-center justify-between">
-                                                        <div>
-                                                            <h3 className="font-medium">
-                                                                Show Hero
-                                                                Section
-                                                            </h3>
-                                                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                                                                Display a hero
-                                                                section at the
-                                                                top of your
-                                                                store
-                                                            </p>
-                                                        </div>
-                                                        <Switch
-                                                            checked={
-                                                                data.show_hero
-                                                            }
-                                                            onCheckedChange={(
-                                                                checked,
-                                                            ) =>
-                                                                setData(
-                                                                    "show_hero",
-                                                                    checked,
-                                                                )
-                                                            }
-                                                        />
-                                                    </div>
-
-                                                    {data.show_hero && (
-                                                        <div className="space-y-4 pl-4 border-l-2 border-[#2C2C2C]">
-                                                            <div>
-                                                                <Label
-                                                                    htmlFor="hero_image"
-                                                                    className="text-sm font-medium mb-2"
-                                                                >
-                                                                    Hero Image
-                                                                    URL
-                                                                </Label>
-                                                                <Input
-                                                                    id="hero_image"
-                                                                    type="text"
-                                                                    className="block w-full bg-gray-100 dark:bg-[#2C2C2C] border-0 focus:ring-primary-orange/20"
-                                                                    value={
-                                                                        data.hero_image
-                                                                    }
-                                                                    onChange={(
-                                                                        e,
-                                                                    ) =>
-                                                                        setData(
-                                                                            "hero_image",
-                                                                            e
-                                                                                .target
-                                                                                .value,
-                                                                        )
-                                                                    }
-                                                                    placeholder="https://example.com/hero-image.jpg"
-                                                                />
-                                                                <InputError
-                                                                    message={
-                                                                        errors.hero_image
-                                                                    }
-                                                                />
-                                                            </div>
-
-                                                            <div>
-                                                                <Label
-                                                                    htmlFor="hero_title"
-                                                                    className="text-sm font-medium mb-2"
-                                                                >
-                                                                    Hero Title
-                                                                </Label>
-                                                                <Input
-                                                                    id="hero_title"
-                                                                    type="text"
-                                                                    className="block w-full bg-gray-100 dark:bg-[#2C2C2C] border-0 focus:ring-primary-orange/20"
-                                                                    value={
-                                                                        data.hero_title
-                                                                    }
-                                                                    onChange={(
-                                                                        e,
-                                                                    ) =>
-                                                                        setData(
-                                                                            "hero_title",
-                                                                            e
-                                                                                .target
-                                                                                .value,
-                                                                        )
-                                                                    }
-                                                                    placeholder="Welcome to our store"
-                                                                />
-                                                                <InputError
-                                                                    message={
-                                                                        errors.hero_title
-                                                                    }
-                                                                />
-                                                            </div>
-
-                                                            <div>
-                                                                <Label
-                                                                    htmlFor="hero_description"
-                                                                    className="text-sm font-medium mb-2"
-                                                                >
-                                                                    Hero
-                                                                    Description
-                                                                </Label>
-                                                                <textarea
-                                                                    id="hero_description"
-                                                                    className="block w-full bg-gray-100 dark:bg-[#2C2C2C] border-0 focus:ring-primary-orange/20 rounded-lg"
-                                                                    value={
-                                                                        data.hero_description
-                                                                    }
-                                                                    onChange={(
-                                                                        e,
-                                                                    ) =>
-                                                                        setData(
-                                                                            "hero_description",
-                                                                            e
-                                                                                .target
-                                                                                .value,
-                                                                        )
-                                                                    }
-                                                                    placeholder="Describe your store or add a welcome message"
-                                                                    rows={3}
-                                                                />
-                                                                <InputError
-                                                                    message={
-                                                                        errors.hero_description
-                                                                    }
-                                                                />
-                                                            </div>
-
-                                                            <div>
-                                                                <Label
-                                                                    htmlFor="hero_content_alignment"
-                                                                    className="text-sm font-medium mb-2"
-                                                                >
-                                                                    Content
-                                                                    Alignment
-                                                                </Label>
-                                                                <div className="grid grid-cols-3 gap-2">
-                                                                    {[
-                                                                        "left",
-                                                                        "center",
-                                                                        "right",
-                                                                    ].map(
-                                                                        (
-                                                                            alignment,
-                                                                        ) => (
-                                                                            <button
-                                                                                key={
-                                                                                    alignment
-                                                                                }
-                                                                                type="button"
-                                                                                onClick={() =>
-                                                                                    setData(
-                                                                                        "hero_content_alignment",
-                                                                                        alignment,
-                                                                                    )
-                                                                                }
-                                                                                className={cn(
-                                                                                    "p-2 text-sm rounded-lg capitalize",
-                                                                                    data.hero_content_alignment ===
-                                                                                        alignment
-                                                                                        ? "bg-primary-orange text-white"
-                                                                                        : "bg-gray-100 dark:bg-[#2C2C2C] hover:bg-gray-200 dark:hover:bg-[#3C3C3C]",
-                                                                                )}
-                                                                            >
-                                                                                {
-                                                                                    alignment
-                                                                                }
-                                                                            </button>
-                                                                        ),
-                                                                    )}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <HeroTab data={data} setData={setData} errors={errors} />
                                     </Tabs.Content>
 
                                     <Tabs.Content
                                         value="theme"
                                         className="space-y-6"
                                     >
-                                        <div className="space-y-6">
-                                            <div>
-                                                <Label>Theme Colors</Label>
-                                                <div className="mt-4 space-y-4">
-                                                    <div>
-                                                        <Label
-                                                            htmlFor="theme_color"
-                                                            className="text-sm font-medium mb-2"
-                                                        >
-                                                            Theme Color
-                                                        </Label>
-                                                        <Input
-                                                            id="theme_color"
-                                                            type="color"
-                                                            className="h-12 block w-full bg-gray-100 dark:bg-[#2C2C2C] border-0 focus:ring-primary-orange/20"
-                                                            value={
-                                                                data.theme_color
-                                                            }
-                                                            onChange={(e) =>
-                                                                setData(
-                                                                    "theme_color",
-                                                                    e.target
-                                                                        .value,
-                                                                )
-                                                            }
-                                                        />
-                                                        <InputError
-                                                            message={
-                                                                errors.theme_color
-                                                            }
-                                                        />
-                                                    </div>
+                                        <ThemeTab data={data} setData={setData} errors={errors} />
+                                    </Tabs.Content>
 
-                                                    <div>
-                                                        <Label
-                                                            htmlFor="background_color"
-                                                            className="text-sm font-medium mb-2"
-                                                        >
-                                                            Background Color
-                                                        </Label>
-                                                        <Input
-                                                            id="background_color"
-                                                            type="color"
-                                                            className="h-12 block w-full bg-gray-100 dark:bg-[#2C2C2C] border-0 focus:ring-primary-orange/20"
-                                                            value={
-                                                                data.background_color
-                                                            }
-                                                            onChange={(e) =>
-                                                                setData(
-                                                                    "background_color",
-                                                                    e.target
-                                                                        .value,
-                                                                )
-                                                            }
-                                                        />
-                                                        <InputError
-                                                            message={
-                                                                errors.background_color
-                                                            }
-                                                        />
-                                                    </div>
-
-                                                    <div>
-                                                        <Label
-                                                            htmlFor="text_color"
-                                                            className="text-sm font-medium mb-2"
-                                                        >
-                                                            Text Color
-                                                        </Label>
-                                                        <Input
-                                                            id="text_color"
-                                                            type="color"
-                                                            className="h-12 block w-full bg-gray-100 dark:bg-[#2C2C2C] border-0 focus:ring-primary-orange/20"
-                                                            value={
-                                                                data.text_color
-                                                            }
-                                                            onChange={(e) =>
-                                                                setData(
-                                                                    "text_color",
-                                                                    e.target
-                                                                        .value,
-                                                                )
-                                                            }
-                                                        />
-                                                        <InputError
-                                                            message={
-                                                                errors.text_color
-                                                            }
-                                                        />
-                                                    </div>
-
-                                                    <div>
-                                                        <Label
-                                                            htmlFor="border_color"
-                                                            className="text-sm font-medium mb-2"
-                                                        >
-                                                            Border Color
-                                                        </Label>
-                                                        <Input
-                                                            id="border_color"
-                                                            type="color"
-                                                            className="h-12 block w-full bg-gray-100 dark:bg-[#2C2C2C] border-0 focus:ring-primary-orange/20"
-                                                            value={
-                                                                data.border_color
-                                                            }
-                                                            onChange={(e) =>
-                                                                setData(
-                                                                    "border_color",
-                                                                    e.target
-                                                                        .value,
-                                                                )
-                                                            }
-                                                        />
-                                                        <InputError
-                                                            message={
-                                                                errors.border_color
-                                                            }
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <Tabs.Content
+                                        value="contact"
+                                        className="space-y-6"
+                                    >
+                                        <ContactTab data={data} setData={setData} errors={errors} />
                                     </Tabs.Content>
                                 </div>
                             </Tabs.Root>
@@ -698,9 +250,17 @@ const Customize = ({ store }) => {
                                                     </h1>
                                                 )}
                                                 {data.hero_description && (
-                                                    <p className="text-sm text-white/70">
+                                                    <p className="text-sm text-white/70 mb-4">
                                                         {data.hero_description}
                                                     </p>
+                                                )}
+                                                {data.show_hero_button && (
+                                                    <button
+                                                        className="inline-block px-6 py-2 rounded-lg text-white text-sm font-medium"
+                                                        style={{ backgroundColor: data.theme_color }}
+                                                    >
+                                                        {data.hero_button_text || "Shop Now"}
+                                                    </button>
                                                 )}
                                             </div>
                                         </div>
@@ -775,34 +335,35 @@ const Customize = ({ store }) => {
                                                 This is a test
                                             </p>
                                         )}
-                                        <div className="grid grid-cols-3 gap-8 mb-8">
+                                        <div className="grid grid-cols-3 gap-4 py-6">
                                             <div>
-                                                <h4 className="font-medium mb-2">
+                                                <h4 className="text-sm font-medium mb-2">
                                                     Quick Links
                                                 </h4>
                                                 <ul className="space-y-1 text-sm opacity-70">
                                                     <li>Home</li>
                                                     <li>Products</li>
-                                                    <li>Contact Us</li>
+                                                    <li>About</li>
                                                 </ul>
                                             </div>
                                             <div>
-                                                <h4 className="font-medium mb-2">
+                                                <h4 className="text-sm font-medium mb-2">
                                                     Customer Service
                                                 </h4>
                                                 <ul className="space-y-1 text-sm opacity-70">
-                                                    <li>FAQ</li>
-                                                    <li>Shipping & Returns</li>
-                                                    <li>Privacy Policy</li>
+                                                    <li>FAQs</li>
+                                                    <li>Shipping</li>
+                                                    <li>Returns</li>
                                                 </ul>
                                             </div>
                                             <div>
-                                                <h4 className="font-medium mb-2">
+                                                <h4 className="text-sm font-medium mb-2">
                                                     Contact Us
                                                 </h4>
                                                 <ul className="space-y-1 text-sm opacity-70">
-                                                    <li>test@test.com</li>
-                                                    <li>+1 (555) 123-4567</li>
+                                                    <li>{data.contact_email || "test@test.com"}</li>
+                                                    <li>{data.contact_phone || "+1 (555) 123-4567"}</li>
+                                                    {data.contact_address ? <li>{data.contact_address}</li> : <li>123 Store Street, City</li>}
                                                 </ul>
                                             </div>
                                         </div>
@@ -813,8 +374,10 @@ const Customize = ({ store }) => {
                                             }}
                                         >
                                             <a
-                                                href="#"
-                                                className="text-gray-500 hover:text-gray-400"
+                                                href={data.facebook_url || "#"}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className={`text-gray-500 hover:text-gray-400 ${!data.facebook_url ? 'opacity-50' : ''}`}
                                             >
                                                 <svg
                                                     className="w-4 h-4"
@@ -826,8 +389,10 @@ const Customize = ({ store }) => {
                                                 </svg>
                                             </a>
                                             <a
-                                                href="#"
-                                                className="text-gray-500 hover:text-gray-400"
+                                                href={data.twitter_url || "#"}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className={`text-gray-500 hover:text-gray-400 ${!data.twitter_url ? 'opacity-50' : ''}`}
                                             >
                                                 <svg
                                                     className="w-4 h-4"
@@ -839,8 +404,10 @@ const Customize = ({ store }) => {
                                                 </svg>
                                             </a>
                                             <a
-                                                href="#"
-                                                className="text-gray-500 hover:text-gray-400"
+                                                href={data.instagram_url || "#"}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className={`text-gray-500 hover:text-gray-400 ${!data.instagram_url ? 'opacity-50' : ''}`}
                                             >
                                                 <svg
                                                     className="w-4 h-4"
