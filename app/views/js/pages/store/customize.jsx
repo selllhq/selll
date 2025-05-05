@@ -362,7 +362,7 @@ const Customize = ({ store }) => {
                                                 </h4>
                                                 <ul className="space-y-1 text-sm opacity-70">
                                                     <li>{data.contact_email || "test@test.com"}</li>
-                                                    <li>{data.contact_phone || "+1 (555) 123-4567"}</li>
+                                                    <li>{data.contact_phone || "+233 123 456 789"}</li>
                                                     {data.contact_address ? <li>{data.contact_address}</li> : <li>123 Store Street, City</li>}
                                                 </ul>
                                             </div>

@@ -44,7 +44,7 @@ const ContactTab = ({ data, setData, errors }) => {
                                     onChange={(e) =>
                                         setData("contact_phone", e.target.value)
                                     }
-                                    placeholder="+1 (555) 123-4567"
+                                    placeholder="+233 123 456 789"
                                 />
                                 <InputError message={errors.contact_phone} />
                             </div>
