@@ -27,13 +27,16 @@ class WaitlistMiddleware extends Middleware
             return;
         }
 
+        if (in_array($path, $allowedPaths)) {
+            return;
+        }
+
         if (
             !auth()->user() &&
             (!(
                 ($inviteCode = request()->get('invite')) &&
                 db()->select('waitlist_invites')->where('token', $inviteCode)->first()
-            ) &&
-                !in_array($path, $allowedPaths))
+            ))
         ) {
             response()->redirect('/', 303);
         }
