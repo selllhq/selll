@@ -12,7 +12,7 @@ class MarketingMailer
     public static function joinedWaitlist($email)
     {
         return mailer()->create([
-            'subject' => 'MarketingMailer Test',
+            'subject' => 'You’re in! Welcome to Selll 🚀',
             'body' => view('mail.waitlist.joined'),
             'recipientEmail' => $email,
             'recipientName' => $email,
@@ -28,7 +28,7 @@ class MarketingMailer
     public static function receivedWaitlistInvite($email, $invite)
     {
         return mailer()->create([
-            'subject' => 'MarketingMailer Test',
+            'subject' => 'You’re in — your Selll invite is ready 🎉',
             'body' => view('mail.waitlist.invited', [
                 'invite' => $invite,
             ]),

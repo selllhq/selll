@@ -373,13 +373,13 @@
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                             <tr>
                                 <td class="logo">
-                                    <img src="{{ assets('img/logo.png') }}" alt="Selll" width="40" height="60"
+                                    <img src="https://selll.online/assets/img/logo.png" alt="Selll" width="40" height="60"
                                         style="width: 40px; height: 60px; border: none; display: block;">
                                 </td>
                             </tr>
                             <tr>
                                 <td class="banner-image">
-                                    <img src="{{ assets('img/twitter-banner.png') }}" alt="Selll" width="100%" height="140"
+                                    <img src="https://selll.online/assets/img/twitter-banner.png" alt="Selll" width="100%" height="140"
                                         style="width: 100%; height: 140px; border: none; display: block;">
                                 </td>
                             </tr>
