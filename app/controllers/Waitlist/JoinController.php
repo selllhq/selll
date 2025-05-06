@@ -23,13 +23,9 @@ class JoinController extends Controller
         $waitlistEmail->email = $data['email'];
         $waitlistEmail->save();
 
-        try {
-            MarketingMailer::joinedWaitlist(
-                $data['email'],
-            )->send();
-        } catch (\Throwable $th) {
-            throw $th;
-        }
+        MarketingMailer::joinedWaitlist(
+            $data['email'],
+        )->send();
 
         return response()->redirect('/', 303);
     }
