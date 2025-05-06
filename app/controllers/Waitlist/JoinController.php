@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Waitlist;
 
+use App\Mailers\MarketingMailer;
 use App\Models\WaitlistEmail;
 
 class JoinController extends Controller
@@ -21,6 +22,14 @@ class JoinController extends Controller
         $waitlistEmail = new WaitlistEmail();
         $waitlistEmail->email = $data['email'];
         $waitlistEmail->save();
+
+        try {
+            MarketingMailer::joinedWaitlist(
+                $data['email'],
+            )->send();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
 
         return response()->redirect('/', 303);
     }

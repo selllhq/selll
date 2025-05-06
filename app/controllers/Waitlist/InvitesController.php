@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Waitlist;
 
+use App\Mailers\MarketingMailer;
 use App\Models\WaitlistInvite;
 use Firebase\JWT\JWT;
 
@@ -30,11 +31,14 @@ class InvitesController extends Controller
         );
         $waitlistInvite->save();
 
-        // send email to user with the invite token
+        MarketingMailer::receivedWaitlistInvite(
+            $data['email'],
+            $waitlistInvite->token,
+        )->send();
 
         return response()->json([
             'message' => 'Invite sent successfully.',
-            'token' => $waitlistInvite->token,
+            // 'token' => $waitlistInvite->token,
         ]);
     }
 }
