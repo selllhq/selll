@@ -7,5 +7,5 @@ namespace App\Controllers\Waitlist;
  */
 class Controller extends \App\Controllers\Controller
 {
-    //
+    // base
 }
