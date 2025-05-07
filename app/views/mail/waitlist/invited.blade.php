@@ -4,7 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>{{ $title ?? 'You’re in — your Selll invite is ready 🎉' }}</title>
+    <title>{{ $title ?? 'You\'re in — your Selll invite is ready &#127881;' }}</title>
     <style media="all" type="text/css">
         /* -------------------------------------
     GLOBAL RESETS
@@ -390,19 +390,19 @@
                     </div>
 
                     <!-- START CENTERED WHITE CONTAINER -->
-                    <span class="preheader">{{ $title ?? 'You’re in — your Selll invite is ready 🎉' }}</span>
+                    <span class="preheader">{{ $title ?? 'You\'re in — your Selll invite is ready &#127881;' }}</span>
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="main">
                         <!-- START MAIN CONTENT AREA -->
                         <tr>
                             <td class="wrapper">
                                 <p class="title">Hey {{ $name ?? 'there' }},</p>
-                                <p>You’ve got early access to Selll — it’s time to start sellling 🚀</p>
+                                <p>You've got early access to Selll — it's time to start sellling &#128640;</p>
                                 <p>No setup. No Stripe account. No headaches. Just your store, your products, and your link to the world — live in minutes.</p>
                                 <p>
-                                    Here’s how to get started: <br/>
-                                    ✅ Create your store <br/>
-                                    ✅ Add your products <br/>
-                                    ✅ Share your link and start sellling 🎉
+                                    Here's how to get started: <br/>
+                                    &#9989; Create your store <br/>
+                                    &#9989; Add your products <br/>
+                                    &#9989; Share your link and start sellling &#127881;
                                 </p>
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0"
                                     class="btn btn-primary">
@@ -427,7 +427,7 @@
                                 </table>
                                 <p>
                                     Need help? <br/>
-                                    We’ve put together a quick guide to help you launch: <br/>
+                                    We've put together a quick guide to help you launch: <br/>
                                     <a href="https://docs.selll.online/" target="_blank">📖 See the Getting Started Guide</a>
                                 </p>
                                 <p>

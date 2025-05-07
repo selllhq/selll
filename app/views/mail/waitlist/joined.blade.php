@@ -4,7 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>{{ $title ?? 'You\'re in! Welcome to Selll 🚀' }}</title>
+    <title>{{ $title ?? 'You\'re in! Welcome to Selll &#128640;' }}</title>
     <style media="all" type="text/css">
         /* -------------------------------------
     GLOBAL RESETS
@@ -390,7 +390,7 @@
                     </div>
 
                     <!-- START CENTERED WHITE CONTAINER -->
-                    <span class="preheader">You're in! Welcome to Selll 🚀</span>
+                    <span class="preheader">You're in! Welcome to Selll &#128640;</span>
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="main">
                         <!-- START MAIN CONTENT AREA -->
                         <tr>
@@ -402,10 +402,10 @@
                                 <p>
                                     Here's a quick look at what's coming: <br/>
 
-                                    ✅ Set up your store in minutes <br/>
-                                    ✅ Accept payments in your currency of choice <br/>
-                                    ✅ Manage everything with a simple, beautiful dashboard <br/>
-                                    ✅ Built for you — whether you're starting out or scaling up
+                                    &#9989; Set up your store in minutes <br/>
+                                    &#9989; Accept payments in your currency of choice <br/>
+                                    &#9989; Manage everything with a simple, beautiful dashboard <br/>
+                                    &#9989; Built for you — whether you're starting out or scaling up
                                 </p>
                                 <p>
                                     You'll be first to know when your access is ready. In the meantime, here's a 30-second preview of how Selll works:
