@@ -373,7 +373,16 @@ export default function Dashboard({
                                                     </p>
                                                 </div>
                                                 <div className="ml-auto font-medium text-emerald-500">
-                                                    +${order.total}
+                                                    +{Intl.NumberFormat(
+                                                        "en-US",
+                                                        {
+                                                            style: "currency",
+                                                            currency:
+                                                                currentStore?.currency,
+                                                        },
+                                                    ).format(
+                                                        order.total,
+                                                    )}
                                                 </div>
                                             </div>
                                         ))}
@@ -408,8 +417,9 @@ export default function Dashboard({
                                         Key metrics from your store
                                     </CardDescription>
                                 </CardHeader>
-                                <CardContent>
-                                    <div className="space-y-6">
+                                <CardContent className="flex justify-center items-center h-10/12">
+                                    <p>Analytics coming soon</p>
+                                    {/* <div className="space-y-6">
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center gap-3">
                                                 <div className="bg-[#2C2C2C] p-2 rounded-lg">
@@ -472,7 +482,7 @@ export default function Dashboard({
                                                 ↑ 15%
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </CardContent>
                             </Card>
                         </div>
