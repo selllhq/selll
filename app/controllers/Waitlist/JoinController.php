@@ -12,7 +12,7 @@ class JoinController extends Controller
         $data = request()->validate(['email' => 'email']);
 
         if (!$data) {
-            return response()->withFlash('error', request()->errors());
+            return response()->withFlash('error', request()->errors())->redirect('/?success=false', 303);
         }
 
         if (WaitlistEmail::where('email', $data['email'])->exists()) {

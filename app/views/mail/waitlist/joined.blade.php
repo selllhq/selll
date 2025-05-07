@@ -396,16 +396,19 @@
                         <tr>
                             <td class="wrapper">
                                 <p class="title">Hey {{ $name ?? 'there' }},</p>
-                                <p>Thanks for signing up for early access to Selll — the fastest way to start selling online, no setup or Stripe account needed.</p>
-                                <p>We're building Selll to make it ridiculously easy to launch a storefront, collect payments, and grow — even if you're just starting out or based outside Stripe-supported countries.</p>
+                                <p>Thanks for joining the waitlist for Selll — the fastest way to launch your online store without the usual setup headaches.</p>
+                                <p>Selll makes it easy to start selling in minutes — no Stripe account, no technical setup, and no fluff. Just your storefront, your products, and your link to the world.</p>
+                                <p>We’re building Selll for makers, indie sellers, and creators who want to launch and grow fast — even outside Stripe-supported countries.</p>
                                 <p>
-                                    Here’s what to expect: <br/>
-                                    ✅ Easy setup in minutes <br/>
-                                    ✅ Instant Paystack + Stripe support <br/>
-                                    ✅ Built for makers, indie sellers & creators
+                                    Here’s a quick look at what’s coming: <br/>
+
+                                    ✅ Set up your store in minutes <br/>
+                                    ✅ Accept payments in your currency of choice <br/>
+                                    ✅ Manage everything with a simple, beautiful dashboard <br/>
+                                    ✅ Built for you — whether you're starting out or scaling up
                                 </p>
                                 <p>
-                                    You’ll be first to know when we open up access. In the meantime, here’s a 30-second preview of how Selll works:
+                                    You’ll be first to know when your access is ready. In the meantime, here’s a 30-second preview of how Selll works:
 
                                     <a href="https://www.youtube.com/watch?v=2X4v0g1j7nE" target="_blank">Watch the video</a>
                                 </p>
