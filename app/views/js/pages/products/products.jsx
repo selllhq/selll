@@ -309,116 +309,98 @@ export default function Products({ orders = [], products, currentStore }) {
                                 className="mt-6"
                             />
                         ) : (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                                {filteredProducts.map((product) => (
-                                    <div
-                                        key={product.id}
-                                        className="bg-[#2C2C2C] rounded-lg overflow-hidden shadow-lg cursor-pointer hover:bg-[#2C2C2C]/90 transition-colors"
-                                        onClick={() =>
-                                            router.visit(
-                                                `/products/${product.id}`,
-                                            )
-                                        }
-                                    >
-                                        <div className="aspect-[4/3] bg-[#1A1A1A] relative group">
-                                            {(() => {
-                                                const parsedImages =
-                                                    parseProductImages(
-                                                        product.images,
-                                                    );
-
-                                                return (
-                                                    <>
-                                                        {parsedImages.length >
-                                                        0 ? (
-                                                            <img
-                                                                src={
-                                                                    parsedImages[0]
-                                                                }
-                                                                alt={
-                                                                    product.name
-                                                                }
-                                                                className="w-full h-full object-cover"
-                                                            />
-                                                        ) : (
-                                                            <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-gray-500">
-                                                                <Package className="w-12 h-12" />
-                                                                <p className="text-sm text-center">
-                                                                    Add photos
-                                                                    to showcase
-                                                                    your product
-                                                                </p>
+                            <div className="overflow-x-auto rounded-lg border border-gray-800">
+                                <table className="w-full text-sm text-left">
+                                    <thead className="text-xs uppercase bg-[#1A1A1A] text-gray-400 border-b border-gray-800">
+                                        <tr>
+                                            <th scope="col" className="px-4 py-3">Name</th>
+                                            <th scope="col" className="px-4 py-3">Price</th>
+                                            <th scope="col" className="px-4 py-3">Status</th>
+                                            <th scope="col" className="px-4 py-3">Total Sales</th>
+                                            <th scope="col" className="px-4 py-3">Total Revenue</th>
+                                            <th scope="col" className="px-4 py-3 text-right">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {filteredProducts.map((product) => {
+                                            const parsedImages = parseProductImages(product.images);
+                                            const totalRevenue = (product.sales || 0) * parseFloat(product.price);
+                                            const stockStatus = product.quantity === "unlimited" || parseInt(product.quantity_items) > 0 ? "Published" : "Out of Stock";
+                                            
+                                            return (
+                                                <tr key={product.id} className="border-b border-gray-800 hover:bg-[#1A1A1A]/50 cursor-pointer" onClick={() => router.visit(`/products/${product.id}`)}>
+                                                    <td className="px-4 py-3">
+                                                        <div className="flex items-center space-x-3">
+                                                            <div className="h-10 w-10 flex-shrink-0 rounded bg-[#2C2C2C] overflow-hidden">
+                                                                {parsedImages.length > 0 ? (
+                                                                    <img src={parsedImages[0]} alt={product.name} className="h-full w-full object-cover" />
+                                                                ) : (
+                                                                    <div className="h-full w-full flex items-center justify-center">
+                                                                        <Package className="h-5 w-5 text-gray-500" />
+                                                                    </div>
+                                                                )}
                                                             </div>
-                                                        )}
-
-                                                        {parsedImages.length >
-                                                            1 && (
-                                                            <div className="absolute bottom-2 right-2 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
-                                                                +
-                                                                {parsedImages.length -
-                                                                    1}{" "}
-                                                                more
+                                                            <div>
+                                                                <div className="font-medium">{product.name}</div>
                                                             </div>
-                                                        )}
-                                                    </>
-                                                );
-                                            })()}
-
-                                            <div className="absolute top-2 right-2">
-                                                <span
-                                                    className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${product.quantity === "unlimited" ? "bg-emerald-500/10 text-emerald-500" : parseInt(product.quantity_items) > 10 ? "bg-emerald-500/10 text-emerald-500" : "bg-primary-orange/10 text-primary-orange"} backdrop-blur-sm`}
-                                                >
-                                                    {product.quantity ===
-                                                    "unlimited"
-                                                        ? "∞ Unlimited"
-                                                        : `${product.quantity_items} in stock`}
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        <div className="p-4 space-y-4">
-                                            <div>
-                                                <h3 className="text-lg font-medium text-white">
-                                                    {product.name}
-                                                </h3>
-                                                <p className="text-sm text-gray-400 line-clamp-2 mt-1">
-                                                    {product.description ||
-                                                        "No description provided"}
-                                                </p>
-                                            </div>
-
-                                            <div className="flex items-center justify-between">
-                                                <div className="text-xl font-bold text-white">
-                                                    {new Intl.NumberFormat(
-                                                        "en-US",
-                                                        {
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-3 font-medium">
+                                                        {new Intl.NumberFormat("en-US", {
                                                             style: "currency",
-                                                            currency:
-                                                                currentStore?.currency,
-                                                        },
-                                                    ).format(product.price)}
-                                                </div>
-                                                <div className="text-sm text-gray-400">
-                                                    {product.sales || 0} sales
-                                                </div>
-                                            </div>
-
-                                            <button
-                                                type="button"
-                                                className="w-full bg-primary-orange hover:bg-primary-orange/90 text-white font-medium py-2 px-4 rounded-lg transition-colors"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    window.open(
-                                                        `https://${currentStore?.slug}.selll.store/products/${product.id}`,
-                                                        "_blank",
-                                                    );
-                                                }}
-                                            >
-                                                View in Store
-                                            </button>
-                                        </div>
-                                    </div>
-                                ))}
+                                                            currency: currentStore?.currency,
+                                                        }).format(product.price)}
+                                                    </td>
+                                                    <td className="px-4 py-3">
+                                                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${stockStatus === "Published" ? "bg-emerald-500/10 text-emerald-500" : "bg-primary-orange/10 text-primary-orange"}`}>
+                                                            {stockStatus}
+                                                        </span>
+                                                    </td>
+                                                    <td className="px-4 py-3">
+                                                        {product.sales || 0}
+                                                    </td>
+                                                    <td className="px-4 py-3">
+                                                        {new Intl.NumberFormat("en-US", {
+                                                            style: "currency",
+                                                            currency: currentStore?.currency,
+                                                        }).format(totalRevenue)}
+                                                    </td>
+                                                    <td className="px-4 py-3 text-right">
+                                                        <div className="flex items-center justify-end space-x-2">
+                                                            <button
+                                                                type="button"
+                                                                className="text-sm font-medium text-primary-orange hover:text-primary-orange/90 transition-colors"
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    window.open(
+                                                                        `https://${currentStore?.slug}.selll.store/products/${product.id}`,
+                                                                        "_blank",
+                                                                    );
+                                                                }}
+                                                            >
+                                                                Share
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                className="text-gray-400 hover:text-gray-300 transition-colors ml-4"
+                                                                onClick={(e) => e.stopPropagation()}
+                                                            >
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                                    <circle cx="12" cy="12" r="1"></circle>
+                                                                    <circle cx="19" cy="12" r="1"></circle>
+                                                                    <circle cx="5" cy="12" r="1"></circle>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>
+                                <div className="bg-[#1A1A1A] px-4 py-3 text-xs text-gray-400 border-t border-gray-800">
+                                    <div>1 result</div>
+                                </div>
                             </div>
                         )}
                     </div>

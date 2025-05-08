@@ -24,6 +24,7 @@ class BillingController extends Controller
             $cartTotal += ((int) $item->price * $cartItem['quantity']);
 
             return [
+                'id' => $item->id,
                 'item' => $item->name,
                 'quantity' => $cartItem['quantity'],
                 'amount' => $item->price * 100,

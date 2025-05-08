@@ -6,6 +6,9 @@ columns:
   store_url:
     type: string
     nullable: true
+  items:
+    type: json
+    nullable: true
   status:
     type: string
     default: pending
