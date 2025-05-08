@@ -12,9 +12,9 @@ class CustomersController extends Controller
         $currentStore = Store::find(auth()->user()->current_store_id);
 
         response()->inertia('products/customers', [
-            'customers' => $currentStore->customers()->get(),
-            'currentStore' => $currentStore->first(),
+            'currentStore' => $currentStore,
             'orders' => $currentStore->carts()->get(),
+            'customers' => $currentStore->customers()->get(),
         ]);
     }
 
@@ -29,7 +29,7 @@ class CustomersController extends Controller
 
         response()->inertia('products/customer', [
             'customer' => $customer,
-            'currentStore' => $currentStore->first(),
+            'currentStore' => $currentStore,
             'orders' => $currentStore->carts()->where('customer_id', $customer->id)->get(),
         ]);
     }

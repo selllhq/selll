@@ -27,6 +27,10 @@ class WaitlistMiddleware extends Middleware
             return;
         }
 
+        if (strpos($path, '/billing/') === 0) {
+            return;
+        }
+
         if (in_array($path, $allowedPaths)) {
             return;
         }

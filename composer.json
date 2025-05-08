@@ -25,7 +25,8 @@
         "leafs/mvc-core": "v4.x-dev",
         "leafs/billing": "dev-main",
         "leafs/fs": "^4.1",
-        "leafs/mail": "^2.2"
+        "leafs/mail": "^2.2",
+        "leafs/paystack": "dev-main"
     },
     "require-dev": {
         "fakerphp/faker": "^1.24"

@@ -15,6 +15,7 @@ class BillingController extends Controller
 
         $cartTotal = 0;
         $store = Store::find($storeId);
+        $billingProvider = in_array($store->currency, ['GHS', 'NGN', 'KES', 'ZAR']) ? 'paystack' : 'stripe';
 
         $customer = $store->customers()->where('email', $customerData['email'])->firstOrCreate($customerData);
 
@@ -36,7 +37,7 @@ class BillingController extends Controller
             'store_url' => request()->get('store_url'),
         ]);
 
-        $session = billing()->charge([
+        $session = billing($billingProvider)->charge([
             'amount' => $cartTotal * 100,
             'currency' => $store->currency,
             'description' => 'Purchase of items in cart',

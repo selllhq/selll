@@ -3,7 +3,6 @@
 namespace App\Controllers\Store;
 
 use App\Models\Store;
-use App\Models\User;
 
 class ProductsController extends Controller
 {
@@ -20,14 +19,14 @@ class ProductsController extends Controller
         response()->inertia('products/products', [
             'orders' => $orders,
             'products' => $products,
-            'currentStore' => $currentStore->first(),
+            'currentStore' => $currentStore,
         ]);
     }
 
     public function create()
     {
         response()->inertia('products/setup', [
-            'currentStore' => Store::find(auth()->user()->current_store_id)->first(),
+            'currentStore' => Store::find(auth()->user()->current_store_id),
         ]);
     }
 
@@ -62,9 +61,9 @@ class ProductsController extends Controller
         $currentStore = Store::find(auth()->user()->current_store_id);
 
         response()->inertia('products/product', [
-            'product' => $currentStore->products()->find($id),
-            'currentStore' => $currentStore->first(),
+            'currentStore' => $currentStore,
             'orders' => $currentStore->carts()->get(),
+            'product' => $currentStore->products()->find($id),
         ]);
     }
 
@@ -74,7 +73,7 @@ class ProductsController extends Controller
 
         response()->inertia('products/edit', [
             'product' => $currentStore->products()->find($id),
-            'currentStore' => $currentStore->first(),
+            'currentStore' => $currentStore,
         ]);
     }
 
