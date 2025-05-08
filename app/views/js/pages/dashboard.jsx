@@ -332,7 +332,7 @@ export default function Dashboard({
                                     <LineChart data={revenueGraph} />
                                 </CardContent>
                             </Card>
-                            <Card className="col-span-3">
+                            <Card className="col-span-4 md:col-span-3">
                                 <CardHeader>
                                     <CardTitle>Recent Orders</CardTitle>
                                     <CardDescription>
@@ -410,7 +410,7 @@ export default function Dashboard({
                                     />
                                 </CardContent>
                             </Card>
-                            <Card className="col-span-3">
+                            <Card className="col-span-4 md:col-span-3">
                                 <CardHeader>
                                     <CardTitle>Quick Stats</CardTitle>
                                     <CardDescription>

@@ -73,34 +73,34 @@ export default function Products({ orders = [], products, currentStore }) {
                         />
                     </div>
                 ) : (
-                    <div className="space-y-8 py-4 px-4">
+                    <div className="space-y-8 py-0 md:py-4 px-0 md:px-4">
                         <div className="md:flex items-center justify-between">
                             <div>
-                                <h2 className="text-4xl font-bold mb-2">
+                                <h2 className="text-2xl md:text-4xl font-bold md:mb-2">
                                     Products
                                 </h2>
-                                <p className="text-gray-400">
+                                <p className="text-muted-foreground text-sm md:text-base">
                                     Manage and track your store's inventory
                                 </p>
                             </div>
 
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-3 mt-2 md:mt-0">
                                 <Button
                                     variant="outline"
-                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C]"
+                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] w-full md:w-auto"
                                     asChild
                                 >
-                                    <Link
+                                    <a
                                         href={`https://${currentStore?.slug}.selll.store`}
                                         target="_blank"
                                         className="flex items-center gap-2"
                                     >
                                         <Store className="h-4 w-4" />
                                         View Store
-                                    </Link>
+                                    </a>
                                 </Button>
                                 <Button
-                                    className="bg-primary-orange hover:bg-primary-orange/90"
+                                    className="bg-primary-red hover:bg-primary-red/90 text-white w-full md:w-auto"
                                     asChild
                                 >
                                     <Link
@@ -275,7 +275,7 @@ export default function Products({ orders = [], products, currentStore }) {
                         </div>
 
                         <div className="flex items-center justify-between mb-6">
-                            <h3 className="text-lg font-medium text-white">
+                            <h3 className="text-lg font-medium">
                                 {filter === "all"
                                     ? "All Products"
                                     : filter === "in_stock"
