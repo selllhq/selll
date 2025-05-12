@@ -43,6 +43,7 @@ class BillingController extends Controller
             'currency' => $store->currency,
             'description' => 'Purchase of items in cart',
             'customer' => $customer->email,
+            'url' => request()->getUrl() . '/billing/callback', // only for paystack
             'metadata' => [
                 'cart_id' => $cart->id,
                 'customer_id' => $customer->id,

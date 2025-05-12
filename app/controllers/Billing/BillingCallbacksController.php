@@ -9,7 +9,7 @@ class BillingCallbacksController extends Controller
 {
     public function handle()
     {
-        $userCart = Cart::where('billing_session_id', request()->get('session_id'))->first();
+        $userCart = Cart::where('billing_session_id', request()->get('session_id') ?? request()->get('txId') ?? request()->get('reference'))->first();
 
         if (!$userCart) {
             return response()->markup('Invalid session ID');
@@ -21,7 +21,7 @@ class BillingCallbacksController extends Controller
             );
         }
 
-        if (billing()->callback()->isSuccessful()) {
+        if (billing(request()->get('session_id') ? 'stripe' : 'paystack')->callback()->isSuccessful()) {
             // notify store of successful payment
             $userCart->status = 'paid';
         } else {
