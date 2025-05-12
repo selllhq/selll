@@ -280,19 +280,19 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                             className="rounded-3xl bg-black/5 p-2 outline outline-white/15 backdrop-blur-md dark:bg-white/10 w-full container transform-none"
                             style={{ transformOrigin: "50% 50% 0px" }}
                         >
-                            {/* <iframe
-                                src="https://www.youtube.com/embed/wvDELSI7fHg?si=SJNoV_HMcjeRWoI8"
+                            <iframe
+                                src="https://www.youtube.com/embed/C_54knYP3ds?si=zCDWysb21LDRvyQN"
                                 title="YouTube video player"
                                 frameBorder="0"
                                 className="rounded-2xl w-full h-full aspect-video bg-black/5 dark:bg-white/10"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 referrerPolicy="strict-origin-when-cross-origin"
-                            ></iframe> */}
-                            <img
+                            ></iframe>
+                            {/* <img
                                 src="/assets/img/screenshots/product.jpg"
                                 alt="image"
                                 className="rounded-2xl w-full h-full"
-                            />
+                            /> */}
                         </div>
                     </div>
 
