@@ -11,7 +11,7 @@
     "license": "MIT",
     "require": {
         "leafs/blade": "^4.0",
-        "leafs/leaf": "^4.1",
+        "leafs/leaf": "4.x-dev",
         "leafs/logger": "^4.0",
         "leafs/vite": "^0.3.0",
         "leafs/date": "^2.2",

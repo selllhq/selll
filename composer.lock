@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "647a3709dc7ab5fcbda283c850870db5",
+    "content-hash": "b25a68d446a3b4d61251b4433fb7c8d2",
     "packages": [
         {
             "name": "brick/math",
@@ -1669,12 +1669,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/billing.git",
-                "reference": "f95bc73d22b254f3c278af6788d8688fbeca1bc4"
+                "reference": "6175bc46f39879cb0f91e684e31e5bb167a89826"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/billing/zipball/f95bc73d22b254f3c278af6788d8688fbeca1bc4",
-                "reference": "f95bc73d22b254f3c278af6788d8688fbeca1bc4",
+                "url": "https://api.github.com/repos/leafsphp/billing/zipball/6175bc46f39879cb0f91e684e31e5bb167a89826",
+                "reference": "6175bc46f39879cb0f91e684e31e5bb167a89826",
                 "shasum": ""
             },
             "require-dev": {
@@ -1712,7 +1712,7 @@
             ],
             "support": {
                 "issues": "https://github.com/leafsphp/billing/issues",
-                "source": "https://github.com/leafsphp/billing/tree/v0.2.0"
+                "source": "https://github.com/leafsphp/billing/tree/main"
             },
             "funding": [
                 {
@@ -1724,7 +1724,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-04-18T10:40:27+00:00"
+            "time": "2025-05-12T14:11:52+00:00"
         },
         {
             "name": "leafs/blade",
@@ -2325,16 +2325,16 @@
         },
         {
             "name": "leafs/leaf",
-            "version": "v4.1.2",
+            "version": "v4.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/leaf.git",
-                "reference": "b9f4896c5b9437566f9791dc85ca315502939fa8"
+                "reference": "6e6493254ad05401c41d7914bf27fefbd31376a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/leaf/zipball/b9f4896c5b9437566f9791dc85ca315502939fa8",
-                "reference": "b9f4896c5b9437566f9791dc85ca315502939fa8",
+                "url": "https://api.github.com/repos/leafsphp/leaf/zipball/6e6493254ad05401c41d7914bf27fefbd31376a6",
+                "reference": "6e6493254ad05401c41d7914bf27fefbd31376a6",
                 "shasum": ""
             },
             "require": {
@@ -2348,6 +2348,7 @@
                 "leafs/alchemy": "^4.0",
                 "pestphp/pest": "*"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "files": [
@@ -2381,7 +2382,7 @@
             ],
             "support": {
                 "issues": "https://github.com/leafsphp/leaf/issues",
-                "source": "https://github.com/leafsphp/leaf/tree/v4.1.2"
+                "source": "https://github.com/leafsphp/leaf/tree/v4.x"
             },
             "funding": [
                 {
@@ -2393,7 +2394,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-04-14T13:46:14+00:00"
+            "time": "2025-05-14T17:27:20+00:00"
         },
         {
             "name": "leafs/logger",
@@ -2658,12 +2659,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/paystack.git",
-                "reference": "f284cc9450a4acc0f54de3749aa1b750ef5a16aa"
+                "reference": "d422bb77c770a75bdc112af19f376ebd089af610"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/paystack/zipball/f284cc9450a4acc0f54de3749aa1b750ef5a16aa",
-                "reference": "f284cc9450a4acc0f54de3749aa1b750ef5a16aa",
+                "url": "https://api.github.com/repos/leafsphp/paystack/zipball/d422bb77c770a75bdc112af19f376ebd089af610",
+                "reference": "d422bb77c770a75bdc112af19f376ebd089af610",
                 "shasum": ""
             },
             "require": {
@@ -2718,7 +2719,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-01-23T14:39:15+00:00"
+            "time": "2025-05-14T11:17:09+00:00"
         },
         {
             "name": "leafs/queue",
@@ -2925,12 +2926,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/stripe.git",
-                "reference": "3ed59891abd965a4d54d07a9bc7d07719b79a55d"
+                "reference": "402284ab5f98c74f80e3b2c6299b61287d056e7b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/stripe/zipball/3ed59891abd965a4d54d07a9bc7d07719b79a55d",
-                "reference": "3ed59891abd965a4d54d07a9bc7d07719b79a55d",
+                "url": "https://api.github.com/repos/leafsphp/stripe/zipball/402284ab5f98c74f80e3b2c6299b61287d056e7b",
+                "reference": "402284ab5f98c74f80e3b2c6299b61287d056e7b",
                 "shasum": ""
             },
             "require": {
@@ -2973,7 +2974,7 @@
             ],
             "support": {
                 "issues": "https://github.com/leafsphp/stripe/issues",
-                "source": "https://github.com/leafsphp/stripe/tree/v0.1.0"
+                "source": "https://github.com/leafsphp/stripe/tree/main"
             },
             "funding": [
                 {
@@ -2985,7 +2986,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-04-07T16:55:00+00:00"
+            "time": "2025-05-12T14:13:13+00:00"
         },
         {
             "name": "leafs/vite",
@@ -5478,6 +5479,7 @@
     "stability-flags": {
         "leafs/aloe": 20,
         "leafs/billing": 20,
+        "leafs/leaf": 20,
         "leafs/mvc-core": 20,
         "leafs/paystack": 20,
         "leafs/stripe": 20
