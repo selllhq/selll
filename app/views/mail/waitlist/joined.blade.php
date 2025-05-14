@@ -4,6 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
     <title>{{ $title ?? 'You\'re in! Welcome to Selll &#128640;' }}</title>
     <style media="all" type="text/css">
         /* -------------------------------------
@@ -396,8 +397,8 @@
                         <tr>
                             <td class="wrapper">
                                 <p class="title">Hey {{ $name ?? 'there' }},</p>
-                                <p>Thanks for joining the waitlist for Selll — the fastest way to launch your online store without the usual setup headaches.</p>
-                                <p>Selll makes it easy to start selling in minutes — no Stripe account, no technical setup, and no fluff. Just your storefront, your products, and your link to the world.</p>
+                                <p>Thanks for joining the waitlist for Selll - the fastest way to launch your online store without the usual setup headaches.</p>
+                                <p>Selll makes it easy to start selling in minutes - no Stripe account, no technical setup, and no fluff. Just your storefront, your products, and your link to the world.</p>
                                 <p>We're building Selll for makers, indie sellers, and creators who want to launch and grow fast — even outside Stripe-supported countries.</p>
                                 <p>
                                     Here's a quick look at what's coming: <br/>
@@ -405,12 +406,12 @@
                                     &#9989; Set up your store in minutes <br/>
                                     &#9989; Accept payments in your currency of choice <br/>
                                     &#9989; Manage everything with a simple, beautiful dashboard <br/>
-                                    &#9989; Built for you — whether you're starting out or scaling up
+                                    &#9989; Built for you - whether you're starting out or scaling up
                                 </p>
                                 <p>
                                     You'll be first to know when your access is ready. In the meantime, here's a 30-second preview of how Selll works:
 
-                                    <a href="https://www.youtube.com/watch?v=2X4v0g1j7nE" target="_blank">Watch the video</a>
+                                    <a href="https://www.youtube.com/watch?v=C_54knYP3ds" target="_blank">Watch the video</a>
                                 </p>
                                 {{-- <table role="presentation" border="0" cellpadding="0" cellspacing="0"
                                     class="btn btn-primary">
@@ -447,7 +448,7 @@
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                             <tr>
                                 <td class="content-block">
-                                    <span class="apple-link">Sent with ♥ from Selll</span>
+                                    <span class="apple-link">Sent with &#9829; from Selll</span>
                                     <br> How fast can you selll?
                                 </td>
                             </tr>

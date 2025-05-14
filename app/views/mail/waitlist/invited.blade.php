@@ -4,7 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>{{ $title ?? 'You\'re in — your Selll invite is ready &#127881;' }}</title>
+    <title>{{ $title ?? 'You\'re in - your Selll invite is ready &#127881;' }}</title>
     <style media="all" type="text/css">
         /* -------------------------------------
     GLOBAL RESETS
@@ -390,14 +390,14 @@
                     </div>
 
                     <!-- START CENTERED WHITE CONTAINER -->
-                    <span class="preheader">{{ $title ?? 'You\'re in — your Selll invite is ready &#127881;' }}</span>
+                    <span class="preheader">{{ $title ?? 'You\'re in - your Selll invite is ready &#127881;' }}</span>
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="main">
                         <!-- START MAIN CONTENT AREA -->
                         <tr>
                             <td class="wrapper">
                                 <p class="title">Hey {{ $name ?? 'there' }},</p>
-                                <p>You've got early access to Selll — it's time to start sellling &#128640;</p>
-                                <p>No setup. No Stripe account. No headaches. Just your store, your products, and your link to the world — live in minutes.</p>
+                                <p>You've got early access to Selll - it's time to start sellling &#128640;</p>
+                                <p>No setup. No Stripe account. No headaches. Just your store, your products, and your link to the world - live in minutes.</p>
                                 <p>
                                     Here's how to get started: <br/>
                                     &#9989; Create your store <br/>
@@ -445,7 +445,7 @@
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                             <tr>
                                 <td class="content-block">
-                                    <span class="apple-link">Sent with ♥ from Selll</span>
+                                    <span class="apple-link">Sent with &#9829; from Selll</span>
                                     <br> How fast can you selll?
                                 </td>
                             </tr>
