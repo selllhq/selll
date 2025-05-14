@@ -399,7 +399,7 @@
                                 <p class="title">Hey {{ $name ?? 'there' }},</p>
                                 <p>Thanks for joining the waitlist for Selll - the fastest way to launch your online store without the usual setup headaches.</p>
                                 <p>Selll makes it easy to start selling in minutes - no Stripe account, no technical setup, and no fluff. Just your storefront, your products, and your link to the world.</p>
-                                <p>We're building Selll for makers, indie sellers, and creators who want to launch and grow fast — even outside Stripe-supported countries.</p>
+                                <p>We're building Selll for makers, indie sellers, and creators who want to launch and grow fast - even outside Stripe-supported countries.</p>
                                 <p>
                                     Here's a quick look at what's coming: <br/>
 
