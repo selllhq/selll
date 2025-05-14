@@ -33,7 +33,7 @@ class InvitesController extends Controller
 
         MarketingMailer::receivedWaitlistInvite(
             $data['email'],
-            "https://selll.online/auth/register?invite={$waitlistInvite->token}",
+            "https://selll.online/auth/register?invite={$waitlistInvite->token}&email={$data['email']}",
         )->send();
 
         return response()->json([

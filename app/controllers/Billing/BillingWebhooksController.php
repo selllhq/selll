@@ -8,7 +8,11 @@ class BillingWebhooksController extends Controller
 {
     public function handle()
     {
-        $event = billing()->webhook();
+        $billingProvider = request()->hasHeader('x-paystack-signature') ?
+            'paystack' :
+            (request()->hasHeader('x-stripe-signature') ? 'stripe' : null);
+
+        $event = billing($billingProvider)->webhook();
 
         if ($event->is('checkout.session.completed')) {
             // Payment was successful and the Checkout Session is complete
