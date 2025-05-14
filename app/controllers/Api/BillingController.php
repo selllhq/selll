@@ -3,6 +3,7 @@
 namespace App\Controllers\Api;
 
 use App\Controllers\Controller;
+use App\Helpers\CustomerHelper;
 use App\Models\Cart;
 use App\Models\Store;
 
@@ -17,7 +18,7 @@ class BillingController extends Controller
         $store = Store::find($storeId);
         $billingProvider = in_array($store->currency, ['GHS', 'NGN', 'KES', 'ZAR']) ? 'paystack' : 'stripe';
 
-        $customer = $store->customers()->where('email', $customerData['email'])->firstOrCreate($customerData);
+        $customer = CustomerHelper::saveToStore($storeId, $customerData);
 
         $items = array_map(function ($cartItem) use ($store, &$cartTotal) {
             $item = $store->products()->find($cartItem['id']);
