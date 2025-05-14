@@ -21,6 +21,8 @@ class BillingCallbacksController extends Controller
             );
         }
 
+        // deal with deductions and shi
+
         if (billing(request()->get('session_id') ? 'stripe' : 'paystack')->callback()->isSuccessful()) {
             // notify store of successful payment
             $userCart->status = 'paid';
