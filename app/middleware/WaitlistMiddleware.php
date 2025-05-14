@@ -18,7 +18,8 @@ class WaitlistMiddleware extends Middleware
             '/auth/login',
             '/waitlist',
             '/admin/waitlist/invite',
-            '/billing/webhook'
+            '/billing/callback',
+            '/private/billing/webhook'
         ];
 
         $path = request()->getPathInfo();
