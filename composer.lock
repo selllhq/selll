@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b25a68d446a3b4d61251b4433fb7c8d2",
+    "content-hash": "e347daf812bdde2894146d72b19e9eaf",
     "packages": [
         {
             "name": "brick/math",
@@ -2789,21 +2789,22 @@
         },
         {
             "name": "leafs/redis",
-            "version": "v4.0",
+            "version": "v4.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/redis.git",
-                "reference": "491b0f2f1e944d70cd32d29460ead25aa4b290a8"
+                "reference": "297da3c397ec2f377235fd2cd8949085094182b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/redis/zipball/491b0f2f1e944d70cd32d29460ead25aa4b290a8",
-                "reference": "491b0f2f1e944d70cd32d29460ead25aa4b290a8",
+                "url": "https://api.github.com/repos/leafsphp/redis/zipball/297da3c397ec2f377235fd2cd8949085094182b1",
+                "reference": "297da3c397ec2f377235fd2cd8949085094182b1",
                 "shasum": ""
             },
             "require": {
                 "leafs/aloe": "*"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "files": [
@@ -2837,7 +2838,7 @@
             ],
             "support": {
                 "issues": "https://github.com/leafsphp/redis/issues",
-                "source": "https://github.com/leafsphp/redis/tree/v4.0"
+                "source": "https://github.com/leafsphp/redis/tree/v4.x"
             },
             "funding": [
                 {
@@ -2849,7 +2850,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-02-19T20:46:52+00:00"
+            "time": "2025-05-15T10:58:55+00:00"
         },
         {
             "name": "leafs/session",
@@ -5483,6 +5484,7 @@
         "leafs/leaf": 20,
         "leafs/mvc-core": 20,
         "leafs/paystack": 20,
+        "leafs/redis": 20,
         "leafs/stripe": 20
     },
     "prefer-stable": true,

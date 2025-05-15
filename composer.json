@@ -16,7 +16,7 @@
         "leafs/vite": "^0.3.0",
         "leafs/date": "^2.2",
         "leafs/queue": "v4.0",
-        "leafs/redis": "v4.0",
+        "leafs/redis": "4.x-dev",
         "leafs/aloe": "v4.x-dev",
         "leafs/inertia": "^4.0",
         "leafs/auth": "^4.0",
