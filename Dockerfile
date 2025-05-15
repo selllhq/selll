@@ -77,10 +77,11 @@ RUN composer install --optimize-autoloader --no-dev \
     # && echo "MAILTO=\"\"\n* * * * * www-data /usr/bin/php /var/www/html/artisan schedule:run" > /etc/cron.d/laravel \
     && cp .fly/entrypoint.sh /entrypoint \
     && chmod +x /entrypoint \
-    && touch .env \
-    && supervisorctl reread \
-    && supervisorctl update \
-    && supervisorctl start redis
+    && touch .env
+    # \
+    # && supervisorctl reread \
+    # && supervisorctl update \
+    # && supervisorctl start redis
 
 # Multi-stage build: Build static assets
 # This allows us to not include Node within the final container
