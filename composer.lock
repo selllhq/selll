@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e347daf812bdde2894146d72b19e9eaf",
+    "content-hash": "164c2605171430f3adadd7b4d6c79ffb",
     "packages": [
         {
             "name": "brick/math",
@@ -2125,7 +2125,7 @@
         },
         {
             "name": "leafs/fs",
-            "version": "v4.1.1",
+            "version": "v4.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/fs.git",
@@ -2142,6 +2142,7 @@
                 "leafs/alchemy": "^2.1",
                 "pestphp/pest": "^1.21"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "files": [
@@ -5481,6 +5482,7 @@
     "stability-flags": {
         "leafs/aloe": 20,
         "leafs/billing": 20,
+        "leafs/fs": 20,
         "leafs/leaf": 20,
         "leafs/mvc-core": 20,
         "leafs/paystack": 20,

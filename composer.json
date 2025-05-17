@@ -24,7 +24,7 @@
         "leafs/cors": "^1.2",
         "leafs/mvc-core": "v4.x-dev",
         "leafs/billing": "dev-main",
-        "leafs/fs": "^4.1",
+        "leafs/fs": "4.x-dev",
         "leafs/mail": "^2.2",
         "leafs/paystack": "dev-main"
     },
