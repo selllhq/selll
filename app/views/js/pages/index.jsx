@@ -187,74 +187,151 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                 id="features"
                 className="relative bg-black text-white py-24 mt-32 overflow-hidden"
             >
-                {/* Decorative gradients and floating shapes */}
                 <div className="pointer-events-none absolute -top-32 -left-32 w-[600px] h-[600px] bg-gradient-to-br from-primary-orange/20 to-primary-red/20 rounded-full blur-[120px] opacity-40 animate-float-rotate-slow"></div>
                 <div className="pointer-events-none absolute bottom-0 right-0 w-[400px] h-[400px] bg-gradient-to-tr from-primary-red/20 to-primary-orange/10 rounded-full blur-[100px] opacity-30 animate-float-rotate-slow-reverse"></div>
-                <div className="container mx-auto px-4 sm:px-8 relative z-10">
-                    <div className="flex flex-col-reverse lg:flex-row gap-16 items-center justify-between">
-                        <div className="max-w-xl lg:w-1/2">
-                            <div className="relative w-full group">
-                                <div className="absolute -inset-4 bg-gradient-to-br from-white/10 to-primary-orange/10 rounded-3xl blur-2xl opacity-60 group-hover:opacity-80 transition-all duration-700"></div>
-                                <div className="relative bg-[#181818] border border-[#292929] rounded-3xl shadow-2xl overflow-hidden backdrop-blur-xl group-hover:scale-105 transition-all duration-700">
-                                    <div className="flex items-center gap-2 px-6 py-4 border-b border-[#232323] bg-black/30 rounded-t-3xl">
-                                        <span className="w-3 h-3 bg-red-500 rounded-full block"></span>
-                                        <span className="w-3 h-3 bg-yellow-400 rounded-full block"></span>
-                                        <span className="w-3 h-3 bg-green-500 rounded-full block"></span>
-                                        <div className="ml-6 flex-1 text-xs text-white/40 font-mono">
-                                            selll.online/dashboard
+
+                <div className="container mx-auto px-4 relative z-10">
+                    <div className="text-center mb-16">
+                        <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r text-white">
+                            Instant Storefronts, No Coding Needed
+                        </h2>
+                        <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+                            Add your products, start accepting payments, track
+                            your sales, and more—without the usual headaches.
+                        </p>
+                    </div>
+
+                    <div className="max-w-7xl mx-auto mb-16 relative">
+                        <div className="relative w-full group">
+                            <div className="absolute -inset-4 bg-gradient-to-br from-white/5 to-primary-orange/10 rounded-3xl blur-2xl opacity-60 group-hover:opacity-80 transition-all duration-700"></div>
+
+                            <div className="relative rounded-2xl shadow-lg p-2 h-full border flex flex-col overflow-hidden lg:order-last bg-default w-full mx-auto">
+                                <div className="w-full px-2 pt-1 pb-3 relative flex items-center gap-1.5 lg:gap-2">
+                                    <div className="w-2 h-2 bg-border rounded-full"></div>
+                                    <div className="w-2 h-2 bg-border rounded-full"></div>
+                                    <div className="w-2 h-2 bg-border rounded-full"></div>
+                                    <div className="text-gray-100/45 ml-[20%] sm:ml-[32%] md:ml-[36%] lg:ml-[40%]">
+                                        place.selll.store
+                                    </div>
+                                </div>
+                                <div className="h-full w-full aspect-video border overflow-hidden rounded-lg">
+                                    <div className="relative w-full max-w-full h-full opacity-100">
+                                        <div className="relative h-full w-full">
+                                            {/* <img
+                                                width="1885"
+                                                alt="image"
+                                                className="w-full h-full hidden dark:block"
+                                                src="/assets/img/screenshots/dash-dark.jpg"
+                                            />
+                                            <img
+                                                width="1883"
+                                                alt="image"
+                                                className="w-full h-full block dark:hidden"
+                                                src="/assets/img/screenshots/dash-light.jpg"
+                                            /> */}
+                                            <img
+                                                src="/assets/img/screenshots/store.jpg"
+                                                alt="Selll store"
+                                                className="w-full rounded-b-3xl shadow-inner group-hover:scale-[1.02] transition-transform duration-700"
+                                            />
                                         </div>
-                                    </div>
-                                    <img
-                                        src="/assets/img/screenshots/store.jpg"
-                                        alt="Selll dashboard"
-                                        className="w-full rounded-b-3xl shadow-inner group-hover:scale-[1.04] transition-transform duration-700"
-                                    />
-                                </div>
-                                {/* Floating feature chip */}
-                                <div className="absolute -right-8 top-1/4 bg-[#181818]/90 border border-[#292929] px-5 py-4 rounded-2xl flex items-center gap-3 shadow-xl backdrop-blur-xl hover:border-primary-orange/40 transition-all duration-300">
-                                    <div className="w-10 h-10 rounded-full bg-primary-orange/20 flex items-center justify-center animate-pulse-slow">
-                                        <svg width="20" height="20" fill="none">
-                                            <circle
-                                                cx="10"
-                                                cy="10"
-                                                r="8"
-                                                stroke="#FFAA49"
-                                                strokeWidth="3"
-                                            />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <p className="text-xs text-white/60">
-                                            Global Payments
-                                        </p>
-                                        <p className="text-sm font-semibold">
-                                            5+ Currencies
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="absolute -left-8 bottom-1/4 bg-[#181818]/90 border border-[#292929] px-5 py-4 rounded-2xl flex items-center gap-3 shadow-xl backdrop-blur-xl hover:border-primary-red/40 transition-all duration-300">
-                                    <div className="w-10 h-10 rounded-full bg-primary-red/20 flex items-center justify-center animate-pulse-slow">
-                                        <svg width="20" height="20" fill="none">
-                                            <path
-                                                d="M10 2v8l6 4"
-                                                stroke="#EC504B"
-                                                strokeWidth="2.5"
-                                                strokeLinecap="round"
-                                            />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <p className="text-xs text-white/60">
-                                            Lightning Fast
-                                        </p>
-                                        <p className="text-sm font-semibold">
-                                            Setup in 2 mins
-                                        </p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="mt-16 bg-[#181818]/80 border border-[#292929] rounded-2xl p-6 shadow-lg flex flex-col gap-3 hover:border-primary-orange/40 hover:scale-105 transition-all duration-300 group md:col-span-2">
+                            <div className="absolute -right-12 top-1/4 bg-[#2C2C2C] border border-gray-800 px-5 py-4 rounded-2xl hidden md:flex items-center gap-3 shadow-xl backdrop-blur-xl hover:border-primary-orange/40 transition-all duration-300">
+                                <div className="w-10 h-10 rounded-full bg-primary-orange/20 flex items-center justify-center animate-pulse-slow">
+                                    <svg width="20" height="20" fill="none">
+                                        <circle
+                                            cx="10"
+                                            cy="10"
+                                            r="8"
+                                            stroke="#FFAA49"
+                                            strokeWidth="3"
+                                        />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p className="text-xs text-gray-400">
+                                        Global Payments
+                                    </p>
+                                    <p className="text-sm font-medium text-white">
+                                        5+ Currencies
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="absolute -left-12 bottom-1/4 bg-[#2C2C2C] border border-gray-800 px-5 py-4 rounded-2xl hidden md:flex items-center gap-3 shadow-xl backdrop-blur-xl hover:border-primary-red/40 transition-all duration-300">
+                                <div className="w-10 h-10 rounded-full bg-primary-red/20 flex items-center justify-center animate-pulse-slow">
+                                    <svg width="20" height="20" fill="none">
+                                        <path
+                                            d="M10 2v8l6 4"
+                                            stroke="#EC504B"
+                                            strokeWidth="2.5"
+                                            strokeLinecap="round"
+                                        />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p className="text-xs text-gray-400">
+                                        Lightning Fast
+                                    </p>
+                                    <p className="text-sm font-medium text-white">
+                                        Setup in 2 mins
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="max-w-7xl mx-auto">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                            <div className="bg-[#141414] border border-gray-900 rounded-xl p-6 shadow-lg flex flex-col gap-3 hover:border-primary-orange/40 hover:scale-[1.02] transition-all duration-300">
+                                <div className="w-12 h-12 rounded-xl bg-primary-orange/20 flex items-center justify-center mb-2 animate-pulse-slow">
+                                    <svg width="28" height="28" fill="none">
+                                        <rect
+                                            x="6"
+                                            y="6"
+                                            width="16"
+                                            height="16"
+                                            rx="4"
+                                            stroke="#FFAA49"
+                                            strokeWidth="2.5"
+                                        />
+                                    </svg>
+                                </div>
+                                <h3 className="text-xl font-medium text-white">
+                                    Your Store, <br /> Your Domain
+                                </h3>
+                                <p className="text-gray-300">
+                                    Get a free <b>.selll.store</b> domain and a
+                                    beautiful dashboard to manage your store.
+                                    Add products, request payouts and more.
+                                </p>
+                            </div>
+
+                            <div className="bg-[#141414] border border-gray-900 rounded-xl p-6 shadow-lg flex flex-col gap-3 hover:border-primary-red/40 hover:scale-[1.02] transition-all duration-300">
+                                <div className="w-12 h-12 rounded-xl bg-primary-red/20 flex items-center justify-center mb-2 animate-pulse-slow">
+                                    <svg width="28" height="28" fill="none">
+                                        <path
+                                            d="M8 14h12M14 8v12"
+                                            stroke="#EC504B"
+                                            strokeWidth="2.5"
+                                            strokeLinecap="round"
+                                        />
+                                    </svg>
+                                </div>
+                                <h3 className="text-xl font-medium text-white">
+                                    Track Sales <br /> with Analytics
+                                </h3>
+                                <p className="text-gray-300">
+                                    Get insights into your sales, track your
+                                    performance, and make data-driven decisions
+                                    to grow your business.
+                                </p>
+                            </div>
+
+                            <div className="bg-[#141414] border border-gray-900 rounded-xl p-6 shadow-lg flex flex-col gap-3 hover:border-primary-orange/40 hover:scale-[1.02] transition-all duration-300">
                                 <div className="w-12 h-12 rounded-xl bg-primary-orange/20 flex items-center justify-center mb-2 animate-pulse-slow">
                                     <svg width="28" height="28" fill="none">
                                         <path
@@ -272,10 +349,10 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                                         />
                                     </svg>
                                 </div>
-                                <h3 className="text-xl font-semibold">
-                                    Get Paid, Anywhere
+                                <h3 className="text-xl font-medium text-white">
+                                    Get Paid, <br /> Anywhere
                                 </h3>
-                                <p className="text-white/60">
+                                <p className="text-gray-300">
                                     Accept payments from customers worldwide
                                     with ease. Selll supports multiple
                                     currencies and payment methods.
@@ -283,62 +360,17 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                             </div>
                         </div>
 
-                        <div className="w-full max-w-xl lg:w-1/2 flex flex-col gap-8">
-                            <h2 className="text-4xl font-extrabold mb-2 bg-gradient-to-r from-primary-orange via-primary-red to-white bg-clip-text text-transparent">
-                                Instant Storefronts, <br /> No Coding Needed
-                            </h2>
-                            <p className="text-lg text-white/70 mb-8">
-                                Add your products, start accepting payments,
-                                track your sales, and more—without the usual
-                                headaches.
-                            </p>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div className="bg-[#181818]/80 border border-[#292929] rounded-2xl p-6 shadow-lg flex flex-col gap-3 hover:border-primary-orange/40 hover:scale-105 transition-all duration-300 group">
-                                    <div className="w-12 h-12 rounded-xl bg-primary-orange/20 flex items-center justify-center mb-2 animate-pulse-slow">
-                                        <svg width="28" height="28" fill="none">
-                                            <rect
-                                                x="6"
-                                                y="6"
-                                                width="16"
-                                                height="16"
-                                                rx="4"
-                                                stroke="#FFAA49"
-                                                strokeWidth="2.5"
-                                            />
-                                        </svg>
-                                    </div>
-                                    <h3 className="text-xl font-semibold">
-                                        Your Store, Your Domain
-                                    </h3>
-                                    <p className="text-white/60">
-                                        Get a free <b>.selll.store</b> domain
-                                        and a beautiful dashboard to manage your
-                                        store. Add products, request payouts and
-                                        more.
-                                    </p>
-                                </div>
-
-                                <div className="bg-[#181818]/80 border border-[#292929] rounded-2xl p-6 shadow-lg flex flex-col gap-3 hover:border-primary-red/40 hover:scale-105 transition-all duration-300 group">
-                                    <div className="w-12 h-12 rounded-xl bg-primary-red/20 flex items-center justify-center mb-2 animate-pulse-slow">
-                                        <svg width="28" height="28" fill="none">
-                                            <path
-                                                d="M8 14h12M14 8v12"
-                                                stroke="#EC504B"
-                                                strokeWidth="2.5"
-                                                strokeLinecap="round"
-                                            />
-                                        </svg>
-                                    </div>
-                                    <h3 className="text-xl font-semibold">
-                                        Track Sales with Analytics
-                                    </h3>
-                                    <p className="text-white/60">
-                                        Get insights into your sales, track your
-                                        performance, and make data-driven
-                                        decisions to grow your business.
-                                    </p>
-                                </div>
-                            </div>
+                        <div className="flex justify-center mb-8">
+                            <Button
+                                onClick={() =>
+                                    document
+                                        .getElementById("waitlist-email")
+                                        .focus()
+                                }
+                                className="bg-primary-orange hover:bg-primary-orange/90 text-white px-8 py-3 rounded-md"
+                            >
+                                Join Waitlist
+                            </Button>
                         </div>
                     </div>
                 </div>
