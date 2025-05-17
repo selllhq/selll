@@ -10,7 +10,7 @@ class HomeController extends Controller
     public function index()
     {
         response()->inertia('index', [
-            // 'activeStores' => Store::count(),
+            'activeStores' => Store::count() + 11,
             // 'purchases' => Cart::where('status', 'paid')->count(),
         ]);
     }

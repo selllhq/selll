@@ -2793,12 +2793,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/redis.git",
-                "reference": "297da3c397ec2f377235fd2cd8949085094182b1"
+                "reference": "a21e1a8e37af135ede02d2565ad6f7eefd469715"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/redis/zipball/297da3c397ec2f377235fd2cd8949085094182b1",
-                "reference": "297da3c397ec2f377235fd2cd8949085094182b1",
+                "url": "https://api.github.com/repos/leafsphp/redis/zipball/a21e1a8e37af135ede02d2565ad6f7eefd469715",
+                "reference": "a21e1a8e37af135ede02d2565ad6f7eefd469715",
                 "shasum": ""
             },
             "require": {
@@ -2850,7 +2850,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-05-15T10:58:55+00:00"
+            "time": "2025-05-15T14:26:30+00:00"
         },
         {
             "name": "leafs/session",
