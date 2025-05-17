@@ -239,7 +239,7 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                                 </div>
                             </div>
 
-                            <div className="absolute -right-12 top-1/4 bg-[#2C2C2C] border border-gray-800 px-5 py-4 rounded-2xl hidden md:flex items-center gap-3 shadow-xl backdrop-blur-xl hover:border-primary-orange/40 transition-all duration-300">
+                            <div className="absolute -right-12 top-1/4 bg-[#2C2C2C] border border-gray-800 px-5 py-4 rounded-2xl hidden lg:flex items-center gap-3 shadow-xl backdrop-blur-xl hover:border-primary-orange/40 transition-all duration-300">
                                 <div className="w-10 h-10 rounded-full bg-primary-orange/20 flex items-center justify-center animate-pulse-slow">
                                     <svg width="20" height="20" fill="none">
                                         <circle
@@ -261,7 +261,7 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                                 </div>
                             </div>
 
-                            <div className="absolute -left-12 bottom-1/4 bg-[#2C2C2C] border border-gray-800 px-5 py-4 rounded-2xl hidden md:flex items-center gap-3 shadow-xl backdrop-blur-xl hover:border-primary-red/40 transition-all duration-300">
+                            <div className="absolute -left-12 bottom-1/4 bg-[#2C2C2C] border border-gray-800 px-5 py-4 rounded-2xl hidden lg:flex items-center gap-3 shadow-xl backdrop-blur-xl hover:border-primary-red/40 transition-all duration-300">
                                 <div className="w-10 h-10 rounded-full bg-primary-red/20 flex items-center justify-center animate-pulse-slow">
                                     <svg width="20" height="20" fill="none">
                                         <path
