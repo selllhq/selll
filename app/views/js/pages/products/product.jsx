@@ -8,7 +8,14 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/shared/card";
-import { Package, User, Eye, Store, TrendingUp, ShoppingCart } from "lucide-react";
+import {
+    Package,
+    User,
+    Eye,
+    Store,
+    TrendingUp,
+    ShoppingCart,
+} from "lucide-react";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { parseProductImages } from "@/utils/store";
@@ -50,30 +57,22 @@ export default function Products({ product, currentStore, orders }) {
 
                     <div className="flex flex-wrap items-center gap-3">
                         <Button
+                            as="a"
                             variant="outline"
-                            className="bg-gray-100 dark:bg-[#2C2C2C] border-0 text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-[#3C3C3C] transition-colors"
-                            asChild
+                            className="bg-gray-100 dark:bg-[#2C2C2C] border-0 text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-[#3C3C3C] transition-colors gap-2"
+                            href={`https://${currentStore?.slug}.selll.store/products/${product.id}`}
+                            target="_blank"
                         >
-                            <a
-                                href={`https://${currentStore?.slug}.selll.store/products/${product.id}`}
-                                target="_blank"
-                                className="flex items-center gap-2"
-                            >
-                                <Store className="h-4 w-4" />
-                                View in Store
-                            </a>
+                            <Store className="h-4 w-4" />
+                            View in Store
                         </Button>
                         <Button
-                            className="bg-primary-orange hover:bg-primary-orange/90 transition-all shadow-md hover:shadow-lg"
-                            asChild
+                            as={Link}
+                            href={`/products/${product.id}/edit`}
+                            className="bg-primary-orange hover:bg-primary-orange/90 transition-all shadow-md hover:shadow-lg gap-2"
                         >
-                            <Link
-                                href={`/products/${product.id}/edit`}
-                                className="flex items-center gap-2"
-                            >
-                                <Package className="h-4 w-4" />
-                                Edit Product
-                            </Link>
+                            <Package className="h-4 w-4" />
+                            Edit Product
                         </Button>
                     </div>
                 </div>
@@ -281,17 +280,13 @@ export default function Products({ product, currentStore, orders }) {
 
                         {orders?.length > 0 && (
                             <Button
+                                as={Link}
+                                href="/orders"
                                 variant="outline"
-                                className="bg-white dark:bg-[#2C2C2C] border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#3C3C3C] transition-all"
-                                asChild
+                                className="bg-white dark:bg-[#2C2C2C] border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#3C3C3C] transition-all gap-2"
                             >
-                                <Link
-                                    href="/orders"
-                                    className="flex items-center gap-2"
-                                >
-                                    <ShoppingCart className="h-4 w-4" />
-                                    View All Orders
-                                </Link>
+                                <ShoppingCart className="h-4 w-4" />
+                                View All Orders
                             </Button>
                         )}
                     </div>

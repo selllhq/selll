@@ -74,26 +74,21 @@ export default function Dashboard({
 
                             <div className="flex items-center gap-3 mt-2 md:mt-0">
                                 <Button
+                                    as={Link}
                                     variant="outline"
+                                    href="/products/new"
                                     className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] w-full md:w-auto"
-                                    asChild
                                 >
-                                    <Link href="/products/new">
-                                        Add Product
-                                    </Link>
+                                    Add Product
                                 </Button>
                                 <Button
-                                    className="bg-primary-red hover:bg-primary-red/90 text-white w-full md:w-auto"
-                                    asChild
+                                    as="a"
+                                    className="bg-primary-red hover:bg-primary-red/90 text-white w-full md:w-auto gap-2"
+                                    href={`https://${currentStore?.slug}.selll.store`}
+                                    target="_blank"
                                 >
-                                    <a
-                                        href={`https://${currentStore?.slug}.selll.store`}
-                                        target="_blank"
-                                        className="flex items-center gap-2"
-                                    >
-                                        <Store className="h-4 w-4" />
-                                        View Store
-                                    </a>
+                                    <Store className="h-4 w-4" />
+                                    View Store
                                 </Button>
                             </div>
                         </div>
@@ -373,16 +368,15 @@ export default function Dashboard({
                                                     </p>
                                                 </div>
                                                 <div className="ml-auto font-medium text-emerald-500">
-                                                    +{Intl.NumberFormat(
+                                                    +
+                                                    {Intl.NumberFormat(
                                                         "en-US",
                                                         {
                                                             style: "currency",
                                                             currency:
                                                                 currentStore?.currency,
                                                         },
-                                                    ).format(
-                                                        order.total,
-                                                    )}
+                                                    ).format(order.total)}
                                                 </div>
                                             </div>
                                         ))}

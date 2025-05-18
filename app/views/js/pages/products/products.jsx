@@ -87,29 +87,21 @@ export default function Products({ orders = [], products, currentStore }) {
                             <div className="flex items-center gap-3 mt-2 md:mt-0">
                                 <Button
                                     variant="outline"
-                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] w-full md:w-auto"
-                                    asChild
+                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] w-full md:w-auto gap-2"
+                                    href={`https://${currentStore?.slug}.selll.store`}
+                                    target="_blank"
+                                    as="a"
                                 >
-                                    <a
-                                        href={`https://${currentStore?.slug}.selll.store`}
-                                        target="_blank"
-                                        className="flex items-center gap-2"
-                                    >
-                                        <Store className="h-4 w-4" />
-                                        View Store
-                                    </a>
+                                    <Store className="h-4 w-4" />
+                                    View Store
                                 </Button>
                                 <Button
-                                    className="bg-primary-red hover:bg-primary-red/90 text-white w-full md:w-auto"
-                                    asChild
+                                    as={Link}
+                                    href="/products/new"
+                                    className="bg-primary-red hover:bg-primary-red/90 text-white w-full md:w-auto gap-2"
                                 >
-                                    <Link
-                                        href="/products/new"
-                                        className="flex items-center gap-2"
-                                    >
-                                        <ShoppingBag className="h-4 w-4" />
-                                        Add Product
-                                    </Link>
+                                    <ShoppingBag className="h-4 w-4" />
+                                    Add Product
                                 </Button>
                             </div>
                         </div>
@@ -313,27 +305,86 @@ export default function Products({ orders = [], products, currentStore }) {
                                 <table className="w-full text-sm text-left">
                                     <thead className="text-xs uppercase bg-[#1A1A1A] text-gray-400 border-b border-gray-800">
                                         <tr>
-                                            <th scope="col" className="px-4 py-3">Name</th>
-                                            <th scope="col" className="px-4 py-3">Price</th>
-                                            <th scope="col" className="px-4 py-3">Status</th>
-                                            <th scope="col" className="px-4 py-3">Total Sales</th>
-                                            <th scope="col" className="px-4 py-3">Total Revenue</th>
-                                            <th scope="col" className="px-4 py-3 text-right">Actions</th>
+                                            <th
+                                                scope="col"
+                                                className="px-4 py-3"
+                                            >
+                                                Name
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className="px-4 py-3"
+                                            >
+                                                Price
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className="px-4 py-3"
+                                            >
+                                                Status
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className="px-4 py-3"
+                                            >
+                                                Total Sales
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className="px-4 py-3"
+                                            >
+                                                Total Revenue
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className="px-4 py-3 text-right"
+                                            >
+                                                Actions
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {filteredProducts.map((product) => {
-                                            const parsedImages = parseProductImages(product.images);
-                                            const totalRevenue = (product.sales || 0) * parseFloat(product.price);
-                                            const stockStatus = product.quantity === "unlimited" || parseInt(product.quantity_items) > 0 ? "Published" : "Out of Stock";
-                                            
+                                            const parsedImages =
+                                                parseProductImages(
+                                                    product.images,
+                                                );
+                                            const totalRevenue =
+                                                (product.sales || 0) *
+                                                parseFloat(product.price);
+                                            const stockStatus =
+                                                product.quantity ===
+                                                    "unlimited" ||
+                                                parseInt(
+                                                    product.quantity_items,
+                                                ) > 0
+                                                    ? "Published"
+                                                    : "Out of Stock";
+
                                             return (
-                                                <tr key={product.id} className="border-b border-gray-800 hover:bg-[#1A1A1A]/50 cursor-pointer" onClick={() => router.visit(`/products/${product.id}`)}>
+                                                <tr
+                                                    key={product.id}
+                                                    className="border-b border-gray-800 hover:bg-[#1A1A1A]/50 cursor-pointer"
+                                                    onClick={() =>
+                                                        router.visit(
+                                                            `/products/${product.id}`,
+                                                        )
+                                                    }
+                                                >
                                                     <td className="px-4 py-3">
                                                         <div className="flex items-center space-x-3">
                                                             <div className="h-10 w-10 flex-shrink-0 rounded bg-[#2C2C2C] overflow-hidden">
-                                                                {parsedImages.length > 0 ? (
-                                                                    <img src={parsedImages[0]} alt={product.name} className="h-full w-full object-cover" />
+                                                                {parsedImages.length >
+                                                                0 ? (
+                                                                    <img
+                                                                        src={
+                                                                            parsedImages[0]
+                                                                        }
+                                                                        alt={
+                                                                            product.name
+                                                                        }
+                                                                        className="h-full w-full object-cover"
+                                                                    />
                                                                 ) : (
                                                                     <div className="h-full w-full flex items-center justify-center">
                                                                         <Package className="h-5 w-5 text-gray-500" />
@@ -341,18 +392,28 @@ export default function Products({ orders = [], products, currentStore }) {
                                                                 )}
                                                             </div>
                                                             <div>
-                                                                <div className="font-medium">{product.name}</div>
+                                                                <div className="font-medium">
+                                                                    {
+                                                                        product.name
+                                                                    }
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td className="px-4 py-3 font-medium">
-                                                        {new Intl.NumberFormat("en-US", {
-                                                            style: "currency",
-                                                            currency: currentStore?.currency,
-                                                        }).format(product.price)}
+                                                        {new Intl.NumberFormat(
+                                                            "en-US",
+                                                            {
+                                                                style: "currency",
+                                                                currency:
+                                                                    currentStore?.currency,
+                                                            },
+                                                        ).format(product.price)}
                                                     </td>
                                                     <td className="px-4 py-3">
-                                                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${stockStatus === "Published" ? "bg-emerald-500/10 text-emerald-500" : "bg-primary-orange/10 text-primary-orange"}`}>
+                                                        <span
+                                                            className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${stockStatus === "Published" ? "bg-emerald-500/10 text-emerald-500" : "bg-primary-orange/10 text-primary-orange"}`}
+                                                        >
                                                             {stockStatus}
                                                         </span>
                                                     </td>
@@ -360,17 +421,23 @@ export default function Products({ orders = [], products, currentStore }) {
                                                         {product.sales || 0}
                                                     </td>
                                                     <td className="px-4 py-3">
-                                                        {new Intl.NumberFormat("en-US", {
-                                                            style: "currency",
-                                                            currency: currentStore?.currency,
-                                                        }).format(totalRevenue)}
+                                                        {new Intl.NumberFormat(
+                                                            "en-US",
+                                                            {
+                                                                style: "currency",
+                                                                currency:
+                                                                    currentStore?.currency,
+                                                            },
+                                                        ).format(totalRevenue)}
                                                     </td>
                                                     <td className="px-4 py-3 text-right">
                                                         <div className="flex items-center justify-end space-x-2">
                                                             <button
                                                                 type="button"
                                                                 className="text-sm font-medium text-primary-orange hover:text-primary-orange/90 transition-colors"
-                                                                onClick={(e) => {
+                                                                onClick={(
+                                                                    e,
+                                                                ) => {
                                                                     e.stopPropagation();
                                                                     window.open(
                                                                         `https://${currentStore?.slug}.selll.store/products/${product.id}`,
@@ -383,12 +450,36 @@ export default function Products({ orders = [], products, currentStore }) {
                                                             <button
                                                                 type="button"
                                                                 className="text-gray-400 hover:text-gray-300 transition-colors ml-4"
-                                                                onClick={(e) => e.stopPropagation()}
+                                                                onClick={(e) =>
+                                                                    e.stopPropagation()
+                                                                }
                                                             >
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                                    <circle cx="12" cy="12" r="1"></circle>
-                                                                    <circle cx="19" cy="12" r="1"></circle>
-                                                                    <circle cx="5" cy="12" r="1"></circle>
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    width="16"
+                                                                    height="16"
+                                                                    viewBox="0 0 24 24"
+                                                                    fill="none"
+                                                                    stroke="currentColor"
+                                                                    strokeWidth="2"
+                                                                    strokeLinecap="round"
+                                                                    strokeLinejoin="round"
+                                                                >
+                                                                    <circle
+                                                                        cx="12"
+                                                                        cy="12"
+                                                                        r="1"
+                                                                    ></circle>
+                                                                    <circle
+                                                                        cx="19"
+                                                                        cy="12"
+                                                                        r="1"
+                                                                    ></circle>
+                                                                    <circle
+                                                                        cx="5"
+                                                                        cy="12"
+                                                                        r="1"
+                                                                    ></circle>
                                                                 </svg>
                                                             </button>
                                                         </div>

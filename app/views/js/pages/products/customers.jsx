@@ -158,30 +158,22 @@ export default function Customers({
 
                             <div className="flex items-center gap-3">
                                 <Button
+                                    as={Link}
+                                    href="/orders"
                                     variant="outline"
                                     className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C]"
-                                    asChild
                                 >
-                                    <Link
-                                        href="/orders"
-                                        className="flex items-center gap-2"
-                                    >
-                                        <ShoppingCart className="h-4 w-4" />
-                                        View Orders
-                                    </Link>
+                                    <ShoppingCart className="h-4 w-4" />
+                                    View Orders
                                 </Button>
                                 <Button
+                                    as={Link}
+                                    href={`https://${currentStore?.slug}.selll.store`}
                                     className="bg-primary-orange hover:bg-primary-orange/90"
-                                    asChild
+                                    target="_blank"
                                 >
-                                    <Link
-                                        href={`https://${currentStore?.slug}.selll.store`}
-                                        target="_blank"
-                                        className="flex items-center gap-2"
-                                    >
-                                        <Store className="h-4 w-4" />
-                                        View Store
-                                    </Link>
+                                    <Store className="h-4 w-4" />
+                                    View Store
                                 </Button>
                             </div>
                         </div>
