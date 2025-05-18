@@ -1,7 +1,20 @@
 import { Link } from "@inertiajs/react";
-import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink } from "./navigation-menu";
+import {
+    NavigationMenu,
+    NavigationMenuList,
+    NavigationMenuItem,
+    NavigationMenuTrigger,
+    NavigationMenuContent,
+    NavigationMenuLink,
+} from "./navigation-menu";
 import Button from "../form/button";
-import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from "./sheet";
+import {
+    Sheet,
+    SheetTrigger,
+    SheetContent,
+    SheetHeader,
+    SheetTitle,
+} from "./sheet";
 import { Book, Menu, Sunset, Trees, Zap } from "lucide-react";
 
 const Navbar = ({
@@ -84,16 +97,26 @@ const Navbar = ({
                     </div>
                     <div className="flex gap-2">
                         {auth.user ? (
-                            <Button asChild variant="outline" size="sm">
-                                <Link href="/dashboard">Dashboard</Link>
+                            <Button
+                                as={Link}
+                                href="/dashboard"
+                                variant="outline"
+                                size="sm"
+                            >
+                                Dashboard
                             </Button>
                         ) : (
                             <>
-                                <Button asChild variant="outline" size="sm">
-                                    <Link href="/auth/login">Login</Link>
+                                <Button
+                                    as={Link}
+                                    href="/auth/login"
+                                    variant="outline"
+                                    size="sm"
+                                >
+                                    Login
                                 </Button>
-                                {/* <Button asChild size="sm" className="bg-primary-red hover:bg-primary-red/80 text-white">
-                                    <Link href="/auth/register">Sign up</Link>
+                                {/* <Button as={Link} href="/auth/register" size="sm" className="bg-primary-red hover:bg-primary-red/80 text-white">
+                                    Sign up</Link>
                                 </Button> */}
                             </>
                         )}
@@ -111,7 +134,9 @@ const Navbar = ({
                             />
                             <span className="text-lg font-semibold">
                                 {logo.title}
-                                <small className="italic ml-1">by Leaf PHP</small>
+                                <small className="italic ml-1">
+                                    by Leaf PHP
+                                </small>
                             </span>
                         </a>
                         <Sheet>
@@ -150,15 +175,15 @@ const Navbar = ({
                                     </Accordion> */}
 
                                     <div className="flex flex-col gap-3">
-                                        <Button asChild variant="outline">
-                                            <Link href="/auth/login">
-                                                Login
-                                            </Link>
+                                        <Button
+                                            as={Link}
+                                            href="/auth/login"
+                                            variant="outline"
+                                        >
+                                            Login
                                         </Button>
-                                        {/* <Button asChild>
-                                            <Link href="/auth/register">
+                                        {/* <Button as={Link} href="/auth/register">
                                                 Sign up
-                                            </Link>
                                         </Button> */}
                                     </div>
                                 </div>
@@ -174,11 +199,18 @@ const Navbar = ({
 const renderMenuItem = (item) => {
     if (item.items) {
         return (
-            <NavigationMenuItem key={item.title} className="text-muted-foreground">
+            <NavigationMenuItem
+                key={item.title}
+                className="text-muted-foreground"
+            >
                 <NavigationMenuTrigger>{item.title}</NavigationMenuTrigger>
                 <NavigationMenuContent>
                     {item.items.map((subItem) => (
-                        <NavigationMenuLink asChild key={subItem.title} className="w-80">
+                        <NavigationMenuLink
+                            asChild
+                            key={subItem.title}
+                            className="w-80"
+                        >
                             <SubMenuLink item={subItem} />
                         </NavigationMenuLink>
                     ))}
@@ -201,7 +233,11 @@ const renderMenuItem = (item) => {
 const renderMobileMenuItem = (item) => {
     if (item.items) {
         return (
-            <AccordionItem key={item.title} value={item.title} className="border-b-0">
+            <AccordionItem
+                key={item.title}
+                value={item.title}
+                className="border-b-0"
+            >
                 <AccordionTrigger className="text-md py-0 font-semibold hover:no-underline">
                     {item.title}
                 </AccordionTrigger>
