@@ -17,6 +17,12 @@ columns:
     type: boolean
     default: false
     nullable: true
+  status:
+    type: enum
+    default: active
+    values:
+      - active
+      - archived
 
 relationships:
   - Store
