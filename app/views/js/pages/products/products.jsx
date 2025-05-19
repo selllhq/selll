@@ -13,6 +13,7 @@ import Button from "@/components/form/button";
 import Input from "@/components/form/input";
 import dayjs from "dayjs";
 import { parseProductImages } from "@/utils/store";
+import { toast } from "sonner";
 
 export default function Products({ orders = [], products, currentStore }) {
     const [search, setSearch] = useState("");
@@ -434,14 +435,16 @@ export default function Products({ orders = [], products, currentStore }) {
                                                         <div className="flex items-center justify-end space-x-2">
                                                             <button
                                                                 type="button"
-                                                                className="text-sm font-medium text-primary-orange hover:text-primary-orange/90 transition-colors"
+                                                                className="text-sm font-medium text-primary-orange hover:text-primary-orange/90 transition-colors cursor-pointer"
                                                                 onClick={(
                                                                     e,
                                                                 ) => {
                                                                     e.stopPropagation();
-                                                                    window.open(
+                                                                    navigator.clipboard.writeText(
                                                                         `https://${currentStore?.slug}.selll.store/products/${product.id}`,
-                                                                        "_blank",
+                                                                    );
+                                                                    toast(
+                                                                        "Product link copied to clipboard.",
                                                                     );
                                                                 }}
                                                             >

@@ -7,6 +7,7 @@ import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from '@leafphp/vite-plugin/inertia-helpers';
 import { initializeTheme } from './utils/app-mode';
+import { Toaster } from './components/ui/sonner';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Selll';
 
@@ -20,7 +21,12 @@ createInertiaApp({
             import.meta.glob("./pages/**/*.jsx"),
         ),
     setup({ el, App, props }) {
-        createRoot(el).render(<App {...props} />);
+        createRoot(el).render(
+            <>
+                <App {...props} />
+                <Toaster />
+            </>,
+        );
     },
     progress: {
         color: "#ec504b",
