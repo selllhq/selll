@@ -27,6 +27,7 @@ class ProductsController extends Controller
     {
         response()->inertia('products/setup', [
             'currentStore' => Store::find(auth()->user()->current_store_id),
+            'errors' => flash()->display('errors') ?? [],
         ]);
     }
 
@@ -40,15 +41,23 @@ class ProductsController extends Controller
             'quantity_items',
         ]);
 
+        $uploads = request()->upload(
+            'images',
+            withBucket('products/' . auth()->user()->current_store_id),
+            ['rename' => true]
+        );
+
+        if (!$uploads) {
+            return response()
+                ->withFlash('errors', request()->errors())
+                ->redirect('/products/create', 303);
+        }
+
         $data['images'] = json_encode(array_map(
             function ($item) {
                 return $item['url'];
             },
-            request()->upload(
-                'images',
-                withBucket('products/' . auth()->user()->current_store_id),
-                ['rename' => true]
-            )
+            $uploads
         ));
 
         Store::find(auth()->user()->current_store_id)->products()->create($data);
