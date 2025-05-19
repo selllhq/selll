@@ -46,7 +46,7 @@ class ProductsController extends Controller
             },
             request()->upload(
                 'images',
-                StoragePath('app/public/products/' . auth()->user()->current_store_id),
+                withBucket('products/' . auth()->user()->current_store_id),
                 ['rename' => true]
             )
         ));
