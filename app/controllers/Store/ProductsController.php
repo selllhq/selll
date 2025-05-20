@@ -100,18 +100,14 @@ class ProductsController extends Controller
 
         $product = Store::find(auth()->user()->current_store_id)->products()->find($id);
 
-        // Handle image updates
         $currentImages = [];
 
-        // Process existing images that weren't deleted
         if (isset($data['existing_images']) && !empty($data['existing_images'])) {
             $currentImages = json_decode($data['existing_images'], true);
         } elseif ($product->images) {
-            // If no existing_images were provided but the product has images, use those
             try {
                 $currentImages = json_decode($product->images, true);
             } catch (\Exception $e) {
-                // If images can't be decoded, treat as empty array
                 $currentImages = [];
             }
         }
@@ -123,17 +119,24 @@ class ProductsController extends Controller
         }
 
         $uploadedImages = [];
+        $uploads = request()->upload(
+            'images',
+            withBucket('products/' . auth()->user()->current_store_id),
+            ['rename' => true]
+        );
+
+        if (!$uploads) {
+            return response()
+                ->withFlash('errors', request()->errors())
+                ->redirect("/products/{$product->id}/edit", 303);
+        }
 
         if (request()->get('images')) {
             $uploadedImages = array_map(
                 function ($item) {
                     return $item['url'];
                 },
-                request()->upload(
-                    'images',
-                    StoragePath('app/public/products/' . auth()->user()->current_store_id),
-                    ['rename' => true]
-                )
+                $uploads
             );
         }
 
