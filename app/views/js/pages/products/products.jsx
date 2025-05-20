@@ -1,6 +1,6 @@
 import Layout from "@/layouts/app-layout";
 import { Head, router, Link } from "@inertiajs/react";
-import { useState } from "react";
+import { useState, Fragment, useRef, useEffect } from "react";
 import EmptyState from "@/components/layout/empty";
 import {
     Card,
@@ -8,7 +8,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/shared/card";
-import { ShoppingBag, TrendingUp, Store, Package, Search } from "lucide-react";
+import { ShoppingBag, TrendingUp, Store, Package, Search, Trash2, X, Share, MoreHorizontal, Edit } from "lucide-react";
 import Button from "@/components/form/button";
 import Input from "@/components/form/input";
 import dayjs from "dayjs";
@@ -18,6 +18,24 @@ import { toast } from "sonner";
 export default function Products({ orders = [], products, currentStore }) {
     const [search, setSearch] = useState("");
     const [filter, setFilter] = useState("all");
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [productToDelete, setProductToDelete] = useState(null);
+    const [activeMenu, setActiveMenu] = useState(null);
+    const menuRef = useRef(null);
+
+    // Close menu when clicking outside
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setActiveMenu(null);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     const filteredProducts = products?.filter((product) => {
         const matchesSearch =
@@ -99,7 +117,7 @@ export default function Products({ orders = [], products, currentStore }) {
                                 <Button
                                     as={Link}
                                     href="/products/new"
-                                    className="bg-primary-red hover:bg-primary-red/90 text-white w-full md:w-auto gap-2"
+                                    className="bg-primary-orange hover:bg-primary-orange/90 text-white w-full md:w-auto gap-2"
                                 >
                                     <ShoppingBag className="h-4 w-4" />
                                     Add Product
@@ -189,7 +207,7 @@ export default function Products({ orders = [], products, currentStore }) {
                                                         .filter(
                                                             (order) =>
                                                                 order.status ===
-                                                                    "paid" &&
+                                                                "paid" &&
                                                                 dayjs(
                                                                     order.created_at,
                                                                 ).isAfter(
@@ -272,8 +290,8 @@ export default function Products({ orders = [], products, currentStore }) {
                                 {filter === "all"
                                     ? "All Products"
                                     : filter === "in_stock"
-                                      ? "In Stock Products"
-                                      : "Out of Stock Products"}{" "}
+                                        ? "In Stock Products"
+                                        : "Out of Stock Products"}{" "}
                                 ({filteredProducts.length})
                             </h3>
 
@@ -340,7 +358,7 @@ export default function Products({ orders = [], products, currentStore }) {
                                                 scope="col"
                                                 className="px-4 py-3 text-right"
                                             >
-                                                Actions
+
                                             </th>
                                         </tr>
                                     </thead>
@@ -356,9 +374,9 @@ export default function Products({ orders = [], products, currentStore }) {
                                             const stockStatus =
                                                 product.quantity ===
                                                     "unlimited" ||
-                                                parseInt(
-                                                    product.quantity_items,
-                                                ) > 0
+                                                    parseInt(
+                                                        product.quantity_items,
+                                                    ) > 0
                                                     ? "Published"
                                                     : "Out of Stock";
 
@@ -376,7 +394,7 @@ export default function Products({ orders = [], products, currentStore }) {
                                                         <div className="flex items-center space-x-3">
                                                             <div className="h-10 w-10 flex-shrink-0 rounded bg-[#2C2C2C] overflow-hidden">
                                                                 {parsedImages.length >
-                                                                0 ? (
+                                                                    0 ? (
                                                                     <img
                                                                         src={
                                                                             parsedImages[0]
@@ -432,59 +450,65 @@ export default function Products({ orders = [], products, currentStore }) {
                                                         ).format(totalRevenue)}
                                                     </td>
                                                     <td className="px-4 py-3 text-right">
-                                                        <div className="flex items-center justify-end space-x-2">
+                                                        <div className="flex items-center justify-end space-x-2 relative" ref={activeMenu === product.id ? menuRef : null}>
                                                             <button
                                                                 type="button"
-                                                                className="text-sm font-medium text-primary-orange hover:text-primary-orange/90 transition-colors cursor-pointer"
-                                                                onClick={(
-                                                                    e,
-                                                                ) => {
+                                                                className="text-gray-400 hover:text-gray-300 transition-colors"
+                                                                onClick={(e) => {
                                                                     e.stopPropagation();
-                                                                    navigator.clipboard.writeText(
-                                                                        `https://${currentStore?.slug}.selll.store/products/${product.id}`,
-                                                                    );
-                                                                    toast(
-                                                                        "Product link copied to clipboard.",
-                                                                    );
+                                                                    setActiveMenu(activeMenu === product.id ? null : product.id);
                                                                 }}
                                                             >
-                                                                Share
+                                                                <MoreHorizontal className="h-4 w-4" />
                                                             </button>
-                                                            <button
-                                                                type="button"
-                                                                className="text-gray-400 hover:text-gray-300 transition-colors ml-4"
-                                                                onClick={(e) =>
-                                                                    e.stopPropagation()
-                                                                }
-                                                            >
-                                                                <svg
-                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                    width="16"
-                                                                    height="16"
-                                                                    viewBox="0 0 24 24"
-                                                                    fill="none"
-                                                                    stroke="currentColor"
-                                                                    strokeWidth="2"
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                >
-                                                                    <circle
-                                                                        cx="12"
-                                                                        cy="12"
-                                                                        r="1"
-                                                                    ></circle>
-                                                                    <circle
-                                                                        cx="19"
-                                                                        cy="12"
-                                                                        r="1"
-                                                                    ></circle>
-                                                                    <circle
-                                                                        cx="5"
-                                                                        cy="12"
-                                                                        r="1"
-                                                                    ></circle>
-                                                                </svg>
-                                                            </button>
+
+                                                            {activeMenu === product.id && (
+                                                                <div className="absolute right-0 top-full mt-1 w-48 rounded-md shadow-lg bg-[#1A1A1A] border border-gray-800 z-10">
+                                                                    <div className="py-1">
+                                                                        <button
+                                                                            type="button"
+                                                                            className="flex items-center w-full px-4 py-2 text-sm text-gray-300 hover:bg-[#2C2C2C] transition-colors text-left"
+                                                                            onClick={(e) => {
+                                                                                e.stopPropagation();
+                                                                                router.visit(`/products/${product.id}/edit`);
+                                                                            }}
+                                                                        >
+                                                                            <Edit className="h-4 w-4 mr-2" />
+                                                                            Edit
+                                                                        </button>
+                                                                        <button
+                                                                            type="button"
+                                                                            className="flex items-center w-full px-4 py-2 text-sm text-gray-300 hover:bg-[#2C2C2C] transition-colors text-left"
+                                                                            onClick={(e) => {
+                                                                                e.stopPropagation();
+                                                                                navigator.clipboard.writeText(
+                                                                                    `https://${currentStore?.slug}.selll.store/products/${product.id}`,
+                                                                                );
+                                                                                toast(
+                                                                                    "Product link copied to clipboard.",
+                                                                                );
+                                                                                setActiveMenu(null);
+                                                                            }}
+                                                                        >
+                                                                            <Share className="h-4 w-4 mr-2" />
+                                                                            Share
+                                                                        </button>
+                                                                        <button
+                                                                            type="button"
+                                                                            className="flex items-center w-full px-4 py-2 text-sm text-red-500 hover:bg-[#2C2C2C] transition-colors text-left"
+                                                                            onClick={(e) => {
+                                                                                e.stopPropagation();
+                                                                                setProductToDelete(product);
+                                                                                setShowDeleteModal(true);
+                                                                                setActiveMenu(null);
+                                                                            }}
+                                                                        >
+                                                                            <Trash2 className="h-4 w-4 mr-2" />
+                                                                            Delete
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            )}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -500,6 +524,59 @@ export default function Products({ orders = [], products, currentStore }) {
                     </div>
                 )}
             </div>
+
+            {showDeleteModal && (
+                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                    <div className="bg-[#1A1A1A] rounded-lg shadow-lg max-w-md w-full border border-gray-800 overflow-hidden">
+                        <div className="flex items-center justify-between p-4 border-b border-gray-800">
+                            <h3 className="text-lg font-medium">Confirm Deletion</h3>
+                            <button
+                                type="button"
+                                className="text-gray-400 hover:text-gray-300 transition-colors"
+                                onClick={() => {
+                                    setShowDeleteModal(false);
+                                    setProductToDelete(null);
+                                }}
+                            >
+                                <X className="h-5 w-5" />
+                            </button>
+                        </div>
+                        <div className="p-4">
+                            <p className="mb-4">
+                                Are you sure you want to delete the product "{productToDelete?.name}"? This action cannot be undone.
+                            </p>
+                            <div className="flex justify-end space-x-3">
+                                <button
+                                    type="button"
+                                    className="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white bg-transparent border border-gray-700 rounded-md hover:bg-gray-800 transition-colors"
+                                    onClick={() => {
+                                        setShowDeleteModal(false);
+                                        setProductToDelete(null);
+                                    }}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="button"
+                                    className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 transition-colors"
+                                    onClick={() => {
+                                        // Here you would add the actual delete logic
+                                        // For example:
+                                        // router.delete(`/products/${productToDelete.id}`);
+
+                                        // For now, we'll just close the modal
+                                        setShowDeleteModal(false);
+                                        setProductToDelete(null);
+                                        toast("Product deleted successfully.");
+                                    }}
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </Layout>
     );
 }

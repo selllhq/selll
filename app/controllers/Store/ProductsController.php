@@ -147,4 +147,39 @@ class ProductsController extends Controller
 
         return response()->redirect("/products/{$product->id}", 303);
     }
+
+    public function destroy($id)
+    {
+        $product = Store::find(auth()->user()->current_store_id)->products()->find($id);
+
+        if (!$product) {
+            return response()
+                ->withFlash('errors', [
+                    'product' => 'Product not found.',
+                ])
+                ->redirect('/products', 303);
+        }
+
+        if ($product->purchases()->count() > 0) {
+            $product->update(['status' => 'archived']);
+
+            return response()
+                ->withFlash('success', 'Product archived successfully.')
+                ->redirect('/products', 303);
+        }
+
+        // if ($product->images) {
+        //     $images = json_decode($product->images, true);
+
+        //     foreach ($images as $image) {
+        //         storage()->delete(withBucket($image));
+        //     }
+        // }
+
+        $product->delete();
+
+        return response()
+            ->withFlash('success', 'Product deleted successfully.')
+            ->redirect('/products', 303);
+    }
 }

@@ -83,7 +83,7 @@ export default function Dashboard({
                                 </Button>
                                 <Button
                                     as="a"
-                                    className="bg-primary-red hover:bg-primary-red/90 text-white w-full md:w-auto gap-2"
+                                    className="bg-primary-orange hover:bg-primary-orange/90 text-white w-full md:w-auto gap-2"
                                     href={`https://${currentStore?.slug}.selll.store`}
                                     target="_blank"
                                 >
