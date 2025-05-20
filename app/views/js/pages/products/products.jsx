@@ -1,6 +1,6 @@
 import Layout from "@/layouts/app-layout";
 import { Head, router, Link } from "@inertiajs/react";
-import { useState, Fragment, useRef, useEffect } from "react";
+import { useState } from "react";
 import EmptyState from "@/components/layout/empty";
 import {
     Card,
@@ -8,34 +8,35 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/shared/card";
-import { ShoppingBag, TrendingUp, Store, Package, Search, Trash2, X, Share, MoreHorizontal, Edit } from "lucide-react";
+import {
+    ShoppingBag,
+    TrendingUp,
+    Store,
+    Package,
+    Search,
+    Trash2,
+    X,
+    Share,
+    MoreHorizontal,
+    Edit,
+} from "lucide-react";
 import Button from "@/components/form/button";
 import Input from "@/components/form/input";
 import dayjs from "dayjs";
 import { parseProductImages } from "@/utils/store";
 import { toast } from "sonner";
+import { useDialog } from "@/components/ui/dialog";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/shared/dropdown-menu";
 
 export default function Products({ orders = [], products, currentStore }) {
     const [search, setSearch] = useState("");
     const [filter, setFilter] = useState("all");
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [productToDelete, setProductToDelete] = useState(null);
-    const [activeMenu, setActiveMenu] = useState(null);
-    const menuRef = useRef(null);
-
-    // Close menu when clicking outside
-    useEffect(() => {
-        function handleClickOutside(event) {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
-                setActiveMenu(null);
-            }
-        }
-
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
+    const confirmModal = useDialog("confirmAction");
 
     const filteredProducts = products?.filter((product) => {
         const matchesSearch =
@@ -207,7 +208,7 @@ export default function Products({ orders = [], products, currentStore }) {
                                                         .filter(
                                                             (order) =>
                                                                 order.status ===
-                                                                "paid" &&
+                                                                    "paid" &&
                                                                 dayjs(
                                                                     order.created_at,
                                                                 ).isAfter(
@@ -239,11 +240,11 @@ export default function Products({ orders = [], products, currentStore }) {
                         <div className="flex items-center justify-between mb-6">
                             <div className="flex-1 max-w-md">
                                 <div className="relative">
-                                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+                                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 dark:text-gray-500" />
                                     <Input
                                         type="search"
                                         placeholder="Search products..."
-                                        className="pl-8 h-9 bg-[#141414] border-[#2C2C2C] rounded-md focus:ring-1 focus:ring-[#2C2C2C] focus:border-[#2C2C2C] hover:bg-[#2C2C2C]/10 transition-colors w-full text-sm placeholder:text-gray-500"
+                                        className="pl-8 h-9 bg-gray-100 dark:bg-[#141414] dark:border-[#2C2C2C] rounded-md focus:ring-1 focus:ring-[#2C2C2C] focus:border-[#2C2C2C] hover:bg-[#2C2C2C]/10 transition-colors w-full text-sm dark:placeholder:text-gray-500"
                                         value={search}
                                         onChange={(e) =>
                                             setSearch(e.target.value)
@@ -252,8 +253,9 @@ export default function Products({ orders = [], products, currentStore }) {
                                 </div>
                             </div>
 
-                            <select
-                                className="ml-6 h-9 bg-[#141414] border-[#2C2C2C] rounded-md focus:ring-1 focus:ring-[#2C2C2C] focus:border-[#2C2C2C] hover:bg-[#2C2C2C]/10 transition-colors text-sm font-medium text-gray-400 px-2.5 appearance-none cursor-pointer min-w-[140px]"
+                            <Input
+                                as="select"
+                                className="ml-6 h-9 bg-gray-100 dark:bg-[#141414] dark:border-[#2C2C2C] rounded-md focus:ring-1 focus:ring-[#2C2C2C] focus:border-[#2C2C2C] hover:bg-[#2C2C2C]/10 transition-colors text-sm font-medium dark:text-gray-400 px-2.5 appearance-none cursor-pointer max-w-[150px]"
                                 value={filter}
                                 onChange={(e) => setFilter(e.target.value)}
                                 style={{
@@ -282,7 +284,7 @@ export default function Products({ orders = [], products, currentStore }) {
                                 >
                                     Out of Stock
                                 </option>
-                            </select>
+                            </Input>
                         </div>
 
                         <div className="flex items-center justify-between mb-6">
@@ -290,8 +292,8 @@ export default function Products({ orders = [], products, currentStore }) {
                                 {filter === "all"
                                     ? "All Products"
                                     : filter === "in_stock"
-                                        ? "In Stock Products"
-                                        : "Out of Stock Products"}{" "}
+                                      ? "In Stock Products"
+                                      : "Out of Stock Products"}{" "}
                                 ({filteredProducts.length})
                             </h3>
 
@@ -320,9 +322,9 @@ export default function Products({ orders = [], products, currentStore }) {
                                 className="mt-6"
                             />
                         ) : (
-                            <div className="overflow-x-auto rounded-lg border border-gray-800">
+                            <div className="overflow-x-auto rounded-lg border border-muted-foreground/15">
                                 <table className="w-full text-sm text-left">
-                                    <thead className="text-xs uppercase bg-[#1A1A1A] text-gray-400 border-b border-gray-800">
+                                    <thead className="text-xs uppercase bg-gray-100 dark:bg-[#1A1A1A] dark:text-gray-400 border-b border-muted-foreground/15">
                                         <tr>
                                             <th
                                                 scope="col"
@@ -357,9 +359,7 @@ export default function Products({ orders = [], products, currentStore }) {
                                             <th
                                                 scope="col"
                                                 className="px-4 py-3 text-right"
-                                            >
-
-                                            </th>
+                                            ></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -374,16 +374,16 @@ export default function Products({ orders = [], products, currentStore }) {
                                             const stockStatus =
                                                 product.quantity ===
                                                     "unlimited" ||
-                                                    parseInt(
-                                                        product.quantity_items,
-                                                    ) > 0
+                                                parseInt(
+                                                    product.quantity_items,
+                                                ) > 0
                                                     ? "Published"
                                                     : "Out of Stock";
 
                                             return (
                                                 <tr
                                                     key={product.id}
-                                                    className="border-b border-gray-800 hover:bg-[#1A1A1A]/50 cursor-pointer"
+                                                    className="border-b border-muted-foreground/15 hover:bg-gray-100 hover:dark:bg-[#1A1A1A]/50 cursor-pointer"
                                                     onClick={() =>
                                                         router.visit(
                                                             `/products/${product.id}`,
@@ -394,7 +394,7 @@ export default function Products({ orders = [], products, currentStore }) {
                                                         <div className="flex items-center space-x-3">
                                                             <div className="h-10 w-10 flex-shrink-0 rounded bg-[#2C2C2C] overflow-hidden">
                                                                 {parsedImages.length >
-                                                                    0 ? (
+                                                                0 ? (
                                                                     <img
                                                                         src={
                                                                             parsedImages[0]
@@ -450,36 +450,47 @@ export default function Products({ orders = [], products, currentStore }) {
                                                         ).format(totalRevenue)}
                                                     </td>
                                                     <td className="px-4 py-3 text-right">
-                                                        <div className="flex items-center justify-end space-x-2 relative" ref={activeMenu === product.id ? menuRef : null}>
-                                                            <button
-                                                                type="button"
-                                                                className="text-gray-400 hover:text-gray-300 transition-colors"
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    setActiveMenu(activeMenu === product.id ? null : product.id);
-                                                                }}
-                                                            >
-                                                                <MoreHorizontal className="h-4 w-4" />
-                                                            </button>
-
-                                                            {activeMenu === product.id && (
-                                                                <div className="absolute right-0 top-full mt-1 w-48 rounded-md shadow-lg bg-[#1A1A1A] border border-gray-800 z-10">
-                                                                    <div className="py-1">
-                                                                        <button
-                                                                            type="button"
-                                                                            className="flex items-center w-full px-4 py-2 text-sm text-gray-300 hover:bg-[#2C2C2C] transition-colors text-left"
-                                                                            onClick={(e) => {
-                                                                                e.stopPropagation();
-                                                                                router.visit(`/products/${product.id}/edit`);
-                                                                            }}
+                                                        <div className="flex items-center justify-end space-x-2 relative">
+                                                            <DropdownMenu>
+                                                                <DropdownMenuTrigger
+                                                                    asChild
+                                                                    stopPropagation
+                                                                >
+                                                                    <Button variant="ghost" className="hover:bg-muted-foreground/10">
+                                                                        <MoreHorizontal className="h-4 w-4" />
+                                                                    </Button>
+                                                                </DropdownMenuTrigger>
+                                                                <DropdownMenuContent
+                                                                    className="w-56"
+                                                                    align="end"
+                                                                >
+                                                                    <DropdownMenuItem
+                                                                        asChild
+                                                                    >
+                                                                        <Link
+                                                                            className="block w-full h-10"
+                                                                            href={`/products/${product.id}/edit`}
+                                                                            as="button"
+                                                                            prefetch
+                                                                            onClick={(
+                                                                                e,
+                                                                            ) =>
+                                                                                e.stopPropagation()
+                                                                            }
                                                                         >
                                                                             <Edit className="h-4 w-4 mr-2" />
                                                                             Edit
-                                                                        </button>
-                                                                        <button
-                                                                            type="button"
-                                                                            className="flex items-center w-full px-4 py-2 text-sm text-gray-300 hover:bg-[#2C2C2C] transition-colors text-left"
-                                                                            onClick={(e) => {
+                                                                        </Link>
+                                                                    </DropdownMenuItem>
+                                                                    <DropdownMenuItem
+                                                                        asChild
+                                                                    >
+                                                                        <Button
+                                                                            variant="ghost"
+                                                                            className="w-full justify-start focus-visible:ring-0"
+                                                                            onClick={(
+                                                                                e,
+                                                                            ) => {
                                                                                 e.stopPropagation();
                                                                                 navigator.clipboard.writeText(
                                                                                     `https://${currentStore?.slug}.selll.store/products/${product.id}`,
@@ -487,28 +498,46 @@ export default function Products({ orders = [], products, currentStore }) {
                                                                                 toast(
                                                                                     "Product link copied to clipboard.",
                                                                                 );
-                                                                                setActiveMenu(null);
                                                                             }}
                                                                         >
                                                                             <Share className="h-4 w-4 mr-2" />
                                                                             Share
-                                                                        </button>
-                                                                        <button
-                                                                            type="button"
-                                                                            className="flex items-center w-full px-4 py-2 text-sm text-red-500 hover:bg-[#2C2C2C] transition-colors text-left"
-                                                                            onClick={(e) => {
+                                                                        </Button>
+                                                                    </DropdownMenuItem>
+                                                                    <DropdownMenuItem
+                                                                        asChild
+                                                                    >
+                                                                        <Button
+                                                                            variant="ghost"
+                                                                            className="w-full justify-start focus-visible:ring-0"
+                                                                            onClick={(
+                                                                                e,
+                                                                            ) => {
                                                                                 e.stopPropagation();
-                                                                                setProductToDelete(product);
-                                                                                setShowDeleteModal(true);
-                                                                                setActiveMenu(null);
+                                                                                confirmModal.openDialog(
+                                                                                    {
+                                                                                        title: "Delete Product",
+                                                                                        description: `Are you sure you want to delete the product "${product.name}"? This action cannot be undone.`,
+                                                                                        cancelText:
+                                                                                            "Cancel",
+                                                                                        confirmText:
+                                                                                            "Delete",
+                                                                                        onConfirm:
+                                                                                            () => {
+                                                                                                toast(
+                                                                                                    "Product deleted successfully.",
+                                                                                                );
+                                                                                            },
+                                                                                    },
+                                                                                );
                                                                             }}
                                                                         >
                                                                             <Trash2 className="h-4 w-4 mr-2" />
                                                                             Delete
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            )}
+                                                                        </Button>
+                                                                    </DropdownMenuItem>
+                                                                </DropdownMenuContent>
+                                                            </DropdownMenu>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -516,67 +545,25 @@ export default function Products({ orders = [], products, currentStore }) {
                                         })}
                                     </tbody>
                                 </table>
-                                <div className="bg-[#1A1A1A] px-4 py-3 text-xs text-gray-400 border-t border-gray-800">
-                                    <div>1 result</div>
+                                <div className="bg-gray-100 dark:bg-[#1A1A1A] px-4 py-3 text-xs text-gray-400">
+                                    <div>
+                                        {Intl.NumberFormat("en-US", {
+                                            style: "decimal",
+                                        }).format(filteredProducts.length)}{" "}
+                                        {filteredProducts.length === 1
+                                            ? "product"
+                                            : "products"}{" "}
+                                        found
+                                        {search && (
+                                            <span> matching "{search}"</span>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         )}
                     </div>
                 )}
             </div>
-
-            {showDeleteModal && (
-                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-                    <div className="bg-[#1A1A1A] rounded-lg shadow-lg max-w-md w-full border border-gray-800 overflow-hidden">
-                        <div className="flex items-center justify-between p-4 border-b border-gray-800">
-                            <h3 className="text-lg font-medium">Confirm Deletion</h3>
-                            <button
-                                type="button"
-                                className="text-gray-400 hover:text-gray-300 transition-colors"
-                                onClick={() => {
-                                    setShowDeleteModal(false);
-                                    setProductToDelete(null);
-                                }}
-                            >
-                                <X className="h-5 w-5" />
-                            </button>
-                        </div>
-                        <div className="p-4">
-                            <p className="mb-4">
-                                Are you sure you want to delete the product "{productToDelete?.name}"? This action cannot be undone.
-                            </p>
-                            <div className="flex justify-end space-x-3">
-                                <button
-                                    type="button"
-                                    className="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white bg-transparent border border-gray-700 rounded-md hover:bg-gray-800 transition-colors"
-                                    onClick={() => {
-                                        setShowDeleteModal(false);
-                                        setProductToDelete(null);
-                                    }}
-                                >
-                                    Cancel
-                                </button>
-                                <button
-                                    type="button"
-                                    className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 transition-colors"
-                                    onClick={() => {
-                                        // Here you would add the actual delete logic
-                                        // For example:
-                                        // router.delete(`/products/${productToDelete.id}`);
-
-                                        // For now, we'll just close the modal
-                                        setShowDeleteModal(false);
-                                        setProductToDelete(null);
-                                        toast("Product deleted successfully.");
-                                    }}
-                                >
-                                    Delete
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
         </Layout>
     );
 }

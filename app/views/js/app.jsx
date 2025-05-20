@@ -8,10 +8,19 @@ import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from '@leafphp/vite-plugin/inertia-helpers';
 import { initializeTheme } from './utils/app-mode';
 import { Toaster } from './components/ui/sonner';
+import ConfirmActionModal from './components/modals/confirm';
+import { createStore } from '@hanabira/store';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Selll';
 
 dayjs.extend(relativeTime);
+
+createStore({
+    compareState: true,
+    state: {
+        "confirmActionOpen": false,
+    }
+});
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -25,6 +34,7 @@ createInertiaApp({
             <>
                 <App {...props} />
                 <Toaster />
+                <ConfirmActionModal />
             </>,
         );
     },
