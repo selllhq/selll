@@ -83,6 +83,7 @@ class ProductsController extends Controller
         response()->inertia('products/edit', [
             'product' => $currentStore->products()->find($id),
             'currentStore' => $currentStore,
+            'errors' => flash()->display('errors') ?? [],
         ]);
     }
 
@@ -92,6 +93,7 @@ class ProductsController extends Controller
             'name',
             'description',
             'price',
+            'images',
             'quantity',
             'quantity_items',
             'existing_images',
@@ -99,7 +101,6 @@ class ProductsController extends Controller
         ]);
 
         $product = Store::find(auth()->user()->current_store_id)->products()->find($id);
-
         $currentImages = [];
 
         if (isset($data['existing_images']) && !empty($data['existing_images'])) {
@@ -119,25 +120,28 @@ class ProductsController extends Controller
         }
 
         $uploadedImages = [];
-        $uploads = request()->upload(
-            'images',
-            withBucket('products/' . auth()->user()->current_store_id),
-            ['rename' => true]
-        );
 
-        if (!$uploads) {
-            return response()
-                ->withFlash('errors', request()->errors())
-                ->redirect("/products/{$product->id}/edit", 303);
-        }
-
-        if (request()->get('images')) {
-            $uploadedImages = array_map(
-                function ($item) {
-                    return $item['url'];
-                },
-                $uploads
+        if ($data['images']) {
+            $uploads = request()->upload(
+                'images',
+                withBucket('products/' . auth()->user()->current_store_id),
+                ['rename' => true]
             );
+
+            if (!$uploads) {
+                return response()
+                    ->withFlash('errors', request()->errors())
+                    ->redirect("/products/{$product->id}/edit", 303);
+            }
+
+            if (request()->get('images')) {
+                $uploadedImages = array_map(
+                    function ($item) {
+                        return $item['url'];
+                    },
+                    $uploads
+                );
+            }
         }
 
         $allImages = array_merge($currentImages, $uploadedImages);

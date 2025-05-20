@@ -1,6 +1,6 @@
 export const CURRENCY_SYMBOLS = {
     USD: "$",
-    GHS: "₵",
+    GHS: "GH₵",
     NGN: "₦",
     EUR: "€",
     GBP: "£",

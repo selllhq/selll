@@ -7,7 +7,11 @@ import Label from "@/components/form/label";
 import { cn } from "@/utils";
 import { useState, useEffect } from "react";
 import Layout from "@/layouts/app-layout";
-import { CURRENCY_LIMITS, CURRENCY_SYMBOLS, parseProductImages } from "@/utils/store";
+import {
+    CURRENCY_LIMITS,
+    CURRENCY_SYMBOLS,
+    parseProductImages,
+} from "@/utils/store";
 import PreviewImage from "@/components/products/preview-image";
 
 const EditProduct = ({ currentStore, product }) => {
@@ -219,6 +223,10 @@ const EditProduct = ({ currentStore, product }) => {
                                             </label>
                                         )}
                                     </div>
+                                    <InputError
+                                        className="mt-2"
+                                        message={errors.upload}
+                                    />
                                 </div>
 
                                 <div className="space-y-3">
@@ -269,7 +277,16 @@ const EditProduct = ({ currentStore, product }) => {
                                         <div className="relative">
                                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                                 <span className="text-gray-500 dark:text-gray-400">
-                                                    {currencySymbol}
+                                                    {Intl.NumberFormat(
+                                                        "en-US",
+                                                        {
+                                                            style: "currency",
+                                                            currency:
+                                                                currentStore?.currency,
+                                                        },
+                                                    )
+                                                        .format(0)
+                                                        .replace("0.00", "")}
                                                 </span>
                                             </div>
                                             <Input
@@ -279,7 +296,7 @@ const EditProduct = ({ currentStore, product }) => {
                                                 max={currencyLimits.max}
                                                 step="0.01"
                                                 className={cn(
-                                                    "block w-full pl-8 bg-gray-100 dark:bg-[#2C2C2C] border-0 focus:ring-primary-orange/20 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400",
+                                                    "block w-full pl-14 bg-gray-100 dark:bg-[#2C2C2C] border-0 focus:ring-primary-orange/20 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400",
                                                     {
                                                         "border-red-500 focus:ring-red-500":
                                                             priceError,
@@ -396,6 +413,7 @@ const EditProduct = ({ currentStore, product }) => {
                         </div>
                     </div>
                 </div>
+
                 <div className="w-full md:w-[40%] lg:w-[35%] xl:w-[600px] h-auto max-h-[50vh] md:max-h-screen overflow-y-auto bg-gray-50 dark:bg-[#1A1A1A] border-t md:border-t-0 md:border-l border-gray-100 dark:border-[#2C2C2C] p-4 md:p-8 order-1 md:order-2 flex-shrink-0 sticky top-0">
                     <div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">
                         Live Preview
@@ -452,8 +470,10 @@ const EditProduct = ({ currentStore, product }) => {
 
                                 <div className="flex items-center justify-between">
                                     <div className="text-xl font-bold">
-                                        {currencySymbol}
-                                        {data.price || "0.00"}
+                                        {Intl.NumberFormat("en-US", {
+                                            style: "currency",
+                                            currency: currentStore?.currency,
+                                        }).format(data.price || 0)}
                                     </div>
 
                                     <div className="text-sm text-gray-500 dark:text-gray-400">
