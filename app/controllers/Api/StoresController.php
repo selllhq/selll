@@ -11,7 +11,7 @@ class StoresController extends Controller
     {
         $store = Store::where('slug', $store)->with(['owner'])->first();
 
-        if (! $store) {
+        if (!$store) {
             return response()->json([
                 'error' => 'Store not found',
             ], 404);
@@ -22,7 +22,26 @@ class StoresController extends Controller
 
     public function showProducts($storeId)
     {
-        return response()->json(Store::find($storeId)->products()->get() ?? []);
+        $products = Store::find($storeId)->products()->where('status', 'active')->get() ?? [];
+
+        return response()->json($products);
+    }
+
+    public function showProduct($storeId, $id)
+    {
+        $currentStore = Store::find($storeId);
+
+        if (!$currentStore) {
+            return response()->json(['error' => 'Store not found'], 404);
+        }
+
+        $product = $currentStore->products()->where(['id' => $id, 'status' => 'active'])->first();
+
+        if (!$product) {
+            return response()->json(['error' => 'Product not found'], 404);
+        }
+
+        return response()->json($product);
     }
 
     public function showOrders($storeId, $orderId)

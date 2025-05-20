@@ -20,12 +20,12 @@
         "leafs/aloe": "v4.x-dev",
         "leafs/inertia": "^4.0",
         "leafs/auth": "^4.0",
-        "leafs/stripe": "dev-main",
         "leafs/cors": "^1.2",
         "leafs/mvc-core": "v4.x-dev",
         "leafs/billing": "dev-main",
         "leafs/fs": "4.x-dev",
         "leafs/mail": "^2.2",
+        "leafs/stripe": "dev-main",
         "leafs/paystack": "dev-main",
         "leafs/s3": "dev-main"
     },
