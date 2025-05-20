@@ -166,6 +166,7 @@ export function AppHeader({ breadcrumbs = [], variant = "header" }) {
                                                     key={item.title}
                                                     href={item.url}
                                                     className="flex items-center space-x-2 font-medium"
+                                                    prefetch
                                                 >
                                                     {item.icon && (
                                                         <Icon

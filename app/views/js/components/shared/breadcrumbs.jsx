@@ -25,7 +25,7 @@ export function Breadcrumbs({ breadcrumbs }) {
                                                 {item.title}
                                             </BreadcrumbPage>
                                         ) : (
-                                            <BreadcrumbLink as={Link} href={item.href}>
+                                            <BreadcrumbLink as={Link} href={item.href} prefetch>
                                                 {item.title}
                                             </BreadcrumbLink>
                                         )}
