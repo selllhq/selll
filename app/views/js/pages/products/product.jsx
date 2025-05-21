@@ -20,12 +20,16 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { parseProductImages } from "@/utils/store";
 import { Badge, StatusBadge } from "@/components/shared/badge";
+import { Wallet } from "lucide-react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/shared/table";
 
 export default function Products({ product, currentStore, orders }) {
     const productImages = parseProductImages(product.images);
     const [activeImage, setActiveImage] = useState(
         productImages.length > 0 ? 0 : null,
     );
+
+    console.log(orders, ' orders');
 
     return (
         <Layout
@@ -77,7 +81,6 @@ export default function Products({ product, currentStore, orders }) {
                     </div>
                 </div>
 
-                {/* Product Image Gallery */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10 w-full">
                     <div className="md:col-span-1 lg:col-span-2">
                         <div className="aspect-square w-full h-[400px] relative">
@@ -138,7 +141,11 @@ export default function Products({ product, currentStore, orders }) {
                                     </div>
                                     <div className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-2">
                                         <span className="inline-flex items-center justify-center bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full text-xs">
-                                            {product.sales || 0} sales
+                                            {orders.filter(
+                                                (order) =>
+                                                    order.status === "paid",
+                                            ).length || 0}{" "}
+                                            sales
                                         </span>
                                     </div>
                                 </div>
@@ -194,68 +201,139 @@ export default function Products({ product, currentStore, orders }) {
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 w-full">
-                    <Card className="border border-gray-100 dark:border-gray-800 shadow-sm">
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="dark:text-white">
-                                Price
-                            </CardTitle>
-                            <div className="bg-gray-100 dark:bg-[#2C2C2C] p-2 rounded-lg">
-                                <TrendingUp className="h-5 w-5 text-primary-orange" />
+                    <Card>
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
+                            <CardTitle>Total Revenue</CardTitle>
+                            <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                <Wallet className="h-5 w-5 text-primary-orange" />
                             </div>
                         </CardHeader>
                         <CardContent>
                             <div>
-                                <div className="text-4xl font-bold mb-2 dark:text-white">
+                                <div className="text-4xl font-bold mb-2">
                                     {new Intl.NumberFormat("en-US", {
                                         style: "currency",
                                         currency: currentStore?.currency,
-                                    }).format(product.price)}
+                                    }).format(
+                                        orders
+                                            .filter(
+                                                (order) =>
+                                                    order.status === "paid",
+                                            )
+                                            .reduce(
+                                                (acc, order) =>
+                                                    acc + Number(order.total),
+                                                0,
+                                            ),
+                                    )}
                                 </div>
-                                <div className="text-sm text-gray-600 dark:text-gray-400">
-                                    {product.sales || 0} sales
+                                <div className="flex items-center gap-1 text-emerald-500">
+                                    <span className="text-sm">
+                                        ↑{" "}
+                                        {new Intl.NumberFormat("en-US", {
+                                            style: "currency",
+                                            currency: currentStore?.currency,
+                                            minimumFractionDigits: 0,
+                                        }).format(
+                                            orders
+                                                .filter(
+                                                    (order) =>
+                                                        order.status ===
+                                                            "paid" &&
+                                                        dayjs(
+                                                            order.created_at,
+                                                        ).isAfter(
+                                                            dayjs().subtract(
+                                                                1,
+                                                                "month",
+                                                            ),
+                                                        ),
+                                                )
+                                                .reduce(
+                                                    (acc, order) =>
+                                                        acc +
+                                                        Number(order.total),
+                                                    0,
+                                                ),
+                                        )}
+                                    </span>
+                                    <span className="text-sm text-gray-500">
+                                        from last month
+                                    </span>
                                 </div>
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card className="border border-gray-100 dark:border-gray-800 shadow-sm">
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="dark:text-white">
-                                Stock Status
-                            </CardTitle>
-                            <div className="bg-gray-100 dark:bg-[#2C2C2C] p-2 rounded-lg">
-                                <Package className="h-5 w-5 text-primary-orange" />
+                    <Card>
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
+                            <CardTitle>Total Sales</CardTitle>
+                            <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                <Wallet className="h-5 w-5 text-primary-orange" />
                             </div>
                         </CardHeader>
                         <CardContent>
                             <div>
-                                <div className="text-4xl font-bold mb-2 dark:text-white">
-                                    {product.quantity === "unlimited"
-                                        ? "∞"
-                                        : product.quantity_items}
+                                <div className="text-4xl font-bold mb-2">
+                                    {orders.filter(
+                                        (order) => order.status === "paid",
+                                    ).length || 0}{" "}
+                                    sold
                                 </div>
-                                <div className="flex items-center gap-2">
-                                    <Badge
-                                        className="px-3 py-1 text-xs font-medium rounded-full shadow-sm"
-                                        variant={
-                                            product.quantity === "unlimited" ||
-                                            parseInt(product.quantity_items) >
-                                                10
-                                                ? "success"
-                                                : parseInt(
-                                                        product.quantity_items,
-                                                    ) > 0
-                                                  ? "warning"
-                                                  : "default"
-                                        }
-                                    >
-                                        {product.quantity === "unlimited"
-                                            ? "Unlimited"
-                                            : parseInt(product.quantity_items) >
-                                                0
-                                              ? `${product.quantity_items} in stock`
-                                              : "Out of Stock"}
-                                    </Badge>
+                                <div className="flex items-center gap-1 text-emerald-500">
+                                    <span className="text-sm">
+                                        ↑{" "}
+                                        {orders.filter(
+                                            (order) => order.status === "paid",
+                                        ).length || 0}
+                                    </span>
+                                    <span className="text-sm text-gray-500">
+                                        from last month
+                                    </span>
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <Card>
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
+                            <CardTitle>Cart abandonment rate</CardTitle>
+                            <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                <Wallet className="h-5 w-5 text-primary-orange" />
+                            </div>
+                        </CardHeader>
+                        <CardContent>
+                            <div>
+                                <div className="text-4xl font-bold mb-2">
+                                    25%
+                                </div>
+                                <div className="flex items-center gap-1 text-red-500">
+                                    <span className="text-sm">↑ 5%</span>
+                                    <span className="text-sm text-gray-500">
+                                        from last month
+                                    </span>
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <Card>
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
+                            <CardTitle>Repeat purchase rate</CardTitle>
+                            <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                <Wallet className="h-5 w-5 text-primary-orange" />
+                            </div>
+                        </CardHeader>
+                        <CardContent>
+                            <div>
+                                <div className="text-4xl font-bold mb-2">
+                                    22%
+                                </div>
+                                <div className="flex items-center gap-1 text-emerald-500">
+                                    <span className="text-sm">↑ 5%</span>
+                                    <span className="text-sm text-gray-500">
+                                        from last month
+                                    </span>
                                 </div>
                             </div>
                         </CardContent>
@@ -284,6 +362,7 @@ export default function Products({ product, currentStore, orders }) {
                                 href="/orders"
                                 variant="outline"
                                 className="bg-white dark:bg-[#2C2C2C] border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#3C3C3C] transition-all gap-2"
+                                prefetch
                             >
                                 <ShoppingCart className="h-4 w-4" />
                                 View All Orders
@@ -300,90 +379,108 @@ export default function Products({ product, currentStore, orders }) {
                             />
                         </div>
                     ) : (
-                        <div className="bg-white dark:bg-[#2C2C2C] rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden">
-                            <div className="px-6 py-4 bg-gray-50 dark:bg-[#1A1A1A] border-b border-gray-100 dark:border-gray-800 flex items-center justify-between text-xs uppercase font-medium text-gray-500 dark:text-gray-400">
-                                <div className="w-[30%]">Customer</div>
-                                <div className="w-[25%]">Date</div>
-                                <div className="w-[20%]">Status</div>
-                                <div className="w-[15%] text-right">Amount</div>
-                                <div className="w-[10%] text-center">
-                                    Action
-                                </div>
-                            </div>
-
-                            <div className="divide-y divide-gray-100 dark:divide-gray-800">
-                                {orders.map((order, index) => (
-                                    <div
-                                        key={order.id}
-                                        className={`px-6 py-4 flex items-center hover:bg-gray-50 dark:hover:bg-[#222222] transition-colors cursor-pointer ${index === orders.length - 1 ? "rounded-b-xl" : ""}`}
-                                        onClick={() =>
-                                            router.visit(`/orders/${order.id}`)
-                                        }
-                                    >
-                                        <div className="w-[30%]">
-                                            <div className="flex items-center gap-3">
-                                                <div className="h-9 w-9 rounded-full bg-gray-100 dark:bg-[#3C3C3C] flex items-center justify-center text-gray-500 dark:text-gray-400">
-                                                    <User className="h-4 w-4" />
-                                                </div>
-                                                <div>
-                                                    <p className="font-medium text-gray-900 dark:text-white">
-                                                        {order.customer_name ||
-                                                            "Anonymous Customer"}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="w-[25%]">
-                                            <div className="flex flex-col">
-                                                <span className="text-sm font-medium text-gray-900 dark:text-white">
-                                                    {dayjs(
-                                                        order.created_at,
-                                                    ).format("MMM D, YYYY")}
-                                                </span>
-                                                <span className="text-xs text-gray-500 dark:text-gray-400">
-                                                    {dayjs(
-                                                        order.created_at,
-                                                    ).fromNow()}
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        <StatusBadge status={order.status} />
-                                        {/* <div className="w-[20%]">
-                                        </div> */}
-
-                                        <div className="w-[15%] text-right">
-                                            <span className="font-bold text-primary-orange">
-                                                {new Intl.NumberFormat(
-                                                    "en-US",
-                                                    {
-                                                        style: "currency",
-                                                        currency:
-                                                            currentStore?.currency ||
-                                                            "USD",
-                                                    },
-                                                ).format(order.amount)}
-                                            </span>
-                                        </div>
-
-                                        <div className="w-[10%] flex justify-center">
-                                            <Button
-                                                variant="ghost"
-                                                size="sm"
-                                                className="h-8 w-8 p-0 rounded-full bg-gray-100 dark:bg-[#3C3C3C] text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-[#4C4C4C]"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
+                        <div className="overflow-x-auto rounded-lg border border-muted-foreground/15">
+                            <Table className="w-full text-sm text-left">
+                                <TableHeader className="text-xs uppercase bg-gray-100 dark:bg-[#1A1A1A] dark:text-gray-400 border-b border-muted-foreground/15">
+                                    <TableRow>
+                                        <TableHead
+                                            scope="col"
+                                            className="px-4 py-3"
+                                        >
+                                            Customer
+                                        </TableHead>
+                                        <TableHead
+                                            scope="col"
+                                            className="px-4 py-3"
+                                        >
+                                            Date
+                                        </TableHead>
+                                        <TableHead
+                                            scope="col"
+                                            className="px-4 py-3"
+                                        >
+                                            Amount
+                                        </TableHead>
+                                        <TableHead
+                                            scope="col"
+                                            className="px-4 py-3"
+                                        >
+                                            Status
+                                        </TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {orders.map((order) => {
+                                        return (
+                                            <TableRow
+                                                key={order.id}
+                                                className="border-b border-muted-foreground/15 hover:bg-gray-100 hover:dark:bg-[#1A1A1A]/50 cursor-pointer"
+                                                onClick={() =>
                                                     router.visit(
                                                         `/orders/${order.id}`,
-                                                    );
-                                                }}
+                                                    )
+                                                }
                                             >
-                                                <Eye className="h-4 w-4" />
-                                            </Button>
-                                        </div>
-                                    </div>
-                                ))}
+                                                <TableCell className="px-4 py-3">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="h-9 w-9 rounded-full bg-gray-100 dark:bg-[#3C3C3C] flex items-center justify-center text-gray-500 dark:text-gray-400">
+                                                            <User className="h-4 w-4" />
+                                                        </div>
+                                                        <div>
+                                                            <p className="font-medium text-gray-900 dark:text-white">
+                                                                {order.customer?.name ||
+                                                                    "Anonymous Customer"}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell className="px-4 py-3 font-medium">
+                                                    <div className="flex flex-col">
+                                                        <span className="text-sm font-medium text-gray-900 dark:text-white">
+                                                            {dayjs(
+                                                                order.created_at,
+                                                            ).format(
+                                                                "MMM D, YYYY",
+                                                            )}
+                                                        </span>
+                                                        <span className="text-xs text-gray-500 dark:text-gray-400">
+                                                            {dayjs(
+                                                                order.created_at,
+                                                            ).fromNow()}
+                                                        </span>
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell className="px-4 py-3">
+                                                    {new Intl.NumberFormat(
+                                                        "en-US",
+                                                        {
+                                                            style: "currency",
+                                                            currency:
+                                                                currentStore?.currency ||
+                                                                "USD",
+                                                        },
+                                                    ).format(order.amount)}
+                                                </TableCell>
+                                                <TableCell className="px-4 py-3">
+                                                    <StatusBadge
+                                                        status={order.status}
+                                                    />
+                                                </TableCell>
+                                            </TableRow>
+                                        );
+                                    })}
+                                </TableBody>
+                            </Table>
+                            <div className="bg-gray-100 dark:bg-[#1A1A1A] px-4 py-3 text-xs text-gray-400">
+                                <div>
+                                    {Intl.NumberFormat("en-US", {
+                                        style: "decimal",
+                                    }).format(orders.length)}{" "}
+                                    {orders.length === 1
+                                        ? "order"
+                                        : "orders"}{" "}
+                                    found
+                                </div>
                             </div>
                         </div>
                     )}

@@ -32,6 +32,7 @@ export function StatusBadge({ status, className, ...props }) {
             case "pending":
                 return <Clock className="h-4 w-4" />;
             case "failed":
+            case "abandoned":
             case "cancelled":
                 return <XCircle className="h-4 w-4" />;
             default:
@@ -42,10 +43,13 @@ export function StatusBadge({ status, className, ...props }) {
     const getStatusColor = (status) => {
         switch (status) {
             case "completed":
+            case "paid":
                 return "bg-emerald-500/10 text-emerald-500";
             case "pending":
                 return "bg-amber-500/10 text-amber-500";
             case "failed":
+            case "abandoned":
+            case "cancelled":
                 return "bg-red-500/10 text-red-500";
             default:
                 return "bg-gray-500/10 text-gray-500";
@@ -58,9 +62,9 @@ export function StatusBadge({ status, className, ...props }) {
             {...props}
         >
             {getStatusIcon(status)}
-            <span className="text-xs font-medium capitalize">
+            <p className="m-0 ml-1 text-xs font-medium capitalize">
                 {status}
-            </span>
+            </p>
         </Badge>
     );
 }
