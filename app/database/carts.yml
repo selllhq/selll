@@ -10,8 +10,15 @@ columns:
     type: json
     nullable: true
   status:
-    type: string
+    type: enum
     default: pending
+    values:
+      - pending
+      - paid
+      - completed
+      - failed
+      - cancelled
+      - abandoned
 
 relationships:
   - Customer

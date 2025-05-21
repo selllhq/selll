@@ -39,23 +39,31 @@ class BillingController extends Controller
             'store_url' => request()->get('store_url'),
         ]);
 
-        $session = billing($billingProvider)->charge([
-            'amount' => $cartTotal * 100,
-            'currency' => $store->currency,
-            'description' => 'Purchase of items in cart',
-            'customer' => $customer->email,
-            'url' => request()->getUrl() . '/billing/callback', // only for paystack
-            'metadata' => [
-                'cart_id' => $cart->id,
-                'customer_id' => $customer->id,
-                'store_id' => $store->id,
-                'items' => $items,
-            ]
-        ]);
+        try {
+            $session = billing($billingProvider)->charge([
+                'amount' => $cartTotal * 100,
+                'currency' => $store->currency,
+                'description' => 'Purchase of items in cart',
+                'customer' => $customer->email,
+                'url' => request()->getUrl() . '/billing/callback', // only for paystack
+                'metadata' => [
+                    'cart_id' => $cart->id,
+                    'customer_id' => $customer->id,
+                    'store_id' => $store->id,
+                    'items' => $items,
+                ]
+            ]);
 
-        $cart = Cart::find($cart->id);
-        $cart->billing_session_id = $session->id();
-        $cart->save();
+            $cart->billing_session_id = $session->id();
+            $cart->save();
+        } catch (\Exception $e) {
+            $cart->status = 'failed';
+            $cart->save();
+
+            return response()->json([
+                'error' => 'Unable to create billing session',
+            ], 500);
+        }
 
         response()->json([
             'id' => $session->id(),

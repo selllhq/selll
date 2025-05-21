@@ -4,7 +4,7 @@ namespace App\Models;
 
 class Cart extends Model
 {
-    protected $fillable = ['store_id', 'total', 'status', 'store_url', 'billing_session_id'];
+    protected $fillable = ['store_id', 'total', 'status', 'store_url', 'items', 'billing_session_id'];
 
     public function customer()
     {
