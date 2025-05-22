@@ -46,6 +46,15 @@ class StoresController extends Controller
 
     public function showOrders($storeId, $orderId)
     {
-        return response()->json(Store::find($storeId)->carts()->find($orderId) ?? []);
+        $order = Store::find($storeId)->carts()->with('customer')->find($orderId) ?? [];
+
+        if (!$order) {
+            return response()->json(['error' => 'Order not found'], 404);
+        }
+
+        $itemsInCart = $order->items()->with('product')->get();
+        $order->items = $itemsInCart;
+
+        return response()->json($order);
     }
 }
