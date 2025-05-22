@@ -296,95 +296,123 @@ export default function Products({ product, currentStore, orders }) {
                         </CardContent>
                     </Card>
 
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
-                            <CardTitle>Cart abandonment rate</CardTitle>
-                            <div className="bg-[#2C2C2C] p-2 rounded-lg">
-                                <Wallet className="h-5 w-5 text-primary-orange" />
-                            </div>
-                        </CardHeader>
-                        <CardContent>
-                            <div>
-                                <div className="text-4xl font-bold mb-2">
-                                    {((orders.filter(
-                                        (order) => order.status === "abandoned",
-                                    ).length || 0) /
-                                        orders.length) *
-                                        100}
-                                    %
-                                </div>
-                                <div
-                                    className={cn(
-                                        "flex items-center gap-1",
-                                        orders.filter(
-                                            (order) =>
-                                                order.status === "abandoned",
-                                        ).length > 0
-                                            ? "text-red-500"
-                                            : "text-emerald-500",
-                                    )}
-                                >
-                                    <span className="text-sm">
-                                        ↑{" "}
-                                        {new Intl.NumberFormat("en-US", {
-                                            style: "percent",
-                                            minimumFractionDigits: 0,
-                                        }).format(
-                                            orders.filter(
-                                                (order) =>
-                                                    order.status ===
-                                                    "abandoned",
-                                            ).length || 0,
-                                        )}
-                                    </span>
-                                    <span className="text-sm text-gray-500">
-                                        from last month
-                                    </span>
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
+                    {orders.length > 0 && (
+                        <>
+                            <Card>
+                                <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
+                                    <CardTitle>Cart abandonment rate</CardTitle>
+                                    <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                        <Wallet className="h-5 w-5 text-primary-orange" />
+                                    </div>
+                                </CardHeader>
+                                <CardContent>
+                                    <div>
+                                        <div className="text-4xl font-bold mb-2">
+                                            {new Intl.NumberFormat("en-US", {
+                                                style: "percent",
+                                                minimumFractionDigits: 0,
+                                            }).format(
+                                                orders.filter(
+                                                    (order) =>
+                                                        order.status ===
+                                                        "abandoned",
+                                                ).length || 0,
+                                            )}
+                                        </div>
+                                        <div
+                                            className={cn(
+                                                "flex items-center gap-1",
+                                                orders.filter(
+                                                    (order) =>
+                                                        order.status ===
+                                                        "abandoned",
+                                                ).length > 0
+                                                    ? "text-red-500"
+                                                    : "text-emerald-500",
+                                            )}
+                                        >
+                                            <span className="text-sm">
+                                                ↑{" "}
+                                                {new Intl.NumberFormat(
+                                                    "en-US",
+                                                    {
+                                                        style: "percent",
+                                                        minimumFractionDigits: 0,
+                                                    },
+                                                ).format(
+                                                    orders.filter(
+                                                        (order) =>
+                                                            order.status ===
+                                                            "abandoned",
+                                                    ).length || 0,
+                                                )}
+                                            </span>
+                                            <span className="text-sm text-gray-500">
+                                                from last month
+                                            </span>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
 
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
-                            <CardTitle>Repeat purchase rate</CardTitle>
-                            <div className="bg-[#2C2C2C] p-2 rounded-lg">
-                                <Wallet className="h-5 w-5 text-primary-orange" />
-                            </div>
-                        </CardHeader>
-                        <CardContent>
-                            <div>
-                                <div className="text-4xl font-bold mb-2">
-                                    {((orders.filter(
-                                        (order) =>
-                                            order.status === "paid" &&
-                                            order.customer_id,
-                                    ).length || 0) /
-                                        orders.length) *
-                                        100}
-                                    %
-                                </div>
-                                <div className="flex items-center gap-1 text-emerald-500">
-                                    <span className="text-sm">
-                                        ↑{" "}
-                                        {new Intl.NumberFormat("en-US", {
-                                            style: "percent",
-                                            minimumFractionDigits: 0,
-                                        }).format(
-                                            (orders.filter(
+                            <Card>
+                                <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
+                                    <CardTitle>Repeat purchase rate</CardTitle>
+                                    <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                        <Wallet className="h-5 w-5 text-primary-orange" />
+                                    </div>
+                                </CardHeader>
+                                <CardContent>
+                                    <div>
+                                        <div className="text-4xl font-bold mb-2">
+                                            {new Intl.NumberFormat("en-US", {
+                                                style: "percent",
+                                                minimumFractionDigits: 0,
+                                            }).format(
+                                                orders.filter(
+                                                    (order) =>
+                                                        order.status ===
+                                                            "abandoned" &&
+                                                        order.customer_id,
+                                                ).length || 0,
+                                            )}
+                                            {((orders.filter(
                                                 (order) =>
                                                     order.status === "paid" &&
                                                     order.customer_id,
-                                            ).length || 0) / orders.length,
-                                        )}
-                                    </span>
-                                    <span className="text-sm text-gray-500">
-                                        from last month
-                                    </span>
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
+                                            ).length || 0) /
+                                                orders.length) *
+                                                100}
+                                            %
+                                        </div>
+                                        <div className="flex items-center gap-1 text-emerald-500">
+                                            <span className="text-sm">
+                                                ↑{" "}
+                                                {new Intl.NumberFormat(
+                                                    "en-US",
+                                                    {
+                                                        style: "percent",
+                                                        minimumFractionDigits: 0,
+                                                    },
+                                                ).format(
+                                                    (orders.filter(
+                                                        (order) =>
+                                                            order.status ===
+                                                                "paid" &&
+                                                            order.customer_id,
+                                                    ).length || 0) /
+                                                        orders.length,
+                                                )}
+                                            </span>
+                                            <span className="text-sm text-gray-500">
+                                                from last month
+                                            </span>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </>
+                    )}
                 </div>
 
                 <div className="w-full">
