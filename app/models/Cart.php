@@ -20,4 +20,9 @@ class Cart extends Model
     {
         return $this->hasMany(ProductPurchase::class);
     }
+
+    public function payout()
+    {
+        return $this->hasOne(Payout::class);
+    }
 }

@@ -9,6 +9,11 @@ class Store extends Model
         'slug',
         'description',
         'currency',
+        'kyc',
+    ];
+
+    protected $hidden = [
+        'kyc',
     ];
 
     /**
@@ -71,5 +76,10 @@ class Store extends Model
     public function carts()
     {
         return $this->hasMany(Cart::class);
+    }
+
+    public function payouts()
+    {
+        return $this->hasMany(Payout::class);
     }
 }

@@ -11,6 +11,7 @@ class BillingCallbacksController extends Controller
 {
     public function handle()
     {
+        $provider = request()->get('session_id') ? 'stripe' : 'paystack';
         $userCart = Cart::where('billing_session_id', request()->get('session_id') ?? request()->get('txId') ?? request()->get('reference'))
             ->with('customer')
             ->first();
@@ -25,7 +26,9 @@ class BillingCallbacksController extends Controller
             );
         }
 
-        if (billing(request()->get('session_id') ? 'stripe' : 'paystack')->callback()->isSuccessful()) {
+        $billingCallback = billing($provider)->callback();
+
+        if ($billingCallback->isSuccessful()) {
             $itemsInCart = json_decode($userCart->items, true);
 
             foreach ($itemsInCart as $item) {
@@ -50,9 +53,24 @@ class BillingCallbacksController extends Controller
 
             StoreMailer::newOrder($ownerEmail, $userCart);
 
-            // deduct selll's 2% commission
-            // deduct stripe/paystack fees
-            // put customer balance in the store's balance
+            $selllFee = 0.02;
+            $selllCommission = $userCart->total * $selllFee;
+
+            if ($provider === 'paystack') {
+                $providerFee = $billingCallback->session()->data['fees'] / $billingCallback->session()->data['amount'];
+                $providerCommission = $billingCallback->session()->data['fees'] / 100;
+            }
+
+            $userCart->payout()->create([
+                'amount' => $userCart->total - $selllCommission - $providerCommission,
+                'currency' => $userCart->currency,
+                'selll_fee' => $selllFee,
+                'selll_fee_amount' => $selllCommission,
+                'payment_provider' => $provider,
+                'payment_fee' => $providerFee,
+                'payment_fee_amount' => $providerCommission,
+                'store_id' => $userCart->store_id,
+            ]);
         } else {
             $userCart->status = 'cancelled';
         }
