@@ -1,5 +1,7 @@
 columns:
   quantity: integer
+  amount: string
+  currency: string
 
 relationships:
   - Customer

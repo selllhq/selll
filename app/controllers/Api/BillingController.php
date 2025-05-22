@@ -35,6 +35,7 @@ class BillingController extends Controller
         $cart = $customer->carts()->create([
             'items' => json_encode($items),
             'total' => $cartTotal,
+            'currency' => $store->currency,
             'store_id' => $store->id,
             'store_url' => request()->get('store_url'),
         ]);

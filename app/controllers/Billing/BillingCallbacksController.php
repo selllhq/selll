@@ -25,10 +25,21 @@ class BillingCallbacksController extends Controller
 
         if (billing(request()->get('session_id') ? 'stripe' : 'paystack')->callback()->isSuccessful()) {
             // notify store of successful payment
+            $itemsInCart = json_decode($userCart->items, true);
+
+            foreach ($itemsInCart as $item) {
+                $userCart->items()->create([
+                    'product_id' => $item['id'],
+                    'customer_id' => $userCart->customer_id,
+                    'quantity' => $item['quantity'],
+                    'amount' => $item['amount'],
+                    'currency' => $userCart->currency / 100,
+                ]);
+            }
+
             $userCart->status = 'paid';
         } else {
-            // notify store of failed payment
-            $userCart->status = 'failed';
+            $userCart->status = 'cancelled';
         }
 
         $userCart->save();

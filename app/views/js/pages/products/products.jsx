@@ -32,6 +32,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/shared/dropdown-menu";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/shared/table";
 
 export default function Products({ orders = [], products, currentStore }) {
     const [search, setSearch] = useState("");
@@ -323,46 +324,46 @@ export default function Products({ orders = [], products, currentStore }) {
                             />
                         ) : (
                             <div className="overflow-x-auto rounded-lg border border-muted-foreground/15">
-                                <table className="w-full text-sm text-left">
-                                    <thead className="text-xs uppercase bg-gray-100 dark:bg-[#1A1A1A] dark:text-gray-400 border-b border-muted-foreground/15">
-                                        <tr>
-                                            <th
+                                <Table className="w-full text-sm text-left">
+                                    <TableHeader className="text-xs uppercase bg-gray-100 dark:bg-[#1A1A1A] dark:text-gray-400 border-b border-muted-foreground/15">
+                                        <TableRow>
+                                            <TableHead
                                                 scope="col"
                                                 className="px-4 py-3"
                                             >
                                                 Name
-                                            </th>
-                                            <th
+                                            </TableHead>
+                                            <TableHead
                                                 scope="col"
                                                 className="px-4 py-3"
                                             >
                                                 Price
-                                            </th>
-                                            <th
+                                            </TableHead>
+                                            <TableHead
                                                 scope="col"
                                                 className="px-4 py-3"
                                             >
                                                 Status
-                                            </th>
-                                            <th
+                                            </TableHead>
+                                            <TableHead
                                                 scope="col"
                                                 className="px-4 py-3"
                                             >
                                                 Total Sales
-                                            </th>
-                                            <th
+                                            </TableHead>
+                                            <TableHead
                                                 scope="col"
                                                 className="px-4 py-3"
                                             >
                                                 Total Revenue
-                                            </th>
-                                            <th
+                                            </TableHead>
+                                            <TableHead
                                                 scope="col"
                                                 className="px-4 py-3 text-right"
-                                            ></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                                            ></TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
                                         {filteredProducts.map((product) => {
                                             const parsedImages =
                                                 parseProductImages(
@@ -381,7 +382,7 @@ export default function Products({ orders = [], products, currentStore }) {
                                                     : "Out of Stock";
 
                                             return (
-                                                <tr
+                                                <TableRow
                                                     key={product.id}
                                                     className="border-b border-muted-foreground/15 hover:bg-gray-100 hover:dark:bg-[#1A1A1A]/50 cursor-pointer"
                                                     onClick={() =>
@@ -390,7 +391,7 @@ export default function Products({ orders = [], products, currentStore }) {
                                                         )
                                                     }
                                                 >
-                                                    <td className="px-4 py-3">
+                                                    <TableCell className="px-4 py-3">
                                                         <div className="flex items-center space-x-3">
                                                             <div className="h-10 w-10 flex-shrink-0 rounded bg-[#2C2C2C] overflow-hidden">
                                                                 {parsedImages.length >
@@ -418,7 +419,7 @@ export default function Products({ orders = [], products, currentStore }) {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </td>
+                                                    </TableCell>
                                                     <td className="px-4 py-3 font-medium">
                                                         {new Intl.NumberFormat(
                                                             "en-US",
@@ -540,11 +541,11 @@ export default function Products({ orders = [], products, currentStore }) {
                                                             </DropdownMenu>
                                                         </div>
                                                     </td>
-                                                </tr>
+                                                </TableRow>
                                             );
                                         })}
-                                    </tbody>
-                                </table>
+                                    </TableBody>
+                                </Table>
                                 <div className="bg-gray-100 dark:bg-[#1A1A1A] px-4 py-3 text-xs text-gray-400">
                                     <div>
                                         {Intl.NumberFormat("en-US", {
