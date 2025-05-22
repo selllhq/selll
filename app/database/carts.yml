@@ -1,5 +1,6 @@
 columns:
   total: string
+  currency: string
   billing_session_id:
     type: string
     nullable: true
