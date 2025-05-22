@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fd18976279ee242a77c71e31d293ddc9",
+    "content-hash": "b9a1eb5649c792c5343f4d8f5c45ea7c",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -2811,12 +2811,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/paystack.git",
-                "reference": "d422bb77c770a75bdc112af19f376ebd089af610"
+                "reference": "c5f8e10f69a3e3f1621515c610601ccfbc2c9b66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/paystack/zipball/d422bb77c770a75bdc112af19f376ebd089af610",
-                "reference": "d422bb77c770a75bdc112af19f376ebd089af610",
+                "url": "https://api.github.com/repos/leafsphp/paystack/zipball/c5f8e10f69a3e3f1621515c610601ccfbc2c9b66",
+                "reference": "c5f8e10f69a3e3f1621515c610601ccfbc2c9b66",
                 "shasum": ""
             },
             "require": {
@@ -2871,7 +2871,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-05-14T11:17:09+00:00"
+            "time": "2025-05-22T11:42:16+00:00"
         },
         {
             "name": "leafs/queue",
