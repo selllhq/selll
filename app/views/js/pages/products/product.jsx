@@ -8,20 +8,21 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/shared/card";
-import {
-    Package,
-    User,
-    Eye,
-    Store,
-    TrendingUp,
-    ShoppingCart,
-} from "lucide-react";
+import { Package, User, Store, TrendingUp, ShoppingCart } from "lucide-react";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { parseProductImages } from "@/utils/store";
 import { Badge, StatusBadge } from "@/components/shared/badge";
 import { Wallet } from "lucide-react";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/shared/table";
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/shared/table";
+import { cn } from "@/utils";
 
 export default function Products({ product, currentStore, orders }) {
     const productImages = parseProductImages(product.images);
@@ -29,7 +30,7 @@ export default function Products({ product, currentStore, orders }) {
         productImages.length > 0 ? 0 : null,
     );
 
-    console.log(orders, ' orders');
+    console.log(orders, " orders");
 
     return (
         <Layout
@@ -305,10 +306,37 @@ export default function Products({ product, currentStore, orders }) {
                         <CardContent>
                             <div>
                                 <div className="text-4xl font-bold mb-2">
-                                    25%
+                                    {((orders.filter(
+                                        (order) => order.status === "abandoned",
+                                    ).length || 0) /
+                                        orders.length) *
+                                        100}
+                                    %
                                 </div>
-                                <div className="flex items-center gap-1 text-red-500">
-                                    <span className="text-sm">↑ 5%</span>
+                                <div
+                                    className={cn(
+                                        "flex items-center gap-1",
+                                        orders.filter(
+                                            (order) =>
+                                                order.status === "abandoned",
+                                        ).length > 0
+                                            ? "text-red-500"
+                                            : "text-emerald-500",
+                                    )}
+                                >
+                                    <span className="text-sm">
+                                        ↑{" "}
+                                        {new Intl.NumberFormat("en-US", {
+                                            style: "percent",
+                                            minimumFractionDigits: 0,
+                                        }).format(
+                                            orders.filter(
+                                                (order) =>
+                                                    order.status ===
+                                                    "abandoned",
+                                            ).length || 0,
+                                        )}
+                                    </span>
                                     <span className="text-sm text-gray-500">
                                         from last month
                                     </span>
@@ -327,10 +355,29 @@ export default function Products({ product, currentStore, orders }) {
                         <CardContent>
                             <div>
                                 <div className="text-4xl font-bold mb-2">
-                                    22%
+                                    {((orders.filter(
+                                        (order) =>
+                                            order.status === "paid" &&
+                                            order.customer_id,
+                                    ).length || 0) /
+                                        orders.length) *
+                                        100}
+                                    %
                                 </div>
                                 <div className="flex items-center gap-1 text-emerald-500">
-                                    <span className="text-sm">↑ 5%</span>
+                                    <span className="text-sm">
+                                        ↑{" "}
+                                        {new Intl.NumberFormat("en-US", {
+                                            style: "percent",
+                                            minimumFractionDigits: 0,
+                                        }).format(
+                                            (orders.filter(
+                                                (order) =>
+                                                    order.status === "paid" &&
+                                                    order.customer_id,
+                                            ).length || 0) / orders.length,
+                                        )}
+                                    </span>
                                     <span className="text-sm text-gray-500">
                                         from last month
                                     </span>
@@ -428,7 +475,8 @@ export default function Products({ product, currentStore, orders }) {
                                                         </div>
                                                         <div>
                                                             <p className="font-medium text-gray-900 dark:text-white">
-                                                                {order.customer?.name ||
+                                                                {order.customer
+                                                                    ?.name ||
                                                                     "Anonymous Customer"}
                                                             </p>
                                                         </div>
@@ -459,7 +507,7 @@ export default function Products({ product, currentStore, orders }) {
                                                                 currentStore?.currency ||
                                                                 "USD",
                                                         },
-                                                    ).format(order.amount)}
+                                                    ).format(order.total)}
                                                 </TableCell>
                                                 <TableCell className="px-4 py-3">
                                                     <StatusBadge
@@ -476,9 +524,7 @@ export default function Products({ product, currentStore, orders }) {
                                     {Intl.NumberFormat("en-US", {
                                         style: "decimal",
                                     }).format(orders.length)}{" "}
-                                    {orders.length === 1
-                                        ? "order"
-                                        : "orders"}{" "}
+                                    {orders.length === 1 ? "order" : "orders"}{" "}
                                     found
                                 </div>
                             </div>

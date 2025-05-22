@@ -68,7 +68,12 @@ class ProductsController extends Controller
     public function show($id)
     {
         $currentStore = Store::find(auth()->user()->current_store_id);
-        $orders = $currentStore->carts()->with('customer')->latest()->get();
+        $orders = $currentStore
+            ->carts()
+            ->where('items', 'LIKE', "%\"id\":$id%")
+            ->with('customer')
+            ->latest()
+            ->get();
 
         response()->inertia('products/product', [
             'currentStore' => $currentStore,
