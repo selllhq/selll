@@ -105,7 +105,8 @@ RUN if [ -f "yarn.lock" ]; then \
     pnpm install --frozen-lockfile; \
     pnpm run build; \
     elif [ -f "package-lock.json" ]; then \
-    npm ci --no-audit; \
+    # npm ci --no-audit; \
+    npm i --force; \
     npm run build; \
     else \
     # if no lock file is found, we check if we have a package.json
