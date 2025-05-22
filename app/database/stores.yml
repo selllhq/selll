@@ -13,14 +13,9 @@ columns:
   config:
     type: text
     nullable: true
+  kyc:
+    type: string
+    nullable: true
 
 relationships:
   - User
-
-seeds:
-  count: 5
-  truncate: true
-  data:
-    name: '@faker.word'
-    slug: '@faker.words:3'
-    verified_at: '@tick.format:YYYY-MM-DD HH:mm:ss'
