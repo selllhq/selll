@@ -144,18 +144,18 @@ const Setup = ({ auth }) => {
                                     }
                                     required
                                 >
-                                    <option value="USD">USD - US Dollar</option>
+                                    {/* <option value="USD">USD - US Dollar</option>
                                     <option value="EUR">EUR - Euro</option>
                                     <option value="GBP">
                                         GBP - British Pound
                                     </option>
                                     <option value="NGN">
                                         NGN - Nigerian Naira
-                                    </option>
+                                    </option> */}
                                     <option value="GHS">
                                         GHS - Ghanaian Cedi
                                     </option>
-                                    <option value="KES">
+                                    {/* <option value="KES">
                                         KES - Kenyan Shilling
                                     </option>
                                     <option value="ZAR">
@@ -163,7 +163,7 @@ const Setup = ({ auth }) => {
                                     </option>
                                     <option value="CAD">
                                         CAD - Canadian Dollar
-                                    </option>
+                                    </option> */}
                                 </Input>
                                 {errors?.currency ? (
                                     <InputError
@@ -172,8 +172,8 @@ const Setup = ({ auth }) => {
                                     />
                                 ) : (
                                     <p className="text-xs text-muted-foreground mt-1">
-                                        This currency will be used for all
-                                        transactions in your store.
+                                        Only GHS is supported at the moment —
+                                        more currencies are coming soon!
                                     </p>
                                 )}
                             </div>

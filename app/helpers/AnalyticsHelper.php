@@ -9,7 +9,7 @@ class AnalyticsHelper
         for ($i = 5; $i >= 0; $i--) {
             $month = date('m', strtotime("-$i months"));
             $year = date('Y', strtotime("-$i months"));
-            $months["$year-$month"] = 0; // Default revenue 0
+            $months["$year-$month"] = 0;
         }
 
         $midyearRevenueList = db()
