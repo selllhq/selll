@@ -15,7 +15,6 @@ import {
     Package,
     Search,
     Trash2,
-    X,
     Share,
     MoreHorizontal,
     Edit,
@@ -32,7 +31,14 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/shared/dropdown-menu";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/shared/table";
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/shared/table";
 
 export default function Products({ orders = [], products, currentStore }) {
     const [search, setSearch] = useState("");
@@ -438,7 +444,16 @@ export default function Products({ orders = [], products, currentStore }) {
                                                         </span>
                                                     </td>
                                                     <td className="px-4 py-3">
-                                                        {product.sales || 0}
+                                                        {/* product.purchases[].quantity sum */}
+                                                        {
+                                                            product.purchases
+                                                                ?.reduce(
+                                                                    (acc, purchase) =>
+                                                                        acc +
+                                                                        purchase.quantity,
+                                                                    0,
+                                                                ) || 0
+                                                        }
                                                     </td>
                                                     <td className="px-4 py-3">
                                                         {new Intl.NumberFormat(
@@ -455,9 +470,11 @@ export default function Products({ orders = [], products, currentStore }) {
                                                             <DropdownMenu>
                                                                 <DropdownMenuTrigger
                                                                     asChild
-                                                                    stopPropagation
                                                                 >
-                                                                    <Button variant="ghost" className="hover:bg-muted-foreground/10">
+                                                                    <Button
+                                                                        variant="ghost"
+                                                                        className="hover:bg-muted-foreground/10"
+                                                                    >
                                                                         <MoreHorizontal className="h-4 w-4" />
                                                                     </Button>
                                                                 </DropdownMenuTrigger>

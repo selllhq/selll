@@ -9,7 +9,7 @@ class ProductsController extends Controller
     public function index()
     {
         $currentStore = Store::find(auth()->user()->current_store_id);
-        $products = $currentStore->products()->get();
+        $products = $currentStore->products()->with('purchases')->get();
         $orders = $currentStore->carts()->with('customer')->latest()->get();
 
         if (!$currentStore) {
