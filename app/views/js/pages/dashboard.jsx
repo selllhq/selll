@@ -14,15 +14,7 @@ import {
 } from "@/components/shared/avatar";
 import dayjs from "dayjs";
 import EmptyState from "@/components/layout/empty";
-import {
-    ArrowUpRight,
-    Package,
-    ShoppingCart,
-    Store,
-    TrendingUp,
-    Users,
-    Wallet,
-} from "lucide-react";
+import { Package, ShoppingCart, Store, Users, Wallet } from "lucide-react";
 import Button from "@/components/form/button";
 import { BarChart, LineChart } from "@/components/shared/charts";
 

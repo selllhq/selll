@@ -376,7 +376,7 @@ export default function Products({ orders = [], products, currentStore }) {
                                                     product.images,
                                                 );
                                             const totalRevenue =
-                                                (product.sales || 0) *
+                                                (product.purchases.length || 0) *
                                                 parseFloat(product.price);
                                             const stockStatus =
                                                 product.quantity ===
