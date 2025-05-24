@@ -95,29 +95,30 @@ export default function Dashboard({
 
                         {dayjs(currentStore?.created_at).isAfter(
                             dayjs().subtract(30, "minutes"),
-                        ) && (
-                            <div className="bg-primary-orange/10 text-primary-orange p-4 rounded-xl mb-4">
-                                Your store was created just now. Get started by
-                                <Link
-                                    href="/products/new"
-                                    className="font-medium underline mx-1"
-                                >
-                                    adding your first product
-                                </Link>
-                                .
-                            </div>
-                        )}
+                        ) &&
+                            products?.length === 0 && (
+                                <div className="bg-primary-orange/10 text-primary-orange p-4 rounded-xl mb-4">
+                                    Your store’s all set up — now let’s{" "}
+                                    <Link
+                                        href="/products/new"
+                                        className="font-medium underline mx-1"
+                                    >
+                                        add your first product
+                                    </Link>{" "}
+                                    and start selling!
+                                </div>
+                            )}
 
                         {currentStore?.config === null && (
                             <div className="bg-primary-orange/10 text-primary-orange p-4 rounded-xl">
-                                Your store hasn't been customized yet.
+                                Your store isn’t customized yet.{" "}
                                 <Link
                                     href="/store/customize"
                                     className="font-medium underline mx-1"
                                 >
-                                    Customize your store
+                                    Make it yours
                                 </Link>
-                                to match your brand.
+                                by adding your branding and style.
                             </div>
                         )}
 
