@@ -20,12 +20,34 @@ class SetupController extends Controller
             'name' => 'string',
             'slug' => 'string',
             'description' => 'min:10',
+            'logo' => 'optional',
+            'currency' => 'string',
+            'email' => 'email',
+            'phone' => 'optional|string',
+            'address' => 'optional|string',
+            'estimated_sales_volume' => 'optional|string',
+            'selling_journey_status' => 'optional|string',
+            'product_types' => 'optional|string',
         ]);
 
         if (!$data) {
             return response()
                 ->withFlash('errors', request()->errors())
                 ->redirect('/store/new', 303);
+        }
+
+        if ($data['logo']) {
+            $data['logo'] = request()->upload(
+                'logo',
+                withBucket('stores/' . auth()->id()),
+                ['rename' => true]
+            )['url'];
+
+            if (!$data['logo']) {
+                return response()
+                    ->withFlash('errors', request()->errors())
+                    ->redirect('/store/new', 303);
+            }
         }
 
         if (Store::where('slug', $data['slug'])->exists()) {

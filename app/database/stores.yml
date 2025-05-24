@@ -1,20 +1,37 @@
 columns:
   name: string
   description: text
-  status:
-    type: string
-    default: sandbox # sandbox or live
   slug:
     type: string
     unique: true
+  logo:
+    type: string
+    nullable: true
   currency:
     type: string
-    default: USD
-  config:
-    type: text
-    nullable: true
-  kyc:
+    default: GHS
+  status:
+    type: enum
+    default: sandbox
+    values:
+      - sandbox
+      - live
+      - maintenance
+  email: string
+  phone:
     type: string
+    nullable: true
+  address:
+    type: string
+    nullable: true
+  estimated_sales_volume: string
+  selling_journey_status: string
+  product_types: string
+  config:
+    type: json
+    nullable: true
+  compliance:
+    type: json
     nullable: true
 
 relationships:

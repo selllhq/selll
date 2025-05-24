@@ -1,19 +1,11 @@
-import { Link, Head, useForm } from "@inertiajs/react";
-import {
-    Store,
-    X,
-    ChevronLeft,
-    Upload,
-    Check,
-    CloudUpload,
-} from "lucide-react";
+import { Head, useForm } from "@inertiajs/react";
+import { ChevronLeft, CloudUpload } from "lucide-react";
 import { slugify } from "@/utils";
 import { useState, useRef } from "react";
 import Button from "@/components/form/button";
 import InputError from "@/components/form/input-error";
 import Input from "@/components/form/input";
 import Label from "@/components/form/label";
-import { Card, CardContent } from "@/components/shared/card";
 
 const Setup = ({ auth }) => {
     const [currentStep, setCurrentStep] = useState(1);
@@ -22,6 +14,7 @@ const Setup = ({ auth }) => {
 
     const { data, setData, post, errors, processing } = useForm({
         name: `${auth.user.name}'s Store`,
+        description: "",
         slug: slugify(auth.user.name),
         logo: null,
         currency: "GHS",
@@ -56,7 +49,6 @@ const Setup = ({ auth }) => {
 
     const submit = (e) => {
         e.preventDefault();
-
         post("/store/new");
     };
 
@@ -65,7 +57,7 @@ const Setup = ({ auth }) => {
             <Head title="Create your new store" />
 
             <div className="h-screen w-full dark:bg-[#141414] flex flex-col md:flex-row">
-                <div className="w-full lg:w-[60%] overflow-y-auto border-r border-[#2C2C2C] flex justify-center items-center">
+                <div className="w-full lg:w-[60%] overflow-y-auto dark:border-r border-[#2C2C2C] flex justify-center items-center">
                     <div className="max-w-xl w-full mx-auto px-4 md:px-8 py-10 md:py-20 relative">
                         <div className="mb-10 md:pt-12">
                             <h2 className="text-3xl md:text-4xl font-bold mb-2">
@@ -75,7 +67,7 @@ const Setup = ({ auth }) => {
                                       ? `Okay ${auth.user.name?.split(" ")[0]},`
                                       : "Final Step, woohoo!"}
                             </h2>
-                            <p className="text-gray-400">
+                            <p className="text-muted-foreground dark:text-gray-400">
                                 {currentStep === 1 ? (
                                     <span>
                                         You're just 2 minutes away from <br />{" "}
@@ -194,7 +186,7 @@ const Setup = ({ auth }) => {
                                             htmlFor="description"
                                             className="text-sm font-medium block mb-3"
                                         >
-                                            Store Description
+                                            Store Description (Optional)
                                         </Label>
                                         <Input
                                             id="description"
@@ -204,16 +196,24 @@ const Setup = ({ auth }) => {
                                             onChange={(e) =>
                                                 setData(
                                                     "description",
-                                                    e.target.value
+                                                    e.target.value,
                                                 )
                                             }
                                             required
                                             placeholder="Tell your customers what you sell..."
                                         />
-                                        <InputError
-                                            className="mt-2"
-                                            message={errors.description}
-                                        />
+                                        {errors?.description ? (
+                                            <InputError
+                                                className="mt-2"
+                                                message={errors.description}
+                                            />
+                                        ) : (
+                                            <small className="text-xs text-muted-foreground mt-1 block">
+                                                This will show when the users
+                                                click on the 'About' tab on your
+                                                store.
+                                            </small>
+                                        )}
                                     </div>
                                 </>
                             )}
@@ -235,7 +235,7 @@ const Setup = ({ auth }) => {
                                                 onChange={(e) =>
                                                     setData(
                                                         "slug",
-                                                        slugify(e.target.value)
+                                                        slugify(e.target.value),
                                                     )
                                                 }
                                                 required
@@ -320,7 +320,7 @@ const Setup = ({ auth }) => {
                                             onChange={(e) =>
                                                 setData(
                                                     "address",
-                                                    e.target.value
+                                                    e.target.value,
                                                 )
                                             }
                                         />
@@ -348,7 +348,10 @@ const Setup = ({ auth }) => {
                                             className="block w-full dark:bg-[#2C2C2C] dark:border-0 focus:ring-primary-orange/20"
                                             value={data.currency}
                                             onChange={(e) =>
-                                                setData("currency", e.target.value)
+                                                setData(
+                                                    "currency",
+                                                    e.target.value,
+                                                )
                                             }
                                             disabled
                                         >
@@ -367,15 +370,20 @@ const Setup = ({ auth }) => {
                                             />
                                         ) : (
                                             <p className="text-xs text-muted-foreground mt-1">
-                                                Only GHS is supported at the moment
-                                                — more currencies are coming soon!
+                                                Only GHS is supported at the
+                                                moment — more currencies are
+                                                coming soon!
                                             </p>
                                         )}
                                     </div>
 
                                     <div className="mt-6">
-                                        <Label htmlFor="selling_journey_status" className="text-sm font-medium block mb-3">
-                                            Where are you in your selling journey?
+                                        <Label
+                                            htmlFor="selling_journey_status"
+                                            className="text-sm font-medium block mb-3"
+                                        >
+                                            Where are you in your selling
+                                            journey?
                                         </Label>
                                         <Input
                                             id="selling_journey_status"
@@ -383,21 +391,42 @@ const Setup = ({ auth }) => {
                                             name="selling_journey_status"
                                             className="block w-full dark:bg-[#2C2C2C] dark:border-0 focus:ring-primary-orange/20"
                                             value={data.selling_journey_status}
-                                            onChange={(e) => setData("selling_journey_status", e.target.value)}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "selling_journey_status",
+                                                    e.target.value,
+                                                )
+                                            }
                                         >
-                                            <option>Just getting started</option>
-                                            <option>I’ve made some sales</option>
+                                            <option>
+                                                Just getting started
+                                            </option>
+                                            <option>
+                                                I’ve made some sales
+                                            </option>
                                             <option>I sell regularly</option>
-                                            <option>I’m running a small business</option>
-                                            <option>I'm running a large business</option>
+                                            <option>
+                                                I’m running a small business
+                                            </option>
+                                            <option>
+                                                I'm running a large business
+                                            </option>
                                         </Input>
-                                        <InputError message={errors.selling_journey_status} className="mt-2" />
+                                        <InputError
+                                            message={
+                                                errors.selling_journey_status
+                                            }
+                                            className="mt-2"
+                                        />
                                     </div>
 
-                                    {/* Product Types */}
                                     <div className="mt-6">
-                                        <Label htmlFor="product_types" className="text-sm font-medium block mb-3">
-                                            What kind of products are you selling?
+                                        <Label
+                                            htmlFor="product_types"
+                                            className="text-sm font-medium block mb-3"
+                                        >
+                                            What kind of products are you
+                                            selling?
                                         </Label>
                                         <Input
                                             id="product_types"
@@ -405,32 +434,58 @@ const Setup = ({ auth }) => {
                                             name="product_types"
                                             className="block w-full dark:bg-[#2C2C2C] dark:border-0 focus:ring-primary-orange/20"
                                             value={data.product_types}
-                                            onChange={(e) => setData("product_types", e.target.value)}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "product_types",
+                                                    e.target.value,
+                                                )
+                                            }
                                         >
                                             <option>Fashion & Apparel</option>
                                             <option>Food & Beverages</option>
-                                            <option>Beauty & Personal Care</option>
+                                            <option>
+                                                Beauty & Personal Care
+                                            </option>
                                             <option>Art & Crafts</option>
                                             <option>Home & Living</option>
-                                            <option>Electronics & Gadgets</option>
-                                            <option>Services (e.g. coaching, design, consulting)</option>
-                                            <option>Subscriptions or Memberships</option>
+                                            <option>
+                                                Electronics & Gadgets
+                                            </option>
+                                            <option>
+                                                Services (e.g. coaching, design,
+                                                consulting)
+                                            </option>
+                                            <option>
+                                                Subscriptions or Memberships
+                                            </option>
                                             <option>Events & Tickets</option>
                                             <option>Books & Stationery</option>
                                         </Input>
-                                        <InputError message={errors.product_types} className="mt-2" />
+                                        <InputError
+                                            message={errors.product_types}
+                                            className="mt-2"
+                                        />
                                     </div>
 
                                     <div className="mt-6">
-                                        <Label htmlFor="estimated_sales_volume" className="text-sm font-medium block mb-3">
-                                            Estimated monthly sales? (Just a rough idea — no pressure!)
+                                        <Label
+                                            htmlFor="estimated_sales_volume"
+                                            className="text-sm font-medium block mb-3"
+                                        >
+                                            Estimated monthly sales? (Just a
+                                            rough idea — no pressure!)
                                         </Label>
                                         <Input
                                             id="estimated_sales_volume"
                                             as="select"
                                             className="block w-full dark:bg-[#2C2C2C] dark:border-0 focus:ring-primary-orange/20"
                                             value={data.estimated_sales_volume}
-                                            onChange={(e) => setData("estimated_sales_volume", e.target.value)}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "estimated_sales_volume",
+                                                    e.target.value,
+                                                )
+                                            }
                                         >
                                             <option>Less than GHS 1,000</option>
                                             <option>GHS 1,000 – 5,000</option>
@@ -438,7 +493,12 @@ const Setup = ({ auth }) => {
                                             <option>GHS 20,000 – 50,000</option>
                                             <option>Over GHS 50,000</option>
                                         </Input>
-                                        <InputError message={errors.estimated_sales_volume} className="mt-2" />
+                                        <InputError
+                                            message={
+                                                errors.estimated_sales_volume
+                                            }
+                                            className="mt-2"
+                                        />
                                     </div>
                                 </>
                             )}
@@ -449,7 +509,7 @@ const Setup = ({ auth }) => {
                                     variant="outline"
                                     onClick={prevStep}
                                     disabled={currentStep === 1}
-                                    className="h-12 px-6 bg-transparent border border-[#2C2C2C] hover:bg-[#2C2C2C] text-white flex items-center gap-2 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="h-12 px-6 border border-[#2C2C2C] flex items-center gap-2 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     <ChevronLeft className="h-4 w-4" />
                                     Back
@@ -597,7 +657,7 @@ const Setup = ({ auth }) => {
                         <div className="mt-4 text-center">
                             <div className="text-xs text-gray-500">
                                 Your store URL will be:{" "}
-                                <span className="text-white font-medium">
+                                <span className="font-bold text-foreground">
                                     https://{data.slug || "yourstore"}
                                     .selll.store
                                 </span>

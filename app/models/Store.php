@@ -8,12 +8,23 @@ class Store extends Model
         'name',
         'slug',
         'description',
+        'logo',
+        'status',
+        'email',
+        'phone',
+        'address',
+        'config',
         'currency',
-        'kyc',
+        'estimated_sales_volume',
+        'selling_journey_status',
+        'product_types',
+        'compliance',
     ];
 
     protected $hidden = [
-        'kyc',
+        'estimated_sales_volume',
+        'selling_journey_status',
+        'compliance',
     ];
 
     /**
