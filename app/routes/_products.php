@@ -6,4 +6,4 @@ app()->post('/products/new', 'Store\ProductsController@store');
 app()->get('/products/(\d+)', 'Store\ProductsController@show');
 app()->get('/products/(\d+)/edit', 'Store\ProductsController@edit');
 app()->post('/products/(\d+)/edit', 'Store\ProductsController@update');
-app()->post('/products/(\d+)/delete', 'Store\ProductsController@destroy');
+app()->delete('/products/(\d+)', 'Store\ProductsController@destroy');

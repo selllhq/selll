@@ -371,12 +371,16 @@ export default function Products({ orders = [], products, currentStore }) {
                                     </TableHeader>
                                     <TableBody>
                                         {filteredProducts.map((product) => {
+                                            const productPurchases =
+                                                product.purchases || [];
+                                            const isDeletable =
+                                                productPurchases.length === 0;
                                             const parsedImages =
                                                 parseProductImages(
                                                     product.images,
                                                 );
                                             const totalRevenue =
-                                                (product.purchases.length || 0) *
+                                                productPurchases.length *
                                                 parseFloat(product.price);
                                             const stockStatus =
                                                 product.quantity ===
@@ -444,16 +448,12 @@ export default function Products({ orders = [], products, currentStore }) {
                                                         </span>
                                                     </td>
                                                     <td className="px-4 py-3">
-                                                        {/* product.purchases[].quantity sum */}
-                                                        {
-                                                            product.purchases
-                                                                ?.reduce(
-                                                                    (acc, purchase) =>
-                                                                        acc +
-                                                                        purchase.quantity,
-                                                                    0,
-                                                                ) || 0
-                                                        }
+                                                        {productPurchases.reduce(
+                                                            (acc, purchase) =>
+                                                                acc +
+                                                                purchase.quantity,
+                                                            0,
+                                                        )}
                                                     </td>
                                                     <td className="px-4 py-3">
                                                         {new Intl.NumberFormat(
@@ -534,16 +534,34 @@ export default function Products({ orders = [], products, currentStore }) {
                                                                                 e.stopPropagation();
                                                                                 confirmModal.openDialog(
                                                                                     {
-                                                                                        title: "Delete Product",
-                                                                                        description: `Are you sure you want to delete the product "${product.name}"? This action cannot be undone.`,
+                                                                                        title: isDeletable
+                                                                                            ? "Delete Product"
+                                                                                            : `Archive "${product.name}"?`,
+                                                                                        description:
+                                                                                            isDeletable
+                                                                                                ? `Are you sure you want to delete the product "${product.name}"? This action cannot be undone.`
+                                                                                                : `Archiving will hide this product from your storefront, so customers won’t see it — but don’t worry, it will stay in your inventory and you can bring it back anytime.`,
                                                                                         cancelText:
                                                                                             "Cancel",
                                                                                         confirmText:
-                                                                                            "Delete",
+                                                                                            isDeletable
+                                                                                                ? "Delete"
+                                                                                                : "Archive",
                                                                                         onConfirm:
                                                                                             () => {
-                                                                                                toast(
-                                                                                                    "Product deleted successfully.",
+                                                                                                router.delete(
+                                                                                                    `/products/${product.id}`,
+                                                                                                    {
+                                                                                                        preserveScroll: true,
+                                                                                                        preserveState: true,
+                                                                                                        onFinish:
+                                                                                                            () => {
+                                                                                                                toast(
+                                                                                                                    "Product deleted successfully.",
+                                                                                                                );
+                                                                                                                confirmModal.closeDialog();
+                                                                                                            },
+                                                                                                    },
                                                                                                 );
                                                                                             },
                                                                                     },
@@ -551,7 +569,10 @@ export default function Products({ orders = [], products, currentStore }) {
                                                                             }}
                                                                         >
                                                                             <Trash2 className="h-4 w-4 mr-2" />
-                                                                            Delete
+                                                                            {!isDeletable
+                                                                                ? "Archive"
+                                                                                : "Delete"}{" "}
+                                                                            Product
                                                                         </Button>
                                                                     </DropdownMenuItem>
                                                                 </DropdownMenuContent>

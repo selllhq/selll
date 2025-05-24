@@ -1,5 +1,13 @@
 import Button from "../form/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, useDialog } from "../ui/dialog";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    useDialog,
+} from "../ui/dialog";
 
 const ConfirmActionModal = () => {
     const dialog = useDialog("confirmAction");
@@ -31,7 +39,9 @@ const ConfirmActionModal = () => {
                             {dialog.data.cancelText}
                         </Button>
                     )}
-                    <Button onClick={() => dialog.data.onConfirm()}>
+                    <Button
+                        onClick={() => dialog.data.onConfirm()}
+                    >
                         {dialog.data.confirmText || "Delete"}
                     </Button>
                 </DialogFooter>
