@@ -93,4 +93,9 @@ class Store extends Model
     {
         return $this->hasMany(Payout::class);
     }
+
+    public function wallets()
+    {
+        return $this->hasMany(Wallet::class);
+    }
 }

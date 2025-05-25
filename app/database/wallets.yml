@@ -1,0 +1,20 @@
+columns:
+  type:
+    type: enum
+    values:
+      - momo
+      - bank
+      - other
+  provider: string
+  account_code: string
+  account_number: string
+  account_identifier: string
+  currency:
+    type: string
+    default: GHS
+  verified_at:
+    type: timestamp
+    nullable: true
+
+relationships:
+  - Store
