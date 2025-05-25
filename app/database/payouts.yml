@@ -6,12 +6,6 @@ columns:
   payment_fee: string
   payment_provider: string
   payment_fee_amount: string
-  status:
-    type: enum
-    default: pending
-    values:
-      - paid
-      - pending
 
 relationships:
   - Cart

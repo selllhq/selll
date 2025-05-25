@@ -6,7 +6,9 @@ columns:
       - bank
       - other
   provider: string
-  account_code: string
+  account_code:
+    type: string
+    unique: true
   account_number: string
   account_identifier: string
   currency:
