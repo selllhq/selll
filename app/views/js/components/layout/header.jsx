@@ -35,6 +35,7 @@ import { cn, getInitials } from "@/utils";
 import { useIsMobile } from "@/utils/use-mobile";
 import { Link, usePage } from "@inertiajs/react";
 import {
+    AlertTriangle,
     ArrowDownCircle,
     BookOpen,
     ChevronsUpDown,
@@ -113,11 +114,13 @@ const activeItemStyles =
 export function AppHeader({ breadcrumbs = [], variant = "header" }) {
     const page = usePage();
 
-    const { auth } = page.props;
+    const { auth, currentStore } = page.props;
 
     if (variant === "sidebar") {
         return <AppSidebar />;
     }
+
+    const showPaymentSetupBanner = currentStore?.status === "sandbox";
 
     return (
         <>
@@ -354,6 +357,21 @@ export function AppHeader({ breadcrumbs = [], variant = "header" }) {
                     </div>
                 )}
             </div>
+
+            {showPaymentSetupBanner && (
+                <div
+                    className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-2 fixed top-16 left-0 right-0 z-40 flex items-center justify-center space-x-2 shadow-md"
+                    role="alert"
+                >
+                    <AlertTriangle className="h-3 w-3 text-yellow-600 flex-shrink-0" />
+                    <p className="text-xs">
+                        You need to add an account to receive your sales before you start selling.{' '}
+                        <Link href="/payouts/setup" className="font-bold underline hover:text-yellow-800" prefetch>
+                            Set up payments now
+                        </Link>
+                    </p>
+                </div>
+            )}
         </>
     );
 }

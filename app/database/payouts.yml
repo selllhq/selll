@@ -8,5 +8,6 @@ columns:
   payment_fee_amount: string
 
 relationships:
-  - Cart
   - Store
+  - Wallet
+  - Cart

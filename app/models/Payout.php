@@ -5,7 +5,7 @@ namespace App\Models;
 class Payout extends Model
 {
     protected $fillable = [
-        'cart_id',
+        'wallet_id',
         'store_id',
         'amount',
         'currency',
@@ -17,9 +17,9 @@ class Payout extends Model
         'payment_provider',
     ];
 
-    public function cart()
+    public function wallet()
     {
-        return $this->belongsTo(Cart::class);
+        return $this->belongsTo(Wallet::class);
     }
 
     public function store()
