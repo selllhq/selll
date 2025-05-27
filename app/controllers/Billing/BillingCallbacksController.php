@@ -70,6 +70,7 @@ class BillingCallbacksController extends Controller
                 'payment_fee' => $providerFee,
                 'payment_fee_amount' => $providerCommission,
                 'store_id' => $userCart->store_id,
+                'wallet_id' => $userCart->store->payout_account_id,
             ]);
         } else {
             $userCart->status = 'cancelled';

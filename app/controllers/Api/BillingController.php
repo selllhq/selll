@@ -39,6 +39,8 @@ class BillingController extends Controller
             'store_url' => request()->get('store_url'),
         ]);
 
+        $storePayoutWallet = $store->wallets()->find($store->payout_account_id);
+
         try {
             $session = billing($billingProvider)->charge([
                 'amount' => $cartTotal * 100,
@@ -46,6 +48,10 @@ class BillingController extends Controller
                 'description' => 'Purchase of items in cart',
                 'customer' => $customer->email,
                 'url' => request()->getUrl() . '/billing/callback', // only for paystack
+                '_paystack' => [
+                    'subaccount' => $storePayoutWallet->account_code,
+                    'bearer' => 'subaccount',
+                ],
                 'metadata' => [
                     'cart_id' => $cart->id,
                     'customer_id' => $customer->id,
