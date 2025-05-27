@@ -14,6 +14,7 @@ class PayoutsController extends Controller
             'currentStore' => $currentStore,
             'wallets' => $currentStore->wallets()->with('payouts')->get(),
             'payouts' => $currentStore->payouts()->with('wallet')->latest()->get(),
+            'payoutWallet' => $currentStore->wallets()->find($currentStore->payout_account_id),
             'orders' => $currentStore->carts()->where('status', 'paid')->count(),
             'errors' => flash()->display('errors'),
         ]);

@@ -27,6 +27,7 @@ export default function Payouts({
     currentStore,
     wallets = [],
     orders = 0,
+    payoutWallet = null,
 }) {
     const [search, setSearch] = useState("");
     const [filter, setFilter] = useState("all");
@@ -86,6 +87,93 @@ export default function Payouts({
                         </p>
                     </div>
                 </div>
+
+                {payoutWallet && (
+                    <Card className="mb-8">
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
+                            <CardTitle>Current Payout Wallet</CardTitle>
+                            <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                <Wallet className="h-5 w-5 text-primary-orange" />
+                            </div>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <p className="text-sm text-gray-400 mb-1">
+                                        Wallet Type
+                                    </p>
+                                    <p className="font-medium">
+                                        {payoutWallet.type === "momo"
+                                            ? "Mobile Money"
+                                            : payoutWallet.type === "bank"
+                                              ? "Bank Account"
+                                              : payoutWallet.type === "other"
+                                                ? "Other"
+                                                : payoutWallet.type}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p className="text-sm text-gray-400 mb-1">
+                                        Provider
+                                    </p>
+                                    <p className="font-medium">
+                                        {payoutWallet.provider || "N/A"}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p className="text-sm text-gray-400 mb-1">
+                                        Account Number
+                                    </p>
+                                    <p className="font-medium">
+                                        {payoutWallet.account_number || "N/A"}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p className="text-sm text-gray-400 mb-1">
+                                        Currency
+                                    </p>
+                                    <p className="font-medium">
+                                        {payoutWallet.currency || "GHS"}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p className="text-sm text-gray-400 mb-1">
+                                        Status
+                                    </p>
+                                    <p className="font-medium">
+                                        {payoutWallet.verified_at ? (
+                                            <span className="text-green-500 flex items-center gap-1">
+                                                <span className="inline-block h-2 w-2 rounded-full bg-green-500"></span>
+                                                Verified (
+                                                {dayjs(
+                                                    payoutWallet.verified_at,
+                                                ).format("MMM D, YYYY")}
+                                                )
+                                            </span>
+                                        ) : (
+                                            <span className="text-yellow-500 flex items-center gap-1">
+                                                <span className="inline-block h-2 w-2 rounded-full bg-yellow-500"></span>
+                                                Not Verified
+                                            </span>
+                                        )}
+                                    </p>
+                                </div>
+                                {/* <div className="md:col-span-2 mt-2">
+                                    <Button
+                                        onClick={() =>
+                                            router.visit("/payouts/setup")
+                                        }
+                                        variant="outline"
+                                        size="sm"
+                                        className="text-primary-orange border-primary-orange hover:bg-primary-orange/10"
+                                    >
+                                        Update Payout Details
+                                    </Button>
+                                </div> */}
+                            </div>
+                        </CardContent>
+                    </Card>
+                )}
 
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mt-8">
                     <Card>
@@ -218,13 +306,47 @@ export default function Payouts({
                 </div>
 
                 {filteredPayouts.length === 0 ? (
-                    <EmptyState
-                        icon={Wallet}
-                        title={search ? "No payouts found" : "No payouts yet"}
-                        description="Payouts are automatically requested when a sale is completed. Start selling products to receive payouts."
-                        button={false}
-                        className="mt-6"
-                    />
+                    <>
+                        {!payoutWallet ? (
+                            <Card className="mt-8">
+                                <CardContent className="p-6">
+                                    <div className="flex flex-col items-center justify-center text-center p-4">
+                                        <div className="bg-[#2C2C2C] p-3 rounded-full mb-4">
+                                            <Wallet className="h-6 w-6 text-primary-orange" />
+                                        </div>
+                                        <h3 className="text-lg font-medium mb-2">
+                                            No Payout Wallet Set Up
+                                        </h3>
+                                        <p className="text-sm text-gray-400 mb-4">
+                                            You haven't set up a payout wallet
+                                            yet. Set up your payout details to
+                                            receive payments from your sales.
+                                        </p>
+                                        <Button
+                                            onClick={() =>
+                                                router.visit("/payouts/setup")
+                                            }
+                                            className="bg-primary-orange hover:bg-primary-orange/90"
+                                        >
+                                            Set Up Payout Wallet
+                                        </Button>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        ) : (
+                            <EmptyState
+                                icon={Wallet}
+                                title={
+                                    search
+                                        ? "No payouts found"
+                                        : "No payouts yet"
+                                }
+                                description="Payouts are automatically requested when a sale is completed. Start selling products to receive payouts."
+                                button={false}
+                                className="mt-6"
+                            />
+                        )}
+                    </>
                 ) : (
                     <div className="rounded-md border border-[#2C2C2C] overflow-hidden">
                         <Table>

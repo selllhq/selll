@@ -14,6 +14,11 @@ class Wallet extends Model
         'verified_at',
     ];
 
+    protected $hidden = [
+        'account_code',
+        'account_identifier',
+    ];
+
     public function store()
     {
         return $this->belongsTo(Store::class);
