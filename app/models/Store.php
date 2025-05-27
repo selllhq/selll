@@ -19,12 +19,14 @@ class Store extends Model
         'selling_journey_status',
         'product_types',
         'compliance',
+        'payout_account_id',
     ];
 
     protected $hidden = [
         'estimated_sales_volume',
         'selling_journey_status',
         'compliance',
+        'payout_account_id',
     ];
 
     /**

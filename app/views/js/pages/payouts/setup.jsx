@@ -1,5 +1,5 @@
 import React from "react";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, router, useForm } from "@inertiajs/react";
 import Layout from "@/layouts/app-layout";
 import Button from "@/components/form/button";
 import Input from "@/components/form/input";
@@ -18,22 +18,38 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/shared/card";
+import { toast } from "sonner";
 
-export default function PayoutSetupPage({ auth, currentStore }) {
+export default function PayoutSetupPage({
+    auth,
+    currentStore,
+    banks,
+    mobileMoney,
+}) {
     const { data, setData, post, errors, processing } = useForm({
         type: "momo",
-        provider: "",
+        provider: null,
         account_number: "",
     });
 
     const providers = {
-        momo: ["MTN Mobile Money", "Vodafone Cash", "AirtelTigo Money"],
-        bank: ["GCB Bank", "Ecobank", "Stanbic Bank", "Absa Bank"],
+        momo: mobileMoney,
+        bank: banks,
     };
 
     const submit = (e) => {
         e.preventDefault();
-        post("/payouts/store");
+        post("/payouts/setup", {
+            onFinish: () => {
+                setData({
+                    type: "momo",
+                    provider: "",
+                    account_number: "",
+                });
+                toast.success("Payout account details saved successfully!");
+                router.visit("/payouts");
+            }
+        });
     };
 
     return (
@@ -59,7 +75,7 @@ export default function PayoutSetupPage({ auth, currentStore }) {
         >
             <Head title="Setup Payouts" />
 
-            <div className="space-y-6 py-0 md:py-6 px-0 md:px-6">
+            <div className="space-y-6 py-0 md:py-6 px-0">
                 <div className="mb-10">
                     <h2 className="text-2xl md:text-3xl font-bold mb-1">
                         Add a payout account
@@ -79,7 +95,7 @@ export default function PayoutSetupPage({ auth, currentStore }) {
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="p-0">
-                                <div className="bg-[#1A1A1A] border border-[#2C2C2C] rounded-lg p-5">
+                                <div className="dark:bg-[#1A1A1A] border border-[#2C2C2C] rounded-lg p-5">
                                     <form
                                         onSubmit={submit}
                                         className="space-y-5"
@@ -93,7 +109,7 @@ export default function PayoutSetupPage({ auth, currentStore }) {
                                             </Label>
                                             <div className="grid grid-cols-2 gap-2">
                                                 <div
-                                                    className={`flex items-center gap-2 p-2.5 rounded-lg cursor-pointer border ${data.type === "momo" ? "border-primary-orange bg-[#2C2C2C]" : "border-[#2C2C2C]"}`}
+                                                    className={`flex items-center gap-2 p-2.5 rounded-lg cursor-pointer border ${data.type === "momo" ? "border-primary-orange bg-primary-orange/10 dark:bg-[#2C2C2C]" : "border-[#2C2C2C]"}`}
                                                     onClick={() =>
                                                         setData("type", "momo")
                                                     }
@@ -110,7 +126,7 @@ export default function PayoutSetupPage({ auth, currentStore }) {
                                                     </div>
                                                 </div>
                                                 <div
-                                                    className={`flex items-center gap-2 p-2.5 rounded-lg cursor-pointer border ${data.type === "bank" ? "border-primary-orange bg-[#2C2C2C]" : "border-[#2C2C2C]"}`}
+                                                    className={`flex items-center gap-2 p-2.5 rounded-lg cursor-pointer border ${data.type === "bank" ? "border-primary-orange bg-primary-orange/10 dark:bg-[#2C2C2C]" : "border-[#2C2C2C]"}`}
                                                     onClick={() =>
                                                         setData("type", "bank")
                                                     }
@@ -147,13 +163,13 @@ export default function PayoutSetupPage({ auth, currentStore }) {
                                                 as="select"
                                                 id="provider"
                                                 value={data.provider}
-                                                onChange={(e) =>
+                                                onChange={(e) => {
                                                     setData(
                                                         "provider",
                                                         e.target.value,
-                                                    )
-                                                }
-                                                className="w-full bg-[#141414] border-[#2C2C2C] focus:border-primary-orange focus:ring-primary-orange"
+                                                    );
+                                                }}
+                                                className="w-full dark:bg-[#141414] border-[#2C2C2C]"
                                             >
                                                 <option value="">
                                                     Select{" "}
@@ -165,10 +181,10 @@ export default function PayoutSetupPage({ auth, currentStore }) {
                                                     providers[data.type] || []
                                                 ).map((prov) => (
                                                     <option
-                                                        key={prov}
-                                                        value={prov}
+                                                        key={prov.slug}
+                                                        value={`${prov.code}:${prov.name}`}
                                                     >
-                                                        {prov}
+                                                        {prov.name}
                                                     </option>
                                                 ))}
                                             </Input>
@@ -203,7 +219,7 @@ export default function PayoutSetupPage({ auth, currentStore }) {
                                                         ? "e.g. 024xxxxxxx"
                                                         : "e.g. 1234567890123"
                                                 }
-                                                className="bg-[#141414] border-[#2C2C2C] focus:border-primary-orange focus:ring-primary-orange"
+                                                className="dark:bg-[#141414] border-[#2C2C2C]"
                                             />
                                             {errors.account_number && (
                                                 <InputError
@@ -239,7 +255,7 @@ export default function PayoutSetupPage({ auth, currentStore }) {
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="p-0">
-                                <div className="bg-[#1A1A1A] border border-[#2C2C2C] rounded-lg p-5 text-xs">
+                                <div className="dark:bg-[#1A1A1A] border border-[#2C2C2C] rounded-lg p-5 text-xs">
                                     <div className="flex items-start gap-3">
                                         <div className="mt-1">
                                             <AlertTriangle className="h-5 w-5 text-primary-orange" />
@@ -269,14 +285,19 @@ export default function PayoutSetupPage({ auth, currentStore }) {
                                                         <div className="h-1.5 w-1.5 rounded-full bg-primary-orange"></div>
                                                         <span className="text-gray-400">
                                                             Minimum payout
-                                                            amount: GHS 50
+                                                            amount: GHS{" "}
+                                                            {data.provider ===
+                                                            "momo"
+                                                                ? "50"
+                                                                : "10"}
                                                         </span>
                                                     </li>
                                                     <li className="flex items-center gap-2">
                                                         <div className="h-1.5 w-1.5 rounded-full bg-primary-orange"></div>
                                                         <span className="text-gray-400">
-                                                            No transaction fees
-                                                            on payouts
+                                                            Our payment
+                                                            processor charges 2%
+                                                            per payout
                                                         </span>
                                                     </li>
                                                 </ul>

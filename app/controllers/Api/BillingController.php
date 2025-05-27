@@ -4,7 +4,6 @@ namespace App\Controllers\Api;
 
 use App\Controllers\Controller;
 use App\Helpers\CustomerHelper;
-use App\Models\Cart;
 use App\Models\Store;
 
 class BillingController extends Controller
