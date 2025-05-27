@@ -153,7 +153,7 @@ const EditProduct = ({ currentStore, product }) => {
         >
             <Head title={`Edit Product: ${product?.name}`} />
 
-            <div className="flex flex-col md:flex-row h-full w-full overflow-hidden pt-28">
+            <div className="flex flex-col md:flex-row h-full w-full overflow-y-auto lg:overflow-hidden pt-28">
                 <div className="flex-1 min-w-0 flex flex-col order-2 md:order-1">
                     <div className="flex-1 overflow-y-auto pb-6">
                         <div className="max-w-2xl px-6 py-20 relative">
@@ -414,13 +414,12 @@ const EditProduct = ({ currentStore, product }) => {
                     </div>
                 </div>
 
-                <div className="w-full md:w-[40%] lg:w-[35%] xl:w-[600px] h-auto max-h-[50vh] md:max-h-screen overflow-y-auto bg-gray-50 dark:bg-[#1A1A1A] border-t md:border-t-0 md:border-l border-gray-100 dark:border-[#2C2C2C] p-4 md:p-8 order-1 md:order-2 flex-shrink-0 sticky top-0">
+                <div className="hidden lg:block w-full md:w-[40%] lg:w-[35%] xl:w-[600px] h-auto max-h-[50vh] md:max-h-screen overflow-y-auto bg-gray-50 dark:bg-[#1A1A1A] border-t md:border-t-0 md:border-l border-gray-100 dark:border-[#2C2C2C] p-4 md:p-8 order-1 md:order-2 flex-shrink-0 sticky top-0">
                     <div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">
                         Live Preview
                     </div>
                     <div className="space-y-4">
                         <div className="bg-white dark:bg-[#2C2C2C] rounded-lg overflow-hidden shadow-lg border border-gray-100 dark:border-[#2C2C2C]">
-                            {/* Product Preview */}
                             <div className="aspect-[4/3] bg-gray-100 dark:bg-[#1A1A1A] relative group">
                                 {existingImages.length > 0 ||
                                 newImages.length > 0 ? (
