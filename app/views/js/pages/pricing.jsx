@@ -80,7 +80,7 @@ const Pricing = ({ auth }) => {
                                         <li className="flex items-center gap-2 text-sm font-medium">
                                             <Check className="size-4" />
                                             <span>
-                                                2% Selll fee + 3%
+                                                2% Selll fee + 2%
                                                 Stripe/Paystack fee
                                             </span>
                                         </li>
