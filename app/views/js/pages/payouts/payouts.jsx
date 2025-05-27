@@ -40,18 +40,6 @@ export default function Payouts({
     });
 
     const totalPaidOut = payouts.reduce((sum, payout) => {
-        if (payout.status === "completed") {
-            return sum + parseFloat(payout.amount);
-        }
-
-        return sum;
-    }, 0);
-
-    const pendingPayouts = payouts.filter(
-        (payout) => payout.status === "pending",
-    );
-
-    const pendingAmount = pendingPayouts.reduce((sum, payout) => {
         return sum + parseFloat(payout.amount);
     }, 0);
 
@@ -88,93 +76,6 @@ export default function Payouts({
                     </div>
                 </div>
 
-                {payoutWallet && (
-                    <Card className="mb-8">
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
-                            <CardTitle>Current Payout Wallet</CardTitle>
-                            <div className="bg-[#2C2C2C] p-2 rounded-lg">
-                                <Wallet className="h-5 w-5 text-primary-orange" />
-                            </div>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <p className="text-sm text-gray-400 mb-1">
-                                        Wallet Type
-                                    </p>
-                                    <p className="font-medium">
-                                        {payoutWallet.type === "momo"
-                                            ? "Mobile Money"
-                                            : payoutWallet.type === "bank"
-                                              ? "Bank Account"
-                                              : payoutWallet.type === "other"
-                                                ? "Other"
-                                                : payoutWallet.type}
-                                    </p>
-                                </div>
-                                <div>
-                                    <p className="text-sm text-gray-400 mb-1">
-                                        Provider
-                                    </p>
-                                    <p className="font-medium">
-                                        {payoutWallet.provider || "N/A"}
-                                    </p>
-                                </div>
-                                <div>
-                                    <p className="text-sm text-gray-400 mb-1">
-                                        Account Number
-                                    </p>
-                                    <p className="font-medium">
-                                        {payoutWallet.account_number || "N/A"}
-                                    </p>
-                                </div>
-                                <div>
-                                    <p className="text-sm text-gray-400 mb-1">
-                                        Currency
-                                    </p>
-                                    <p className="font-medium">
-                                        {payoutWallet.currency || "GHS"}
-                                    </p>
-                                </div>
-                                <div>
-                                    <p className="text-sm text-gray-400 mb-1">
-                                        Status
-                                    </p>
-                                    <p className="font-medium">
-                                        {payoutWallet.verified_at ? (
-                                            <span className="text-green-500 flex items-center gap-1">
-                                                <span className="inline-block h-2 w-2 rounded-full bg-green-500"></span>
-                                                Verified (
-                                                {dayjs(
-                                                    payoutWallet.verified_at,
-                                                ).format("MMM D, YYYY")}
-                                                )
-                                            </span>
-                                        ) : (
-                                            <span className="text-yellow-500 flex items-center gap-1">
-                                                <span className="inline-block h-2 w-2 rounded-full bg-yellow-500"></span>
-                                                Not Verified
-                                            </span>
-                                        )}
-                                    </p>
-                                </div>
-                                {/* <div className="md:col-span-2 mt-2">
-                                    <Button
-                                        onClick={() =>
-                                            router.visit("/payouts/setup")
-                                        }
-                                        variant="outline"
-                                        size="sm"
-                                        className="text-primary-orange border-primary-orange hover:bg-primary-orange/10"
-                                    >
-                                        Update Payout Details
-                                    </Button>
-                                </div> */}
-                            </div>
-                        </CardContent>
-                    </Card>
-                )}
-
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mt-8">
                     <Card>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
@@ -200,31 +101,37 @@ export default function Payouts({
                             </div>
                         </CardContent>
                     </Card>
-
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
-                            <CardTitle>Pending Payouts</CardTitle>
-                            <div className="bg-[#2C2C2C] p-2 rounded-lg">
-                                <Clock className="h-5 w-5 text-primary-orange" />
-                            </div>
-                        </CardHeader>
-                        <CardContent>
-                            <div>
-                                <div className="text-4xl font-bold mb-2">
-                                    {new Intl.NumberFormat("en-US", {
-                                        style: "currency",
-                                        currency:
-                                            currentStore?.currency || "USD",
-                                    }).format(pendingAmount)}
+                    
+                    {payoutWallet && (
+                        <Card>
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
+                                <CardTitle>Payout Wallet</CardTitle>
+                                <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                    <Wallet className="h-5 w-5 text-primary-orange" />
                                 </div>
-                                <div className="flex items-center gap-1 text-gray-400">
-                                    <span className="text-sm">
-                                        From 2 pending payouts
-                                    </span>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="space-y-3">
+                                    <div>
+                                        <p className="font-medium">
+                                            {payoutWallet.type === "momo"
+                                                ? "Mobile Money"
+                                                : payoutWallet.type === "bank"
+                                                  ? "Bank Account"
+                                                  : payoutWallet.type === "other"
+                                                    ? "Other"
+                                                    : payoutWallet.type} - {payoutWallet.provider || "N/A"}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p className="font-medium">
+                                            {payoutWallet.account_number || "N/A"}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                        </CardContent>
-                    </Card>
+                            </CardContent>
+                        </Card>
+                    )}
                 </div>
 
                 <div className="flex items-center justify-between mb-6">
@@ -391,10 +298,13 @@ export default function Payouts({
                                             )}
                                         </TableCell>
                                         <TableCell className="text-gray-400 truncate max-w-[200px]">
-                                            {payout.payment_method ===
-                                            "bank_transfer"
-                                                ? `Bank Transfer to ${payout.bank_name || "N/A"}`
-                                                : payout.payment_method}
+                                            {payout.wallet.type === "momo"
+                                                ? "Mobile Money"
+                                                : payout.wallet.type === "bank"
+                                                  ? "Bank Account"
+                                                  : payout.wallet.type === "other"
+                                                    ? "Other"
+                                                    : payout.wallet.type}
                                         </TableCell>
                                         <TableCell className="text-gray-400">
                                             {payout.processed_at

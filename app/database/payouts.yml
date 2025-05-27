@@ -6,6 +6,9 @@ columns:
   payment_fee: string
   payment_provider: string
   payment_fee_amount: string
+  reference:
+    type: string
+    nullable: true
 
 relationships:
   - Store
