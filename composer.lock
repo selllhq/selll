@@ -2811,12 +2811,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/paystack.git",
-                "reference": "feb84f3f735b01d20544d507f4b10a0a80e06c22"
+                "reference": "de6a89fc227c7411f8df7661312857e2647a072b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/paystack/zipball/feb84f3f735b01d20544d507f4b10a0a80e06c22",
-                "reference": "feb84f3f735b01d20544d507f4b10a0a80e06c22",
+                "url": "https://api.github.com/repos/leafsphp/paystack/zipball/de6a89fc227c7411f8df7661312857e2647a072b",
+                "reference": "de6a89fc227c7411f8df7661312857e2647a072b",
                 "shasum": ""
             },
             "require": {
@@ -2871,7 +2871,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-05-23T19:48:34+00:00"
+            "time": "2025-05-27T12:17:06+00:00"
         },
         {
             "name": "leafs/queue",
