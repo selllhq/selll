@@ -30,11 +30,29 @@ class StoresController extends Controller
     public function showProducts($storeId)
     {
         $category = request()->query('category');
-        $sort = request()->query('sortBy', 'created_at:desc');
+        $sort = request()->query('sortBy', 'created_at-desc');
+        $search = request()->query('search');
+
+        if ($search) {
+            $products = Store::find($storeId)->products()
+                ->where('status', 'active')
+                ->where(function ($query) use ($search) {
+                    $query->where('name', 'like', "%$search%")
+                        ->orWhere('description', 'like', "%$search%");
+                })
+                ->orderBy(
+                    explode('-', $sort)[0],
+                    explode('-', $sort)[1] ?? 'desc'
+                )
+                ->get() ?? [];
+
+            return response()->json($products);
+        }
 
         if ($sort === 'popular') {
             return response()->json(
                 Store::find($storeId)->products()
+                    ->where('status', 'active')
                     ->withCount('purchases')
                     ->orderByDesc('purchases_count')
                     ->get() ?? []
@@ -47,16 +65,16 @@ class StoresController extends Controller
                 ->products()
                 ->where('status', 'active')
                 ->orderBy(
-                    explode(':', $sort)[0],
-                    explode(':', $sort)[1] ?? 'desc'
+                    explode('-', $sort)[0],
+                    explode('-', $sort)[1] ?? 'desc'
                 )
                 ->get() ?? []
             : Store::find($storeId)
                 ->products()
                 ->where('status', 'active')
                 ->orderBy(
-                    explode(':', $sort)[0],
-                    explode(':', $sort)[1] ?? 'desc'
+                    explode('-', $sort)[0],
+                    explode('-', $sort)[1] ?? 'desc'
                 )
                 ->get() ?? [];
 
