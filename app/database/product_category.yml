@@ -1,0 +1,4 @@
+relationships:
+  - Store
+  - Category
+  - Product

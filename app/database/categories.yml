@@ -1,0 +1,14 @@
+columns:
+  title: string
+  description:
+    type: text
+    nullable: true
+  status:
+    type: enum
+    default: active
+    values:
+      - active
+      - archived
+
+relationships:
+  - Store

@@ -72,6 +72,14 @@ class Store extends Model
     }
 
     /**
+     * Get all categories of a store.
+     */
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
+
+    /**
      * Get all products of a store.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
