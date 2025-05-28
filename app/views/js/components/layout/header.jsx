@@ -41,9 +41,8 @@ import {
     ChevronsUpDown,
     HelpCircle,
     LayoutGrid,
-    Mail,
     Menu,
-    Search,
+    MessagesSquare,
     ShoppingBasket,
     ShoppingCart,
     Users,
@@ -97,13 +96,18 @@ const mainNavItems = [
 
 const rightNavItems = [
     {
+        title: "Feedback",
+        url: "https://selll.canny.io/feature-requests",
+        icon: MessagesSquare,
+    },
+    {
         title: "Help",
         url: "mailto:support@selll.online",
         icon: HelpCircle,
     },
     {
         title: "Selll Docs",
-        url: "https://docs.selll.online",
+        url: "https://selll.tawk.help",
         icon: BookOpen,
     },
 ];
@@ -279,13 +283,13 @@ export function AppHeader({ breadcrumbs = [], variant = "header" }) {
 
                     <div className="flex items-center space-x-2 ml-auto md:ml-0">
                         <div className="relative flex items-center space-x-1">
-                            <Button
+                            {/* <Button
                                 variant="ghost"
                                 size="icon"
                                 className="group h-9 w-9 cursor-pointer"
                             >
                                 <Search className="!size-5 opacity-80 group-hover:opacity-100" />
-                            </Button>
+                            </Button> */}
                             <div className="hidden lg:flex">
                                 {rightNavItems.map((item) => (
                                     <TooltipProvider

@@ -511,7 +511,7 @@ const Faqs = ({ auth }) => {
                                 </p>
                                 <Button
                                     as="a"
-                                    href="https://docs.selll.online"
+                                    href="https://selll.tawk.help"
                                     target="_blank"
                                     className="w-full bg-[#2C2C2C] hover:bg-primary-orange text-white font-medium py-2.5 transition-colors group-hover:bg-primary-orange/90 flex items-center justify-center"
                                 >

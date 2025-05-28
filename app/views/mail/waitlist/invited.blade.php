@@ -428,7 +428,7 @@
                                 <p>
                                     Need help? <br/>
                                     We've put together a quick guide to help you launch: <br/>
-                                    <a href="https://docs.selll.online/" target="_blank">📖 See the Getting Started Guide</a>
+                                    <a href="https://selll.tawk.help/" target="_blank">📖 See the Getting Started Guide</a>
                                 </p>
                                 <p>
                                     See you on the dashboard,<br/>

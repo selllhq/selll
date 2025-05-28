@@ -11,7 +11,7 @@ import {
     AvatarImage,
 } from "@/components/shared/avatar";
 import { Link } from "@inertiajs/react";
-import { LogOut, Settings, Store } from "lucide-react";
+import { LogOut, PenBox, Settings, Store } from "lucide-react";
 import { getInitials } from "@/utils";
 
 export function UserMenuContent({ user, showEmail = false }) {
@@ -41,6 +41,18 @@ export function UserMenuContent({ user, showEmail = false }) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
+                <DropdownMenuItem asChild>
+                    <a
+                        className="block w-full"
+                        href="https://selll.canny.io/feature-requests"
+                        as="button"
+                        target="_blank"
+                        onClick={cleanup}
+                    >
+                        <PenBox className="mr-2" />
+                        Leave Feedback
+                    </a>
+                </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                     <Link
                         className="block w-full"
