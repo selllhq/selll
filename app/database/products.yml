@@ -10,12 +10,14 @@ columns:
   images:
     type: json
     nullable: true
-  categories:
-    type: json
-    nullable: true
   physical:
     type: boolean
+    default: true
+  is_featured:
+    type: boolean
     default: false
+  variants:
+    type: json
     nullable: true
   status:
     type: enum
