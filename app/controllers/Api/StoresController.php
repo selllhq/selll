@@ -20,9 +20,45 @@ class StoresController extends Controller
         return response()->json($store);
     }
 
+    public function showCategories($storeId)
+    {
+        $categories = Store::find($storeId)->categories()->where('status', 'active')->get() ?? [];
+
+        return response()->json($categories);
+    }
+
     public function showProducts($storeId)
     {
-        $products = Store::find($storeId)->products()->where('status', 'active')->get() ?? [];
+        $category = request()->query('category');
+        $sort = request()->query('sortBy', 'created_at:desc');
+
+        if ($sort === 'popular') {
+            return response()->json(
+                Store::find($storeId)->products()
+                    ->withCount('purchases')
+                    ->orderByDesc('purchases_count')
+                    ->get() ?? []
+            );
+        }
+
+        $products = $category
+            ? Store::find($storeId)->categories()
+                ->find($category)
+                ->products()
+                ->where('status', 'active')
+                ->orderBy(
+                    explode(':', $sort)[0],
+                    explode(':', $sort)[1] ?? 'desc'
+                )
+                ->get() ?? []
+            : Store::find($storeId)
+                ->products()
+                ->where('status', 'active')
+                ->orderBy(
+                    explode(':', $sort)[0],
+                    explode(':', $sort)[1] ?? 'desc'
+                )
+                ->get() ?? [];
 
         return response()->json($products);
     }
