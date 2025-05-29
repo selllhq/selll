@@ -417,7 +417,6 @@ const Faqs = ({ auth }) => {
             </div>
 
             <section className="relative overflow-hidden py-24 bg-[#141414]">
-                {/* Background elements */}
                 <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-5"></div>
                 <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-orange/20 to-transparent"></div>
                 <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-orange/20 to-transparent"></div>
@@ -461,9 +460,8 @@ const Faqs = ({ auth }) => {
                                     within 24 hours.
                                 </p>
                                 <Button
-                                    as={Link}
-                                    href="/contact"
                                     className="w-full bg-[#2C2C2C] hover:bg-primary-orange text-white font-medium py-2.5 transition-colors group-hover:bg-primary-orange/90 flex items-center justify-center"
+                                    onClick={() => window.Tawk_API?.toggle()}
                                 >
                                     <span>Contact Support</span>
                                     <svg
@@ -551,7 +549,7 @@ const Faqs = ({ auth }) => {
                                 <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
                                 <path d="M12 6v6l4 2" />
                             </svg>
-                            <span>Average response time: 4 hours</span>
+                            <span>Average response time: 22 minutes</span>
                         </div>
                     </div>
                 </div>

@@ -102,8 +102,12 @@ const rightNavItems = [
     },
     {
         title: "Help",
-        url: "mailto:support@selll.online",
+        url: "javascript:void(Tawk_API.toggle())",
         icon: HelpCircle,
+        onClick: (e) => {
+            e.preventDefault();
+            window.Tawk_API?.toggle();
+        },
     },
     {
         title: "Selll Docs",
@@ -194,6 +198,11 @@ export function AppHeader({ breadcrumbs = [], variant = "header" }) {
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="flex items-center space-x-2 font-medium"
+                                                    onClick={(e) => {
+                                                        if (item.onClick) {
+                                                            item.onClick(e);
+                                                        }
+                                                    }}
                                                 >
                                                     {item.icon && (
                                                         <Icon
@@ -303,6 +312,11 @@ export function AppHeader({ breadcrumbs = [], variant = "header" }) {
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="group text-accent-foreground ring-offset-background hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring ml-1 inline-flex h-9 w-9 items-center justify-center rounded-md bg-transparent p-0 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                                                    onClick={(e) => {
+                                                        if (item.onClick) {
+                                                            item.onClick(e);
+                                                        }
+                                                    }}
                                                 >
                                                     <span className="sr-only">
                                                         {item.title}
@@ -369,8 +383,13 @@ export function AppHeader({ breadcrumbs = [], variant = "header" }) {
                 >
                     <AlertTriangle className="h-3 w-3 text-yellow-600 flex-shrink-0" />
                     <p className="text-xs">
-                        You need to add an account to receive your sales before you start selling.{' '}
-                        <Link href="/payouts/setup" className="font-bold underline hover:text-yellow-800" prefetch>
+                        You need to add an account to receive your sales before
+                        you start selling.{" "}
+                        <Link
+                            href="/payouts/setup"
+                            className="font-bold underline hover:text-yellow-800"
+                            prefetch
+                        >
                             Set up payments now
                         </Link>
                     </p>
@@ -449,6 +468,11 @@ export function AppSidebar({ showEmail }) {
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100"
+                                        onClick={(e) => {
+                                            if (item.onClick) {
+                                                item.onClick(e);
+                                            }
+                                        }}
                                     >
                                         {item.icon && (
                                             <Icon
