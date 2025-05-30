@@ -9,24 +9,32 @@ class ProductsController extends Controller
     public function index()
     {
         $currentStore = Store::find(auth()->user()->current_store_id);
-        $products = $currentStore->products()->with('purchases')->get();
-        $orders = $currentStore->carts()->with('customer')->latest()->get();
 
         if (!$currentStore) {
-            return response()->redirect('/store/create', 303);
+            return response()->redirect('/store/new', 303);
         }
 
         response()->inertia('products/products', [
-            'orders' => $orders,
-            'products' => $products,
             'currentStore' => $currentStore,
+            'orders' => $currentStore
+                ->carts()
+                ->with('customer')
+                ->latest()
+                ->get(),
+            'products' => $currentStore
+                ->products()
+                ->withCount('purchases')
+                ->get(),
         ]);
     }
 
     public function create()
     {
+        $currentStore = Store::find(auth()->user()->current_store_id);
+
         response()->inertia('products/setup', [
-            'currentStore' => Store::find(auth()->user()->current_store_id),
+            'currentStore' => $currentStore,
+            'categories' => $currentStore->categories()->get(),
             'errors' => flash()->display('errors') ?? [],
         ]);
     }
@@ -60,25 +68,43 @@ class ProductsController extends Controller
             $uploads
         ));
 
-        Store::find(auth()->user()->current_store_id)->products()->create($data);
+        $currentStore = Store::find(auth()->user()->current_store_id);
+        $product = $currentStore->products()->create($data);
 
-        return response()->redirect('/products', 303);
+        foreach (request()->get('categories') as $categoryData) {
+            $category = $currentStore->categories()->where('title', $categoryData['value'])->first();
+
+            if (!$category) {
+                $category = $currentStore->categories()->firstOrCreate(
+                    ['title' => $categoryData['value']],
+                    ['description' => $categoryData['label']]
+                );
+            }
+
+            $product->categories()->attach($category->id, [
+                'store_id' => auth()->user()->current_store_id,
+            ]);
+        }
+
+        return response()->redirect("/products/{$product->id}", 303);
     }
 
     public function show($id)
     {
         $currentStore = Store::find(auth()->user()->current_store_id);
-        $orders = $currentStore
-            ->carts()
-            ->where('items', 'LIKE', "%\"id\":$id%")
-            ->with('customer')
-            ->latest()
-            ->get();
 
         response()->inertia('products/product', [
             'currentStore' => $currentStore,
-            'orders' => $orders,
-            'product' => $currentStore->products()->find($id),
+            'product' => $currentStore
+                ->products()
+                ->with('categories')
+                ->find($id),
+            'orders' => $currentStore
+                ->carts()
+                ->where('items', 'LIKE', "%\"id\":$id,%")
+                ->with('customer')
+                ->latest()
+                ->get(),
         ]);
     }
 
@@ -87,7 +113,7 @@ class ProductsController extends Controller
         $currentStore = Store::find(auth()->user()->current_store_id);
 
         response()->inertia('products/edit', [
-            'product' => $currentStore->products()->find($id),
+            'product' => $currentStore->products()->with('categories')->find($id),
             'currentStore' => $currentStore,
             'errors' => flash()->display('errors') ?? [],
         ]);
@@ -106,7 +132,28 @@ class ProductsController extends Controller
             'images_to_delete',
         ]);
 
-        $product = Store::find(auth()->user()->current_store_id)->products()->find($id);
+        $currentStore = Store::find(auth()->user()->current_store_id);
+        $product = $currentStore->products()->find($id);
+
+        if (!empty($categories = request()->get('categories'))) {
+            $product->categories()->detach();
+
+            foreach ($categories as $categoryData) {
+                $category = $currentStore->categories()->where('title', $categoryData['value'])->first();
+
+                if (!$category) {
+                    $category = $currentStore->categories()->firstOrCreate(
+                        ['title' => $categoryData['value']],
+                        ['description' => $categoryData['label']]
+                    );
+                }
+
+                $product->categories()->attach($category->id, [
+                    'store_id' => auth()->user()->current_store_id,
+                ]);
+            }
+        }
+
         $currentImages = [];
 
         if (isset($data['existing_images']) && !empty($data['existing_images'])) {

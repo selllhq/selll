@@ -371,16 +371,14 @@ export default function Products({ orders = [], products, currentStore }) {
                                     </TableHeader>
                                     <TableBody>
                                         {filteredProducts.map((product) => {
-                                            const productPurchases =
-                                                product.purchases || [];
                                             const isDeletable =
-                                                productPurchases.length === 0;
+                                                product.purchases_count === 0;
                                             const parsedImages =
                                                 parseProductImages(
                                                     product.images,
                                                 );
                                             const totalRevenue =
-                                                productPurchases.length *
+                                                product.purchases_count *
                                                 parseFloat(product.price);
                                             const stockStatus =
                                                 product.quantity ===
@@ -448,12 +446,7 @@ export default function Products({ orders = [], products, currentStore }) {
                                                         </span>
                                                     </td>
                                                     <td className="px-4 py-3">
-                                                        {productPurchases.reduce(
-                                                            (acc, purchase) =>
-                                                                acc +
-                                                                purchase.quantity,
-                                                            0,
-                                                        )}
+                                                        {product.purchases_count.toLocaleString()}
                                                     </td>
                                                     <td className="px-4 py-3">
                                                         {new Intl.NumberFormat(

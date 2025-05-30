@@ -5,7 +5,8 @@ namespace App\Models;
 class Category extends Model
 {
     protected $fillable = [
-        'name',
+        'store_id',
+        'title',
         'description',
     ];
 

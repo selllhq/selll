@@ -30,8 +30,6 @@ export default function Products({ product, currentStore, orders }) {
         productImages.length > 0 ? 0 : null,
     );
 
-    console.log(orders, " orders");
-
     return (
         <Layout
             variant="header"
@@ -58,6 +56,15 @@ export default function Products({ product, currentStore, orders }) {
                         <p className="text-gray-600 dark:text-gray-400">
                             {product?.description || "No description provided"}
                         </p>
+                        {product?.categories && (
+                            <div className="flex gap-2">
+                                {product?.categories?.map((category) => (
+                                    <Badge key={category.id} className="mt-2">
+                                        {category.title}
+                                    </Badge>
+                                ))}
+                            </div>
+                        )}
                     </div>
 
                     <div className="flex flex-wrap items-center gap-3">
@@ -372,18 +379,15 @@ export default function Products({ product, currentStore, orders }) {
                                                 orders.filter(
                                                     (order) =>
                                                         order.status ===
-                                                            "abandoned" &&
+                                                            "paid" &&
                                                         order.customer_id,
-                                                ).length || 0,
+                                                ).length /
+                                                    (orders.filter(
+                                                        (order) =>
+                                                            order.status ===
+                                                            "paid",
+                                                    ).length || 1),
                                             )}
-                                            {((orders.filter(
-                                                (order) =>
-                                                    order.status === "paid" &&
-                                                    order.customer_id,
-                                            ).length || 0) /
-                                                orders.length) *
-                                                100}
-                                            %
                                         </div>
                                         <div className="flex items-center gap-1 text-emerald-500">
                                             <span className="text-sm">
@@ -395,13 +399,7 @@ export default function Products({ product, currentStore, orders }) {
                                                         minimumFractionDigits: 0,
                                                     },
                                                 ).format(
-                                                    (orders.filter(
-                                                        (order) =>
-                                                            order.status ===
-                                                                "paid" &&
-                                                            order.customer_id,
-                                                    ).length || 0) /
-                                                        orders.length,
+                                                    0.15, // Placeholder value - would typically come from historical data
                                                 )}
                                             </span>
                                             <span className="text-sm text-gray-500">

@@ -1,8 +1,10 @@
-import * as React from "react";
-
 import { cn } from "@/utils";
 
 export default function Input({ className, type, as: Comp = "input", ...props }, ref) {
+    if (props.render) {
+        props.children = props.render(props);
+    }
+
     return (
         <Comp
             type={type}

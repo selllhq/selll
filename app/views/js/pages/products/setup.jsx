@@ -9,8 +9,10 @@ import { useState, useEffect } from "react";
 import Layout from "@/layouts/app-layout";
 import { CURRENCY_LIMITS, CURRENCY_SYMBOLS } from "@/utils/store";
 import PreviewImage from "@/components/products/preview-image";
+import ProductPreview from "@/components/products/product-preview";
+import Select from "@/components/form/creatable-select";
 
-const Setup = ({ currentStore }) => {
+const Setup = ({ currentStore, categories }) => {
     const [images, setImages] = useState([]);
     const [priceError, setPriceError] = useState("");
     const { data, setData, post, errors, processing } = useForm({
@@ -20,6 +22,7 @@ const Setup = ({ currentStore }) => {
         quantity: "unlimited",
         quantity_items: "",
         images: [],
+        categories: [],
     });
 
     const currencyLimits =
@@ -75,22 +78,7 @@ const Setup = ({ currentStore }) => {
             return;
         }
 
-        const formData = new FormData();
-
-        formData.append("name", data.name);
-        formData.append("description", data.description);
-        formData.append("price", data.price);
-        formData.append("quantity", data.quantity);
-
-        if (data.quantity === "limited") {
-            formData.append("quantity_items", data.quantity_items);
-        }
-
-        images.forEach((image, index) => {
-            formData.append("images[]", image);
-        });
-
-        post("/products/new", formData);
+        post("/products/new");
     };
 
     return (
@@ -228,7 +216,16 @@ const Setup = ({ currentStore }) => {
                                         <div className="relative">
                                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                                 <span className="text-gray-500 dark:text-gray-400">
-                                                    {currencySymbol}
+                                                    {Intl.NumberFormat(
+                                                        "en-US",
+                                                        {
+                                                            style: "currency",
+                                                            currency:
+                                                                currentStore?.currency,
+                                                        },
+                                                    )
+                                                        .format(0)
+                                                        .replace("0.00", "")}
                                                 </span>
                                             </div>
                                             <Input
@@ -238,7 +235,7 @@ const Setup = ({ currentStore }) => {
                                                 max={currencyLimits.max}
                                                 step="0.01"
                                                 className={cn(
-                                                    "block w-full pl-8 bg-gray-100 dark:bg-[#2C2C2C] border-0 focus:ring-primary-orange/20 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400",
+                                                    "block w-full pl-14 bg-gray-100 dark:bg-[#2C2C2C] dark:border-0 focus:ring-primary-orange/20 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400",
                                                     {
                                                         "border-red-500 focus:ring-red-500":
                                                             priceError,
@@ -339,6 +336,39 @@ const Setup = ({ currentStore }) => {
                                     />
                                 </div>
 
+                                <div className="space-y-3">
+                                    <Label htmlFor="quantity">
+                                        Product categories
+                                    </Label>
+                                    <Select
+                                        isMulti
+                                        id="categories"
+                                        name="categories"
+                                        options={
+                                            categories?.map((category) => ({
+                                                value: category.title,
+                                                label: category.title,
+                                            })) || []
+                                        }
+                                        value={data.categories}
+                                        onChange={(selected) => {
+                                            setData("categories", selected);
+                                        }}
+                                        noOptionsMessage={() =>
+                                            "No categories found, type in the category name to create a new one."
+                                        }
+                                        placeholder={(isFocused) =>
+                                            isFocused
+                                                ? "Start typing to search or create categories..."
+                                                : "Select or create categories for this product"
+                                        }
+                                    />
+                                    <InputError
+                                        className="mt-2"
+                                        message={errors.quantity}
+                                    />
+                                </div>
+
                                 <div className="flex gap-4 pt-8">
                                     <Button
                                         type="submit"
@@ -356,80 +386,11 @@ const Setup = ({ currentStore }) => {
                     </div>
                 </div>
 
-                <div className="hidden lg:block w-full md:w-[40%] lg:w-[35%] xl:w-[600px] h-auto max-h-[50vh] md:max-h-screen overflow-y-auto bg-gray-50 dark:bg-[#1A1A1A] border-t md:border-t-0 md:border-l border-gray-100 dark:border-[#2C2C2C] p-4 md:p-8 order-1 md:order-2 flex-shrink-0 sticky top-0">
-                    <div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">
-                        Live Preview
-                    </div>
-                    <div className="space-y-4">
-                        <div className="bg-white dark:bg-[#2C2C2C] rounded-lg overflow-hidden shadow-lg border border-gray-100 dark:border-[#2C2C2C]">
-                            <div className="aspect-[4/3] bg-gray-100 dark:bg-[#1A1A1A] relative group">
-                                {images.length > 0 ? (
-                                    <img
-                                        src={URL.createObjectURL(images[0])}
-                                        alt="Product preview"
-                                        className="w-full h-full object-cover"
-                                    />
-                                ) : (
-                                    <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-gray-500">
-                                        <Package className="w-12 h-12" />
-                                        <p className="text-sm text-center">
-                                            Add photos to showcase your product
-                                        </p>
-                                    </div>
-                                )}
-
-                                {/* Image count badge */}
-                                {images.length > 1 && (
-                                    <div className="absolute bottom-2 right-2 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
-                                        +{images.length - 1} more
-                                    </div>
-                                )}
-                            </div>
-
-                            <div className="p-4 space-y-4">
-                                <div>
-                                    <h3 className="text-lg font-medium">
-                                        {data.name || "Product Name"}
-                                    </h3>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 mt-1">
-                                        {data.description ||
-                                            "Product description will appear here"}
-                                    </p>
-                                </div>
-
-                                <div className="flex items-center justify-between">
-                                    <div className="text-xl font-bold">
-                                        {currencySymbol}
-                                        {data.price || "0.00"}
-                                    </div>
-
-                                    <div className="text-sm text-gray-500 dark:text-gray-400">
-                                        {data.quantity === "limited"
-                                            ? `${data.quantity_items || 0} in stock`
-                                            : "Unlimited stock"}
-                                    </div>
-                                </div>
-
-                                <button
-                                    type="button"
-                                    className="w-full bg-primary-orange hover:bg-primary-orange/90 text-white font-medium py-2 px-4 rounded-lg transition-colors"
-                                    disabled
-                                >
-                                    Buy Now
-                                </button>
-                            </div>
-                        </div>
-
-                        <div className="bg-white dark:bg-[#2C2C2C] rounded-lg p-4 border border-gray-100 dark:border-[#2C2C2C]">
-                            <div className="text-sm text-gray-500 dark:text-gray-400">
-                                This is how your product will appear to
-                                customers on your store page. The preview
-                                updates in real-time as you make changes to your
-                                product details.
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <ProductPreview
+                    product={data}
+                    newImages={images}
+                    currentStore={currentStore}
+                />
             </div>
         </Layout>
     );
