@@ -383,7 +383,7 @@ const EditProduct = ({ currentStore, product }) => {
 
                                 <div className="space-y-3">
                                     <Label htmlFor="quantity">
-                                        Product categories
+                                        Product categories (optional)
                                     </Label>
                                     <Select
                                         isMulti
