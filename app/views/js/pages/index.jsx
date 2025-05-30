@@ -1,8 +1,7 @@
 import { Head, Link } from "@inertiajs/react";
 import Navbar from "@/components/layout/navbar";
 import Button from "@/components/form/button";
-import { CheckCircle } from "lucide-react";
-import WaitlistForm from "@/components/waitlist/form";
+import { CheckCircle, MailCheckIcon } from "lucide-react";
 
 const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
     return (
@@ -10,8 +9,6 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
             <Head title="Selll online for free" />
 
             <Navbar auth={auth} />
-
-            <WaitlistForm />
 
             <section className="relative pt-60 bg-[url(/assets/img/bg-vector.svg)] bg-cover bg-[20px_-1000px] bg-rota bg-no-repeat">
                 <div className="max-w-screen-xl mx-auto px-2 sm:px-4 text-center">
@@ -34,40 +31,30 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                             Back to Dashboard
                         </Button>
                     ) : (
-                        // <form
-                        //     className="my-16 rounded-full p-[6px] max-w-[508px] bg-background w-full border border-gray500 mx-auto flex items-center"
-                        //     method="get"
-                        //     action="/auth/register"
-                        // >
-                        //     <div className="flex items-center h-full flex-1 px-3 gap-3">
-                        //         <label
-                        //             htmlFor="email"
-                        //             className="size-4 grid place-content-center"
-                        //         >
-                        //             <MailCheckIcon className="text-gray-400 dark:text-gray-500 size-4" />
-                        //         </label>
-                        //         <input
-                        //             type="text"
-                        //             id="email"
-                        //             name="email"
-                        //             className="flex-1 placeholder:text-sm placeholder:text-gray-400 dark:placeholder:text-gray-500 text-black dark:text-gray-300 h-full border-none outline-none text-lg"
-                        //             placeholder="Enter email to claim your free store"
-                        //         />
-                        //     </div>
-                        //     <Button className="p-4 font-medium rounded-full active:scale-95 transition-all duration-150 ease-in-out border-none bg-primary-orange hover:bg-primary-red/80 text-white flex-shrink-0">
-                        //         Start Selling
-                        //     </Button>
-                        // </form>
-                        <Button
-                            className="my-10 bg-primary-red hover:bg-primary-red/80"
-                            onClick={() =>
-                                document
-                                    .getElementById("waitlist-email")
-                                    .focus()
-                            }
+                        <form
+                            className="my-16 rounded-full p-[6px] max-w-[508px] bg-background w-full border border-gray500 mx-auto flex items-center"
+                            method="get"
+                            action="/auth/register"
                         >
-                            Join waitlist
-                        </Button>
+                            <div className="flex items-center h-full flex-1 px-3 gap-3">
+                                <label
+                                    htmlFor="email"
+                                    className="size-4 grid place-content-center"
+                                >
+                                    <MailCheckIcon className="text-gray-400 dark:text-gray-500 size-4" />
+                                </label>
+                                <input
+                                    type="text"
+                                    id="email"
+                                    name="email"
+                                    className="flex-1 placeholder:text-sm placeholder:text-gray-400 dark:placeholder:text-gray-500 text-black dark:text-gray-300 h-full border-none outline-none text-lg"
+                                    placeholder="Enter email to claim your free store"
+                                />
+                            </div>
+                            <Button className="p-4 font-medium rounded-full active:scale-95 transition-all duration-150 ease-in-out border-none bg-primary-red hover:bg-primary-red/80 text-white flex-shrink-0">
+                                Start Selling
+                            </Button>
+                        </form>
                     )}
 
                     <ul className="hidden md:flex w-fit mx-auto gap-12 mb-[100px]">
@@ -253,10 +240,10 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                                 </div>
                                 <div>
                                     <p className="text-xs text-gray-400">
-                                        Global Payments
+                                        Unlimited selling
                                     </p>
                                     <p className="text-sm font-medium text-white">
-                                        5+ Currencies
+                                        Sell with no restrictions
                                     </p>
                                 </div>
                             </div>
@@ -277,7 +264,7 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                                         Lightning Fast
                                     </p>
                                     <p className="text-sm font-medium text-white">
-                                        Setup in 2 mins
+                                        Setup your store in 2 mins
                                     </p>
                                 </div>
                             </div>
@@ -350,26 +337,23 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                                     </svg>
                                 </div>
                                 <h3 className="text-xl font-medium text-white">
-                                    Get Paid, <br /> Anywhere
+                                    Manage Inventory <br /> right on your store
                                 </h3>
                                 <p className="text-gray-300">
-                                    Accept payments from customers worldwide
-                                    with ease. Selll supports multiple
-                                    currencies and payment methods.
+                                    You can easily add, edit, and manage your
+                                    products, track stock levels, and ensure
+                                    your store is always up-to-date.
                                 </p>
                             </div>
                         </div>
 
                         <div className="flex justify-center mb-8">
                             <Button
-                                onClick={() =>
-                                    document
-                                        .getElementById("waitlist-email")
-                                        .focus()
-                                }
-                                className="bg-primary-orange hover:bg-primary-orange/90 text-white px-8 py-3 rounded-md"
+                                as={Link}
+                                href="/auth/register"
+                                className="bg-primary-orange/90 hover:bg-primary-orange text-white p-6 rounded-md"
                             >
-                                Join Waitlist
+                                Create Your Store
                             </Button>
                         </div>
                     </div>
@@ -380,17 +364,14 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                 id="video-demo"
                 className="relative py-32 bg-gradient-to-b from-[#141414] to-primary-red/90"
             >
-                {/* Background pattern */}
                 <div className="absolute inset-0 bg-[url(/assets/img/bg-vector.svg)] bg-cover opacity-5"></div>
-
-                {/* Accent border */}
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary-orange to-transparent opacity-70"></div>
 
                 <div className="max-w-screen-xl mx-auto px-4 sm:px-6 relative z-10">
                     <div className="text-center mb-16">
                         <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-                            Sell to anyone, anywhere <br /> with multiple
-                            currencies supported
+                            From your first sale <br /> to the
+                            world — start local, grow global.
                         </h2>
                     </div>
 
@@ -423,7 +404,7 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                         <h3 className="text-2xl md:text-3xl font-bold mb-12 text-center text-white">
                             Let's get you started{" "}
                             <span className="text-primary-orange">
-                                in minutes
+                                in 2 minutes
                             </span>
                         </h3>
 
@@ -462,34 +443,23 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                                     Set up payouts
                                 </h4>
                                 <p className="text-gray-100">
-                                    Connect your bank account to receive
-                                    payments directly when customers buy.
+                                    Tell us where to send your earnings, and
+                                    you're ready to start selling.
                                 </p>
                             </div>
                         </div>
 
                         <div className="flex justify-center">
-                            {/* <Button
+                            <Button
                                 as={Link}
                                 href="/auth/register"
                                 className="mt-4 bg-white hover:bg-gray-100 text-primary-red font-medium px-8 py-3 rounded-md"
                             >
                                 Let's do it
-                            </Button> */}
-                            <Button
-                                onClick={() =>
-                                    document
-                                        .getElementById("waitlist-email")
-                                        .focus()
-                                }
-                                className="mt-4 bg-white hover:bg-gray-100 text-primary-red font-medium px-8 py-3 rounded-md"
-                            >
-                                Join Waitlist
                             </Button>
                         </div>
                     </div>
 
-                    {/* Stats section */}
                     <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-white/10 pt-12">
                         <div className="text-center">
                             <div className="text-3xl sm:text-4xl font-bold text-white mb-2">

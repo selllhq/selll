@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import leaf from "@leafphp/vite-plugin";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import eslintPlugin from "vite-plugin-eslint";
 
 export default defineConfig({
     plugins: [
@@ -11,11 +12,11 @@ export default defineConfig({
             refresh: true,
         }),
         react(),
-        eslintPlugin({
-            cache: false,
-            include: ["./app/views/js/**/*.js", "./app/views/js/**/*.jsx"],
-            exclude: [],
-        }),
+        // eslintPlugin({
+        //     cache: false,
+        //     include: ["./app/views/js/**/*.js", "./app/views/js/**/*.jsx"],
+        //     exclude: [],
+        // }),
     ],
     resolve: {
         alias: {
