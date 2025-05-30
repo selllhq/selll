@@ -24,7 +24,6 @@ export default function Login() {
         <div className="bg-[#141414] flex w-screen min-h-screen">
             <Head title="Log in" />
 
-            {/* Left column - Login form */}
             <div className="flex flex-col justify-center w-full lg:w-1/2 px-6 sm:px-10 py-8">
                 <div className="max-w-md mx-auto w-full mb-16">
                     <div className="mb-8">
@@ -122,11 +121,11 @@ export default function Login() {
                             Sign In
                         </Button>
 
-                        {/* <div className="text-center mt-4">
+                        <div className="text-center mt-4">
                             <p className="text-white/70 text-sm">
                                 Don't have an account? <Link href="/auth/register" className="text-primary-orange hover:text-primary-orange/80">Sign Up Now</Link>
                             </p>
-                        </div> */}
+                        </div>
                     </form>
 
                     {/* <div className="mt-8 relative space-y-3 w-full">
