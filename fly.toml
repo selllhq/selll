@@ -20,9 +20,8 @@ processes = ['app']
 APP_ENV = 'production'
 APP_URL = 'https://selll.online/'
 DB_CONNECTION = 'pgsql'
-DB_DATABASE = 'main'
+DB_DATABASE = 'selll'
 DB_PORT = '5432'
-DB_OPTIONS = '--endpoint=ep-dawn-mode-abzkqtho'
 REDIS_SESSION = 'true'
 REDIS_PORT = '6379'
 
