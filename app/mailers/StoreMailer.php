@@ -5,6 +5,23 @@ namespace App\Mailers;
 class StoreMailer
 {
     /**
+     * Create welcome mail for store when they sign up
+     */
+    public static function welcome($user, $store)
+    {
+        return mailer()->create([
+            'subject' => "Welcome to Selll, {$store->name}!",
+            'body' => view('mail.store.welcome', [
+                'name' => $user->name,
+                'storeName' => $store->name,
+            ]),
+            'recipientEmail' => $user->email,
+            'recipientName' => $store->name,
+            'senderName' => 'Ashley from Selll',
+        ]);
+    }
+
+    /**
      * Create mail for store when a new order is placed
      * @param mixed $email The email of the store owner
      * @param mixed $order The order details

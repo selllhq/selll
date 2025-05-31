@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Store;
 
+use App\Mailers\StoreMailer;
 use App\Models\Store;
 use App\Models\User;
 
@@ -58,7 +59,9 @@ class SetupController extends Controller
         }
 
         $user = User::find(auth()->id());
-        $user->switchStore($user->ownedStores()->create($data));
+        $user->switchStore($store = $user->ownedStores()->create($data));
+
+        StoreMailer::welcome($user, $store)->send();
 
         return response()->redirect('/payouts/setup', 303);
     }
