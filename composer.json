@@ -19,7 +19,7 @@
         "leafs/redis": "4.x-dev",
         "leafs/aloe": "v4.x-dev",
         "leafs/inertia": "^4.0",
-        "leafs/auth": "^4.0",
+        "leafs/auth": "v4.x-dev",
         "leafs/cors": "^1.2",
         "leafs/mvc-core": "v4.x-dev",
         "leafs/billing": "dev-main",
