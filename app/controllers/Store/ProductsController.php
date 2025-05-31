@@ -23,7 +23,7 @@ class ProductsController extends Controller
                 ->get(),
             'products' => $currentStore
                 ->products()
-                ->withCount('purchases')
+                ->with('purchases')
                 ->get(),
         ]);
     }
@@ -99,6 +99,11 @@ class ProductsController extends Controller
                 ->products()
                 ->with('categories')
                 ->find($id),
+            'purchases' => $currentStore
+                ->products()
+                ->find($id)
+                ->purchases()
+                ->get(),
             'orders' => $currentStore
                 ->carts()
                 ->where('items', 'LIKE', "%\"id\":$id,%")

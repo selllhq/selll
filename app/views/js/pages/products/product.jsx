@@ -43,14 +43,14 @@ import { useDialog } from "@/components/ui/dialog";
 import StockTopUpModal from "@/components/modals/stock-topup";
 import { toast } from "sonner";
 
-export default function Products({ product, currentStore, orders }) {
+export default function Products({ product, currentStore, orders, purchases }) {
     const stockTopUpDialog = useDialog("stockTopUp");
     const productImages = parseProductImages(product.images);
     const [activeImage, setActiveImage] = useState(
         productImages.length > 0 ? 0 : null,
     );
 
-    const isDeletable = product.purchases_count === 0;
+    const isDeletable = product.purchases?.length === 0;
     const isLowStock =
         product.quantity !== "unlimited" &&
         parseInt(product.quantity_items) < 3;
@@ -294,11 +294,12 @@ export default function Products({ product, currentStore, orders }) {
                                     </div>
                                     <div className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-2">
                                         <span className="inline-flex items-center justify-center bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full text-xs">
+                                            Included in{" "}
                                             {orders.filter(
                                                 (order) =>
                                                     order.status === "paid",
                                             ).length || 0}{" "}
-                                            sales
+                                            orders
                                         </span>
                                     </div>
                                 </div>
@@ -428,17 +429,29 @@ export default function Products({ product, currentStore, orders }) {
                         <CardContent>
                             <div>
                                 <div className="text-4xl font-bold mb-2">
-                                    {orders.filter(
-                                        (order) => order.status === "paid",
-                                    ).length || 0}{" "}
+                                    {purchases?.reduce(
+                                        (acc, purchase) =>
+                                            acc + purchase.quantity,
+                                        0,
+                                    )}{" "}
                                     sold
                                 </div>
                                 <div className="flex items-center gap-1 text-emerald-500">
                                     <span className="text-sm">
                                         ↑{" "}
-                                        {orders.filter(
-                                            (order) => order.status === "paid",
-                                        ).length || 0}
+                                        {purchases?.reduce((acc, purchase) => {
+                                            const lastMonth = dayjs()
+                                                .subtract(1, "month")
+                                                .startOf("month");
+                                            return (
+                                                acc +
+                                                (dayjs(
+                                                    purchase.created_at,
+                                                ).isAfter(lastMonth)
+                                                    ? purchase.quantity
+                                                    : 0)
+                                            );
+                                        }, 0) || 0}{" "}
                                     </span>
                                     <span className="text-sm text-gray-500">
                                         from last month
