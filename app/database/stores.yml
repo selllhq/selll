@@ -30,6 +30,7 @@ columns:
   estimated_sales_volume: string
   selling_journey_status: string
   product_types: string
+  customer_source: string
   payout_account_id:
     type: foreignId
     nullable: true

@@ -1,4 +1,3 @@
-import React from "react";
 import { Head, router, useForm } from "@inertiajs/react";
 import Layout from "@/layouts/app-layout";
 import Button from "@/components/form/button";
@@ -20,12 +19,7 @@ import {
 } from "@/components/shared/card";
 import { toast } from "sonner";
 
-export default function PayoutSetupPage({
-    auth,
-    currentStore,
-    banks,
-    mobileMoney,
-}) {
+export default function PayoutSetupPage({ banks, mobileMoney }) {
     const { data, setData, post, errors, processing } = useForm({
         type: "momo",
         provider: null,
@@ -47,8 +41,8 @@ export default function PayoutSetupPage({
                     account_number: "",
                 });
                 toast.success("Payout account details saved successfully!");
-                router.visit("/payouts");
-            }
+                router.visit("/dashboard");
+            },
         });
     };
 
@@ -75,14 +69,14 @@ export default function PayoutSetupPage({
         >
             <Head title="Setup Payouts" />
 
-            <div className="space-y-6 py-0 md:py-6 px-0">
+            <div className="space-y-6 py-0 md:py-6 md:mt-8 px-0">
                 <div className="mb-10">
                     <h2 className="text-2xl md:text-3xl font-bold mb-1">
-                        Add a payout account
+                        Set up how you get paid
                     </h2>
                     <p className="text-muted-foreground text-sm">
-                        Set up how you want to receive payments from your store
-                        sales
+                        Tell us where to send your money when orders start
+                        rolling in.
                     </p>
                 </div>
 
