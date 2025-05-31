@@ -121,7 +121,7 @@ class ProductsController extends Controller
 
     public function update($id)
     {
-        $data = request()->get([
+        $data = request()->try([
             'name',
             'description',
             'price',
@@ -174,7 +174,7 @@ class ProductsController extends Controller
 
         $uploadedImages = [];
 
-        if ($data['images']) {
+        if (isset($data['images'])) {
             $uploads = request()->upload(
                 'images',
                 withBucket('products/' . auth()->user()->current_store_id),

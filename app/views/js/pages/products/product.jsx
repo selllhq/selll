@@ -8,7 +8,17 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/shared/card";
-import { Package, User, Store, TrendingUp, ShoppingCart } from "lucide-react";
+import {
+    Package,
+    User,
+    Store,
+    TrendingUp,
+    ShoppingCart,
+    Edit,
+    Share,
+    Trash2,
+    MoreHorizontal,
+} from "lucide-react";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { parseProductImages } from "@/utils/store";
@@ -22,13 +32,48 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/shared/table";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/shared/dropdown-menu";
 import { cn } from "@/utils";
+import { useDialog } from "@/components/ui/dialog";
+import StockTopUpModal from "@/components/modals/stock-topup";
+import { toast } from "sonner";
 
 export default function Products({ product, currentStore, orders }) {
+    const stockTopUpDialog = useDialog("stockTopUp");
     const productImages = parseProductImages(product.images);
     const [activeImage, setActiveImage] = useState(
         productImages.length > 0 ? 0 : null,
     );
+
+    const isDeletable = product.purchases_count === 0;
+    const isLowStock =
+        product.quantity !== "unlimited" &&
+        parseInt(product.quantity_items) < 3;
+
+    const handleTopUpClick = () => {
+        stockTopUpDialog.openDialog({
+            currentStock: parseInt(product.quantity_items),
+            onSave: (newStock) => {
+                router.post(
+                    `/products/${product.id}/edit`,
+                    {
+                        quantity_items: newStock,
+                    },
+                    {
+                        onSuccess: () => {
+                            toast.success("Stock updated successfully!");
+                            stockTopUpDialog.closeDialog();
+                        },
+                    },
+                );
+            },
+        });
+    };
 
     return (
         <Layout
@@ -47,7 +92,26 @@ export default function Products({ product, currentStore, orders }) {
         >
             <Head title={`${product?.name} from ${currentStore?.name}`} />
 
+            <StockTopUpModal />
+
             <div className="py-6 px-4 mt-28 space-y-10 w-full">
+                {isLowStock && (
+                    <div className="mb-6 bg-yellow-50 border border-yellow-200 text-yellow-900 dark:bg-yellow-900/10 dark:border-yellow-700 dark:text-yellow-200 px-6 py-4 rounded-lg flex items-center justify-between gap-4">
+                        <div>
+                            <strong>Low Stock:</strong> You have less than 3
+                            items left in stock for this product. Top up soon to
+                            avoid missing sales!
+                        </div>
+                        <Button
+                            variant="outline"
+                            className="bg-yellow-100 dark:bg-yellow-800 text-yellow-900 dark:text-yellow-100 border-yellow-200 dark:border-yellow-700 hover:bg-yellow-200 dark:hover:bg-yellow-700"
+                            onClick={handleTopUpClick}
+                        >
+                            Top Up
+                        </Button>
+                    </div>
+                )}
+
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 w-full">
                     <div>
                         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
@@ -86,6 +150,87 @@ export default function Products({ product, currentStore, orders }) {
                             <Package className="h-4 w-4" />
                             Edit Product
                         </Button>
+
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button
+                                    variant="ghost"
+                                    className="hover:bg-muted-foreground/10"
+                                >
+                                    <MoreHorizontal className="h-4 w-4" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-56" align="end">
+                                <DropdownMenuItem asChild>
+                                    <Button
+                                        variant="ghost"
+                                        className="w-full justify-start focus-visible:ring-0"
+                                        onClick={handleTopUpClick}
+                                    >
+                                        <Edit className="h-4 w-4 mr-2" />
+                                        Add/Remove Stock
+                                    </Button>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Button
+                                        variant="ghost"
+                                        className="w-full justify-start focus-visible:ring-0"
+                                        onClick={() => {
+                                            navigator.clipboard.writeText(
+                                                `https://${currentStore?.slug}.selll.store/products/${product.id}`,
+                                            );
+                                            toast(
+                                                "Product link copied to clipboard.",
+                                            );
+                                        }}
+                                    >
+                                        <Share className="h-4 w-4 mr-2" />
+                                        Copy Product Link
+                                    </Button>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Button
+                                        variant="ghost"
+                                        className="w-full justify-start focus-visible:ring-0"
+                                        onClick={() => {
+                                            confirmModal.openDialog({
+                                                title: isDeletable
+                                                    ? "Delete Product"
+                                                    : `Archive "${product.name}"?`,
+                                                description: isDeletable
+                                                    ? `Are you sure you want to delete the product "${product.name}"? This action cannot be undone.`
+                                                    : `Archiving will hide this product from your storefront, so customers won’t see it — but don’t worry, it will stay in your inventory and you can bring it back anytime.`,
+                                                cancelText: "Cancel",
+                                                confirmText: isDeletable
+                                                    ? "Delete"
+                                                    : "Archive",
+                                                onConfirm: () => {
+                                                    router.delete(
+                                                        `/products/${product.id}`,
+                                                        {
+                                                            preserveScroll: true,
+                                                            preserveState: true,
+                                                            onFinish: () => {
+                                                                toast(
+                                                                    "Product deleted successfully.",
+                                                                );
+                                                                confirmModal.closeDialog();
+                                                            },
+                                                        },
+                                                    );
+                                                },
+                                            });
+                                        }}
+                                    >
+                                        <Trash2 className="h-4 w-4 mr-2" />
+                                        {!isDeletable
+                                            ? "Archive"
+                                            : "Delete"}{" "}
+                                        Product
+                                    </Button>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
                 </div>
 

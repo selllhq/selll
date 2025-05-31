@@ -12,8 +12,6 @@ import {
 const ConfirmActionModal = () => {
     const dialog = useDialog("confirmAction");
 
-    console.log("ConfirmActionModal", dialog.open, dialog.data);
-
     if (!dialog.open) {
         return null;
     }
