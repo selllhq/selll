@@ -18,13 +18,15 @@ app()->group('/auth', [
     },
 ]);
 
+app()->get('/auth/verify', 'Auth\VerificationController@show');
+
 app()->post('/auth/logout', [
     'middleware' => 'auth.required',
     'Auth\LoginController@logout'
 ]);
 
 app()->group('/dashboard', [
-    'middleware' => 'auth.required',
+    'middleware' => ['auth.required', 'auth.verified'],
     function () {
         app()->get('/', 'Auth\DashboardController@index');
     },

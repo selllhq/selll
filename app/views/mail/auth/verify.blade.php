@@ -123,7 +123,7 @@ idth: 1px; margin: 0 auto; padding: 0; width: 456px;">
                                                                             style="box-sizing: border-box; position:
                                                                             relative; font-family: 'Bricolage Grotesque', sans-serif;
                                                                             font-size: 16px; line-height: 2;">
-                                                                            <a href="https://selll.online/auth/verify?token=123"
+                                                                            <a href="https://selll.online/auth/verify?token={{ $token }}"
                                                                                 class="button button-primary"
                                                                                 target="_blank" rel="noopener"
                                                                                 style="box-sizing: border-box;
@@ -178,14 +178,14 @@ idth: 1px; margin: 0 auto; padding: 0; width: 456px;">
                                                         link
                                                         below
                                                         into your browser:
-                                                        <a href="https://selll.online/auth/verify?token=123"
+                                                        <a href="https://selll.online/auth/verify?token={{ $token }}"
                                                             style="box-sizing: border-box; position: relative;
                                                             font-family: 'Bricolage Grotesque', sans-serif;
                                                             font-size: 16px; line-height: 2; color: #ec504b;
                                                             text-decoration: none; word-break: break-word;
                                                             border-bottom: 1px solid
                                                             #ec504b;">
-                                                            https://selll.online/auth/verify?token=123
+                                                            https://selll.online/auth/verify?token={{ $token }}
                                                         </a>
                                                     </p>
                                                 </td>
