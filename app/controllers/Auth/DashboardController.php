@@ -27,6 +27,7 @@ class DashboardController extends Controller
             'stores' => $stores,
             'currentStore' => $currentStore,
             'products' => $products,
+            'productsSold' => $currentStore->productPurchases()->sum('quantity'),
             'orders' => $orders,
             'customers' => $customers,
             'revenueGraph' => AnalyticsHelper::getRevenue6Months($currentStoreId),

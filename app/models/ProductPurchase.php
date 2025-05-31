@@ -11,6 +11,7 @@ class ProductPurchase extends Model
         'amount',
         'currency',
         'cart_id',
+        'store_id',
     ];
 
     public function product()
@@ -26,5 +27,10 @@ class ProductPurchase extends Model
     public function cart()
     {
         return $this->belongsTo(Cart::class);
+    }
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
     }
 }

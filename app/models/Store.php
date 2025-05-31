@@ -92,6 +92,14 @@ class Store extends Model
     }
 
     /**
+     * Get all product purchases of a store.
+     */
+    public function productPurchases()
+    {
+        return $this->hasMany(ProductPurchase::class);
+    }
+
+    /**
      * Get all carts of a store.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

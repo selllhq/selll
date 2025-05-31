@@ -33,6 +33,7 @@ class BillingCallbacksController extends Controller
 
             foreach ($itemsInCart as $item) {
                 $userCart->items()->create([
+                    'store_id' => $userCart->store_id,
                     'product_id' => $item['id'],
                     'customer_id' => $userCart->customer_id,
                     'quantity' => $item['quantity'],

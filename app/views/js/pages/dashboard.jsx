@@ -21,10 +21,10 @@ import { BarChart, LineChart } from "@/components/shared/charts";
 export default function Dashboard({
     auth,
     products = [],
+    productsSold = 0,
     stores = [],
     currentStore,
     orders = [],
-    revenue = 0,
     customers = [],
     revenueGraph = [],
 }) {
@@ -189,7 +189,7 @@ export default function Dashboard({
                             </Card>
                             <Card>
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
-                                    <CardTitle>Products Sold</CardTitle>
+                                    <CardTitle>Total No. Products Sold</CardTitle>
                                     <div className="bg-[#2C2C2C] p-2 rounded-lg">
                                         <ShoppingCart className="h-5 w-5 text-primary-orange" />
                                     </div>
@@ -197,16 +197,7 @@ export default function Dashboard({
                                 <CardContent>
                                     <div>
                                         <div className="text-4xl font-bold mb-2">
-                                            {orders
-                                                .reduce(
-                                                    (acc, order) =>
-                                                        acc +
-                                                        (order.status === "paid"
-                                                            ? 1
-                                                            : 0),
-                                                    0,
-                                                )
-                                                .toLocaleString()}
+                                            {productsSold.toLocaleString()}
                                         </div>
                                         <div className="flex items-center gap-1 text-emerald-500">
                                             <span className="text-sm">
