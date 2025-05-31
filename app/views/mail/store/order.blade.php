@@ -74,10 +74,7 @@
                             <table class="inner-body" align="center" width="456" cellpadding="0" cellspacing="0"
                                 role="presentation"
                                 style=
-"box-sizing: border-box; position: relative; font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; line-height: 2; -premai
-ler-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 456px; bac
-kground-color: #F7F7F8; border-color: #e8e5ef; border-radius: 2px; border-w
-idth: 1px; margin: 0 auto; padding: 0; width: 456px;">
+"box-sizing: border-box; position: relative; font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; line-height: 2; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 456px; background-color: #F7F7F8; border-color: #e8e5ef; border-radius: 2px; border-width: 1px; margin: 0 auto; padding: 0; width: 456px;">
                                 <tr>
                                     <td class="content-cell"
                                         style="box-sizing: border-box; position: relative;
@@ -89,30 +86,30 @@ idth: 1px; margin: 0 auto; padding: 0; width: 456px;">
                                             text-align: left;">
                                             {{ $order->customer->name }} just paid you &#128640;
                                         </h1>
+
                                         @if ($isFirstOrder)
                                             <p
                                                 style="box-sizing: border-box; position: relative; font-family:
                                             'Bricolage Grotesque', sans-serif; font-size: 16px;
                                             line-height:28px; margin-bottom: 24px; margin-top: 0; text-align: left;">
-                                                🎉 Congratulations on your first order — here’s to many more!
+                                                &#x1F389; Congratulations on your first order - here's to many more!
                                             </p>
                                         @endif
 
                                         <p
-                                            style="box-sizing: border-box; position: relative; font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; color: #121217 !important; line-height: 28px; margin-bottom: 24px; margin-top: 0; text-
-                                            align: left;">
+                                            style="box-sizing: border-box; position: relative; font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; color: #121217 !important; line-height: 28px; margin-bottom: 24px; margin-top: 0; text-align: left;">
                                             <strong
                                                 style="box-sizing: border-box; position: relative;
                                                 font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; line-height: 2; font-weight: 600;">Order
-                                                #:</strong> 297423141<br>
+                                                #:</strong> {{ $order->id }}<br>
                                             <strong
                                                 style="box-sizing: border-box; position: relative; font-family: 'Bricolage Grotesque', sans-serif; font-size:
                                                 16px; line-height: 2; font-weight: 600;">Date:</strong>
-                                            22 Dec 2024,
-                                            19:22<br>
+                                            {{ $order->created_at->format('d M Y, H:i') }}<br>
                                             <strong
                                                 style="box-sizing: border-box; position: relative; font-family: 'Bricolage Grotesque', sans-serif; font-size:
-                                                16px; line-height: 2; font-weight: 600;">Order Items:</strong>
+                                                16px; line-height: 2; font-weight: 600;">Order
+                                                Items:</strong>
                                         </p>
 
                                         <div class="table order-items-table"
@@ -121,83 +118,48 @@ idth: 1px; margin: 0 auto; padding: 0; width: 456px;">
                                                 style="box-sizing: border-box; position: relative; font-family :
                                                 'Bricolage Grotesque', sans-serif;
                                                 font-size: 16px; line -height: 2; -premailer-cellpadding: 0;
-                                                -premailer-cellspacing: 0; -premaile r-width: 100%; width: 100%; margin:
+                                                -premailer-cellspacing: 0; -premailer-width: 100%; width: 100%; margin:
                                                 20px 0;">
                                                 <tbody
-                                                    style="box-sizing: border-box; position: relative; font-fa
-                                                    mily: 'Bricolage Grotesque', sans-serif; font-size: 16px; line-height: 2;">
-                                                    <tr>
-                                                        <td align="left" width="96"
-                                                            style="box-sizing:
-                                                            border-box; position: relative; font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px;
-                                                            line-height: 2; margin: 0; vertical-align: top;">
-                                                            <div class="product-thumb"
-                                                                style="box-sizing: border-box; position: relative; font-family: 'Bricolage Grotesque', sans-serif; font-size:
-                                                                16px; line-height: 2; width: 80px; height: 60px ;
-                                                                border-radius: 8px; overflow: hidden; background-color:
-                                                                #F7F7F8; margin-r ight: 16px;">
-                                                                <img src="https://selll.online/assets/img/screenshots/dash-dark.jpg"
-                                                                    alt=""
-                                                                    style="bo x-sizing: border-box; position:
-                                                                    relative; font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px;
-                                                                    line-height: 2; max-width: 100%; width: 80px;
-                                                                    height: 60px; object-fit: cover;">
-                                                            </div>
-                                                        </td>
-                                                        <td align="left"
-                                                            style="box-sizing: border-box; position:
-                                                            relative; font-family: 'Bricolage Grotesque', sans-serif;
-                                                            font-size: 16px; line-height: 1; margin: 0; vertical-align:
-                                                            top;">
-                                                            <strong
-                                                                style="box-sizing: border-box; position: relative; font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; line-height: 2; font-weight: 600;">Brand
-                                                                assets</strong><br>
-                                                            <span>GHS 20.00</span>
-                                                        </td>
-                                                        <td align="right"
-                                                            style="box-sizing: border-box; position:
-                                                            relative; font-family: 'Bricolage Grotesque', sans-serif;
-                                                            font-size: 16px; line-height: 2; margin: 0; vertical-align:
-                                                            top;">
-                                                            x2
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td align="left" width="96"
-                                                            style="box-sizing:
-                                                            border-box; position: relative; font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px;
-                                                            line-height: 2; margin: 0; vertical-align: top;">
-                                                            <div class="product-thumb"
-                                                                style="box-sizing: border-box; position: relative; font-family: 'Bricolage Grotesque', sans-serif; font-size:
-                                                                16px; line-height: 2; width: 80px; height: 60px ;
-                                                                border-radius: 8px; overflow: hidden; background-color:
-                                                                #F7F7F8; margin-r ight: 16px;">
-                                                                <img src="https://selll.online/assets/img/screenshots/dash-dark.jpg"
-                                                                    alt=""
-                                                                    style="bo x-sizing: border-box; position:
-                                                                    relative; font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px;
-                                                                    line-height: 2; max-width: 100%; width: 80px;
-                                                                    height: 60px; object-fit: cover;">
-                                                            </div>
-                                                        </td>
-                                                        <td align="left"
-                                                            style="box-sizing: border-box; position:
-                                                            relative; font-family: 'Bricolage Grotesque', sans-serif;
-                                                            font-size: 16px; line-height: 1; margin: 0; vertical-align:
-                                                            top;">
-                                                            <strong
-                                                                style="box-sizing: border-box; position: relative; font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; line-height: 2; font-weight: 600;">Brand
-                                                                assets</strong><br>
-                                                            <span>GHS 20.00</span>
-                                                        </td>
-                                                        <td align="right"
-                                                            style="box-sizing: border-box; position:
-                                                            relative; font-family: 'Bricolage Grotesque', sans-serif;
-                                                            font-size: 16px; line-height: 2; margin: 0; vertical-align:
-                                                            top;">
-                                                            x2
-                                                        </td>
-                                                    </tr>
+                                                    style="box-sizing: border-box; position: relative; font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; line-height: 2;">
+                                                    @foreach ($order->items()->with('product')->get() as $orderItem)
+                                                        <tr>
+                                                            <td align="left" width="96"
+                                                                style="box-sizing:
+                                                                border-box; position: relative; font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px;
+                                                                line-height: 2; margin: 0; vertical-align: top;">
+                                                                <div class="product-thumb"
+                                                                    style="box-sizing: border-box; position: relative; font-family: 'Bricolage Grotesque', sans-serif; font-size:
+                                                                    16px; line-height: 2; width: 80px; height: 60px ;
+                                                                    border-radius: 8px; overflow: hidden; background-color:
+                                                                    #F7F7F8; margin-right: 16px;">
+                                                                    <img src="{{ $orderItem->product->images ? json_decode($orderItem->product->images)[0] : 'https://selll.online/assets/img/placeholders/product.png' }}"
+                                                                        alt=""
+                                                                        style="bo x-sizing: border-box; position:
+                                                                        relative; font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px;
+                                                                        line-height: 2; max-width: 100%; width: 80px;
+                                                                        height: 60px; object-fit: cover;">
+                                                                </div>
+                                                            </td>
+                                                            <td align="left"
+                                                                style="box-sizing: border-box; position:
+                                                                relative; font-family: 'Bricolage Grotesque', sans-serif;
+                                                                font-size: 16px; line-height: 1; margin: 0; vertical-align:
+                                                                top;">
+                                                                <strong
+                                                                    style="box-sizing: border-box; position: relative; font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; line-height: 2; font-weight: 600;">{{ $orderItem->product->name }}</strong><br>
+                                                                <span>{{ $orderItem->currency }}
+                                                                    {{ $orderItem->amount ? number_format($orderItem->amount, 2) : '0.00' }}</span>
+                                                            </td>
+                                                            <td align="right"
+                                                                style="box-sizing: border-box; position:
+                                                                relative; font-family: 'Bricolage Grotesque', sans-serif;
+                                                                font-size: 16px; line-height: 2; margin: 0; vertical-align:
+                                                                top;">
+                                                                {{ $orderItem->quantity > 1 ? "x{$orderItem->quantity}" : '' }}
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
@@ -207,8 +169,10 @@ idth: 1px; margin: 0 auto; padding: 0; width: 456px;">
                                             align: left;">
                                             <strong
                                                 style="box-sizing: border-box; position: relative;
-                                                font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; line-height: 2; font-weight: 600;">Total Order
-                                                Amount:</strong> GHS 200.00<br>
+                                                font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; line-height: 2; font-weight: 600;">Total
+                                                Order
+                                                Amount:</strong> {{ $order->currency }}
+                                            {{ $order->total ? number_format($order->total, 2) : '0.00' }}<br>
                                         </p>
 
                                         <table class="action" align="center" width="100%" cellpadding="0"
@@ -240,7 +204,7 @@ idth: 1px; margin: 0 auto; padding: 0; width: 456px;">
                                                                             style="box-sizing: border-box; position:
                                                                             relative; font-family: 'Bricolage Grotesque', sans-serif;
                                                                             font-size: 16px; line-height: 2;">
-                                                                            <a href="https://selll.online/orders/297423141"
+                                                                            <a href="https://selll.online/orders/{{ $order->id }}"
                                                                                 class="button button-primary"
                                                                                 target="_blank" rel="noopener"
                                                                                 style="box-sizing: border-box;
@@ -252,7 +216,8 @@ idth: 1px; margin: 0 auto; padding: 0; width: 456px;">
                                                                                 pointer; -webkit-text-size-adjust: none;
                                                                                 display: block; overflow: hidden;
                                                                                 text-decoration: none; background-color:
-                                                                                #ec504b;">View on dashboard</a>
+                                                                                #ec504b;">View
+                                                                                on dashboard</a>
                                                                         </td>
                                                                     </tr>
                                                                 </table>

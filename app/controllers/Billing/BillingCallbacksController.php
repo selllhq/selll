@@ -51,8 +51,6 @@ class BillingCallbacksController extends Controller
             $userCart->status = 'paid';
             $ownerEmail = $userCart->store->owner->email;
 
-            StoreMailer::newOrder($ownerEmail, $userCart);
-
             $selllFee = 0.02;
             $selllCommission = $userCart->total * $selllFee;
 
@@ -72,6 +70,8 @@ class BillingCallbacksController extends Controller
                 'store_id' => $userCart->store_id,
                 'wallet_id' => $userCart->store->payout_account_id,
             ]);
+
+            StoreMailer::newOrder($ownerEmail, $userCart)->send();
         } else {
             $userCart->status = 'cancelled';
         }

@@ -13,12 +13,14 @@ class StoreMailer
     public static function newOrder($email, $order)
     {
         return mailer()->create([
-            'subject' => 'Welcome to Selll',
-            'body' => view('mail.store.new-order', [
+            'subject' => "Selll - New Order from {$order->customer->name}",
+            'body' => view('mail.store.order', [
                 'order' => $order,
+                'isFirstOrder' => $order->store->carts()->count() === 1,
             ]),
             'recipientEmail' => $email,
             'recipientName' => $email,
+            'senderName' => 'Selll Receipts',
         ]);
     }
 }
