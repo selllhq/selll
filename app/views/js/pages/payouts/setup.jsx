@@ -72,7 +72,7 @@ export default function PayoutSetupPage({ banks, mobileMoney }) {
             <div className="space-y-6 py-0 md:py-6 md:mt-8 px-0">
                 <div className="mb-10">
                     <h2 className="text-2xl md:text-3xl font-bold mb-1">
-                        Set up how you get paid
+                        Set up we pay you
                     </h2>
                     <p className="text-muted-foreground text-sm">
                         Tell us where to send your money when orders start

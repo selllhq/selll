@@ -24,7 +24,7 @@ const Setup = ({ auth }) => {
         estimated_sales_volume: "Less than GHS 1,000",
         selling_journey_status: "Just getting started",
         product_types: "Fashion & Apparel",
-        customer_source: "",
+        customer_source: "Instagram",
     });
 
     const handleImageChange = (e) => {
@@ -530,9 +530,6 @@ const Setup = ({ auth }) => {
                                                 )
                                             }
                                         >
-                                            <option value="" disabled>
-                                                Select an option
-                                            </option>
                                             <option value="Instagram">
                                                 Instagram
                                             </option>
