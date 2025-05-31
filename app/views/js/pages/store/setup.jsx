@@ -24,6 +24,7 @@ const Setup = ({ auth }) => {
         estimated_sales_volume: "Less than GHS 1,000",
         selling_journey_status: "Just getting started",
         product_types: "Fashion & Apparel",
+        customer_source: "",
     });
 
     const handleImageChange = (e) => {
@@ -334,7 +335,6 @@ const Setup = ({ auth }) => {
 
                             {currentStep === 3 && (
                                 <>
-                                    {/* Store Currency */}
                                     <div className="mb-6">
                                         <Label
                                             htmlFor="currency"
@@ -472,8 +472,10 @@ const Setup = ({ auth }) => {
                                             htmlFor="estimated_sales_volume"
                                             className="text-sm font-medium block mb-3"
                                         >
-                                            Estimated monthly sales? (Just a
-                                            rough idea — no pressure!)
+                                            Estimated monthly sales?{" "}
+                                            {data.selling_journey_status ===
+                                                "Just getting started" &&
+                                                "(Just a rough idea — no pressure!)"}
                                         </Label>
                                         <Input
                                             id="estimated_sales_volume"
@@ -500,6 +502,62 @@ const Setup = ({ auth }) => {
                                             className="mt-2"
                                         />
                                     </div>
+
+                                    <div className="mt-6">
+                                        <Label
+                                            htmlFor="customer_source"
+                                            className="text-sm font-medium block mb-3"
+                                        >
+                                            Where do you most of your customers
+                                            come from?
+                                            <span className="text-xs text-gray-500 block mt-1">
+                                                {data.selling_journey_status ===
+                                                "Just getting started"
+                                                    ? "(No pressure, just a guess!)"
+                                                    : "(e.g., Instagram, WhatsApp, referrals, offline sales, etc.)"}
+                                            </span>
+                                        </Label>
+                                        <Input
+                                            id="customer_source"
+                                            as="select"
+                                            name="customer_source"
+                                            className="block w-full dark:bg-[#2C2C2C] dark:border-0 focus:ring-primary-orange/20"
+                                            value={data.customer_source || ""}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "customer_source",
+                                                    e.target.value,
+                                                )
+                                            }
+                                        >
+                                            <option value="" disabled>
+                                                Select an option
+                                            </option>
+                                            <option value="Instagram">
+                                                Instagram
+                                            </option>
+                                            <option value="WhatsApp">
+                                                WhatsApp
+                                            </option>
+                                            <option value="TikTok">
+                                                TikTok
+                                            </option>
+                                            <option value="Website">
+                                                Website
+                                            </option>
+                                            <option value="Referrals / Word of mouth">
+                                                Referrals / Word of mouth
+                                            </option>
+                                            <option value="Offline / In-person">
+                                                Offline / In-person
+                                            </option>
+                                            <option value="Other">Other</option>
+                                        </Input>
+                                        <InputError
+                                            message={errors.customer_source}
+                                            className="mt-2"
+                                        />
+                                    </div>
                                 </>
                             )}
 
@@ -521,7 +579,9 @@ const Setup = ({ auth }) => {
                                         onClick={nextStep}
                                         className="h-12 px-8 bg-primary-orange hover:bg-primary-orange/90 text-white flex items-center justify-center gap-2 rounded-md"
                                     >
-                                        Continue
+                                        {currentStep === 1
+                                            ? "Next, store URL"
+                                            : "Continue"}
                                     </Button>
                                 ) : (
                                     <Button
@@ -580,7 +640,7 @@ const Setup = ({ auth }) => {
                                 </h2>
                                 <p className="text-xs md:text-sm text-white/90 mb-3 px-4">
                                     {data.description ||
-                                        "This is where your catchy store description will appear."}
+                                        "This is some text you can change if you customize your store."}
                                 </p>
                                 <button className="bg-primary-orange text-white text-xs font-semibold py-2 px-4 rounded hover:opacity-90 transition-opacity">
                                     Shop now →

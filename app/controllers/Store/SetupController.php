@@ -25,9 +25,10 @@ class SetupController extends Controller
             'email' => 'email',
             'phone' => 'optional|string',
             'address' => 'optional|string',
-            'estimated_sales_volume' => 'optional|string',
-            'selling_journey_status' => 'optional|string',
-            'product_types' => 'optional|string',
+            'estimated_sales_volume' => 'string',
+            'selling_journey_status' => 'string',
+            'product_types' => 'string',
+            'customer_source' => 'string',
         ]);
 
         if (!$data) {
@@ -59,7 +60,7 @@ class SetupController extends Controller
         $user = User::find(auth()->id());
         $user->switchStore($user->ownedStores()->create($data));
 
-        return response()->redirect('/dashboard');
+        return response()->redirect('/payouts/setup', 303);
     }
 
     public function showCustomize()

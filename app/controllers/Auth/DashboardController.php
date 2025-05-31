@@ -12,6 +12,10 @@ class DashboardController extends Controller
     {
         $currentStoreId = auth()->user()->current_store_id;
 
+        if (!$currentStoreId) {
+            return response()->redirect('/store/new', 303);
+        }
+
         $stores = User::find(auth()->id())->ownedStores()->get();
         $currentStore = $currentStoreId ? Store::find($currentStoreId) : [];
 

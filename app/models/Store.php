@@ -20,6 +20,7 @@ class Store extends Model
         'product_types',
         'compliance',
         'payout_account_id',
+        'customer_source',
     ];
 
     protected $hidden = [
@@ -27,6 +28,7 @@ class Store extends Model
         'selling_journey_status',
         'compliance',
         'payout_account_id',
+        'customer_source',
     ];
 
     /**
