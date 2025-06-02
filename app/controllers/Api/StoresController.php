@@ -33,52 +33,38 @@ class StoresController extends Controller
         $sort = request()->query('sortBy', 'created_at-desc');
         $search = request()->query('search');
 
-        if ($search) {
-            $products = Store::find($storeId)->products()
+        $products = $category
+            ? Store::find($storeId)->categories()
+                ->find($category)
+                ->products()
                 ->where('status', 'active')
+            : Store::find($storeId)
+                ->products()
+                ->where('status', 'active');
+
+        if ($search) {
+            $products = $products
                 ->where(function ($query) use ($search) {
                     $query->where('name', 'like', "%$search%")
                         ->orWhere('description', 'like', "%$search%");
-                })
-                ->orderBy(
-                    explode('-', $sort)[0],
-                    explode('-', $sort)[1] ?? 'desc'
-                )
-                ->get() ?? [];
-
-            return response()->json($products);
+                });
         }
 
         if ($sort === 'popular') {
             return response()->json(
-                Store::find($storeId)->products()
-                    ->where('status', 'active')
+                $products
                     ->withCount('purchases')
                     ->orderByDesc('purchases_count')
                     ->get() ?? []
             );
         }
 
-        $products = $category
-            ? Store::find($storeId)->categories()
-                ->find($category)
-                ->products()
-                ->where('status', 'active')
-                ->orderBy(
-                    explode('-', $sort)[0],
-                    explode('-', $sort)[1] ?? 'desc'
-                )
-                ->get() ?? []
-            : Store::find($storeId)
-                ->products()
-                ->where('status', 'active')
-                ->orderBy(
-                    explode('-', $sort)[0],
-                    explode('-', $sort)[1] ?? 'desc'
-                )
-                ->get() ?? [];
-
-        return response()->json($products);
+        return response()->json($products
+            ->orderBy(
+                explode('-', $sort)[0],
+                explode('-', $sort)[1] ?? 'desc'
+            )
+            ->get() ?? []);
     }
 
     public function showProduct($storeId, $id)
