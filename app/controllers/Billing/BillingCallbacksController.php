@@ -22,7 +22,7 @@ class BillingCallbacksController extends Controller
 
         if ($userCart->status !== 'pending') {
             return response()->redirect(
-                "{$userCart->store_url}/order?order_id={$userCart->id}&status=past"
+                "{$userCart->store_url}/order/{$userCart->id}?status=past"
             );
         }
 
@@ -80,7 +80,7 @@ class BillingCallbacksController extends Controller
         $userCart->save();
 
         return response()->redirect(
-            "{$userCart->store_url}/order?order_id=" . ($userCart->id ?? '')
+            "{$userCart->store_url}/order/" . ($userCart->id ?? '')
         );
     }
 }
