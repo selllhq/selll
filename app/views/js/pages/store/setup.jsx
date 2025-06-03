@@ -187,7 +187,7 @@ const Setup = ({ auth }) => {
                                             htmlFor="description"
                                             className="text-sm font-medium block mb-3"
                                         >
-                                            Store Description (Optional)
+                                            Store Description (At least 10 characters)
                                         </Label>
                                         <Input
                                             id="description"

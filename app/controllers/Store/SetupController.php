@@ -38,7 +38,7 @@ class SetupController extends Controller
                 ->redirect('/store/new', 303);
         }
 
-        if ($data['logo']) {
+        if (isset($data['logo'])) {
             $data['logo'] = request()->upload(
                 'logo',
                 withBucket('stores/' . auth()->id()),
