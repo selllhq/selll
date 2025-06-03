@@ -43,7 +43,7 @@ class SetupController extends Controller
                 'logo',
                 withBucket('stores/' . auth()->id()),
                 ['rename' => true]
-            )['url'];
+            )['url'] ?? null;
 
             if (!$data['logo']) {
                 return response()
