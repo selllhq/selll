@@ -8,33 +8,34 @@ import { LayoutTab, HeroTab, ThemeTab, ContactTab } from "./tabs";
 
 const Customize = ({ store }) => {
     const storeConfig = JSON.parse(store?.config ?? "{}");
+
     const { data, setData, post, errors, processing } = useForm({
         show_hero: storeConfig?.show_hero ?? false,
         hero_image: storeConfig?.hero_image ?? "",
         hero_title: storeConfig?.hero_title ?? "",
         hero_description: storeConfig?.hero_description ?? "",
         hero_content_alignment: storeConfig?.hero_content_alignment ?? "center",
-        show_hero_button: storeConfig?.show_hero_button ?? false,
+        show_hero_button: storeConfig?.show_hero_button ?? true,
         hero_button_text: storeConfig?.hero_button_text ?? "Shop Now",
         show_store_name: storeConfig?.show_store_name ?? true,
         show_store_logo: storeConfig?.show_store_logo ?? true,
-        show_store_description: storeConfig?.show_store_description ?? true,
+        show_store_description: storeConfig?.show_store_description ?? false,
         show_store_information_in_popup:
             storeConfig?.show_store_information_in_popup ?? true,
         show_product_price: storeConfig?.show_product_price ?? true,
-        show_product_description: storeConfig?.show_product_description ?? true,
+        show_product_description: storeConfig?.show_product_description ?? false,
         theme_color: storeConfig?.theme_color ?? "#FF6B00",
         background_color: storeConfig?.background_color ?? "#141414",
         text_color: storeConfig?.text_color ?? "#FFFFFF",
         border_color: storeConfig?.border_color ?? "#2C2C2C",
         open_product_in_popup: storeConfig?.open_product_in_popup ?? true,
         show_contact_info: storeConfig?.show_contact_info ?? true,
-        contact_email: storeConfig?.contact_email ?? "",
-        contact_phone: storeConfig?.contact_phone ?? "",
+        contact_email: storeConfig?.contact_email ?? store?.email ?? "",
+        contact_phone: storeConfig?.contact_phone ?? store?.phone ?? "",
         facebook_url: storeConfig?.facebook_url ?? "",
         twitter_url: storeConfig?.twitter_url ?? "",
         instagram_url: storeConfig?.instagram_url ?? "",
-        contact_address: storeConfig?.contact_address ?? "",
+        contact_address: storeConfig?.contact_address ?? store?.address ?? "",
     });
 
     const submit = (e) => {

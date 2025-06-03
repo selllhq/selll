@@ -77,22 +77,21 @@ class SetupController extends Controller
     public function customize()
     {
         $data = request()->validate([
-            'show_hero' => 'optional|boolean',
             'hero_image' => 'optional|string',
             'hero_title' => 'optional|string',
             'hero_description' => 'optional|string',
             'hero_content_alignment' => 'optional|string',
-            'show_store_name' => 'boolean',
-            'show_store_logo' => 'boolean',
-            'show_store_description' => 'boolean',
-            'show_store_information_in_popup' => 'boolean',
-            'show_product_price' => 'boolean',
-            'show_product_description' => 'boolean',
+            'hero_button_text' => 'optional|string',
             'theme_color' => 'string',
             'background_color' => 'string',
             'text_color' => 'string',
             'border_color' => 'string',
-            'open_product_in_popup' => 'boolean',
+            'contact_email' => 'email',
+            'contact_phone' => 'string',
+            'contact_address' => 'optional|string',
+            'facebook_url' => 'optional|string',
+            'instagram_url' => 'optional|string',
+            'twitter_url' => 'optional|string',
         ]);
 
         if (!$data) {
@@ -100,6 +99,22 @@ class SetupController extends Controller
                 ->withFlash('errors', request()->errors())
                 ->redirect('/store/customize', 303);
         }
+
+        $data = array_merge(
+            $data,
+            request()->try([
+                'show_hero',
+                'show_hero_button',
+                'show_store_name',
+                'show_store_logo',
+                'show_store_description',
+                'show_store_information_in_popup',
+                'show_product_price',
+                'show_product_description',
+                'open_product_in_popup',
+                'show_contact_info',
+            ])
+        );
 
         $store = Store::find(auth()->user()->current_store_id);
         $store->config = json_encode($data);
