@@ -4,7 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>Verify your email</title>
+    <title>Selll is live - let's build your store together!</title>
     <meta name="robots" content="noindex, nofollow">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
@@ -84,13 +84,23 @@
                                             style="box-sizing: border-box; position: relative; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 500;
                                             line-height: 1.5; margin-bottom: 24px; font-size:24px; margin-top: 0;
                                             text-align: left;">
-                                            Verify your email address</h1>
+                                            Selll is live - let's build your store together!
+                                        </h1>
                                         <p
                                             style="box-sizing: border-box; position: relative; font-family:
                                             'Bricolage Grotesque', sans-serif; font-size: 16px;
                                             line-height:28px; margin-bottom: 24px; margin-top: 0; text-align: left;">
-                                            You know the
-                                            drill. Click the link below to verify your email address.</p>
+                                            Thank you so much for signing up for the waitlist — your early support has
+                                            meant the world to us.
+                                        </p>
+                                        <p
+                                            style="box-sizing: border-box; position: relative; font-family:
+                                            'Bricolage Grotesque', sans-serif; font-size: 16px;
+                                            line-height:28px; margin-bottom: 24px; margin-top: 0; text-align: left;">
+                                            We're excited to share that Selll is officially live! You can now create
+                                            your account and start selling online in minutes. No complex setup, no
+                                            payment headaches — just a simple way to sell.
+                                        </p>
                                         <table class="action" align="center" width="100%" cellpadding="0"
                                             cellspacing="0" role="presentation"
                                             style="box-sizing: border-box;
@@ -120,7 +130,7 @@
                                                                             style="box-sizing: border-box; position:
                                                                             relative; font-family: 'Bricolage Grotesque', sans-serif;
                                                                             font-size: 16px; line-height: 2;">
-                                                                            <a href="https://selll.online/auth/verify?token={{ $token }}"
+                                                                            <a href="https://selll.online/auth/register?email={{ $email }}"
                                                                                 class="button button-primary"
                                                                                 target="_blank" rel="noopener"
                                                                                 style="box-sizing: border-box;
@@ -132,8 +142,8 @@
                                                                                 pointer; -webkit-text-size-adjust: none;
                                                                                 display: block; overflow: hidden;
                                                                                 text-decoration: none; background-color:
-                                                                                #ec504b;">Verify
-                                                                                email address</a>
+                                                                                #ec504b;">Create
+                                                                                your free store</a>
                                                                         </td>
                                                                     </tr>
                                                                 </table>
@@ -148,46 +158,14 @@
                                             style="box-sizing: border-box; position: relative; font-family:
                                             'Bricolage Grotesque', sans-serif; font-size: 16px;
                                             line-height:28px; margin-bottom: 24px; margin-top: 0; text-align: left;">
-                                            Love,<br>
-                                            <a href="https://bento.me/selll"
+                                            We're here if you need anything along the way. <br>
+                                            Let’s build something great,<br>
+                                            <a href="https://instagram.com/myselllonline"
                                                 style="box-sizing: border-box; position: relative; font-family:
                                                 'Bricolage Grotesque', sans-serif;
                                                 font-size: 16px; line-height: 2; color: #ec504b; text-decoration: none;
-                                                border-bottom: 1px solid #ec504b;">The
-                                                Selll Team</a>
+                                                border-bottom: 1px solid #ec504b;">Michael from Selll</a>
                                         </p>
-
-
-                                        <table class="subcopy" width="100%" cellpadding="0" cellspacing="0"
-                                            role="presentation"
-                                            style="box-sizing: border-box; position: relative;
-                                            font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; line-height: 2;">
-                                            <tr>
-                                                <td
-                                                    style="box-sizing: border-box; position: relative; font-family:
-                                                    'Bricolage Grotesque', sans-serif; font-size: 16px; line-height: 2;">
-                                                    <p
-                                                        style="box-sizing: border-box; position: relative; font-family:
-                                                        'Bricolage Grotesque', sans-serif; font-size: 16px; line-height:28px;
-                                                        margin-bottom: 24px; margin-top: 0; text-align: left;">
-                                                        If you
-                                                        have any trouble with the button, you can copy and paste the
-                                                        link
-                                                        below
-                                                        into your browser:
-                                                        <a href="https://selll.online/auth/verify?token={{ $token }}"
-                                                            style="box-sizing: border-box; position: relative;
-                                                            font-family: 'Bricolage Grotesque', sans-serif;
-                                                            font-size: 16px; line-height: 2; color: #ec504b;
-                                                            text-decoration: none; word-break: break-word;
-                                                            border-bottom: 1px solid
-                                                            #ec504b;">
-                                                            https://selll.online/auth/verify?token={{ $token }}
-                                                        </a>
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                        </table>
                                     </td>
                                 </tr>
                             </table>
