@@ -1,18 +1,19 @@
 import { Head, useForm } from "@inertiajs/react";
-import { ChevronLeft, CloudUpload } from "lucide-react";
+import { AlertCircleIcon, ChevronLeft, CloudUpload } from "lucide-react";
 import { slugify } from "@/utils";
 import { useState, useRef } from "react";
 import Button from "@/components/form/button";
 import InputError from "@/components/form/input-error";
 import Input from "@/components/form/input";
 import Label from "@/components/form/label";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const Setup = ({ auth }) => {
     const [currentStep, setCurrentStep] = useState(1);
     const [profileImage, setProfileImage] = useState(null);
     const fileInputRef = useRef(null);
 
-    const { data, setData, post, errors, processing } = useForm({
+    const { data, setData, post, errors, hasErrors, processing } = useForm({
         name: `${auth.user.name}'s Store`,
         description: "",
         slug: slugify(auth.user.name),
@@ -98,6 +99,22 @@ const Setup = ({ auth }) => {
                         </div>
 
                         <form onSubmit={submit} className="space-y-8 pb-8">
+                            {hasErrors && (
+                                <Alert variant="destructive">
+                                    <AlertCircleIcon />
+                                    <AlertTitle>
+                                        You have some errors
+                                    </AlertTitle>
+                                    <AlertDescription>
+                                        <p>
+                                            Please verify your store information
+                                            and try again. You can press 'Back' to
+                                            view the previous step.
+                                        </p>
+                                    </AlertDescription>
+                                </Alert>
+                            )}
+
                             {currentStep === 1 && (
                                 <>
                                     <div className="mb-8">
@@ -187,7 +204,8 @@ const Setup = ({ auth }) => {
                                             htmlFor="description"
                                             className="text-sm font-medium block mb-3"
                                         >
-                                            Store Description (At least 10 characters)
+                                            Store Description (At least 10
+                                            characters)
                                         </Label>
                                         <Input
                                             id="description"
