@@ -460,21 +460,21 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                         </div>
                     </div>
 
-                    <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-white/10 pt-12">
+                    <div className="mt-16 grid grid-cols-1 md:grid-cols-2 mx-auto gap-8 border-t border-white/10 pt-12">
                         <div className="text-center">
                             <div className="text-3xl sm:text-4xl font-bold text-white mb-2">
                                 {Intl.NumberFormat().format(activeStores)}
                             </div>
                             <p className="text-gray-100">Active Stores</p>
                         </div>
-                        <div className="text-center">
+                        {/* <div className="text-center">
                             <div className="text-3xl sm:text-4xl font-bold text-white mb-2">
                                 5+
                             </div>
                             <p className="text-gray-100">
                                 Supported Currencies
                             </p>
-                        </div>
+                        </div> */}
                         <div className="text-center">
                             <div className="text-3xl sm:text-4xl font-bold text-white mb-2">
                                 2 mins
