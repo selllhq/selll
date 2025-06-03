@@ -4,7 +4,7 @@ namespace App\Models;
 
 class Customer extends Model
 {
-    protected $fillable = ['name', 'email', 'phone'];
+    protected $fillable = ['name', 'email', 'phone', 'address', 'city', 'country', 'notes'];
 
     public function carts()
     {
