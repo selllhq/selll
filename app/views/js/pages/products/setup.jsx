@@ -11,6 +11,7 @@ import { CURRENCY_LIMITS, CURRENCY_SYMBOLS } from "@/utils/store";
 import PreviewImage from "@/components/products/preview-image";
 import ProductPreview from "@/components/products/product-preview";
 import Select from "@/components/form/creatable-select";
+import { MinimalTiptapEditor } from "@/components/ui/minimal-tiptap";
 
 const Setup = ({ currentStore, categories }) => {
     const [images, setImages] = useState([]);
@@ -190,7 +191,7 @@ const Setup = ({ currentStore, categories }) => {
                                     <Label htmlFor="description">
                                         Product Description
                                     </Label>
-                                    <Input
+                                    {/* <Input
                                         id="description"
                                         as="textarea"
                                         className="block w-full min-h-20 bg-gray-100 dark:bg-[#2C2C2C] border-0 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
@@ -203,6 +204,22 @@ const Setup = ({ currentStore, categories }) => {
                                         }
                                         required
                                         placeholder="Describe your product..."
+                                    /> */}
+                                    <MinimalTiptapEditor
+                                        value={data.description}
+                                        onChange={(e) =>
+                                            setData(
+                                                "description",
+                                                e.target.value,
+                                            )
+                                        }
+                                        className="block w-full min-h-20 bg-gray-100 dark:bg-[#2C2C2C] border-0 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
+                                        editorContentClassName="p-5"
+                                        output="html"
+                                        placeholder="Describe your product..."
+                                        autofocus={false}
+                                        editable={true}
+                                        editorClassName="focus:outline-hidden"
                                     />
                                     <InputError
                                         className="mt-2"
