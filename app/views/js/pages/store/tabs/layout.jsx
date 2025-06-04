@@ -70,7 +70,7 @@ const LayoutTab = ({ data, setData }) => {
                                 Display your
                                 store
                                 description on
-                                the homepage
+                                the homepage footer
                             </p>
                         </div>
                         <Switch
@@ -88,7 +88,7 @@ const LayoutTab = ({ data, setData }) => {
                         />
                     </div>
 
-                    <div className="flex items-center justify-between">
+                    {/* <div className="flex items-center justify-between">
                         <div>
                             <h3 className="font-medium">
                                 Store
@@ -115,7 +115,7 @@ const LayoutTab = ({ data, setData }) => {
                                 )
                             }
                         />
-                    </div>
+                    </div> */}
 
                     <div className="flex items-center justify-between">
                         <div>

@@ -23,7 +23,7 @@ const Customize = ({ store }) => {
         show_store_information_in_popup:
             storeConfig?.show_store_information_in_popup ?? true,
         show_product_price: storeConfig?.show_product_price ?? true,
-        show_product_description: storeConfig?.show_product_description ?? false,
+        show_product_description: storeConfig?.show_product_description ?? true,
         theme_color: storeConfig?.theme_color ?? "#FF6B00",
         background_color: storeConfig?.background_color ?? "#141414",
         text_color: storeConfig?.text_color ?? "#FFFFFF",
