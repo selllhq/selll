@@ -206,12 +206,10 @@ const Setup = ({ currentStore, categories }) => {
                                         placeholder="Describe your product..."
                                     /> */}
                                     <MinimalTiptapEditor
+                                        id="description"
                                         value={data.description}
-                                        onChange={(e) =>
-                                            setData(
-                                                "description",
-                                                e.target.value,
-                                            )
+                                        onChange={(value) =>
+                                            setData("description", value)
                                         }
                                         className="block w-full min-h-20 bg-gray-100 dark:bg-[#2C2C2C] border-0 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
                                         editorContentClassName="p-5"

@@ -42,10 +42,14 @@ const ProductPreview = ({ product, currentStore, newImages = {}, existingImages 
                             <h3 className="text-lg font-medium">
                                 {product.name || "Product Name"}
                             </h3>
-                            <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 mt-1">
-                                {product.description ||
-                                    "Product description will appear here"}
-                            </p>
+                            <p
+                                className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 mt-1"
+                                dangerouslySetInnerHTML={{
+                                    __html:
+                                        product.description ||
+                                        "Product description will appear here",
+                                }}
+                            ></p>
                         </div>
 
                         <div className="flex items-center justify-between">

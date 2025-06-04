@@ -47,7 +47,7 @@ class ProductsController extends Controller
             'price',
             'quantity',
             'quantity_items',
-        ]);
+        ], false);
 
         $uploads = request()->upload(
             'images',
@@ -71,7 +71,7 @@ class ProductsController extends Controller
         $currentStore = Store::find(auth()->user()->current_store_id);
         $product = $currentStore->products()->create($data);
 
-        foreach (request()->get('categories') as $categoryData) {
+        foreach (request()->get('categories', false) ?? [] as $categoryData) {
             $category = $currentStore->categories()->where('title', $categoryData['value'])->first();
 
             if (!$category) {
@@ -135,12 +135,12 @@ class ProductsController extends Controller
             'quantity_items',
             'existing_images',
             'images_to_delete',
-        ]);
+        ], false);
 
         $currentStore = Store::find(auth()->user()->current_store_id);
         $product = $currentStore->products()->find($id);
 
-        if (!empty($categories = request()->get('categories'))) {
+        if (!empty($categories = request()->get('categories', false))) {
             $product->categories()->detach();
 
             foreach ($categories as $categoryData) {
@@ -179,7 +179,7 @@ class ProductsController extends Controller
 
         $uploadedImages = [];
 
-        if (isset($data['images'])) {
+        if (isset($data['images']) && !empty($data['images'])) {
             $uploads = request()->upload(
                 'images',
                 withBucket('products/' . auth()->user()->current_store_id),

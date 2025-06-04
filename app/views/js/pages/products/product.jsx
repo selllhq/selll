@@ -117,9 +117,14 @@ export default function Products({ product, currentStore, orders, purchases }) {
                         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
                             {product?.name}
                         </h1>
-                        <p className="text-gray-600 dark:text-gray-400">
-                            {product?.description || "No description provided"}
-                        </p>
+                        <p
+                            className="text-gray-600 dark:text-gray-400 truncate max-w-2xl"
+                            dangerouslySetInnerHTML={{
+                                __html:
+                                    product?.description ||
+                                    "No description provided",
+                            }}
+                        ></p>
                         {product?.categories && (
                             <div className="flex gap-2">
                                 {product?.categories?.map((category) => (
