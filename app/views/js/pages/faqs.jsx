@@ -33,7 +33,7 @@ const Faqs = ({ auth }) => {
         { id: "store", name: "Store Customization", icon: Store },
         // { id: "shipping", name: "Shipping & Delivery", icon: Truck },
         // { id: "analytics", name: "Analytics & Reports", icon: BarChart },
-        { id: "international", name: "International Selling", icon: Globe },
+        // { id: "international", name: "International Selling", icon: Globe },
         { id: "security", name: "Security & Privacy", icon: Shield },
         { id: "payouts", name: "Payouts", icon: Wallet },
     ];
@@ -98,12 +98,12 @@ const Faqs = ({ auth }) => {
             {
                 id: "payment-methods",
                 question: "What payment methods can I offer my customers?",
-                answer: "Selll supports various payment methods including credit/debit cards, PayPal, Apple Pay, Google Pay, and bank transfers. You can enable the payment methods that work best for your business and customers.",
+                answer: "Selll supports various payment methods including credit/debit cards, Mobile money, Apple Pay, and bank transfers. All of this is handled through our secure payment processors, so you don't have to worry about managing payment gateways yourself.",
             },
             {
                 id: "transaction-fees",
                 question: "What are the transaction fees?",
-                answer: "Selll charges a small transaction fee of 2% per transaction in addition to the payment processor fees which vary by provider, but range from 2% to 3%. Premium plans will have lower transaction fees once you reach a certain sales threshold.",
+                answer: "Selll charges a small transaction fee of 2% per transaction. In addition, the payment processor fees which vary by provider, but range from 1.9% to 3%. Not to worry though, we are always working to reduce these fees and provide the best value for our users.",
             },
             {
                 id: "payment-security",
@@ -113,7 +113,7 @@ const Faqs = ({ auth }) => {
             {
                 id: "refund-process",
                 question: "How do I process refunds?",
-                answer: "Refunds are handled by our account managers. You can initiate a refund directly from the order details page in your dashboard. The refund will be processed through the original payment method used by the customer.",
+                answer: "Refunds are handled by our account managers. Give us a few details, and the refund will be on its way, and will be processed through the original payment method used by the customer.",
             },
         ],
         store: [
@@ -125,7 +125,7 @@ const Faqs = ({ auth }) => {
             {
                 id: "custom-domain",
                 question: "Can I use my own domain name?",
-                answer: "Not yet, but we are working on this feature for our premium plans. For now, your store will be hosted on a Selll subdomain (e.g., yourstore.selll.store). Once custom domains are available, you will be able to connect your own domain easily.",
+                answer: "Not yet, but we are working on this feature for our premium plans. For now, your store will be hosted on a Selll subdomain (e.g., yourstore.selll.store). Once custom domains are available, you will be able to connect your own domain easily (eg., yourstore.com).",
             },
             {
                 id: "mobile-friendly",
@@ -210,7 +210,7 @@ const Faqs = ({ auth }) => {
             {
                 id: "backups",
                 question: "Does Selll back up my store data?",
-                answer: "Yes, we perform automatic daily backups of your store data. This ensures that your product information, customer data, and sales history are safe and can be restored if needed.",
+                answer: "Yes, we perform automatic backups of your store data. This ensures that your product information, customer data, and sales history are safe and can be restored if needed.",
             },
             {
                 id: "fraud-protection",
@@ -227,12 +227,12 @@ const Faqs = ({ auth }) => {
             {
                 id: "payout-schedule",
                 question: "When will I receive my payouts?",
-                answer: "Payouts are processed on a rolling basis. For new accounts, there's an initial 7-day holding period. After that, payouts are processed every 2 business days for premium plans and every 7 days for free plans. Funds typically appear in your bank account within 1-3 business days after processing.",
+                answer: "Payouts will be automatically deposited in your payout wallet, typically within 1-3 business days after a sale is made. There is no need to be alarmed if you do not see the funds immediately, as processing times may vary based on your bank or payment provider.",
             },
             {
                 id: "payout-methods",
                 question: "What payout methods are available?",
-                answer: "Selll supports payouts via bank transfer, Wise, and mobile money services in supported countries. Note that some payout methods come with additional fees not covered by Selll.",
+                answer: "Selll supports payouts via bank transfer, and mobile money services in supported countries. Note that some payout methods come with additional fees not covered by Selll.",
             },
             {
                 id: "minimum-payout",
@@ -242,7 +242,7 @@ const Faqs = ({ auth }) => {
             {
                 id: "payout-fees",
                 question: "Are there any fees for payouts?",
-                answer: "Standard payouts to bank accounts in your local currency may incur fees depending on your bank. For Wise and mobile money transfers, there may be additional fees charged by the service provider. Selll does not charge any additional fees for processing payouts.",
+                answer: "Standard payouts to bank accounts in your local currency may incur fees depending on your bank. For mobile money transfers, there may be additional fees charged by the service provider. Selll does not charge any additional fees for processing payouts.",
             },
         ],
     };
