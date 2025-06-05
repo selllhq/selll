@@ -7,7 +7,15 @@ import Footer from "@/components/layout/footer";
 const Pricing = ({ auth }) => {
     return (
         <>
-            <Head title="Pricing" />
+            <Head>
+                <title>
+                    Selll Pricing - Start Your Online Store Today For Free
+                </title>
+                <meta
+                    name="description"
+                    content="Start for free in 2 minutes. No business registration, no hassle. Just create your store and start earning today!"
+                />
+            </Head>
 
             <Navbar auth={auth} />
 

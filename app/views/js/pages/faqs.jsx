@@ -249,7 +249,13 @@ const Faqs = ({ auth }) => {
 
     return (
         <>
-            <Head title="Frequently Asked Questions" />
+            <Head>
+                <title>Frequently Asked Questions</title>
+                <meta
+                    name="description"
+                    content="If you're new to Selll or looking to replatform your business, this guide will help you learn more about the platform and its features."
+                />
+            </Head>
 
             <Navbar auth={auth} />
 

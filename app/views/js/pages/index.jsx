@@ -6,7 +6,10 @@ import { CheckCircle, MailCheckIcon } from "lucide-react";
 const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
     return (
         <div>
-            <Head title="Selll online for free" />
+            <Head>
+                <title>The easiest way to sell online for free</title>
+                <meta name="description" content="Get your own store with no coding, add your products and get paid" />
+            </Head>
 
             <Navbar auth={auth} />
 
@@ -370,8 +373,8 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                 <div className="max-w-screen-xl mx-auto px-4 sm:px-6 relative z-10">
                     <div className="text-center mb-16">
                         <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-                            From your first sale <br /> to the
-                            world — start local, grow global.
+                            From your first sale <br /> to the world — start
+                            local, grow global.
                         </h2>
                     </div>
 
