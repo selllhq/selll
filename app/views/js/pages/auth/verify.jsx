@@ -96,7 +96,7 @@ export default function Verify({ auth }) {
                                 {resending ? "Resending..." : "Resend Email"}
                             </Button>
 
-                            <Link href="/auth/login">
+                            <Link href="/auth/logout" method="post">
                                 <Button
                                     className="cursor-pointer w-full bg-[#2C2C2C] hover:bg-[#3C3C3C] text-white"
                                 >
@@ -120,7 +120,6 @@ export default function Verify({ auth }) {
                 </div>
             </div>
 
-            {/* Right column - Testimonial */}
             <div className="hidden lg:flex lg:w-1/2 bg-[#1e1e1e] items-center justify-center relative">
                 <div className="max-w-md px-8 py-12 text-center">
                     <div className="mb-6">
