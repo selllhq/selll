@@ -1,4 +1,10 @@
 <?php
 
-app()->get('/orders', 'Store\OrdersController@index');
-app()->get('/orders/(\d+)', 'Store\OrdersController@show');
+app()->group('/orders', [
+    'middleware' => ['auth.required', 'auth.verified'],
+    function () {
+        app()->get('/', 'Store\OrdersController@index');
+        app()->get('/(\d+)', 'Store\OrdersController@show');
+    }
+]);
+

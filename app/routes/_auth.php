@@ -1,13 +1,5 @@
 <?php
 
-auth()->middleware('auth.required', function () {
-    response()->redirect('/auth/login');
-});
-
-auth()->middleware('auth.guest', function () {
-    response()->redirect('/dashboard');
-});
-
 app()->group('/auth', [
     'middleware' => 'auth.guest',
     function () {
@@ -32,7 +24,10 @@ app()->group('/dashboard', [
     },
 ]);
 
-app()->group('/settings', function () {
-    app()->get('/profile', 'Profile\AccountController@show_update');
-    app()->patch('/profile', 'Profile\AccountController@update');
-});
+app()->group('/settings', [
+    'middleware' => ['auth.required', 'auth.verified'],
+    function () {
+        app()->get('/profile', 'Profile\AccountController@show_update');
+        app()->patch('/profile', 'Profile\AccountController@update');
+    }
+]);

@@ -1,6 +1,12 @@
 <?php
 
-app()->get('/store/new', 'Store\SetupController@index');
-app()->post('/store/new', 'Store\SetupController@store');
-app()->get('/store/customize', 'Store\SetupController@showCustomize');
-app()->post('/store/customize', 'Store\SetupController@customize');
+app()->group('/store', [
+    'middleware' => ['auth.required', 'auth.verified'],
+    function () {
+        app()->get('/new', 'Store\SetupController@index');
+        app()->post('/new', 'Store\SetupController@store');
+        app()->get('/customize', 'Store\SetupController@showCustomize');
+        app()->post('/customize', 'Store\SetupController@customize');
+    }
+]);
+

@@ -2,8 +2,6 @@
 
 namespace App\Controllers\Auth;
 
-use App\Models\User;
-
 class VerificationController extends Controller
 {
     public function show()

@@ -39,6 +39,14 @@
 */
 // app()->use(ExampleMiddleware::class);
 
+auth()->middleware('auth.required', function () {
+    response()->redirect('/auth/login');
+});
+
+auth()->middleware('auth.guest', function () {
+    response()->redirect('/dashboard');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Your application routes

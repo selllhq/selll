@@ -1,5 +1,11 @@
 <?php
 
-app()->get('/payouts', 'Store\PayoutsController@index');
-app()->get('/payouts/setup', 'Store\PayoutsController@setup');
-app()->post('/payouts/setup', 'Store\PayoutsController@store');
+app()->group('/payouts', [
+    'middleware' => ['auth.required', 'auth.verified'],
+    function () {
+        app()->get('/', 'Store\PayoutsController@index');
+        app()->get('/setup', 'Store\PayoutsController@setup');
+        app()->post('/setup', 'Store\PayoutsController@store');
+    }
+]);
+
