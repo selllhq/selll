@@ -111,10 +111,10 @@ const Contact = ({ auth }) => {
                                             </p>
                                             <a
                                                 target="_blank"
-                                                href="https://instagram.com/myselllonline"
+                                                href="https://instagram.com/selllhq"
                                                 className="text-gray-900 dark:text-white hover:text-primary-orange transition-colors"
                                             >
-                                                @myselllonline
+                                                @selllhq
                                             </a>
                                         </div>
                                     </div>
@@ -129,10 +129,10 @@ const Contact = ({ auth }) => {
                                             </p>
                                             <a
                                                 target="_blank"
-                                                href="https://twitter.com/myselllonline"
+                                                href="https://twitter.com/selllhq"
                                                 className="text-gray-900 dark:text-white hover:text-primary-orange transition-colors"
                                             >
-                                                @myselllonline
+                                                @selllhq
                                             </a>
                                         </div>
                                     </div>

@@ -160,7 +160,7 @@
                                             line-height:28px; margin-bottom: 24px; margin-top: 0; text-align: left;">
                                             We're here if you need anything along the way. <br>
                                             Let’s build something great,<br>
-                                            <a href="https://instagram.com/myselllonline"
+                                            <a href="https://instagram.com/selllhq"
                                                 style="box-sizing: border-box; position: relative; font-family:
                                                 'Bricolage Grotesque', sans-serif;
                                                 font-size: 16px; line-height: 2; color: #ec504b; text-decoration: none;
