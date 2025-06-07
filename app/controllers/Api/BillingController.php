@@ -21,7 +21,7 @@ class BillingController extends Controller
 
         $items = array_map(function ($cartItem) use ($store, &$cartTotal) {
             $item = $store->products()->find($cartItem['id']);
-            $cartTotal += ((int) $item->price * $cartItem['quantity']);
+            $cartTotal += ((float) $item->price * $cartItem['quantity']);
 
             return [
                 'id' => $item->id,

@@ -1744,12 +1744,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/auth.git",
-                "reference": "58dc085dc49feb5d76994d6925e894ae326341de"
+                "reference": "e9696efc6d5aa1290d072673f7f65e1c41d20ce5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/auth/zipball/58dc085dc49feb5d76994d6925e894ae326341de",
-                "reference": "58dc085dc49feb5d76994d6925e894ae326341de",
+                "url": "https://api.github.com/repos/leafsphp/auth/zipball/e9696efc6d5aa1290d072673f7f65e1c41d20ce5",
+                "reference": "e9696efc6d5aa1290d072673f7f65e1c41d20ce5",
                 "shasum": ""
             },
             "require": {
@@ -1813,7 +1813,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-05-31T13:52:24+00:00"
+            "time": "2025-06-07T18:10:08+00:00"
         },
         {
             "name": "leafs/billing",
