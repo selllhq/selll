@@ -40,4 +40,24 @@ class StoreMailer
             'senderName' => 'Selll Receipts',
         ]);
     }
+
+    /**
+     * Create mail for store when a new order is placed
+     * @param mixed $email The email of the store owner
+     * @param mixed $order The order details
+     * @return \Leaf\Mail
+     */
+    public static function wrongOrder()
+    {
+        return mailer()->create([
+            'subject' => "Apology for Incorrect Charge - We've Got It Covered",
+            'body' => view('mail.store.wrong-order', [
+                'storeOwnerName' => 'Survival King',
+                'orderId' => 10,
+            ]),
+            'recipientEmail' => 'kingvival@gmail.com',
+            'recipientName' => 'Survival King',
+            'senderName' => 'Selll Receipts',
+        ]);
+    }
 }

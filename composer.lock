@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.343.22",
+            "version": "3.344.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "174cc187df3bde52c21e9c00a4e99610a08732a3"
+                "reference": "3a6aaaea75f4605f89aa57ad63b9a077bf01e1e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/174cc187df3bde52c21e9c00a4e99610a08732a3",
-                "reference": "174cc187df3bde52c21e9c00a4e99610a08732a3",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/3a6aaaea75f4605f89aa57ad63b9a077bf01e1e5",
+                "reference": "3a6aaaea75f4605f89aa57ad63b9a077bf01e1e5",
                 "shasum": ""
             },
             "require": {
@@ -153,22 +153,22 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.343.22"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.344.2"
             },
-            "time": "2025-05-30T18:11:02+00:00"
+            "time": "2025-06-06T18:14:42+00:00"
         },
         {
             "name": "brick/math",
-            "version": "0.12.3",
+            "version": "0.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brick/math.git",
-                "reference": "866551da34e9a618e64a819ee1e01c20d8a588ba"
+                "reference": "fc7ed316430118cc7836bf45faff18d5dfc8de04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brick/math/zipball/866551da34e9a618e64a819ee1e01c20d8a588ba",
-                "reference": "866551da34e9a618e64a819ee1e01c20d8a588ba",
+                "url": "https://api.github.com/repos/brick/math/zipball/fc7ed316430118cc7836bf45faff18d5dfc8de04",
+                "reference": "fc7ed316430118cc7836bf45faff18d5dfc8de04",
                 "shasum": ""
             },
             "require": {
@@ -207,7 +207,7 @@
             ],
             "support": {
                 "issues": "https://github.com/brick/math/issues",
-                "source": "https://github.com/brick/math/tree/0.12.3"
+                "source": "https://github.com/brick/math/tree/0.13.1"
             },
             "funding": [
                 {
@@ -215,7 +215,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-28T13:11:00+00:00"
+            "time": "2025-03-29T13:50:30+00:00"
         },
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -829,7 +829,7 @@
         },
         {
             "name": "illuminate/bus",
-            "version": "v12.16.0",
+            "version": "v12.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/bus.git",
@@ -882,16 +882,16 @@
         },
         {
             "name": "illuminate/collections",
-            "version": "v12.16.0",
+            "version": "v12.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
-                "reference": "d5ea498fd4de52341eced75eced74b7f076bb35f"
+                "reference": "e5711846b7c68128bc8de72c13e017606043c996"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/collections/zipball/d5ea498fd4de52341eced75eced74b7f076bb35f",
-                "reference": "d5ea498fd4de52341eced75eced74b7f076bb35f",
+                "url": "https://api.github.com/repos/illuminate/collections/zipball/e5711846b7c68128bc8de72c13e017606043c996",
+                "reference": "e5711846b7c68128bc8de72c13e017606043c996",
                 "shasum": ""
             },
             "require": {
@@ -935,11 +935,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2025-05-26T17:22:35+00:00"
+            "time": "2025-05-28T13:08:33+00:00"
         },
         {
             "name": "illuminate/conditionable",
-            "version": "v12.16.0",
+            "version": "v12.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/conditionable.git",
@@ -985,7 +985,7 @@
         },
         {
             "name": "illuminate/config",
-            "version": "v12.16.0",
+            "version": "v12.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/config.git",
@@ -1033,16 +1033,16 @@
         },
         {
             "name": "illuminate/container",
-            "version": "v12.16.0",
+            "version": "v12.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
-                "reference": "a3c80c986a421a5c550f89e80daa0d7ac817e6cf"
+                "reference": "222ff6913fa7efc914fcd63e9c44ba5d46835a6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/container/zipball/a3c80c986a421a5c550f89e80daa0d7ac817e6cf",
-                "reference": "a3c80c986a421a5c550f89e80daa0d7ac817e6cf",
+                "url": "https://api.github.com/repos/illuminate/container/zipball/222ff6913fa7efc914fcd63e9c44ba5d46835a6c",
+                "reference": "222ff6913fa7efc914fcd63e9c44ba5d46835a6c",
                 "shasum": ""
             },
             "require": {
@@ -1080,11 +1080,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2025-05-21T13:18:18+00:00"
+            "time": "2025-06-02T14:34:09+00:00"
         },
         {
             "name": "illuminate/contracts",
-            "version": "v12.16.0",
+            "version": "v12.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -1132,20 +1132,20 @@
         },
         {
             "name": "illuminate/database",
-            "version": "v12.16.0",
+            "version": "v12.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/database.git",
-                "reference": "6a920097dbc242a6f4da396d135df24f61a340a1"
+                "reference": "a2623e05d47be19c78d53b5826382259d6881656"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/database/zipball/6a920097dbc242a6f4da396d135df24f61a340a1",
-                "reference": "6a920097dbc242a6f4da396d135df24f61a340a1",
+                "url": "https://api.github.com/repos/illuminate/database/zipball/a2623e05d47be19c78d53b5826382259d6881656",
+                "reference": "a2623e05d47be19c78d53b5826382259d6881656",
                 "shasum": ""
             },
             "require": {
-                "brick/math": "^0.11|^0.12",
+                "brick/math": "^0.11|^0.12|^0.13",
                 "ext-pdo": "*",
                 "illuminate/collections": "^12.0",
                 "illuminate/container": "^12.0",
@@ -1198,11 +1198,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2025-05-26T17:24:46+00:00"
+            "time": "2025-06-03T13:52:06+00:00"
         },
         {
             "name": "illuminate/events",
-            "version": "v12.16.0",
+            "version": "v12.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/events.git",
@@ -1257,7 +1257,7 @@
         },
         {
             "name": "illuminate/filesystem",
-            "version": "v12.16.0",
+            "version": "v12.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/filesystem.git",
@@ -1324,7 +1324,7 @@
         },
         {
             "name": "illuminate/macroable",
-            "version": "v12.16.0",
+            "version": "v12.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -1370,7 +1370,7 @@
         },
         {
             "name": "illuminate/pipeline",
-            "version": "v12.16.0",
+            "version": "v12.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/pipeline.git",
@@ -1418,7 +1418,7 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v12.16.0",
+            "version": "v12.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
@@ -1495,16 +1495,16 @@
         },
         {
             "name": "illuminate/view",
-            "version": "v12.16.0",
+            "version": "v12.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/view.git",
-                "reference": "d091ef05421e2ba06554a21fe931f5bd4cce319d"
+                "reference": "97d9b586718ec60a54c197751c0c408a5258a917"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/view/zipball/d091ef05421e2ba06554a21fe931f5bd4cce319d",
-                "reference": "d091ef05421e2ba06554a21fe931f5bd4cce319d",
+                "url": "https://api.github.com/repos/illuminate/view/zipball/97d9b586718ec60a54c197751c0c408a5258a917",
+                "reference": "97d9b586718ec60a54c197751c0c408a5258a917",
                 "shasum": ""
             },
             "require": {
@@ -1545,7 +1545,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2025-05-13T15:08:45+00:00"
+            "time": "2025-05-27T22:29:35+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -1614,12 +1614,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/aloe.git",
-                "reference": "2b088cf586976cf3f8393c5fa5f69e8000be00ac"
+                "reference": "4a42ca683e43ef29fe60cfbb4336ee68386b1071"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/aloe/zipball/2b088cf586976cf3f8393c5fa5f69e8000be00ac",
-                "reference": "2b088cf586976cf3f8393c5fa5f69e8000be00ac",
+                "url": "https://api.github.com/repos/leafsphp/aloe/zipball/4a42ca683e43ef29fe60cfbb4336ee68386b1071",
+                "reference": "4a42ca683e43ef29fe60cfbb4336ee68386b1071",
                 "shasum": ""
             },
             "require": {
@@ -1677,7 +1677,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-05-30T16:18:21+00:00"
+            "time": "2025-06-08T21:46:28+00:00"
         },
         {
             "name": "leafs/anchor",
@@ -2682,12 +2682,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/mvc-core.git",
-                "reference": "f5caa8344d44bf7c5edd02448ebbab107aad2df4"
+                "reference": "08990d6b455c4c9b69916571c5a4170bab3c697b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/mvc-core/zipball/f5caa8344d44bf7c5edd02448ebbab107aad2df4",
-                "reference": "f5caa8344d44bf7c5edd02448ebbab107aad2df4",
+                "url": "https://api.github.com/repos/leafsphp/mvc-core/zipball/08990d6b455c4c9b69916571c5a4170bab3c697b",
+                "reference": "08990d6b455c4c9b69916571c5a4170bab3c697b",
                 "shasum": ""
             },
             "require": {
@@ -2750,7 +2750,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-05-31T13:50:31+00:00"
+            "time": "2025-06-08T21:44:28+00:00"
         },
         {
             "name": "leafs/password",

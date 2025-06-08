@@ -8,3 +8,4 @@ app()->post('/api/stores/(\d+)/checkout', 'Api\BillingController@handle');
 app()->get('/api/stores/(\d+)/orders/(\d+)', 'Api\StoresController@showOrders');
 
 app()->post('/api/auth/email', 'Api\AuthController@verify');
+app()->post('/api/analytics', 'Api\AnalyticsController@store');

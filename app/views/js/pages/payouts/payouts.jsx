@@ -32,13 +32,6 @@ export default function Payouts({
     const [search, setSearch] = useState("");
     const [filter, setFilter] = useState("all");
 
-    console.log("Payouts data:", {
-        payouts,
-        currentStore,
-        wallets,
-        orders,
-    });
-
     const totalPaidOut = payouts.reduce((sum, payout) => {
         return sum + parseFloat(payout.amount);
     }, 0);
@@ -101,7 +94,7 @@ export default function Payouts({
                             </div>
                         </CardContent>
                     </Card>
-                    
+
                     {payoutWallet && (
                         <Card>
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">

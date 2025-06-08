@@ -1,0 +1,39 @@
+connection: analytics
+timestamps: false
+
+columns:
+  event:
+    type: enum
+    values:
+      - page_view
+      - add_to_cart
+      - checkout
+      - purchase
+  page:
+    type: enum
+    default: action
+    values:
+      - home
+      - product
+      - action
+      - other
+  action_id: string
+  metadata:
+    type: json
+    nullable: true
+  user_ip:
+    type: string
+    nullable: true
+  user_location:
+    type: string
+    nullable: true
+  user_device:
+    type: string
+    nullable: true
+  internal_reference:
+    type: string
+    nullable: true
+  created_at: timestamp
+
+relationships:
+  - Store
