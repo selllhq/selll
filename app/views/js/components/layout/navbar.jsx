@@ -57,6 +57,10 @@ const Navbar = ({
         //     ],
         // },
         {
+            title: "Selll for Social Media",
+            url: "/social",
+        },
+        {
             title: "Pricing",
             url: "/pricing",
         },
@@ -164,15 +168,11 @@ const Navbar = ({
                                     </SheetTitle>
                                 </SheetHeader>
                                 <div className="flex flex-col gap-6 p-4">
-                                    {/* <Accordion
-                                        type="single"
-                                        collapsible
-                                        className="flex w-full flex-col gap-4"
-                                    >
+                                    <div className="flex w-full flex-col gap-4">
                                         {menu.map((item) =>
-                                            renderMobileMenuItem(item),
+                                            renderMenuItem(item),
                                         )}
-                                    </Accordion> */}
+                                    </div>
 
                                     <div className="flex flex-col gap-3">
                                         <Button

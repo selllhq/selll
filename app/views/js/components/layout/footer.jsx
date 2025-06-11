@@ -6,7 +6,7 @@ const Footer = () => {
             <div className="relative mx-auto w-full container">
                 <div className="py-8">
                     <div className="flex flex-wrap justify-between">
-                        <nav className="flex items-center gap-6 sm:gap-8">
+                        <nav className="flex flex-col md:flex-row md:items-center gap-6 sm:gap-8">
                             <a
                                 href="https://leafphp.dev"
                                 target="_blank"
@@ -26,6 +26,12 @@ const Footer = () => {
                             >
                                 Terms of use
                             </Link>
+                            {/* <Link
+                                href="/blog"
+                                className="text-sm text-gray-600 dark:text-gray-400 hover:underline focus:outline-none"
+                            >
+                                Blog
+                            </Link> */}
                         </nav>
                     </div>
                 </div>

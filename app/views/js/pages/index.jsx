@@ -1,15 +1,18 @@
+import { CheckCircle } from "lucide-react";
 import { Head, Link } from "@inertiajs/react";
 import Navbar from "@/components/layout/navbar";
 import Button from "@/components/form/button";
-import { CheckCircle, MailCheckIcon } from "lucide-react";
 import SignUpMiniForm from "@/components/layout/sign-up-mini-form";
 
-const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
+const Lander = ({ auth, activeStores = 0 }) => {
     return (
         <div>
             <Head>
                 <title>The easiest way to sell online for free</title>
-                <meta name="description" content="Get your own store with no coding, add your products and get paid" />
+                <meta
+                    name="description"
+                    content="Get your own store with no coding, add your products and get paid"
+                />
             </Head>
 
             <Navbar auth={auth} />
@@ -24,10 +27,10 @@ const Lander = ({ auth, purchases = 0, activeStores = 0 }) => {
                     </h1>
 
                     <p className="max-w-[667px] mx-auto md:text-xl text-gray-500 dark:text-gray-300">
-                        No complex setup. No Stripe account required. No
-                        technical headaches. Just create your storefront, add
-                        your products, share your link, and start
-                        selling—wherever you are, in just a few clicks.
+                        No setup stress. No payment accounts to figure out. No
+                        tech stuff to worry about. Just create your store, add
+                        your products, and share your link with the world
+                        to start selling online.
                     </p>
 
                     <SignUpMiniForm auth={auth} />
