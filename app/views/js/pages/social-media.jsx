@@ -228,7 +228,7 @@ export default function SocialMediaPage({ auth }) {
                             <div className="mt-16">
                                 <Button
                                     as={Link}
-                                    href="/pos"
+                                    href="/auth/register"
                                     variant="outline"
                                     size="lg"
                                     className="font-medium"
