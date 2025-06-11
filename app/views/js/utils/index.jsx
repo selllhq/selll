@@ -1,6 +1,7 @@
-import { usePage } from "@inertiajs/react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { usePage } from "@inertiajs/react";
+import { useState, useEffect } from "react";
 
 export function cn(...inputs) {
     return twMerge(clsx(inputs));
@@ -13,7 +14,7 @@ export function getInitials(name = "?") {
         .join("")
         .toUpperCase()
         .substring(0, 2);
-};
+}
 
 export function slugify(text) {
     return text
@@ -29,4 +30,28 @@ export function slugify(text) {
 
 export function useAuth() {
     return usePage().props.auth;
+}
+
+export function RotatingWords({ words, interval = 3000, className = "" }) {
+    const [index, setIndex] = useState(0);
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setIndex((i) => (i + 1) % words.length);
+        }, interval);
+        return () => clearInterval(timer);
+    }, [words, interval]);
+
+    return (
+        <span
+            aria-live="polite"
+            className={
+                "inline-block transition-opacity duration-500 ease-in-out " +
+                className
+            }
+            style={{ minWidth: 90 }}
+        >
+            {words[index]}
+        </span>
+    );
 }
