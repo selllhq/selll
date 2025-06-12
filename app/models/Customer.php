@@ -15,4 +15,9 @@ class Customer extends Model
     {
         return $this->belongsTo(Store::class);
     }
+
+    public function shippingUpdates()
+    {
+        return $this->hasMany(ShippingUpdate::class);
+    }
 }

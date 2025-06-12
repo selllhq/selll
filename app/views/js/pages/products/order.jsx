@@ -15,21 +15,73 @@ import {
     MapPin,
     Clock,
     Package,
-    Download,
+    Eye,
     Printer,
+    Send,
+    Check,
 } from "lucide-react";
 import Button from "@/components/form/button";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog";
 import dayjs from "dayjs";
 import { getInitials } from "@/utils";
 import { StatusBadge } from "@/components/shared/badge";
 import { formatCurrency } from "@/utils/store";
+import { useState } from "react";
+import Input from "@/components/form/input";
+import { toast } from "sonner";
 
 export default function Order({ order, currentStore }) {
+    const [isDeliveryModalOpen, setDeliveryModalOpen] = useState(false);
+    const [deliveryUpdate, setDeliveryUpdate] = useState("");
+    const [expectedDeliveryDate, setExpectedDeliveryDate] = useState("");
+    const [isUpdating, setIsUpdating] = useState(false);
+
+    const handleDeliveryUpdate = () => {
+        setIsUpdating(true);
+
+        router.post(
+            `/orders/${order.id}/shipping`,
+            {
+                message: deliveryUpdate,
+                expected_delivery_date: expectedDeliveryDate,
+            },
+            {
+                onSuccess: () => {
+                    setDeliveryModalOpen(false);
+                    setDeliveryUpdate("");
+                    setExpectedDeliveryDate("");
+                    toast.success("Delivery update sent successfully!");
+                },
+                onFinish: () => setIsUpdating(false),
+            },
+        );
+    };
+
+    const markAsDelivered = () => {
+        setIsUpdating(true);
+        router.post(
+            `/orders/${order.id}/complete`,
+            {},
+            {
+                onSuccess: () => {
+                    setDeliveryModalOpen(false);
+                    setDeliveryUpdate("");
+                },
+                onFinish: () => setIsUpdating(false),
+            },
+        );
+    };
+
     const handlePrint = () => {
-        // Create a new window for printing
         const printWindow = window.open("", "_blank");
 
-        // Generate the print content
         const printContent = `
             <html>
             <head>
@@ -242,11 +294,11 @@ export default function Order({ order, currentStore }) {
         >
             <Head title={`Order #${order?.id} - Order Details`} />
 
-            <div className="md:mt-20">
+            <div className="mt-12 md:mt-20">
                 <div className="flex flex-col gap-6">
                     <div className="flex flex-col md:flex-row justify-between gap-4 items-start md:items-center">
                         <div className="flex items-center gap-4">
-                            <div className="bg-[#1A1A1A] p-3 rounded-lg">
+                            <div className="ring ring-muted-foreground/15 dark:bg-[#1A1A1A] p-3 rounded-lg">
                                 <ShoppingCart className="h-6 w-6 text-primary-orange" />
                             </div>
                             <div>
@@ -263,27 +315,48 @@ export default function Order({ order, currentStore }) {
                         </div>
 
                         <div className="flex flex-col md:flex-row gap-3 items-start md:items-center">
-                            <StatusBadge status={order?.status} />
+                            <StatusBadge
+                                className="py-2.5"
+                                status={order?.status}
+                            />
 
                             <div className="flex gap-2">
                                 <Button
-                                    variant="outline"
                                     size="sm"
-                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C]"
+                                    className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
                                     onClick={handlePrint}
                                 >
-                                    <Printer className="h-4 w-4 mr-2" />
+                                    <Printer className="h-4 w-4" />
                                     Print
                                 </Button>
 
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C]"
-                                >
-                                    <Download className="h-4 w-4 mr-2" />
-                                    Export
-                                </Button>
+                                {order?.status === "paid" &&
+                                orderItems?.some(
+                                    (item) => item.product?.physical,
+                                ) ? (
+                                    <Button
+                                        size="sm"
+                                        className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
+                                        onClick={() =>
+                                            setDeliveryModalOpen(true)
+                                        }
+                                    >
+                                        <Package className="h-4 w-4" />
+                                        Update Delivery
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        as="a"
+                                        size="sm"
+                                        href={`${order?.store_url}/orders/${order?.id}`}
+                                        className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        <Eye className="h-4 w-4" />
+                                        View order
+                                    </Button>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -306,15 +379,15 @@ export default function Order({ order, currentStore }) {
                                 </CardHeader>
                                 <CardContent className="flex-1 flex flex-col h-full">
                                     {orderItems.length === 0 ? (
-                                        <div className="flex-1 flex flex-col items-center justify-center border border-[#2C2C2C] rounded-md bg-[#1A1A1A] p-8">
+                                        <div className="flex-1 flex flex-col items-center justify-center border border-muted-foreground/15 dark:border-[#2C2C2C] rounded-md bg-[#1A1A1A] p-8">
                                             <Package className="h-12 w-12 text-gray-500 mb-4" />
                                             <p className="text-gray-400 text-lg">
                                                 No items in this order
                                             </p>
                                         </div>
                                     ) : (
-                                        <div className="rounded-md border border-[#2C2C2C] overflow-hidden h-full flex flex-col">
-                                            <div className="grid grid-cols-4 bg-[#1A1A1A] p-4 border-b border-[#2C2C2C]">
+                                        <div className="rounded-md border border-muted-foreground/15 dark:border-[#2C2C2C] overflow-hidden h-full flex flex-col overflow-x-auto">
+                                            <div className="grid grid-cols-4 bg-[#1A1A1A] p-4 border-b border-muted-foreground/15 dark:border-[#2C2C2C] min-w-md">
                                                 <div className="col-span-1 font-medium text-white">
                                                     Product
                                                 </div>
@@ -329,7 +402,7 @@ export default function Order({ order, currentStore }) {
                                                 </div>
                                             </div>
 
-                                            <div className="flex-1 flex flex-col">
+                                            <div className="flex-1 flex flex-col min-w-md">
                                                 {orderItems.map(
                                                     (item, index) => {
                                                         const product =
@@ -341,23 +414,25 @@ export default function Order({ order, currentStore }) {
                                                         const total =
                                                             price * quantity;
 
+                                                        const productImage =
+                                                            product.images
+                                                                ? JSON.parse(
+                                                                      product.images,
+                                                                  )[0]
+                                                                : null;
+
                                                         return (
                                                             <div
                                                                 key={index}
-                                                                className="grid grid-cols-4 p-4 border-b border-[#2C2C2C] hover:bg-[#1A1A1A] transition-colors"
+                                                                className="grid grid-cols-4 p-4 border-b border-muted-foreground/15 dark:border-[#2C2C2C] hover:bg-accent-foreground/10 dark:hover:bg-[#1A1A1A] transition-colors"
                                                             >
                                                                 <div className="col-span-1">
                                                                     <div className="flex items-center gap-3">
-                                                                        <div className="h-12 w-12 rounded-md bg-[#2C2C2C] flex items-center justify-center overflow-hidden">
-                                                                            {product.images &&
-                                                                            product
-                                                                                .images
-                                                                                .length >
-                                                                                0 ? (
+                                                                        <div className="h-12 !w-12 rounded-md bg-[#2C2C2C] items-center justify-center overflow-hidden hidden lg:flex">
+                                                                            {productImage ? (
                                                                                 <img
                                                                                     src={
-                                                                                        product
-                                                                                            .images[0]
+                                                                                        productImage
                                                                                     }
                                                                                     alt={
                                                                                         product.name
@@ -369,17 +444,18 @@ export default function Order({ order, currentStore }) {
                                                                             )}
                                                                         </div>
                                                                         <div>
-                                                                            <p className="font-medium text-white">
+                                                                            <p className="font-medium text-primary">
                                                                                 {
                                                                                     product.name
                                                                                 }
                                                                             </p>
                                                                             {product.description && (
-                                                                                <p className="text-xs text-gray-400 line-clamp-1">
-                                                                                    {
-                                                                                        product.description
-                                                                                    }
-                                                                                </p>
+                                                                                <p
+                                                                                    className="text-xs text-primary/65 line-clamp-1"
+                                                                                    dangerouslySetInnerHTML={{
+                                                                                        __html: product.description,
+                                                                                    }}
+                                                                                ></p>
                                                                             )}
                                                                         </div>
                                                                     </div>
@@ -404,14 +480,13 @@ export default function Order({ order, currentStore }) {
                                                     },
                                                 )}
 
-                                                {/* Spacer to push the footer down when few items */}
                                                 {orderItems.length < 3 && (
                                                     <div className="flex-1"></div>
                                                 )}
                                             </div>
 
-                                            <div className="mt-auto bg-[#1A1A1A] border-t border-[#2C2C2C]">
-                                                <div className="grid grid-cols-4 p-4 border-b border-[#2C2C2C]">
+                                            <div className="mt-auto dark:bg-[#1A1A1A] border-t border-muted-foreground/15 dark:border-[#2C2C2C] min-w-md">
+                                                <div className="grid grid-cols-4 p-4 border-b border-muted-foreground/15 dark:border-[#2C2C2C]">
                                                     <div className="col-span-3 text-right font-medium">
                                                         Subtotal
                                                     </div>
@@ -442,12 +517,6 @@ export default function Order({ order, currentStore }) {
 
                         <div className="space-y-6 h-full flex flex-col">
                             <Card>
-                                <CardHeader>
-                                    <CardTitle className="flex items-center gap-2">
-                                        <User className="h-5 w-5 text-primary-orange" />
-                                        Customer
-                                    </CardTitle>
-                                </CardHeader>
                                 <CardContent>
                                     {order?.customer ? (
                                         <div className="space-y-4">
@@ -461,7 +530,7 @@ export default function Order({ order, currentStore }) {
                                                     <h3 className="font-medium">
                                                         {order.customer.name}
                                                     </h3>
-                                                    <p className="text-xs text-gray-400">
+                                                    <p className="text-xs text-primary/65">
                                                         Customer since{" "}
                                                         {dayjs(
                                                             order.customer
@@ -471,47 +540,57 @@ export default function Order({ order, currentStore }) {
                                                 </div>
                                             </div>
 
-                                            <div className="space-y-2 pt-2">
+                                            <div className="space-y-2 pt-2 ml-2">
                                                 {order.customer.email && (
                                                     <div className="flex items-center gap-2">
-                                                        <Mail className="h-4 w-4 text-gray-500" />
-                                                        <span className="text-sm text-gray-300">
+                                                        <Mail className="h-4 w-4 text-primary/75" />
+                                                        <a
+                                                            className="text-sm text-primary/65 hover:underline"
+                                                            href={`mailto:${order.customer.email}`}
+                                                        >
                                                             {
                                                                 order.customer
                                                                     .email
                                                             }
-                                                        </span>
+                                                        </a>
                                                     </div>
                                                 )}
 
                                                 {order.customer.phone && (
                                                     <div className="flex items-center gap-2">
-                                                        <Phone className="h-4 w-4 text-gray-500" />
-                                                        <span className="text-sm text-gray-300">
+                                                        <Phone className="h-4 w-4 text-primary/75" />
+                                                        <a
+                                                            className="text-sm text-primary/65 hover:underline"
+                                                            href={`tel:${order.customer.phone}`}
+                                                        >
                                                             {
                                                                 order.customer
                                                                     .phone
                                                             }
-                                                        </span>
+                                                        </a>
                                                     </div>
                                                 )}
 
                                                 {order.customer.address && (
                                                     <div className="flex items-start gap-2">
-                                                        <MapPin className="h-4 w-4 text-gray-500 mt-0.5" />
-                                                        <span className="text-sm text-gray-300">
+                                                        <MapPin className="h-4 w-4 text-primary/75 mt-0.5" />
+                                                        <a
+                                                            className="text-sm text-primary/65 hover:underline"
+                                                            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(order.customer.address)}`}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                        >
                                                             {
                                                                 order.customer
                                                                     .address
                                                             }
-                                                        </span>
+                                                        </a>
                                                     </div>
                                                 )}
                                             </div>
 
                                             <div className="pt-2">
                                                 <Button
-                                                    variant="outline"
                                                     size="sm"
                                                     className="w-full bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C]"
                                                     onClick={() =>
@@ -539,7 +618,6 @@ export default function Order({ order, currentStore }) {
                                 </CardContent>
                             </Card>
 
-                            {/* Order timeline */}
                             <Card>
                                 <CardHeader>
                                     <CardTitle className="flex items-center gap-2">
@@ -549,7 +627,7 @@ export default function Order({ order, currentStore }) {
                                 </CardHeader>
                                 <CardContent>
                                     <div className="space-y-4">
-                                        <div className="relative pl-6 pb-4 border-l border-[#2C2C2C]">
+                                        <div className="relative ml-2 pl-6 pb-4 border-l border-muted-foreground/15 dark:border-[#2C2C2C]">
                                             <div className="absolute left-0 top-0 -translate-x-1/2 h-4 w-4 rounded-full bg-primary-orange"></div>
                                             <h3 className="font-medium">
                                                 Order Placed
@@ -564,10 +642,63 @@ export default function Order({ order, currentStore }) {
                                         </div>
 
                                         {order?.status === "paid" && (
-                                            <div className="relative pl-6 pb-4 border-l border-[#2C2C2C]">
-                                                <div className="absolute left-0 top-0 -translate-x-1/2 h-4 w-4 rounded-full bg-green-500"></div>
+                                            <>
+                                                <div className="relative ml-2 pl-6 pb-4 border-l border-muted-foreground/15 dark:border-[#2C2C2C]">
+                                                    <div className="absolute left-0 top-0 -translate-x-1/2 h-4 w-4 rounded-full bg-green-500"></div>
+                                                    <h3 className="font-medium">
+                                                        Payment Completed
+                                                    </h3>
+                                                    <p className="text-sm text-gray-400">
+                                                        {dayjs(
+                                                            order?.updated_at,
+                                                        ).format(
+                                                            "MMM D, YYYY [at] h:mm A",
+                                                        )}
+                                                    </p>
+                                                </div>
+
+                                                {(order?.shipping_updates
+                                                    ?.length > 0 ||
+                                                    orderItems?.some(
+                                                        (item) =>
+                                                            item.product
+                                                                ?.physical,
+                                                    )) && (
+                                                    <div className="relative ml-2 pl-6 pb-4 border-l border-muted-foreground/15 dark:border-[#2C2C2C]">
+                                                        <div className="absolute left-0 top-0 -translate-x-1/2 h-4 w-4 rounded-full bg-blue-500"></div>
+                                                        <h3 className="font-medium flex items-center gap-2">
+                                                            <Package className="w-4 h-4" />
+                                                            Product Delivery
+                                                        </h3>
+                                                        <p className="text-sm text-gray-400">
+                                                            {order
+                                                                ?.shipping_updates
+                                                                ?.length > 0
+                                                                ? `${
+                                                                      order
+                                                                          .shipping_updates
+                                                                          .length
+                                                                  } updates sent — ${
+                                                                      order
+                                                                          .shipping_updates[
+                                                                          order
+                                                                              .shipping_updates
+                                                                              .length -
+                                                                              1
+                                                                      ].message
+                                                                  }`
+                                                                : "Physical products in this order should be delivered to the customer's shipping address."}
+                                                        </p>
+                                                    </div>
+                                                )}
+                                            </>
+                                        )}
+
+                                        {order?.status === "completed" && (
+                                            <div className="relative ml-2 pl-6 border-l border-muted-foreground/15 dark:border-[#2C2C2C]">
+                                                <div className="absolute left-0 top-0 -translate-x-1/2 h-4 w-4 rounded-full bg-emerald-500"></div>
                                                 <h3 className="font-medium">
-                                                    Payment Completed
+                                                    Order Completed
                                                 </h3>
                                                 <p className="text-sm text-gray-400">
                                                     {dayjs(
@@ -580,7 +711,7 @@ export default function Order({ order, currentStore }) {
                                         )}
 
                                         {order?.status === "cancelled" && (
-                                            <div className="relative pl-6 border-l border-[#2C2C2C]">
+                                            <div className="relative ml-2 pl-6 border-l border-muted-foreground/15 dark:border-[#2C2C2C]">
                                                 <div className="absolute left-0 top-0 -translate-x-1/2 h-4 w-4 rounded-full bg-red-500"></div>
                                                 <h3 className="font-medium">
                                                     Order Cancelled
@@ -596,7 +727,7 @@ export default function Order({ order, currentStore }) {
                                         )}
 
                                         {order?.status === "pending" && (
-                                            <div className="relative pl-6 border-l border-[#2C2C2C]">
+                                            <div className="relative ml-2 pl-6 border-l border-muted-foreground/15 dark:border-[#2C2C2C]">
                                                 <div className="absolute left-0 top-0 -translate-x-1/2 h-4 w-4 rounded-full bg-yellow-500"></div>
                                                 <h3 className="font-medium">
                                                     Awaiting Payment
@@ -616,6 +747,84 @@ export default function Order({ order, currentStore }) {
                     </div>
                 </div>
             </div>
+
+            <Dialog
+                open={isDeliveryModalOpen}
+                onOpenChange={setDeliveryModalOpen}
+            >
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Update Delivery Status</DialogTitle>
+                        <DialogDescription>
+                            Send a delivery update to the customer or mark the
+                            order as delivered.
+                        </DialogDescription>
+                    </DialogHeader>
+
+                    <div className="space-y-4 py-4">
+                        <div className="space-y-6">
+                            <div className="space-y-2">
+                                <Input
+                                    type="date"
+                                    label="When will the order be delivered?"
+                                    value={expectedDeliveryDate}
+                                    onChange={(e) =>
+                                        setExpectedDeliveryDate(e.target.value)
+                                    }
+                                    min={dayjs().format("YYYY-MM-DD")}
+                                    required
+                                />
+                                <p className="text-sm text-primary/65">
+                                    Choose the expected date this order will be
+                                    delivered to the customer
+                                </p>
+                            </div>
+
+                            <div className="space-y-2">
+                                <Input
+                                    as="textarea"
+                                    label="Update Message"
+                                    placeholder="Example: Your order has been picked up by our delivery partner and is on its way..."
+                                    value={deliveryUpdate}
+                                    onChange={(e) =>
+                                        setDeliveryUpdate(e.target.value)
+                                    }
+                                    className="min-h-[100px]"
+                                />
+                                <p className="text-sm text-primary/65">
+                                    This message will be sent to the customer
+                                    via email
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col gap-2 pt-2">
+                            <Button
+                                onClick={handleDeliveryUpdate}
+                                disabled={
+                                    !deliveryUpdate.trim() ||
+                                    !expectedDeliveryDate ||
+                                    isUpdating
+                                }
+                                className="w-full"
+                            >
+                                <Send className="w-4 h-4 mr-2" />
+                                Send Update
+                            </Button>
+                            OR
+                            <Button
+                                onClick={markAsDelivered}
+                                disabled={isUpdating}
+                                variant="outline"
+                                className="w-full"
+                            >
+                                <Check className="w-4 h-4 mr-2" />
+                                Mark as Delivered
+                            </Button>
+                        </div>
+                    </div>
+                </DialogContent>
+            </Dialog>
         </Layout>
     );
 }

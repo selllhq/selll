@@ -118,4 +118,9 @@ class Store extends Model
     {
         return $this->hasMany(Wallet::class);
     }
+
+    public function shippingUpdates()
+    {
+        return $this->hasMany(ShippingUpdate::class);
+    }
 }

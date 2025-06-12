@@ -25,6 +25,27 @@ class UserMailer
     }
 
     /**
+     * Create verification mail for user who registered
+     * @param mixed $email
+     * @return \Leaf\Mail
+     */
+    public static function shippingUpdate($order, $store, $message, $expectedDeliveryDate)
+    {
+        return mailer()->create([
+            'subject' => "Update to your order on {$store->name}",
+            'body' => view('mail.customer.shipping-update', [
+                'order' => $order,
+                'store' => $store,
+                'message' => $message,
+                'expectedDeliveryDate' => $expectedDeliveryDate,
+            ]),
+            'recipientEmail' => $order->customer->email,
+            'recipientName' => $order->customer->name,
+            'senderName' => $store->name,
+        ]);
+    }
+
+    /**
      * Create mail for user who received a waitlist invite
      * @param mixed $email
      * @param mixed $invite
