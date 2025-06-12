@@ -86,7 +86,10 @@ class StoresController extends Controller
 
     public function showOrders($storeId, $orderId)
     {
-        $order = Store::find($storeId)->carts()->with('customer')->find($orderId) ?? [];
+        $order = Store::find($storeId)
+            ->carts()
+            ->with(['customer', 'shippingUpdates'])
+            ->find($orderId) ?? [];
 
         if (!$order) {
             return response()->json(['error' => 'Order not found'], 404);
