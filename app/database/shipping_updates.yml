@@ -1,0 +1,25 @@
+columns:
+  message: string
+  tracking_id:
+    type: string
+    nullable: true
+  carrier:
+    type: string
+    nullable: true
+    default: Custom
+  shipping_method:
+    type: string
+    default: courier
+  estimated_delivery_date: timestamp
+  status:
+    type: enum
+    default: pending
+    values:
+      - pending
+      - completed
+      - cancelled
+
+relationships:
+  - Store
+  - Customer
+  - Cart

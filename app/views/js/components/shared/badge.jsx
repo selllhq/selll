@@ -44,13 +44,14 @@ export function StatusBadge({ status, className, ...props }) {
         switch (status) {
             case "completed":
             case "paid":
-                return "bg-emerald-500/10 text-emerald-500";
+                return "bg-emerald-500/10 text-emerald-500 border border-emerald-500/50";
+            case "processing":
             case "pending":
-                return "bg-amber-500/10 text-amber-500";
+                return "bg-amber-500/10 text-amber-500 border border-amber-500/20";
             case "failed":
             case "abandoned":
             case "cancelled":
-                return "bg-red-500/10 text-red-500";
+                return "bg-red-500/10 text-red-500 border border-red-500/20";
             default:
                 return "bg-gray-500/10 text-gray-500";
         }
