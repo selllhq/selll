@@ -70,7 +70,7 @@ class OrdersController extends Controller
             SMSHelper::write([
                 'recipient' => $order->customer->phone,
                 'senderId' => 'Selll Order',
-                'message' => "Update on your order #{$order->id} from {$currentStore->name} {$message}. Expected delivery date is {$expectedDeliveryDate}. Visit {$order->store_url}/order/{$order->id} for more details.",
+                'message' => "Update on your order #{$order->id} from {$currentStore->name} {$message}. Expected delivery date is {$expectedDeliveryDate}. Visit {$order->store_url}/orders/{$order->id} for more details.",
             ])
                 ->withArkesel()
                 ->send();

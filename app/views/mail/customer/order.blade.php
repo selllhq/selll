@@ -234,7 +234,7 @@ idth: 1px; margin: 0 auto; padding: 0; width: 456px;">
                                                                             style="box-sizing: border-box; position:
                                                                             relative; font-family: 'Bricolage Grotesque', sans-serif;
                                                                             font-size: 16px; line-height: 2;">
-                                                                            <a href="{{ $order->store_url }}/order/{{ $order->id }}"
+                                                                            <a href="{{ $order->store_url }}/orders/{{ $order->id }}"
                                                                                 class="button button-primary"
                                                                                 target="_blank" rel="noopener"
                                                                                 style="box-sizing: border-box;
