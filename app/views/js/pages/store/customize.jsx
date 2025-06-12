@@ -5,6 +5,7 @@ import { cn } from "@/utils";
 import Layout from "@/layouts/app-layout";
 import * as Tabs from "@radix-ui/react-tabs";
 import { LayoutTab, HeroTab, ThemeTab, ContactTab } from "./tabs";
+import { toast } from "sonner";
 
 const Customize = ({ store }) => {
     const storeConfig = JSON.parse(store?.config ?? "{}");
@@ -40,7 +41,11 @@ const Customize = ({ store }) => {
 
     const submit = (e) => {
         e.preventDefault();
-        post("/store/customize");
+        post("/store/customize", {
+            onSuccess: () => {
+                toast.success("Store customization saved successfully!");
+            },
+        });
     };
 
     return (

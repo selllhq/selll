@@ -120,6 +120,6 @@ class SetupController extends Controller
         $store->config = json_encode($data);
         $store->save();
 
-        return response()->redirect('/dashboard', 303);
+        return response()->redirect('/store/customize', 303);
     }
 }
