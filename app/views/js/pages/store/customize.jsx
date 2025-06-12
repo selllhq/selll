@@ -18,6 +18,7 @@ const Customize = ({ store }) => {
         hero_content_alignment: storeConfig?.hero_content_alignment ?? "center",
         show_hero_button: storeConfig?.show_hero_button ?? true,
         hero_button_text: storeConfig?.hero_button_text ?? "Shop Now",
+        show_hero_search: storeConfig?.show_hero_search ?? false,
         show_store_name: storeConfig?.show_store_name ?? true,
         show_store_logo: storeConfig?.show_store_logo ?? true,
         show_store_description: storeConfig?.show_store_description ?? false,
@@ -25,6 +26,7 @@ const Customize = ({ store }) => {
             storeConfig?.show_store_information_in_popup ?? true,
         show_product_price: storeConfig?.show_product_price ?? true,
         show_product_description: storeConfig?.show_product_description ?? true,
+        two_cards_on_mobile: storeConfig?.two_cards_on_mobile ?? false,
         theme_color: storeConfig?.theme_color ?? "#FF6B00",
         background_color: storeConfig?.background_color ?? "#141414",
         text_color: storeConfig?.text_color ?? "#FFFFFF",
@@ -268,13 +270,42 @@ const Customize = ({ store }) => {
                                                         {data.hero_button_text || "Shop Now"}
                                                     </button>
                                                 )}
+                                                {data.show_hero_search && (
+                                                    <div className="relative w-full max-w-md">
+                                                        <input
+                                                            type="text"
+                                                            placeholder="Search products..."
+                                                            className="w-full px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/70 text-sm"
+                                                        />
+                                                        <button
+                                                            className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-md text-white/70 hover:text-white hover:bg-white/10"
+                                                            style={{ backgroundColor: data.theme_color }}
+                                                        >
+                                                            <svg
+                                                                className="w-4 h-4"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                viewBox="0 0 24 24"
+                                                            >
+                                                                <path
+                                                                    strokeLinecap="round"
+                                                                    strokeLinejoin="round"
+                                                                    strokeWidth="2"
+                                                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                                                />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
                                 )}
 
                                 {/* Products Grid */}
-                                <div className="flex-1 p-4 grid grid-cols-1 gap-4">
+                                <div
+                                    className={`flex-1 p-4 grid gap-4 ${data.two_cards_on_mobile ? 'grid-cols-2' : 'grid-cols-1'}`}
+                                >
                                     <div
                                         className="rounded-lg overflow-hidden"
                                         style={{
@@ -323,6 +354,57 @@ const Customize = ({ store }) => {
                                                 }}
                                             >
                                                 View in Store
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        className="rounded-lg overflow-hidden"
+                                        style={{
+                                            border: `1px solid ${data.border_color}`,
+                                        }}
+                                    >
+                                        <div className="aspect-square bg-gray-800 flex items-center justify-center">
+                                            <svg
+                                                className="w-8 h-8 text-gray-600"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth="2"
+                                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                                />
+                                            </svg>
+                                        </div>
+                                        <div className="p-4">
+                                            <h3 className="font-medium">
+                                                Another Product
+                                            </h3>
+                                            {data.show_product_description && (
+                                                <p className="text-sm opacity-70 mt-1">
+                                                    This is another test product
+                                                </p>
+                                            )}
+                                            {data.show_product_price && (
+                                                <p
+                                                    className="mt-2 font-medium"
+                                                    style={{
+                                                        color: data.theme_color,
+                                                    }}
+                                                >
+                                                    GHS 99.00
+                                                </p>
+                                            )}
+                                            <button
+                                                className="w-full mt-3 py-2 rounded-lg text-white text-sm"
+                                                style={{
+                                                    backgroundColor: data.theme_color,
+                                                }}
+                                            >
+                                                Buy Now
                                             </button>
                                         </div>
                                     </div>

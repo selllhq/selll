@@ -105,6 +105,7 @@ class SetupController extends Controller
             request()->try([
                 'show_hero',
                 'show_hero_button',
+                'show_hero_search',
                 'show_store_name',
                 'show_store_logo',
                 'show_store_description',
@@ -113,6 +114,7 @@ class SetupController extends Controller
                 'show_product_description',
                 'open_product_in_popup',
                 'show_contact_info',
+                'two_cards_on_mobile',
             ])
         );
 

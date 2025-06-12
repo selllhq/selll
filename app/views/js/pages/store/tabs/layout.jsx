@@ -173,28 +173,30 @@ const LayoutTab = ({ data, setData }) => {
 
                     <div className="flex items-center justify-between">
                         <div>
-                            <h3 className="font-medium">
-                                Open Product in
-                                Popup
-                            </h3>
+                            <h3 className="font-medium">Open Product in Popup</h3>
                             <p className="text-sm text-gray-500 dark:text-gray-400">
-                                Open product
-                                details in a popup
-                                instead of a new
-                                page
+                                Open product details in a popup instead of a new page
                             </p>
                         </div>
                         <Switch
-                            checked={
-                                data.open_product_in_popup
+                            checked={data.open_product_in_popup}
+                            onCheckedChange={(checked) =>
+                                setData("open_product_in_popup", checked)
                             }
-                            onCheckedChange={(
-                                checked,
-                            ) =>
-                                setData(
-                                    "open_product_in_popup",
-                                    checked,
-                                )
+                        />
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <h3 className="font-medium">Two Cards on Mobile</h3>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                                Show two product cards side by side on mobile devices
+                            </p>
+                        </div>
+                        <Switch
+                            checked={data.two_cards_on_mobile}
+                            onCheckedChange={(checked) =>
+                                setData("two_cards_on_mobile", checked)
                             }
                         />
                     </div>
