@@ -114,6 +114,22 @@ class User extends Model
     }
 
     /**
+     * Get the referral user joined with.
+     */
+    public function referral()
+    {
+        return $this->hasOne(Referral::class, 'user_id');
+    }
+
+    /**
+     * Get the user's referral list.
+     */
+    public function referrals()
+    {
+        return $this->hasMany(Referral::class, 'referrer_id');
+    }
+
+    /**
      * Get the user's "personal" store.
      *
      * @return \App\Models\Store

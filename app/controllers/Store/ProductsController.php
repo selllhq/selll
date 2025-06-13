@@ -3,6 +3,7 @@
 namespace App\Controllers\Store;
 
 use App\Models\Store;
+use App\Models\User;
 
 class ProductsController extends Controller
 {
@@ -83,6 +84,12 @@ class ProductsController extends Controller
 
             $product->categories()->attach($category->id, [
                 'store_id' => auth()->user()->current_store_id,
+            ]);
+        }
+
+        if ($currentStore->products()->count() === 1) {
+            User::find(auth()->id())->referral()->first()?->update([
+                'store_product_added_at' => $currentStore->updated_at
             ]);
         }
 

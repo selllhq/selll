@@ -1,0 +1,23 @@
+columns:
+  referrer_id: bigInteger
+  store_id:
+    type: bigInteger
+    nullable: true
+  store_created_at:
+    type: timestamp
+    nullable: true
+  store_activated_at:
+    type: timestamp
+    nullable: true
+  store_product_added_at:
+    type: timestamp
+    nullable: true
+  store_first_order_at:
+    type: timestamp
+    nullable: true
+  reward_paid:
+    type: boolean
+    default: false
+
+relationships:
+  - User

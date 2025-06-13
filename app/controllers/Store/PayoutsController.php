@@ -3,6 +3,7 @@
 namespace App\Controllers\Store;
 
 use App\Models\Store;
+use App\Models\User;
 
 class PayoutsController extends Controller
 {
@@ -96,6 +97,10 @@ class PayoutsController extends Controller
         $currentStore->update([
             'status' => 'live',
             'payout_account_id' => $wallet->id,
+        ]);
+
+        User::find(auth()->id())->referral()->first()?->update([
+            'store_activated_at' => $currentStore->updated_at
         ]);
 
         return response()->redirect('/payouts/setup', 303);

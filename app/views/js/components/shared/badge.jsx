@@ -64,7 +64,7 @@ export function StatusBadge({ status, className, ...props }) {
         >
             {getStatusIcon(status)}
             <p className="m-0 ml-1 text-xs font-medium capitalize">
-                {status}
+                {props.children ?? status}
             </p>
         </Badge>
     );

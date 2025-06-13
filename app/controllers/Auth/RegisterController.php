@@ -3,6 +3,7 @@
 namespace App\Controllers\Auth;
 
 use App\Mailers\UserMailer;
+use App\Models\Referral;
 
 class RegisterController extends Controller
 {
@@ -32,6 +33,17 @@ class RegisterController extends Controller
         }
 
         $success = auth()->register($credentials);
+
+        if ($refCode = request()->get('ref')) {
+            $referrer = auth()->verifyToken($refCode, 'referral');
+
+            if ($referrer) {
+                Referral::create([
+                    'user_id' => auth()->id(),
+                    'referrer_id' => $referrer->id(),
+                ]);
+            }
+        }
 
         if (!$success) {
             return response()

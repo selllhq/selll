@@ -58,8 +58,12 @@ class SetupController extends Controller
                 ->redirect('/store/new', 303);
         }
 
-        $user = User::find(auth()->id());
+        $user = User::with('referral')->find(auth()->id());
         $user->switchStore($store = $user->ownedStores()->create($data));
+        $user->referral()->first()?->update([
+            'store_id' => $store->id,
+            'store_created_at' => $store->created_at,
+        ]);
 
         StoreMailer::welcome($user, $store)->send();
 

@@ -6,6 +6,7 @@ use App\Controllers\Controller;
 use App\Mailers\StoreMailer;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\User;
 
 class BillingCallbacksController extends Controller
 {
@@ -60,7 +61,7 @@ class BillingCallbacksController extends Controller
                 $providerCommission = $billingCallback->session()->data['fees'] / 100;
             }
 
-            $userCart->payout()->create([
+            $payout = $userCart->payout()->create([
                 'amount' => $userCart->total - $selllCommission - $providerCommission,
                 'currency' => $userCart->currency,
                 'selll_fee' => $selllFee,
@@ -71,6 +72,12 @@ class BillingCallbacksController extends Controller
                 'store_id' => $userCart->store_id,
                 'wallet_id' => $userCart->store->payout_account_id,
             ]);
+
+            if ($userCart->store->carts()->count() === 1) {
+                User::find(auth()->id())->referral()->first()?->update([
+                    'store_first_order_at' => $payout->updated_at
+                ]);
+            }
 
             StoreMailer::newOrder($ownerEmail, $userCart)->send();
         } else {
