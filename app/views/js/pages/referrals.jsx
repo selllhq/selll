@@ -90,7 +90,7 @@ export default function Referrals({ referrals, referralCode }) {
                             </div>
                             <p className="text-sm text-muted-foreground">
                                 {referrals.filter((r) => r.reward_paid).length}{" "}
-                                qualified
+                                paid out
                             </p>
                         </CardContent>
                     </Card>
@@ -105,7 +105,7 @@ export default function Referrals({ referrals, referralCode }) {
                             <div className="text-4xl font-bold mb-2">
                                 {formatCurrency(
                                     referrals.filter((r) => r.reward_paid)
-                                        .length,
+                                        .length * 10,
                                     "GHS",
                                 )}
                             </div>
@@ -125,7 +125,7 @@ export default function Referrals({ referrals, referralCode }) {
                                             r.store_activated_at &&
                                             r.store_product_added_at &&
                                             !r.reward_paid,
-                                    ).length,
+                                    ).length * 10,
                                     "GHS",
                                 )}{" "}
                                 pending earnings
@@ -137,7 +137,7 @@ export default function Referrals({ referrals, referralCode }) {
                             <CardTitle>Your Referral Link</CardTitle>
                             <CardDescription className="text-primary">
                                 Share this link with other store owners. You'll
-                                earn $1 for each store that:
+                                earn GHS 10 for each store that:
                                 <ul className="mt-2 list-disc list-inside space-y-1">
                                     <li>Signs up using your referral link</li>
                                     <li>Activates their store</li>
@@ -241,7 +241,7 @@ export default function Referrals({ referrals, referralCode }) {
                                                     <td className="p-4 align-middle">
                                                         {referral.reward_paid ? (
                                                             <span className="text-green-500 font-medium">
-                                                                $1.00
+                                                                GHS 10.00
                                                             </span>
                                                         ) : (
                                                             <span className="text-muted-foreground">
