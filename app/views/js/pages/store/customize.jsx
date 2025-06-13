@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Head, useForm } from "@inertiajs/react";
 import { Store, LayoutDashboard, Palette, Image, Mail } from "lucide-react";
 import Button from "@/components/form/button";
@@ -9,6 +10,7 @@ import { toast } from "sonner";
 
 const Customize = ({ store }) => {
     const storeConfig = JSON.parse(store?.config ?? "{}");
+    const [showPreview, setShowPreview] = useState(false);
 
     const { data, setData, post, errors, processing } = useForm({
         show_hero: storeConfig?.show_hero ?? false,
@@ -68,7 +70,7 @@ const Customize = ({ store }) => {
             <Head title="Customize Store" />
 
             <div className="flex h-[calc(100vh-5rem)]">
-                <div className="w-[60%] overflow-y-auto border-r dark:border-[#2C2C2C] p-6 pt-20">
+                <div className="w-full sm:w-[60%] overflow-y-auto border-r dark:border-[#2C2C2C] p-6 pt-20">
                     <div>
                         <div className="mb-8">
                             <h2 className="text-2xl font-medium mb-2">
@@ -163,6 +165,16 @@ const Customize = ({ store }) => {
                             </Tabs.Root>
 
                             <div className="mt-20 border-t dark:border-[#2C2C2C] pt-6 space-y-4">
+                                <div className="block sm:hidden">
+                                    <Button
+                                        type="button"
+                                        onClick={() => setShowPreview(!showPreview)}
+                                        className="w-full mb-4 bg-[#2C2C2C] hover:bg-[#3C3C3C]"
+                                    >
+                                        {showPreview ? 'Hide Preview' : 'Show Preview'}
+                                    </Button>
+                                </div>
+
                                 <Button
                                     type="submit"
                                     className="w-full bg-primary-orange hover:bg-primary-orange/90"
@@ -175,8 +187,26 @@ const Customize = ({ store }) => {
                     </div>
                 </div>
 
-                <div className="w-[40%] bg-gray-50 dark:bg-[#1C1C1C] overflow-y-auto">
+                <div className={`fixed inset-0 sm:static w-full sm:w-[40%] bg-gray-50 dark:bg-[#1C1C1C] overflow-y-auto transition-transform duration-300 ${showPreview ? 'translate-x-0 mt-28' : 'translate-x-full sm:translate-x-0'}`}>
                     <div className="p-8">
+                        <button
+                            onClick={() => setShowPreview(false)}
+                            className="block sm:hidden absolute right-4 top-4 p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-[#2C2C2C]"
+                        >
+                            <svg
+                                className="w-6 h-6"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
+                            </svg>
+                        </button>
                         <div className="rounded-xl overflow-hidden border border-gray-200 dark:border-[#2C2C2C] bg-white dark:bg-[#141414]">
                             <div
                                 className="min-h-[600px] flex flex-col"
