@@ -65,4 +65,21 @@ class DashboardController extends Controller
             'currentStore' => $currentStore,
         ]);
     }
+
+    public function gettingStarted()
+    {
+        $currentStoreId = auth()->user()->current_store_id;
+
+        if (!$currentStoreId) {
+            return response()->redirect('/store/new', 303);
+        }
+
+        $currentStore = $currentStoreId ? Store::find($currentStoreId) : [];
+
+        response()->inertia('getting-started', [
+            'currentStore' => $currentStore,
+            'wallets' => $currentStore->wallets()->get(),
+            'products' => $currentStore->products()->get()
+        ]);
+    }
 }

@@ -1,5 +1,5 @@
 import Layout from "@/layouts/app-layout";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import {
     Card,
     CardContent,
@@ -17,6 +17,7 @@ import EmptyState from "@/components/layout/empty";
 import { Package, ShoppingCart, Store, Users, Wallet } from "lucide-react";
 import Button from "@/components/form/button";
 import { BarChart, LineChart } from "@/components/shared/charts";
+import { useEffect } from "react";
 
 export default function Dashboard({
     auth,
@@ -28,6 +29,12 @@ export default function Dashboard({
     customers = [],
     revenueGraph = [],
 }) {
+    useEffect(() => {
+        if (products.length === 0) {
+            router.visit('/dashboard/getting-started');
+        }
+    }, []);
+
     return (
         <Layout
             variant="header"

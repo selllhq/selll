@@ -1,0 +1,39 @@
+connection: imports
+
+columns:
+  username: string
+  import_id: string
+  data: json
+  imported:
+    type: boolean
+    default: false
+  transformed:
+    type: boolean
+    default: false
+
+# example
+# inputUrl: "https://www.instagram.com/made_by_lucia__/",
+# id: "3560505145990139919",
+# type: "Image",
+# shortCode: "DFpdJDfsVAP",
+# caption: "",
+# hashtags: [],
+# mentions: [],
+# url: "https://www.instagram.com/p/DFpdJDfsVAP/",
+# commentsCount: 0,
+# firstComment: "",
+# latestComments: [],
+# dimensionsHeight: 1350,
+# dimensionsWidth: 1080,
+# displayUrl:
+#     "https://instagram.ftpa1-1.fna.fbcdn.net/v/t51.2885-15/476141700_17848958889399261_4795028057537291342_n.jpg?stp=dst-jpg_e35_p1080x1080_sh0.08_tt6&_nc_ht=instagram.ftpa1-1.fna.fbcdn.net&_nc_cat=109&_nc_oc=Q6cZ2QGqH222WBUNGDWg5DSRsRprhrJNeeXAy1_LROBq35C5GtD6rOXEv1F_KuY0x40Wm-lrKlBywU7DKHP9mIk_XmWv&_nc_ohc=Wu2VQheJhZsQ7kNvwERrPZY&_nc_gid=Jz3NSTQ2Wo8Bib-LYCr1bA&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfMteKYYO4mtsSTEJRvEYT4OG3t0XJ4_wwIB4adG6xqrDA&oe=6853C611&_nc_sid=10d13b",
+# images: [],
+# alt: "Photo by Made By Lucia | Cinnamon Rolls on February 04, 2025.",
+# likesCount: 20,
+# timestamp: "2025-02-04T10:35:10.000Z",
+# childPosts: [],
+# ownerFullName: "Made By Lucia | Cinnamon Rolls",
+# ownerUsername: "made_by_lucia__",
+# ownerId: "71890239260",
+# isSponsored: false,
+# isCommentsDisabled: false,

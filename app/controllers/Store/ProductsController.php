@@ -2,6 +2,8 @@
 
 namespace App\Controllers\Store;
 
+use App\Helpers\ProductImportHelper;
+use App\Models\ProductImport;
 use App\Models\Store;
 use App\Models\User;
 
@@ -38,6 +40,79 @@ class ProductsController extends Controller
             'categories' => $currentStore->categories()->get(),
             'errors' => flash()->display('errors') ?? [],
         ]);
+    }
+
+    public function import()
+    {
+        $currentStore = Store::find(auth()->user()->current_store_id);
+
+        response()->inertia('products/import', [
+            'currentStore' => $currentStore,
+            'categories' => $currentStore->categories()->get(),
+            'errors' => flash()->display('errors') ?? [],
+        ]);
+    }
+
+    public function importFromInstagram()
+    {
+        $username = request()->get('username');
+
+        response()->json(ProductImportHelper::fromInstagram(
+            $username,
+        ) ?? []);
+    }
+
+    public function checkInstagramImport($request)
+    {
+        $data = ProductImportHelper::fetchResults($request);
+
+        if (isset($data['error'])) {
+            return response()->die(['errors' => $data['error']]);
+        }
+
+        $parsedData = [];
+
+        $dbPost = ProductImport::where('import_id', $request)->get()->first();
+
+        if (!$dbPost->transformed) {
+            set_time_limit(0);
+
+            foreach ($data as $post) {
+                if (count($post['images']) === 0) {
+                    $post['displayUrl'] = storage()->createFile(
+                        withBucket("products/$request/display.jpg"),
+                        file_get_contents($post['displayUrl']),
+                        [
+                            'rename' => true,
+                            'recursive' => true,
+                        ]
+                    );
+                } else {
+                    $post['images'] = array_map(function ($image) use ($request) {
+                        return storage()->createFile(
+                            withBucket("products/$request/image.jpg"),
+                            file_get_contents($image),
+                            [
+                                'rename' => true,
+                                'recursive' => true,
+                            ]
+                        );
+                    }, $post['images']);
+
+                    $post['displayUrl'] = $post['images'][0];
+                }
+
+                $parsedData[] = $post;
+            }
+
+            $dbPost->data = json_encode($parsedData);
+            $dbPost->transformed = true;
+            $dbPost->save();
+        } else {
+            $parsedData = json_decode($dbPost->data, true);
+        }
+
+        return response()->json($parsedData);
     }
 
     public function store()

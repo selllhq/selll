@@ -21,6 +21,7 @@ app()->group('/dashboard', [
     'middleware' => ['auth.required', 'auth.verified'],
     function () {
         app()->get('/', 'Auth\DashboardController@index');
+        app()->get('/getting-started', 'Auth\DashboardController@gettingStarted');
         app()->get('/referrals', 'Auth\DashboardController@referrals');
     },
 ]);

@@ -18,6 +18,7 @@ processes = ['app']
 
 [env]
 APP_ENV = 'production'
+APP_DEBUG = 'false'
 APP_URL = 'https://selll.online/'
 DB_CONNECTION = 'pgsql'
 DB_DATABASE = 'selll'
