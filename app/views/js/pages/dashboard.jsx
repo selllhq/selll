@@ -315,7 +315,7 @@ export default function Dashboard({
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <LineChart data={revenueGraph} />
+                                    <LineChart currentStore={currentStore} data={revenueGraph} />
                                 </CardContent>
                             </Card>
                             <Card className="col-span-4 md:col-span-3">
@@ -386,6 +386,7 @@ export default function Dashboard({
                                 </CardHeader>
                                 <CardContent>
                                     <BarChart
+                                        currentStore={currentStore}
                                         data={products
                                             .slice(0, 5)
                                             .map((product) => ({

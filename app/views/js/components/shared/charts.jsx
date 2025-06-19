@@ -10,7 +10,7 @@ import {
     BarChart as RechartsBarChart,
 } from "recharts";
 
-export function LineChart({ data }) {
+export function LineChart({ data, currentStore }) {
     return (
         <ResponsiveContainer width="100%" height={350}>
             <RechartsLineChart data={data}>
@@ -30,7 +30,12 @@ export function LineChart({ data }) {
                     fontSize={12}
                     tickLine={false}
                     axisLine={false}
-                    tickFormatter={(value) => `$${value}`}
+                    tickFormatter={(value) =>
+                        new Intl.NumberFormat("en-US", {
+                            style: "currency",
+                            currency: currentStore?.currency,
+                        }).format(value)
+                    }
                 />
                 <Tooltip
                     content={({ active, payload }) => {
@@ -69,7 +74,7 @@ export function LineChart({ data }) {
     );
 }
 
-export function BarChart({ data }) {
+export function BarChart({ data, currentStore }) {
     return (
         <ResponsiveContainer width="100%" height={350}>
             <RechartsBarChart data={data}>
@@ -89,7 +94,12 @@ export function BarChart({ data }) {
                     fontSize={12}
                     tickLine={false}
                     axisLine={false}
-                    tickFormatter={(value) => `$${value}`}
+                    tickFormatter={(value) =>
+                        new Intl.NumberFormat("en-US", {
+                            style: "currency",
+                            currency: currentStore?.currency,
+                        }).format(value)
+                    }
                 />
                 <Tooltip
                     content={({ active, payload }) => {
