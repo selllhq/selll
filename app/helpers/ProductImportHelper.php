@@ -19,47 +19,45 @@ class ProductImportHelper
             $instagramUrl = "https://www.instagram.com/$instagramUrl/";
         }
 
-        $dbPost = ProductImport::where('username', $instagramUrl);
+        if ($dbPost = ProductImport::where('username', $instagramUrl)->first()) {
+            return $dbPost;
+        }
 
-        if ($dbPost->exists()) {
-            return $dbPost->first();
-        } else {
-            $client = new \GuzzleHttp\Client();
+        $client = new \GuzzleHttp\Client();
 
-            try {
-                $response = $client->post("https://api.apify.com/v2/acts/apify~instagram-scraper/runs", [
-                    'json' => [
-                        'addParentData' => false,
-                        'directUrls' => [
-                            $instagramUrl,
-                        ],
-                        'enhanceUserSearchWithFacebookPage' => false,
-                        'isUserReelFeedURL' => false,
-                        'isUserTaggedFeedURL' => false,
-                        'resultsLimit' => 30,
-                        'resultsType' => 'posts',
-                        'searchLimit' => 1,
-                        'searchType' => 'hashtag',
+        try {
+            $response = $client->post("https://api.apify.com/v2/acts/apify~instagram-scraper/runs", [
+                'json' => [
+                    'addParentData' => false,
+                    'directUrls' => [
+                        $instagramUrl,
                     ],
-                    'headers' => [
-                        'Authorization' => 'Bearer apify_api_GAMnXPuglW4KgTm4NcHRHrCDgnxiqm0KR5AU',
-                    ],
-                ]);
+                    'enhanceUserSearchWithFacebookPage' => false,
+                    'isUserReelFeedURL' => false,
+                    'isUserTaggedFeedURL' => false,
+                    'resultsLimit' => 30,
+                    'resultsType' => 'posts',
+                    'searchLimit' => 1,
+                    'searchType' => 'hashtag',
+                ],
+                'headers' => [
+                    'Authorization' => 'Bearer apify_api_GAMnXPuglW4KgTm4NcHRHrCDgnxiqm0KR5AU',
+                ],
+            ]);
 
-                $body = json_decode($response->getBody(), true);
+            $body = json_decode($response->getBody(), true);
 
-                $dbPost = ProductImport::create([
-                    'import_id' => $body['data']['defaultDatasetId'],
-                    'username' => $instagramUrl,
-                    'data' => json_encode([]),
-                ]);
-
-                return $dbPost->first();
-            } catch (\GuzzleHttp\Exception\RequestException $e) {
-            } catch (\Exception $e) {
-                error_log('Error importing instagram posts error: ' . $e->getMessage());
-                return false;
-            }
+            return ProductImport::create([
+                'import_id' => $body['data']['defaultDatasetId'],
+                'username' => $instagramUrl,
+                'imported' => false,
+                'transformed' => false,
+                'data' => json_encode([]),
+            ]);
+        } catch (\GuzzleHttp\Exception\RequestException $e) {
+        } catch (\Exception $e) {
+            error_log('Error importing instagram posts error: ' . $e->getMessage());
+            return false;
         }
     }
 
@@ -71,7 +69,7 @@ class ProductImportHelper
         $dbPost = ProductImport::where('import_id', $runId)->first();
 
         if ($dbPost->imported === true && !empty(json_decode($dbPost->data))) {
-            return json_decode($dbPost->data, true);
+            return $dbPost;
         }
 
         try {
@@ -88,7 +86,7 @@ class ProductImportHelper
             $dbPost->imported = true;
             $dbPost->save();
 
-            return $body;
+            return $dbPost;
         } catch (\GuzzleHttp\Exception\RequestException $e) {
         } catch (\Exception $e) {
             error_log('Error fetching instagram posts error: ' . $e->getMessage());

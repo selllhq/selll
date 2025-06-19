@@ -64,39 +64,63 @@ class ProductsController extends Controller
 
     public function checkInstagramImport($request)
     {
-        $data = ProductImportHelper::fetchResults($request);
+        set_time_limit(0);
 
-        if (isset($data['error'])) {
-            return response()->die(['errors' => $data['error']]);
+        $dbPost = ProductImportHelper::fetchResults($request);
+
+        if (!$dbPost) {
+            return response()->die(['errors' => 'Could not fetch import data.']);
         }
 
         $parsedData = [];
 
-        $dbPost = ProductImport::where('import_id', $request)->get()->first();
-
-        if (!$dbPost->transformed) {
-            set_time_limit(0);
-
-            foreach ($data as $post) {
+        if (
+            $dbPost->transformed === false ||
+            strpos($dbPost->data, 'cdninstagram.com') !== false ||
+            strpos($dbPost->data, 'fbcdn.net') !== false
+        ) {
+            foreach (json_decode($dbPost->data, true) as $post) {
                 if (count($post['images']) === 0) {
-                    $post['displayUrl'] = storage()->createFile(
-                        withBucket("products/$request/display.jpg"),
-                        file_get_contents($post['displayUrl']),
-                        [
-                            'rename' => true,
-                            'recursive' => true,
-                        ]
-                    );
-                } else {
-                    $post['images'] = array_map(function ($image) use ($request) {
-                        return storage()->createFile(
-                            withBucket("products/$request/image.jpg"),
-                            file_get_contents($image),
+                    if (
+                        strpos($post['displayUrl'], 'cdn1.selll.online') === false &&
+                        (strpos($post['displayUrl'], 'cdninstagram.com') !== false ||
+                            strpos($post['displayUrl'], 'fbcdn.net') !== false)
+                    ) {
+                        $post['displayUrl'] = storage()->createFile(
+                            withBucket("imports/$request/display.jpg"),
+                            file_get_contents($post['displayUrl']),
                             [
                                 'rename' => true,
                                 'recursive' => true,
                             ]
                         );
+
+                        // if ($post['type'] === 'Video') {
+                        //     $post['images'][] = $post['displayUrl'];
+                        //     $post['images'][] = storage()->createFile(
+                        //         withBucket("imports/$request/video.mp4"),
+                        //         file_get_contents($post['videoUrl']),
+                        //         [
+                        //             'rename' => true,
+                        //             'recursive' => true,
+                        //         ]
+                        //     );
+                        // }
+                    }
+                } else {
+                    $post['images'] = array_map(function ($image) use ($request) {
+                        if ((strpos($image, 'cdninstagram.com') !== false || strpos($image, 'fbcdn.net') !== false) && strpos($image, 'cdn1.selll.online') === false) {
+                            return storage()->createFile(
+                                withBucket("imports/$request/display.jpg" . basename($image)),
+                                file_get_contents($image),
+                                [
+                                    'rename' => true,
+                                    'recursive' => true,
+                                ]
+                            );
+                        }
+
+                        return $image;
                     }, $post['images']);
 
                     $post['displayUrl'] = $post['images'][0];
@@ -169,6 +193,39 @@ class ProductsController extends Controller
         }
 
         return response()->redirect("/products/{$product->id}", 303);
+    }
+
+    public function storeFromImport()
+    {
+        $data = request()->get([
+            'name',
+            'description',
+            'price',
+            'quantity',
+            'quantity_items',
+            'images'
+        ], false);
+
+        $data['images'] = json_encode($data['images'] ?? []);
+        $currentStore = Store::find(auth()->user()->current_store_id);
+        $product = $currentStore->products()->create($data);
+
+        foreach (request()->get('categories', false) ?? [] as $categoryData) {
+            $category = $currentStore->categories()->where('title', $categoryData['value'])->first();
+
+            if (!$category) {
+                $category = $currentStore->categories()->firstOrCreate(
+                    ['title' => $categoryData['value']],
+                    ['description' => $categoryData['label']]
+                );
+            }
+
+            $product->categories()->attach($category->id, [
+                'store_id' => auth()->user()->current_store_id,
+            ]);
+        }
+
+        return response()->redirect('/products/import', 303);
     }
 
     public function show($id)

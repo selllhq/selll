@@ -1,5 +1,5 @@
 import Layout from "@/layouts/app-layout";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import {
     Card,
     CardContent,
@@ -19,10 +19,19 @@ import InputError from "@/components/form/input-error";
 import Label from "@/components/form/label";
 import Select from "@/components/form/creatable-select";
 import { MinimalTiptapEditor } from "@/components/ui/minimal-tiptap";
-import { Instagram, Loader2, Package, Plus, Trash, X } from "lucide-react";
+import {
+    Instagram,
+    Loader2,
+    Package,
+    Plus,
+    Search,
+    Trash,
+    X,
+} from "lucide-react";
 import { useState } from "react";
 import { CURRENCY_LIMITS, CURRENCY_SYMBOLS } from "@/utils/store";
 import { cn } from "@/utils";
+import { toast } from "sonner";
 
 export default function ImportProducts({ currentStore, categories, auth }) {
     const [loading, setLoading] = useState(false);
@@ -66,10 +75,8 @@ export default function ImportProducts({ currentStore, categories, auth }) {
                     setLoading(false);
                 } else {
                     setTimeout(() => {
-                        handleFetchPosts(
-                            id ?? instagramPostSettings.import_id,
-                        );
-                    }, 5000);
+                        handleFetchPosts(id ?? instagramPostSettings.import_id);
+                    }, 10000);
                 }
             })
             .catch((error) => {
@@ -92,7 +99,7 @@ export default function ImportProducts({ currentStore, categories, auth }) {
 
                 setTimeout(() => {
                     handleFetchPosts(data?.import_id);
-                }, 10000);
+                }, 5000);
             })
             .catch((error) => {
                 console.error("Error importing Instagram posts:", error);
@@ -102,9 +109,9 @@ export default function ImportProducts({ currentStore, categories, auth }) {
 
     const handlePostClick = (post) => {
         setSelectedPost(post);
-        const categories = post.hashtags.map(tag => ({
+        const categories = post.hashtags.map((tag) => ({
             value: tag,
-            label: tag
+            label: tag,
         }));
 
         setData({
@@ -114,7 +121,7 @@ export default function ImportProducts({ currentStore, categories, auth }) {
             quantity: "unlimited",
             quantity_items: "",
             images: post.type === "Sidecar" ? post.images : [post.displayUrl],
-            categories: categories
+            categories: categories,
         });
     };
 
@@ -125,30 +132,29 @@ export default function ImportProducts({ currentStore, categories, auth }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         const price = parseFloat(data.price);
 
         if (price < currencyLimits.min || price > currencyLimits.max) {
             return;
         }
 
-        post("/products/new", {
+        post("/products/new/import", {
             onSuccess: () => {
-                // Remove the post from the list
+                toast.success(
+                    "Product created successfully! You can now edit it.",
+                );
+
                 setInstagramPosts((posts) =>
                     posts.filter((p) => p.id !== selectedPost?.id),
                 );
+
                 closeModal();
             },
         });
     };
 
-    const handleFinalize = () => {
-        const selectedPosts = instagramPosts.filter((p) => p.selected);
-        if (selectedPosts.length === 0) return;
-
-        // Handle upload of selected posts
-        console.log("Converting posts to products:", selectedPosts);
-    };
+    console.log("selectedPost", selectedPost);
 
     return (
         <Layout
@@ -170,92 +176,113 @@ export default function ImportProducts({ currentStore, categories, auth }) {
             <div className="mt-16 md:py-4 md:px-4">
                 <div className="mb-6">
                     <h2 className="text-2xl md:text-4xl font-bold md:mb-2">
-                        Okay, {auth.user.name.split(" ")[0]}
+                        Hello, {auth.user.name.split(" ")[0]}
                     </h2>
                     <p className="text-muted-foreground text-sm md:text-base sm:max-w-md">
-                        Let's turn your Instagram posts into products in your
-                        store, just enter your Instagram username and select the
-                        products you want to import.
+                        Import posts from Instagram to showcase on your store.
                     </p>
                 </div>
                 <div className="space-y-8">
-                    {!instagramPostSettings.id && (
-                        <Card>
-                            <CardHeader>
-                                <CardTitle className="text-lg flex items-center gap-2">
-                                    <Instagram className="h-3 w-3" />
-                                    Import from Instagram
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="max-w-md">
+                    {!instagramPosts.length && (
+                        <Card className="flex flex-col gap-5 justify-center items-center p-6 sm:p-12 md:p-24">
+                            {!instagramPostSettings.id ? (
+                                <>
+                                    <div className="flex justify-center items-center h-16 w-16 text-white bg-primary-orange p-4 rounded-full">
+                                        <Instagram className="w-full h-full" />
+                                    </div>
+                                    <div className="text-center">
+                                        <h2 className="sm:text-xl">
+                                            Import Instagram Posts
+                                        </h2>
+                                        <p className="text-xs sm:text-sm text-muted-foreground">
+                                            Enter your Instagram handle to
+                                            import and analyze your posts
+                                        </p>
+                                    </div>
+
                                     <form
                                         onSubmit={handleImport}
-                                        className="flex flex-col sm:flex-row gap-3"
+                                        className="w-full sm:max-w-md mx-auto"
                                     >
-                                        <Input
-                                            placeholder="Enter Instagram username"
-                                            value={username}
-                                            onChange={(e) =>
-                                                setUsername(e.target.value)
-                                            }
-                                        />
-                                        <Button
-                                            disabled={loading || !username}
-                                            className="bg-primary-orange hover:bg-primary-orange/90 text-white min-w-[120px]"
-                                        >
-                                            {loading ? (
-                                                <Loader2 className="h-4 w-4 animate-spin" />
-                                            ) : (
-                                                "Import"
-                                            )}
-                                        </Button>
+                                        <div className="relative">
+                                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                                <span className="text-accent-foreground text-sm sm:text-lg font-medium">
+                                                    @
+                                                </span>
+                                            </div>
+                                            <Input
+                                                type="text"
+                                                placeholder="instagram_handle"
+                                                className="w-full pl-10 pr-12 py-6 text-sm sm:text-lg border-0 rounded-lg focus:outline-none focus-visible:ring-primary-orange transition-colors border-gray-200 focus:border-none"
+                                                value={username}
+                                                onChange={(e) =>
+                                                    setUsername(e.target.value)
+                                                }
+                                            />
+                                            <Button
+                                                type="submit"
+                                                disabled={loading || !username}
+                                                className={`absolute inset-y-0 top-1 right-1 p-3 bg-primary-orange hover:bg-primary-orange/90 text-white rounded-xl ${loading || !username ? "bg-transparent" : ""}`}
+                                            >
+                                                {loading ? (
+                                                    <Loader2 className="size-4 animate-spin" />
+                                                ) : (
+                                                    <Search className="size-4" />
+                                                )}
+                                            </Button>
+                                        </div>
+                                        <div className="mt-2 text-center hidden sm:block">
+                                            <p className="text-xs text-muted-foreground">
+                                                We'll display your public posts,
+                                                you can select what you want to
+                                                import
+                                            </p>
+                                        </div>
                                     </form>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    )}
-
-                    {instagramPostSettings.id && !instagramPosts.length && (
-                        <Card>
-                            <CardContent>
-                                <div className="flex items-center gap-2">
-                                    <Instagram className="h-12 w-12 text-primary-orange animate-pulse" />
-                                    <div className="text-sm text-gray-500">
-                                        Fetching posts from{" "}
-                                        <strong>
-                                            {instagramPostSettings.username}
-                                        </strong>
+                                </>
+                            ) : (
+                                <>
+                                    <div className="flex justify-center items-center h-16 w-16 text-white bg-primary-orange p-4 rounded-full animate-pulse">
+                                        <Instagram className="w-full h-full" />
                                     </div>
-                                </div>
-                            </CardContent>
+                                    <div className="text-center">
+                                        <h2 className="sm:text-xl">
+                                            Importing Posts from @{username}
+                                        </h2>
+                                        <p className="text-xs sm:text-sm text-muted-foreground">
+                                            Please wait while we fetch your
+                                            Instagram content...
+                                        </p>
+                                    </div>
+                                    <div className="mt-4 w-64 mx-auto bg-gray-200 rounded-full h-2">
+                                        <div className="bg-primary-orange h-2 rounded-full animate-pulse w-3/4"></div>
+                                    </div>
+                                </>
+                            )}
                         </Card>
                     )}
 
                     {instagramPosts.length > 0 && (
                         <Card>
                             <CardHeader>
-                                <div className="flex items-center justify-between">
+                                <div className="flex flex-col md:flex-row items-center justify-between">
                                     <div>
                                         <CardTitle>
                                             Select items from Instagram
                                         </CardTitle>
                                         <CardDescription>
-                                            Click on posts to select them for
-                                            import
+                                            Click on posts to create products from them
                                         </CardDescription>
                                     </div>
                                     <div className="text-right">
-                                        <div className="text-2xl font-semibold">
-                                            {selectedCount}
-                                            <span className="text-gray-400">
-                                                {" "}
-                                                / {maxSelection}
-                                            </span>
-                                        </div>
-                                        <div className="text-sm text-gray-500">
-                                            posts selected
-                                        </div>
+                                        <Button
+                                            as={Link}
+                                            href="/products"
+                                            variant="outline"
+                                            className="text-sm"
+                                        >
+                                            View All Products
+                                        </Button>
                                     </div>
                                 </div>
                             </CardHeader>
@@ -330,13 +357,40 @@ export default function ImportProducts({ currentStore, categories, auth }) {
                                             </DialogTitle>
                                             <div className="mt-4 flex items-start gap-4">
                                                 <div className="w-24 h-24 rounded-lg overflow-hidden">
-                                                    <img
-                                                        src={
-                                                            selectedPost?.displayUrl
-                                                        }
-                                                        alt={selectedPost?.alt}
-                                                        className="w-full h-full object-cover"
-                                                    />
+                                                    {selectedPost?.images
+                                                        ?.length > 1 ? (
+                                                        <div className="grid grid-cols-2">
+                                                            {selectedPost.images.map(
+                                                                (
+                                                                    image,
+                                                                    index,
+                                                                ) => (
+                                                                    <img
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                        src={
+                                                                            image
+                                                                        }
+                                                                        alt={
+                                                                            selectedPost?.alt
+                                                                        }
+                                                                        className="w-full h-full object-cover"
+                                                                    />
+                                                                ),
+                                                            )}
+                                                        </div>
+                                                    ) : (
+                                                        <img
+                                                            src={
+                                                                selectedPost?.displayUrl
+                                                            }
+                                                            alt={
+                                                                selectedPost?.alt
+                                                            }
+                                                            className="w-full h-full object-cover"
+                                                        />
+                                                    )}
                                                 </div>
                                                 <div className="flex-1">
                                                     <div className="text-sm text-gray-500">

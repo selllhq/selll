@@ -6,6 +6,7 @@ app()->group('/products', [
         app()->get('/', 'Store\ProductsController@index');
         app()->get('/new', 'Store\ProductsController@create');
         app()->post('/new', 'Store\ProductsController@store');
+        app()->post('/new/import', 'Store\ProductsController@storeFromImport');
         app()->get('/import', 'Store\ProductsController@import');
         app()->get('/import/instagram', 'Store\ProductsController@importFromInstagram');
         app()->get('/import/instagram/{request}', 'Store\ProductsController@checkInstagramImport');
@@ -15,4 +16,3 @@ app()->group('/products', [
         app()->delete('/(\d+)', 'Store\ProductsController@destroy');
     }
 ]);
-

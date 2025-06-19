@@ -39,6 +39,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/shared/table";
+import { CaretDownIcon } from "@radix-ui/react-icons";
 
 export default function Products({ orders = [], products, currentStore }) {
     const [search, setSearch] = useState("");
@@ -122,14 +123,33 @@ export default function Products({ orders = [], products, currentStore }) {
                                     <Store className="h-4 w-4" />
                                     View Store
                                 </Button>
-                                <Button
-                                    as={Link}
-                                    href="/products/new"
-                                    className="bg-primary-orange hover:bg-primary-orange/90 text-white w-full md:w-auto gap-2"
-                                >
-                                    <ShoppingBag className="h-4 w-4" />
-                                    Add Product
-                                </Button>
+                                <div className="flex items-center">
+                                    <Button
+                                        as={Link}
+                                        href="/products/new"
+                                        className="bg-primary-orange hover:bg-primary-orange/90 text-white w-full md:w-auto gap-2 rounded-r-none"
+                                    >
+                                        <ShoppingBag className="h-4 w-4" />
+                                        Add Product
+                                    </Button>
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                            <Button
+                                                variant="outline"
+                                                className="rounded-l-none border-l-0 px-2 bg-primary-orange hover:bg-primary-orange/90 !ring-0 !border-0 text-white"
+                                            >
+                                                <CaretDownIcon />
+                                            </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="end">
+                                            <DropdownMenuItem asChild>
+                                                <Link href="/products/import">
+                                                    Import from Instagram
+                                                </Link>
+                                            </DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                </div>
                             </div>
                         </div>
 
@@ -470,7 +490,8 @@ export default function Products({ orders = [], products, currentStore }) {
                                                                     purchase,
                                                                 ) =>
                                                                     acc +
-                                                                    (purchase.quantity * purchase.amount),
+                                                                    purchase.quantity *
+                                                                        purchase.amount,
                                                                 0,
                                                             ),
                                                         )}
