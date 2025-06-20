@@ -18,11 +18,17 @@ processes = ['app']
 
 [env]
 APP_ENV = 'production'
-APP_DEBUG = 'false'
+APP_DEBUG = 'true'
 APP_URL = 'https://selll.online/'
 DB_CONNECTION = 'pgsql'
 DB_DATABASE = 'selll'
+ANALYTICS_DB_DATABASE = 'analytics'
+IMPORTS_DB_DATABASE = 'imports'
+ANALYTICS_DB_USERNAME = 'analytics_owner'
+IMPORTS_DB_USERNAME = 'imports_owner'
 DB_PORT = '5432'
+ANALYTICS_DB_PORT = '5432'
+IMPORTS_DB_PORT = '5432'
 REDIS_SESSION = 'true'
 REDIS_PORT = '6379'
 
