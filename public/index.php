@@ -56,6 +56,8 @@ if (php_sapi_name() === 'cli-server') {
     unset($path);
 }
 
+echo "This is a Leaf MVC application.\n";
+
 /*
 |--------------------------------------------------------------------------
 | Run your Leaf MVC application
@@ -64,4 +66,4 @@ if (php_sapi_name() === 'cli-server') {
 | This line brings in all your routes and starts your application
 |
 */
-\Leaf\Core::runApplication();
+// \Leaf\Core::runApplication();
