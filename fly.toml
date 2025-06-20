@@ -3,7 +3,7 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'selll'
+app = 'pr-1-selllhq-selll'
 primary_region = 'lhr'
 
 [build]
@@ -37,7 +37,7 @@ ANALYTICS_DB_DATABASE = 'analytics'
 ANALYTICS_DB_USERNAME = 'analytics_owner'
 ANALYTICS_DB_PORT = '5432'
 
-REDIS_SESSION = 'true'
+REDIS_SESSION = 'false'
 REDIS_PORT = '6379'
 QUEUE_CONNECTION = 'redis'
 
