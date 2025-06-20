@@ -19,8 +19,8 @@ const GetStarted = ({ products, wallets }) => {
             content: (completed) => (
                 <Card>
                     <CardHeader className="mb-0">
-                        <CardTitle>Connect your bank/momo</CardTitle>
-                        <CardDescription>
+                        <CardTitle className="!text-primary">Connect your bank/momo</CardTitle>
+                        <CardDescription className="text-muted-foreground">
                             Tell us where to send your money when customers buy
                             items from your store
                         </CardDescription>
@@ -46,8 +46,8 @@ const GetStarted = ({ products, wallets }) => {
             content: (completed) => (
                 <Card>
                     <CardHeader className="mb-0">
-                        <CardTitle>List Your First Product</CardTitle>
-                        <CardDescription>
+                        <CardTitle className="!text-primary">List Your First Product</CardTitle>
+                        <CardDescription className="text-muted-foreground">
                             Add products to your store with high-quality images,
                             detailed descriptions, and competitive prices. The
                             more details you provide, the better!
@@ -81,7 +81,7 @@ const GetStarted = ({ products, wallets }) => {
             <div className="container mx-auto px-4 py-8 max-w-xl">
                 <div className="mb-10">
                     <h1 className="text-3xl font-bold mb-2">
-                        Get Started with Your Store
+                        Setup your store
                     </h1>
                     <p className="text-muted-foreground">
                         Follow these steps to set up your store and start
@@ -113,9 +113,6 @@ const GetStarted = ({ products, wallets }) => {
                                     )}
                                 </div>
                                 <div
-                                    className={
-                                        step.complete ? "opacity-75" : ""
-                                    }
                                 >
                                     {step.content(step.complete)}
                                 </div>

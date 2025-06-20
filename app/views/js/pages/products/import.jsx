@@ -142,7 +142,7 @@ export default function ImportProducts({ currentStore, categories, auth }) {
         post("/products/new/import", {
             onSuccess: () => {
                 toast.success(
-                    "Product created successfully! You can now edit it.",
+                    "Product imported successfully!",
                 );
 
                 setInstagramPosts((posts) =>
@@ -213,7 +213,7 @@ export default function ImportProducts({ currentStore, categories, auth }) {
                                             <Input
                                                 type="text"
                                                 placeholder="instagram_handle"
-                                                className="w-full pl-10 pr-12 py-6 text-sm sm:text-lg border-0 rounded-lg focus:outline-none focus-visible:ring-primary-orange transition-colors border-gray-200 focus:border-none"
+                                                className="w-full pl-10 pr-12 py-6 bg-accent focus-visible:bg-background text-sm sm:text-lg border-0 rounded-lg focus:outline-none focus-visible:ring-primary-orange transition-colors border-gray-200 focus:border-none"
                                                 value={username}
                                                 onChange={(e) =>
                                                     setUsername(e.target.value)
@@ -271,15 +271,16 @@ export default function ImportProducts({ currentStore, categories, auth }) {
                                             Select items from Instagram
                                         </CardTitle>
                                         <CardDescription>
-                                            Click on posts to create products from them
+                                            Click on posts to create products
+                                            from them
                                         </CardDescription>
                                     </div>
-                                    <div className="text-right">
+                                    <div className="text-right w-full mt-2">
                                         <Button
                                             as={Link}
                                             href="/products"
                                             variant="outline"
-                                            className="text-sm"
+                                            className="text-sm w-full sm:w-auto"
                                         >
                                             View All Products
                                         </Button>
@@ -350,12 +351,17 @@ export default function ImportProducts({ currentStore, categories, auth }) {
                                 >
                                     <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                                         <DialogHeader>
-                                            <DialogTitle className="text-2xl flex items-center gap-2">
+                                            <DialogTitle className="text-lg md:text-2xl flex items-center gap-2">
                                                 <Package className="h-6 w-6" />
-                                                Create Product from Instagram
-                                                Post
+                                                Create Product
                                             </DialogTitle>
-                                            <div className="mt-4 flex items-start gap-4">
+                                            <div className="mt-4 flex flex-col items-start gap-4">
+                                                <small className="text-sm text-gray-500">
+                                                    Posted on{" "}
+                                                    {new Date(
+                                                        selectedPost?.timestamp,
+                                                    ).toLocaleDateString()}
+                                                </small>
                                                 <div className="w-24 h-24 rounded-lg overflow-hidden">
                                                     {selectedPost?.images
                                                         ?.length > 1 ? (
@@ -390,34 +396,6 @@ export default function ImportProducts({ currentStore, categories, auth }) {
                                                             }
                                                             className="w-full h-full object-cover"
                                                         />
-                                                    )}
-                                                </div>
-                                                <div className="flex-1">
-                                                    <div className="text-sm text-gray-500">
-                                                        Posted on{" "}
-                                                        {new Date(
-                                                            selectedPost?.timestamp,
-                                                        ).toLocaleDateString()}
-                                                    </div>
-                                                    <div className="text-sm mt-1 line-clamp-2">
-                                                        {selectedPost?.caption}
-                                                    </div>
-                                                    {selectedPost?.hashtags
-                                                        .length > 0 && (
-                                                        <div className="flex flex-wrap gap-1 mt-2">
-                                                            {selectedPost?.hashtags.map(
-                                                                (tag) => (
-                                                                    <span
-                                                                        key={
-                                                                            tag
-                                                                        }
-                                                                        className="text-xs bg-gray-100 dark:bg-[#2C2C2C] px-2 py-1 rounded-full"
-                                                                    >
-                                                                        #{tag}
-                                                                    </span>
-                                                                ),
-                                                            )}
-                                                        </div>
                                                     )}
                                                 </div>
                                             </div>
@@ -471,56 +449,44 @@ export default function ImportProducts({ currentStore, categories, auth }) {
                                                     />
                                                 </div>
 
-                                                <div className="grid grid-cols-2 gap-4">
-                                                    <div>
-                                                        <Label htmlFor="price">
-                                                            Price (
-                                                            {currencySymbol})
-                                                        </Label>
-                                                        <Input
-                                                            id="price"
-                                                            type="number"
-                                                            step="0.01"
-                                                            min={
-                                                                currencyLimits.min
-                                                            }
-                                                            max={
-                                                                currencyLimits.max
-                                                            }
-                                                            value={data.price}
-                                                            onChange={(e) =>
-                                                                setData(
-                                                                    "price",
-                                                                    e.target
-                                                                        .value,
-                                                                )
-                                                            }
-                                                            required
-                                                        />
-                                                        <InputError
-                                                            message={
-                                                                errors.price
-                                                            }
-                                                        />
-                                                    </div>
+                                                <div>
+                                                    <Label htmlFor="price">
+                                                        Price (
+                                                        {currentStore?.currency}
+                                                        )
+                                                    </Label>
+                                                    <Input
+                                                        id="price"
+                                                        type="number"
+                                                        step="0.01"
+                                                        min={currencyLimits.min}
+                                                        max={currencyLimits.max}
+                                                        value={data.price}
+                                                        onChange={(e) =>
+                                                            setData(
+                                                                "price",
+                                                                e.target.value,
+                                                            )
+                                                        }
+                                                        required
+                                                    />
+                                                    <InputError
+                                                        message={errors.price}
+                                                    />
+                                                </div>
 
+                                                <div
+                                                    className={`grid gap-4 ${data.quantity === "limited" ? "grid-cols-2" : "grid-cols-1"}`}
+                                                >
                                                     <div>
                                                         <Label htmlFor="quantity">
                                                             Stock quantity
                                                         </Label>
                                                         <Input
                                                             as="select"
-                                                            className={cn(
-                                                                "block pr-0 bg-gray-100 dark:bg-[#2C2C2C] border-0 focus:ring-primary-orange/20 text-gray-900 dark:text-white",
-                                                                {
-                                                                    "w-24":
-                                                                        data.quantity ===
-                                                                        "limited",
-                                                                    "w-full":
-                                                                        data.quantity ===
-                                                                        "unlimited",
-                                                                },
-                                                            )}
+                                                            className={
+                                                                "block pr-0 bg-gray-100 dark:bg-[#2C2C2C] border-0 focus:ring-primary-orange/20 text-gray-900 dark:text-white w-full"
+                                                            }
                                                             value={
                                                                 data.quantity
                                                             }
@@ -545,8 +511,15 @@ export default function ImportProducts({ currentStore, categories, auth }) {
                                                                 Limited
                                                             </option>
                                                         </Input>
-                                                        {data.quantity ===
-                                                            "limited" && (
+                                                    </div>
+
+                                                    {data.quantity ===
+                                                        "limited" && (
+                                                        <div>
+                                                            <Label htmlFor="quantity_items">
+                                                                Quantity in
+                                                                stock
+                                                            </Label>
                                                             <Input
                                                                 id="quantity_items"
                                                                 type="number"
@@ -565,13 +538,13 @@ export default function ImportProducts({ currentStore, categories, auth }) {
                                                                 required
                                                                 placeholder="Enter stock quantity"
                                                             />
-                                                        )}
-                                                        <InputError
-                                                            message={
-                                                                errors.quantity
-                                                            }
-                                                        />
-                                                    </div>
+                                                            <InputError
+                                                                message={
+                                                                    errors.quantity
+                                                                }
+                                                            />
+                                                        </div>
+                                                    )}
                                                 </div>
 
                                                 <div>
