@@ -1614,12 +1614,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/aloe.git",
-                "reference": "4a42ca683e43ef29fe60cfbb4336ee68386b1071"
+                "reference": "3b71e41022f087063cfb1d3a144a8e25d5beba07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/aloe/zipball/4a42ca683e43ef29fe60cfbb4336ee68386b1071",
-                "reference": "4a42ca683e43ef29fe60cfbb4336ee68386b1071",
+                "url": "https://api.github.com/repos/leafsphp/aloe/zipball/3b71e41022f087063cfb1d3a144a8e25d5beba07",
+                "reference": "3b71e41022f087063cfb1d3a144a8e25d5beba07",
                 "shasum": ""
             },
             "require": {
@@ -1677,7 +1677,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-06-08T21:46:28+00:00"
+            "time": "2025-06-20T11:02:07+00:00"
         },
         {
             "name": "leafs/anchor",
