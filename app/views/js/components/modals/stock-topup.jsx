@@ -12,20 +12,25 @@ import {
 import Button from "../form/button";
 
 const StockTopUpModal = () => {
-    const dialog = useDialog("stockTopUp");
-    const { open, data } = dialog;
+    const { open, data, closeDialog } = useDialog("stockTopUp");
     const [quantity, setQuantity] = useState(data?.currentStock || 0);
 
     useEffect(() => {
-        if (open && typeof data?.currentStock === "number") {
-            setQuantity(data.currentStock);
+        if (open) {
+            if (data?.quantity === "unlimited") {
+                setQuantity(Infinity);
+            } else if (typeof data?.currentStock === "number") {
+                setQuantity(data.currentStock);
+            }
         }
-    }, [open, data]);
+    }, [open, data?.currentStock, data?.quantity]);
 
-    if (!open) return null;
+    if (!open) {
+        return null;
+    }
 
-    const increment = () => setQuantity((q) => q + 1);
-    const decrement = () => setQuantity((q) => (q > 0 ? q - 1 : 0));
+    const increment = () => setQuantity((q) => (q < Infinity ? q + 1 : 0 + 1));
+    const decrement = () => setQuantity((q) => (q === Infinity ? 1 : q > 0 ? q - 1 : 0));
 
     const handleSave = () => {
         if (typeof data?.onSave === "function") {
@@ -34,12 +39,15 @@ const StockTopUpModal = () => {
     };
 
     return (
-        <Dialog open={open} onOpenChange={dialog.closeDialog}>
+        <Dialog open={open} onOpenChange={closeDialog}>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                     <DialogTitle>Update Stock</DialogTitle>
                     <DialogDescription>
-                        Use the plus and minus buttons to update your product's stock.
+                        Use the plus and minus buttons to update your product's
+                        stock. {quantity === Infinity
+                            ? "This product has unlimited stock, updating it stock will change it to a specific quantity."
+                            : ""}
                     </DialogDescription>
                 </DialogHeader>
                 <div className="flex items-center justify-center gap-6 py-6">
@@ -52,7 +60,7 @@ const StockTopUpModal = () => {
                         -
                     </Button>
                     <span className="text-3xl font-bold w-12 text-center">
-                        {quantity}
+                        {quantity === Infinity ? "∞" : quantity}
                     </span>
                     <Button
                         variant="outline"
@@ -67,7 +75,10 @@ const StockTopUpModal = () => {
                     <DialogClose asChild>
                         <Button variant="outline">Cancel</Button>
                     </DialogClose>
-                    <Button onClick={handleSave} className="bg-primary-orange text-white">
+                    <Button
+                        onClick={handleSave}
+                        className="bg-primary-orange text-white"
+                    >
                         Save
                     </Button>
                 </DialogFooter>

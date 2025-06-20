@@ -58,10 +58,12 @@ export default function Products({ product, currentStore, orders, purchases }) {
     const handleTopUpClick = () => {
         stockTopUpDialog.openDialog({
             currentStock: parseInt(product.quantity_items),
+            quantity: product.quantity,
             onSave: (newStock) => {
                 router.post(
                     `/products/${product.id}/edit`,
                     {
+                        quantity: newStock === Infinity ? "unlimited" : "limited",
                         quantity_items: newStock,
                     },
                     {
