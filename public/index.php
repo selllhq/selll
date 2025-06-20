@@ -58,10 +58,28 @@ if (php_sapi_name() === 'cli-server') {
 
 /*
 |--------------------------------------------------------------------------
+| Load Sentry
+|--------------------------------------------------------------------------
+|
+| Sentry is a powerful error tracking and performance monitoring tool.
+| It helps you identify and fix issues in your application.
+| This configuration initializes Sentry with your DSN.
+|
+*/
+\Sentry\init([
+    'dsn' => 'https://91e032e0490f3f3602ad4af2fc9ee585@o4509531514667008.ingest.de.sentry.io/4509531525611600',
+]);
+
+/*
+|--------------------------------------------------------------------------
 | Run your Leaf MVC application
 |--------------------------------------------------------------------------
 |
 | This line brings in all your routes and starts your application
 |
 */
-\Leaf\Core::runApplication();
+try {
+    \Leaf\Core::runApplication();
+} catch (\Throwable $exception) {
+    \Sentry\captureException($exception);
+}

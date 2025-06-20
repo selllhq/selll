@@ -3,7 +3,7 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'selll'
+app = 'pr-1-selllhq-selll'
 primary_region = 'lhr'
 
 [build]
@@ -17,20 +17,42 @@ min_machines_running = 1
 processes = ['app']
 
 [env]
-APP_ENV = 'production'
+APP_NAME = 'Selll'
+APP_ENV = 'local'
 APP_DEBUG = 'true'
 APP_URL = 'https://selll.online/'
+APP_KEY = 'base64:XqCe5Dy/i1lEzfM5zxd3+jYzDM6jr9/ZJorVmHwkb2I='
 DB_CONNECTION = 'pgsql'
+BILLING_PROVIDER = 'stripe'
+
 DB_DATABASE = 'selll'
-ANALYTICS_DB_DATABASE = 'analytics'
-IMPORTS_DB_DATABASE = 'imports'
-ANALYTICS_DB_USERNAME = 'analytics_owner'
-IMPORTS_DB_USERNAME = 'imports_owner'
+DB_USERNAME = 'selll_owner'
 DB_PORT = '5432'
-ANALYTICS_DB_PORT = '5432'
+
+IMPORTS_DB_DATABASE = 'imports'
+IMPORTS_DB_USERNAME = 'imports_owner'
 IMPORTS_DB_PORT = '5432'
-REDIS_SESSION = 'true'
+
+ANALYTICS_DB_DATABASE = 'analytics'
+ANALYTICS_DB_USERNAME = 'analytics_owner'
+ANALYTICS_DB_PORT = '5432'
+
+REDIS_SESSION = 'false'
 REDIS_PORT = '6379'
+QUEUE_CONNECTION = 'redis'
+
+MAIL_DRIVER = 'smtp'
+MAIL_HOST = 'live.smtp.mailtrap.io'
+MAIL_PORT = '587'
+MAIL_DEBUG = 'SERVER'
+MAIL_SENDER_NAME = 'Selll'
+MAIL_SENDER_EMAIL = 'hello@selll.online'
+MAIL_ENCRYPTION = 'STARTTLS'
+
+AWS_DEFAULT_REGION = 'weur'
+AWS_BUCKET = 'products'
+AWS_URL = 'https://cdn1.selll.online'
+AWS_USE_PATH_STYLE_ENDPOINT = 'false'
 
 [[vm]]
 memory = '1gb'
