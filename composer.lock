@@ -2682,12 +2682,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/mvc-core.git",
-                "reference": "08990d6b455c4c9b69916571c5a4170bab3c697b"
+                "reference": "cdd0cbbba9b440d05f61f77fd5ee987c8c273a61"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/mvc-core/zipball/08990d6b455c4c9b69916571c5a4170bab3c697b",
-                "reference": "08990d6b455c4c9b69916571c5a4170bab3c697b",
+                "url": "https://api.github.com/repos/leafsphp/mvc-core/zipball/cdd0cbbba9b440d05f61f77fd5ee987c8c273a61",
+                "reference": "cdd0cbbba9b440d05f61f77fd5ee987c8c273a61",
                 "shasum": ""
             },
             "require": {
@@ -2750,7 +2750,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-06-08T21:44:28+00:00"
+            "time": "2025-06-20T13:42:08+00:00"
         },
         {
             "name": "leafs/password",
