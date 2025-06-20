@@ -23,18 +23,19 @@ APP_DEBUG = 'true'
 APP_URL = 'https://selll.online/'
 APP_KEY = 'base64:XqCe5Dy/i1lEzfM5zxd3+jYzDM6jr9/ZJorVmHwkb2I='
 DB_CONNECTION = 'pgsql'
+BILLING_PROVIDER = 'stripe'
 
 DB_DATABASE = 'selll'
-ANALYTICS_DB_DATABASE = 'analytics'
-IMPORTS_DB_DATABASE = 'imports'
-
 DB_USERNAME = 'selll_owner'
-ANALYTICS_DB_USERNAME = 'analytics_owner'
-IMPORTS_DB_USERNAME = 'imports_owner'
-
 DB_PORT = '5432'
-ANALYTICS_DB_PORT = '5432'
+
+IMPORTS_DB_DATABASE = 'imports'
+IMPORTS_DB_USERNAME = 'imports_owner'
 IMPORTS_DB_PORT = '5432'
+
+ANALYTICS_DB_DATABASE = 'analytics'
+ANALYTICS_DB_USERNAME = 'analytics_owner'
+ANALYTICS_DB_PORT = '5432'
 
 REDIS_SESSION = 'true'
 REDIS_PORT = '6379'
