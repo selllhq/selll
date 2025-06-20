@@ -12,7 +12,7 @@ return [
     | you may use many connections at once using the Database library.
     |
     */
-    'default' => _env('DB_CONNECTION', 'mysql'),
+    'default' => _env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
