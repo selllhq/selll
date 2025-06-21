@@ -47,6 +47,12 @@ auth()->middleware('auth.guest', function () {
     response()->redirect('/dashboard');
 });
 
+app()->register('mixpanel', function () {
+    return Mixpanel::getInstance(
+        _env('MIXPANEL_TOKEN'),
+    );
+});
+
 /*
 |--------------------------------------------------------------------------
 | Your application routes

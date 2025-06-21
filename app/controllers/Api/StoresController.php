@@ -17,6 +17,12 @@ class StoresController extends Controller
             ], 404);
         }
 
+        app()->mixpanel->track('Store Viewed', [
+            'store_id' => $store->id,
+            'store_name' => $store->name,
+            'source' => request()->headers('Referer') ?? 'unknown',
+        ]);
+
         return response()->json($store);
     }
 
@@ -59,6 +65,13 @@ class StoresController extends Controller
             );
         }
 
+        app()->mixpanel->track('Products Viewed', [
+            'store_id' => $storeId,
+            'category' => $category,
+            'sort' => $sort,
+            'search' => $search,
+        ]);
+
         return response()->json($products
             ->orderBy(
                 explode('-', $sort)[0],
@@ -81,6 +94,13 @@ class StoresController extends Controller
             return response()->json(['error' => 'Product not found'], 404);
         }
 
+        app()->mixpanel->track('Product Viewed', [
+            'store_id' => $storeId,
+            'product_id' => $product->id,
+            'product_name' => $product->name,
+            'source' => request()->headers('Referer') ?? 'unknown',
+        ]);
+
         return response()->json($product);
     }
 
@@ -97,6 +117,13 @@ class StoresController extends Controller
 
         $itemsInCart = $order->items()->with('product')->get();
         $order->items = $itemsInCart;
+
+        app()->mixpanel->track('Customer Order Viewed', [
+            'store_id' => $storeId,
+            'order_id' => $order->id,
+            'customer_id' => $order->customer->id ?? null,
+            'source' => request()->headers('Referer') ?? 'unknown',
+        ]);
 
         return response()->json($order);
     }
