@@ -59,6 +59,14 @@ class RegisterController extends Controller
             throw $th;
         }
 
+        app()->mixpanel->identify(auth()->id());
+
+        app()->mixpanel->track('User Registered', [
+            '$user_id' => auth()->id(),
+            'email' => $credentials['email'],
+            'source' => request()->headers('Referer') ?? 'unknown',
+        ]);
+
         return response()->redirect('/dashboard', 303);
     }
 }

@@ -71,6 +71,15 @@ class BillingController extends Controller
             ], 500);
         }
 
+        app()->mixpanel->track('Billing Session Created', [
+            'store_id' => $store->id,
+            'customer_id' => $customer->id,
+            'cart_id' => $cart->id,
+            'provider' => $billingProvider,
+            'amount' => $cartTotal,
+            'currency' => $store->currency,
+        ]);
+
         response()->json([
             'id' => $session->id(),
             'url' => $session->url(),

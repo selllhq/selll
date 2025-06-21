@@ -79,6 +79,15 @@ class BillingCallbacksController extends Controller
                 ]);
             }
 
+            app()->mixpanel->track('Order Paid', [
+                'store_id' => $userCart->store_id,
+                'customer_id' => $userCart->customer_id,
+                'cart_id' => $userCart->id,
+                'amount' => $userCart->total,
+                'currency' => $userCart->currency,
+                'payment_provider' => $provider,
+            ]);
+
             StoreMailer::newOrder($ownerEmail, $userCart)->send();
         } else {
             $userCart->status = 'cancelled';
