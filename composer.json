@@ -28,7 +28,8 @@
         "leafs/stripe": "dev-main",
         "leafs/paystack": "dev-main",
         "leafs/s3": "dev-main",
-        "sentry/sentry": "^4.14"
+        "sentry/sentry": "^4.14",
+        "mixpanel/mixpanel-php": "^2.11"
     },
     "require-dev": {
         "fakerphp/faker": "^1.24"

@@ -3,7 +3,6 @@
 namespace App\Controllers\Store;
 
 use App\Helpers\ProductImportHelper;
-use App\Models\ProductImport;
 use App\Models\Store;
 use App\Models\User;
 
@@ -56,6 +55,11 @@ class ProductsController extends Controller
     public function importFromInstagram()
     {
         $username = request()->get('username');
+
+        app()->mixpanel->track('Instagram Import', [
+            'username' => $username,
+            'source' => request()->headers('Referer') ?? 'unknown',
+        ]);
 
         response()->json(ProductImportHelper::fromInstagram(
             $username,
@@ -192,6 +196,12 @@ class ProductsController extends Controller
             ]);
         }
 
+        app()->mixpanel->track('Product Created', [
+            'store_id' => $currentStore->id,
+            'product_id' => $product->id,
+            'source' => request()->headers('Referer') ?? 'default',
+        ]);
+
         return response()->redirect("/products/{$product->id}", 303);
     }
 
@@ -224,6 +234,12 @@ class ProductsController extends Controller
                 'store_id' => auth()->user()->current_store_id,
             ]);
         }
+
+        app()->mixpanel->track('Product Created', [
+            'store_id' => $currentStore->id,
+            'product_id' => $product->id,
+            'source' => 'instagram_import',
+        ]);
 
         return response()->redirect('/products/import', 303);
     }
@@ -367,6 +383,11 @@ class ProductsController extends Controller
         if ($product->purchases()->count() > 0) {
             $product->update(['status' => 'archived']);
 
+            app()->mixpanel->track('Product Archived', [
+                'store_id' => auth()->user()->current_store_id,
+                'product_id' => $product->id,
+            ]);
+
             return response()
                 ->withFlash('success', 'Product archived successfully.')
                 ->redirect('/products', 303);
@@ -381,6 +402,11 @@ class ProductsController extends Controller
         // }
 
         $product->delete();
+
+        app()->mixpanel->track('Product Deleted', [
+            'store_id' => auth()->user()->current_store_id,
+            'product_id' => $product->id,
+        ]);
 
         return response()
             ->withFlash('success', 'Product deleted successfully.')
