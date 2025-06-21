@@ -1,5 +1,8 @@
+import dayjs from "dayjs";
+import { Head, Link } from "@inertiajs/react";
+import { Package, ShoppingCart, Store, Users, Wallet } from "lucide-react";
+
 import Layout from "@/layouts/app-layout";
-import { Head, Link, router } from "@inertiajs/react";
 import {
     Card,
     CardContent,
@@ -12,12 +15,9 @@ import {
     AvatarFallback,
     AvatarImage,
 } from "@/components/shared/avatar";
-import dayjs from "dayjs";
 import EmptyState from "@/components/layout/empty";
-import { Package, ShoppingCart, Store, Users, Wallet } from "lucide-react";
 import Button from "@/components/form/button";
 import { BarChart, LineChart } from "@/components/shared/charts";
-import { useEffect } from "react";
 
 export default function Dashboard({
     auth,
@@ -29,12 +29,6 @@ export default function Dashboard({
     customers = [],
     revenueGraph = [],
 }) {
-    useEffect(() => {
-        if (products.length === 0) {
-            router.visit('/dashboard/getting-started');
-        }
-    }, []);
-
     return (
         <Layout
             variant="header"
@@ -196,7 +190,9 @@ export default function Dashboard({
                             </Card>
                             <Card>
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
-                                    <CardTitle>Total No. Products Sold</CardTitle>
+                                    <CardTitle>
+                                        Total No. Products Sold
+                                    </CardTitle>
                                     <div className="bg-[#2C2C2C] p-2 rounded-lg">
                                         <ShoppingCart className="h-5 w-5 text-primary-orange" />
                                     </div>
@@ -315,7 +311,10 @@ export default function Dashboard({
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <LineChart currentStore={currentStore} data={revenueGraph} />
+                                    <LineChart
+                                        currentStore={currentStore}
+                                        data={revenueGraph}
+                                    />
                                 </CardContent>
                             </Card>
                             <Card className="col-span-4 md:col-span-3">
