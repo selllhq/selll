@@ -23,6 +23,11 @@ class DashboardController extends Controller
         $customers = $currentStoreId ? $currentStore->customers()->get() : [];
         $orders = $currentStoreId ? $currentStore->carts()->with('customer')->latest()->get() : [];
 
+        if (count($products) === 0 && count($orders) === 0) {
+            return response()->redirect('/dashboard/getting-started', 303);
+        }
+
+
         response()->inertia('dashboard', [
             'stores' => $stores,
             'currentStore' => $currentStore,
