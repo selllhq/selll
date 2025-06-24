@@ -5,6 +5,8 @@ app()->group('/auth', [
     function () {
         app()->get('/login', 'Auth\LoginController@show');
         app()->post('/login', 'Auth\LoginController@store');
+        app()->get('/google', 'Auth\RegisterController@google');
+        app()->get('/google/callback', 'Auth\RegisterController@storeOAuth');
         app()->get('/register', 'Auth\RegisterController@show');
         app()->post('/register', 'Auth\RegisterController@store');
     },

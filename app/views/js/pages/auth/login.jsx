@@ -128,7 +128,7 @@ export default function Login() {
                         </div>
                     </form>
 
-                    {/* <div className="mt-8 relative space-y-3 w-full">
+                    <div className="mt-8 relative space-y-3 w-full">
                         <div className="relative">
                             <div className="absolute inset-0 flex items-center">
                                 <div className="w-full border-t border-gray-700"></div>
@@ -138,11 +138,11 @@ export default function Login() {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="w-full gap-3">
                             <Button
-                                as={Link}
+                                as="a"
                                 href="/auth/google"
-                                className="py-2 space-x-2 h-auto text-sm justify-center border border-gray-700 text-white/90 hover:bg-[#2C2C2C] bg-[#1e1e1e]"
+                                className="py-2 space-x-2 h-auto w-full text-sm justify-center border border-gray-700 text-white/90 hover:bg-[#2C2C2C] bg-[#1e1e1e]"
                             >
                                 <span className="w-5 h-5">
                                     <svg
@@ -172,7 +172,7 @@ export default function Login() {
                                 <span>Google</span>
                             </Button>
 
-                            <Button
+                            {/* <Button
                                 as={Link}
                                 href="/auth/github"
                                 className="py-2 space-x-2 h-auto text-sm justify-center border border-gray-700 text-white/90 hover:bg-[#2C2C2C] bg-[#1e1e1e]"
@@ -193,9 +193,9 @@ export default function Login() {
                                     </svg>
                                 </span>
                                 <span>GitHub</span>
-                            </Button>
+                            </Button> */}
                         </div>
-                    </div> */}
+                    </div>
                 </div>
             </div>
 

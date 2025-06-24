@@ -14,7 +14,7 @@
     @vite(['/js/app.jsx', "/js/pages/{$page['component']}.jsx"])
     @inertiaHead
 
-    <!-- Google Tag Manager -->
+    {{-- Google Tag Manager --}}
     <script>
         (function(w, d, s, l, i) {
             w[l] = w[l] || [];
@@ -31,9 +31,19 @@
             f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-W7TC9W5S');
     </script>
-    <!-- End Google Tag Manager -->
+    {{-- End Google Tag Manager --}}
 
-    <!--Start of Tawk.to Script-->
+    {{-- <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+        window.OneSignalDeferred = window.OneSignalDeferred || [];
+        OneSignalDeferred.push(async function(OneSignal) {
+            await OneSignal.init({
+                appId: "3d8b7dd3-0d0e-4c92-99f7-be1c31b9f806",
+            });
+        });
+    </script> --}}
+
+    {{-- Start of Tawk.to Script --}}
     <script type="text/javascript">
         var Tawk_API = Tawk_API || {},
             Tawk_LoadStart = new Date();
@@ -49,14 +59,14 @@
             window.Tawk_API = Tawk_API || {};
         })();
     </script>
-    <!--End of Tawk.to Script-->
+    {{-- End of Tawk.to Script --}}
 </head>
 
 <body>
-    <!-- Google Tag Manager (noscript) -->
+    {{-- Google Tag Manager (noscript) --}}
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W7TC9W5S" height="0" width="0"
             style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
+    {{-- End Google Tag Manager (noscript) --}}
 
     @inertia
 </body>
