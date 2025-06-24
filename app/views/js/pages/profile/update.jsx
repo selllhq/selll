@@ -54,7 +54,7 @@ export default function Profile({ auth }) {
                         <InputError className="mt-2" message={errors.name} />
                     </div>
 
-                    <div className="grid gap-2">
+                    {/* <div className="grid gap-2">
                         <Label htmlFor="email">Email address</Label>
 
                         <Input
@@ -69,7 +69,7 @@ export default function Profile({ auth }) {
                         />
 
                         <InputError className="mt-2" message={errors.email} />
-                    </div>
+                    </div> */}
 
                     <div className="flex items-center gap-4">
                         <Button disabled={processing}>Save</Button>
