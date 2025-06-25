@@ -30,7 +30,7 @@ class StoresController extends Controller
 
         Analytics::create([
             'event' => 'page_view',
-            'page' => 'product',
+            'page' => 'home',
             'action_id' => $store->id,
             'store_id' => $store->id,
             'metadata' => json_encode([
