@@ -30,7 +30,8 @@
         "leafs/s3": "dev-main",
         "sentry/sentry": "^4.14",
         "mixpanel/mixpanel-php": "^2.11",
-        "league/oauth2-google": "^4.0"
+        "league/oauth2-google": "^4.0",
+        "leafs/http": "v4.x-dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.24"

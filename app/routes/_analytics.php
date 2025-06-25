@@ -1,8 +1,9 @@
 <?php
 
-app()->group('/analytics', [
-    'middleware' => ['auth.required', 'auth.verified'],
+app()->group(
+    '/api/analytics',
     function () {
-        app()->get('/', 'Store\AnalyticsController@index');
+        app()->post('/add-to-cart', 'Api\AnalyticsController@addToCart');
+        app()->post('/product-view', 'Api\AnalyticsController@productView');
     },
-]);
+);

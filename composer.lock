@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fea30bb8fdb83bc325de91ca855ce81e",
+    "content-hash": "33c3c1affbdc1c3b8ef4708b9f5a5906",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.347.0",
+            "version": "3.347.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "c66a35e650f077caddd7db8d3a1f58b2c2b8c78b"
+                "reference": "ca91caa1d93223f03905e245a268759258ca41a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/c66a35e650f077caddd7db8d3a1f58b2c2b8c78b",
-                "reference": "c66a35e650f077caddd7db8d3a1f58b2c2b8c78b",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/ca91caa1d93223f03905e245a268759258ca41a6",
+                "reference": "ca91caa1d93223f03905e245a268759258ca41a6",
                 "shasum": ""
             },
             "require": {
@@ -153,9 +153,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.347.0"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.347.1"
             },
-            "time": "2025-06-23T18:12:15+00:00"
+            "time": "2025-06-24T18:14:42+00:00"
         },
         {
             "name": "brick/math",
@@ -2404,16 +2404,16 @@
         },
         {
             "name": "leafs/http",
-            "version": "v4.1",
+            "version": "v4.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/http.git",
-                "reference": "61e0f83c9f94cb74c9611f891b59743fd18bd897"
+                "reference": "4ac870cfc17deb40dcf0d5f57d7d5e267428eb86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/http/zipball/61e0f83c9f94cb74c9611f891b59743fd18bd897",
-                "reference": "61e0f83c9f94cb74c9611f891b59743fd18bd897",
+                "url": "https://api.github.com/repos/leafsphp/http/zipball/4ac870cfc17deb40dcf0d5f57d7d5e267428eb86",
+                "reference": "4ac870cfc17deb40dcf0d5f57d7d5e267428eb86",
                 "shasum": ""
             },
             "require": {
@@ -2421,6 +2421,7 @@
                 "leafs/form": "^3.0",
                 "leafs/fs": "^4.0"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "files": [
@@ -2455,7 +2456,7 @@
             ],
             "support": {
                 "issues": "https://github.com/leafsphp/http/issues",
-                "source": "https://github.com/leafsphp/http/tree/v4.1"
+                "source": "https://github.com/leafsphp/http/tree/v4.x"
             },
             "funding": [
                 {
@@ -2467,7 +2468,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-03-26T10:11:23+00:00"
+            "time": "2025-06-25T12:02:09+00:00"
         },
         {
             "name": "leafs/inertia",
@@ -6403,6 +6404,7 @@
         "leafs/auth": 20,
         "leafs/billing": 20,
         "leafs/fs": 20,
+        "leafs/http": 20,
         "leafs/leaf": 20,
         "leafs/mvc-core": 20,
         "leafs/paystack": 20,

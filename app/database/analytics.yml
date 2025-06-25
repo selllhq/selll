@@ -1,5 +1,4 @@
 connection: analytics
-timestamps: false
 
 columns:
   event:
@@ -17,7 +16,7 @@ columns:
       - product
       - action
       - other
-  action_id: string
+  action_id: bigInteger
   metadata:
     type: json
     nullable: true
@@ -33,7 +32,6 @@ columns:
   internal_reference:
     type: string
     nullable: true
-  created_at: timestamp
 
 relationships:
   - Store

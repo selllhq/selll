@@ -3,6 +3,7 @@
 namespace App\Controllers\Api;
 
 use App\Controllers\Controller;
+use App\Models\Analytics;
 use App\Models\Store;
 
 class StoresController extends Controller
@@ -17,10 +18,27 @@ class StoresController extends Controller
             ], 404);
         }
 
+        $geoData = request()->getUserLocation();
+
         app()->mixpanel->track('Store Viewed', [
             'store_id' => $store->id,
             'store_name' => $store->name,
             'source' => request()->headers('Referer') ?? 'unknown',
+            '$latitude' => $geoData['lat'] ?? null,
+            '$longitude' => $geoData['lon'] ?? null,
+        ]);
+
+        Analytics::create([
+            'event' => 'page_view',
+            'page' => 'product',
+            'action_id' => $store->id,
+            'store_id' => $store->id,
+            'metadata' => json_encode([
+                'store_name' => $store->name,
+                'owner_id' => $store->owner->id ?? null,
+            ]),
+            'user_ip' => $geoData['ip'],
+            'user_location' => $geoData['country'] ?? 'unknown',
         ]);
 
         return response()->json($store);
@@ -94,11 +112,27 @@ class StoresController extends Controller
             return response()->json(['error' => 'Product not found'], 404);
         }
 
+        $geoData = request()->getUserLocation();
+
         app()->mixpanel->track('Product Viewed', [
             'store_id' => $storeId,
             'product_id' => $product->id,
             'product_name' => $product->name,
             'source' => request()->headers('Referer') ?? 'unknown',
+            '$latitude' => $geoData['lat'] ?? null,
+            '$longitude' => $geoData['lon'] ?? null,
+        ]);
+
+        Analytics::create([
+            'event' => 'page_view',
+            'page' => 'product',
+            'action_id' => $product->id,
+            'store_id' => $storeId,
+            'metadata' => json_encode([
+                'product_name' => $product->name,
+            ]),
+            'user_ip' => $geoData['ip'],
+            'user_location' => $geoData['country'] ?? 'unknown',
         ]);
 
         return response()->json($product);
