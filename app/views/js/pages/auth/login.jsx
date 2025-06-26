@@ -5,9 +5,9 @@ import InputError from "@/components/form/input-error";
 import Button from "@/components/form/button";
 import { cn } from "@/utils";
 
-export default function Login() {
+export default function Login({ request }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        email: "",
+        email: request?.email ?? "",
         password: "",
         remember: false,
     });
@@ -40,12 +40,16 @@ export default function Login() {
                         <h1 className="text-white text-2xl lg:text-3xl font-semibold mb-1">
                             Welcome back
                         </h1>
-                        <p className="text-white/70 text-sm">Sign in to your account</p>
+                        <p className="text-white/70 text-sm">
+                            Sign in to your account
+                        </p>
                     </div>
 
                     <form onSubmit={submit} className="space-y-5 w-full">
                         <div>
-                            <label htmlFor="email" className="sr-only">Email</label>
+                            <label htmlFor="email" className="sr-only">
+                                Email
+                            </label>
                             <div className="relative">
                                 <Input
                                     id="email"
@@ -55,11 +59,13 @@ export default function Login() {
                                     value={data.email}
                                     className={cn(
                                         "mt-1 block w-full bg-[#2C2C2C] border-[#2C2C2C] text-white placeholder:text-white/50",
-                                        "focus-visible:ring-primary-orange focus-visible:border-primary-orange"
+                                        "focus-visible:ring-primary-orange focus-visible:border-primary-orange",
                                     )}
                                     autoComplete="username"
                                     isFocused={true}
-                                    onChange={(e) => setData("email", e.target.value)}
+                                    onChange={(e) =>
+                                        setData("email", e.target.value)
+                                    }
                                 />
                             </div>
                             <InputError
@@ -69,7 +75,9 @@ export default function Login() {
                         </div>
 
                         <div>
-                            <label htmlFor="password" className="sr-only">Password</label>
+                            <label htmlFor="password" className="sr-only">
+                                Password
+                            </label>
                             <div className="relative">
                                 <Input
                                     id="password"
@@ -79,7 +87,7 @@ export default function Login() {
                                     value={data.password}
                                     className={cn(
                                         "mt-1 block w-full bg-[#2C2C2C] border-[#2C2C2C] text-white placeholder:text-white/50",
-                                        "focus-visible:ring-primary-orange focus-visible:border-primary-orange"
+                                        "focus-visible:ring-primary-orange focus-visible:border-primary-orange",
                                     )}
                                     autoComplete="current-password"
                                     onChange={(e) =>
@@ -123,7 +131,13 @@ export default function Login() {
 
                         <div className="text-center mt-4">
                             <p className="text-white/70 text-sm">
-                                Don't have an account? <Link href="/auth/register" className="text-primary-orange hover:text-primary-orange/80">Sign Up Now</Link>
+                                Don't have an account?{" "}
+                                <Link
+                                    href="/auth/register"
+                                    className="text-primary-orange hover:text-primary-orange/80"
+                                >
+                                    Sign Up Now
+                                </Link>
                             </p>
                         </div>
                     </form>
@@ -134,14 +148,20 @@ export default function Login() {
                                 <div className="w-full border-t border-gray-700"></div>
                             </div>
                             <div className="relative flex justify-center text-sm">
-                                <span className="px-2 bg-[#141414] text-white/70">Or continue with</span>
+                                <span className="px-2 bg-[#141414] text-white/70">
+                                    Or continue with
+                                </span>
                             </div>
                         </div>
 
                         <div className="w-full gap-3">
                             <Button
                                 as="a"
-                                href="/auth/google"
+                                href={
+                                    request?.ref
+                                        ? "/auth/google?ref=" + request.ref
+                                        : "/auth/google"
+                                }
                                 className="py-2 space-x-2 h-auto w-full text-sm justify-center border border-gray-700 text-white/90 hover:bg-[#2C2C2C] bg-[#1e1e1e]"
                             >
                                 <span className="w-5 h-5">
@@ -204,23 +224,41 @@ export default function Login() {
                 <div className="max-w-md px-8 py-12 text-center">
                     <div className="mb-6">
                         <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary-orange/10 text-primary-orange">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                                className="w-6 h-6"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
+                                />
                             </svg>
                         </div>
                     </div>
 
                     <blockquote className="text-xl font-medium text-white mb-6">
-                        I just got access to Selll and it's amazing! Already set up my store and products, and it's so easy to use.
+                        I just got access to Selll and it's amazing! Already set
+                        up my store and products, and it's so easy to use.
                     </blockquote>
 
                     <div className="flex items-center justify-center space-x-3">
                         <div className="flex-shrink-0">
-                            <img src="https://github.com/identicons/jasonlong.png" alt="User" className="w-10 h-10 rounded-full" />
+                            <img
+                                src="https://github.com/identicons/jasonlong.png"
+                                alt="User"
+                                className="w-10 h-10 rounded-full"
+                            />
                         </div>
                         <div className="text-left">
                             <p className="text-white font-medium">@osemuix</p>
-                            <p className="text-white/70 text-sm">osemuix.selll.store</p>
+                            <p className="text-white/70 text-sm">
+                                osemuix.selll.store
+                            </p>
                         </div>
                     </div>
                 </div>

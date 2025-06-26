@@ -18,8 +18,14 @@ class RegisterController extends Controller
 
     public function google()
     {
+        $referralCode = request()->get('ref');
+
         return response()->redirect(
-            auth()->client('google')->getAuthorizationUrl()
+            auth()->client('google')->getAuthorizationUrl([
+                'state' => json_encode([
+                    'ref' => $referralCode,
+                ]),
+            ])
         );
     }
 
@@ -112,7 +118,9 @@ class RegisterController extends Controller
                     ->redirect('/auth/register', 303);
             }
 
-            if ($refCode = request()->get('ref')) {
+            $state = json_decode(request()->get('state', false) ?? '{}', true);
+
+            if ($refCode = $state['ref'] ?? null) {
                 $referrer = auth()->verifyToken($refCode, 'referral');
 
                 if ($referrer) {
