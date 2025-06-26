@@ -196,10 +196,17 @@ class ProductsController extends Controller
             ]);
         }
 
+        $geoData = request()->getUserLocation();
+
         app()->mixpanel->track('Product Created', [
+            '$user_id' => auth()->id(),
             'store_id' => $currentStore->id,
             'product_id' => $product->id,
             'source' => request()->headers('Referer') ?? 'default',
+            '$region' => $geoData['region'] ?? null,
+            '$city' => $geoData['city'] ?? null,
+            'mp_country_code' => $geoData['countryCode'] ?? null,
+            '$country_code' => $geoData['countryCode'] ?? null,
         ]);
 
         return response()->redirect("/products/{$product->id}", 303);
@@ -235,10 +242,17 @@ class ProductsController extends Controller
             ]);
         }
 
+        $geoData = request()->getUserLocation();
+
         app()->mixpanel->track('Product Created', [
+            '$user_id' => auth()->id(),
             'store_id' => $currentStore->id,
             'product_id' => $product->id,
             'source' => 'instagram_import',
+            '$region' => $geoData['region'] ?? null,
+            '$city' => $geoData['city'] ?? null,
+            'mp_country_code' => $geoData['countryCode'] ?? null,
+            '$country_code' => $geoData['countryCode'] ?? null,
         ]);
 
         return response()->redirect('/products/import', 303);
@@ -380,12 +394,19 @@ class ProductsController extends Controller
                 ->redirect('/products', 303);
         }
 
+        $geoData = request()->getUserLocation();
+
         if ($product->purchases()->count() > 0) {
             $product->update(['status' => 'archived']);
 
             app()->mixpanel->track('Product Archived', [
+                '$user_id' => auth()->id(),
                 'store_id' => auth()->user()->current_store_id,
                 'product_id' => $product->id,
+                '$region' => $geoData['region'] ?? null,
+                '$city' => $geoData['city'] ?? null,
+                'mp_country_code' => $geoData['countryCode'] ?? null,
+                '$country_code' => $geoData['countryCode'] ?? null,
             ]);
 
             return response()
@@ -404,8 +425,13 @@ class ProductsController extends Controller
         $product->delete();
 
         app()->mixpanel->track('Product Deleted', [
+            '$user_id' => auth()->id(),
             'store_id' => auth()->user()->current_store_id,
             'product_id' => $product->id,
+            '$region' => $geoData['region'] ?? null,
+            '$city' => $geoData['city'] ?? null,
+            'mp_country_code' => $geoData['countryCode'] ?? null,
+            '$country_code' => $geoData['countryCode'] ?? null,
         ]);
 
         return response()

@@ -67,6 +67,17 @@ class SetupController extends Controller
 
         StoreMailer::welcome($user, $store)->send();
 
+        $geoData = request()->getUserLocation();
+
+        app()->mixpanel->track('Store Created', [
+            '$user_id' => auth()->id(),
+            'store_id' => $store->id,
+            '$region' => $geoData['region'] ?? null,
+            '$city' => $geoData['city'] ?? null,
+            'mp_country_code' => $geoData['countryCode'] ?? null,
+            '$country_code' => $geoData['countryCode'] ?? null,
+        ]);
+
         return response()->redirect('/payouts/setup', 303);
     }
 

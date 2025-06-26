@@ -79,6 +79,8 @@ class BillingCallbacksController extends Controller
                 ]);
             }
 
+            $geoData = request()->getUserLocation();
+
             app()->mixpanel->track('Order Paid', [
                 'store_id' => $userCart->store_id,
                 'customer_id' => $userCart->customer_id,
@@ -86,6 +88,10 @@ class BillingCallbacksController extends Controller
                 'amount' => $userCart->total,
                 'currency' => $userCart->currency,
                 'payment_provider' => $provider,
+                '$region' => $geoData['region'] ?? null,
+                '$city' => $geoData['city'] ?? null,
+                'mp_country_code' => $geoData['countryCode'] ?? null,
+                '$country_code' => $geoData['countryCode'] ?? null,
             ]);
 
             StoreMailer::newOrder($ownerEmail, $userCart)->send();

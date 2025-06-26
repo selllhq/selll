@@ -198,7 +198,11 @@ export default function Register({ request }) {
                         <div className="w-full gap-3">
                             <Button
                                 as="a"
-                                href="/auth/google"
+                                href={
+                                    request?.ref
+                                        ? "/auth/google?ref=" + request.ref
+                                        : "/auth/google"
+                                }
                                 className="py-2 space-x-2 h-auto w-full text-sm justify-center border border-gray-700 text-white/90 hover:bg-[#2C2C2C] bg-[#1e1e1e]"
                             >
                                 <span className="w-5 h-5">
