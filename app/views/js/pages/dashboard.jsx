@@ -1,6 +1,14 @@
 import dayjs from "dayjs";
 import { Head, Link } from "@inertiajs/react";
-import { Package, ShoppingCart, Store, Users, Wallet } from "lucide-react";
+import {
+    ArrowUpRight,
+    Package,
+    ShoppingCart,
+    Store,
+    TrendingUp,
+    Users,
+    Wallet,
+} from "lucide-react";
 
 import Layout from "@/layouts/app-layout";
 import {
@@ -28,7 +36,9 @@ export default function Dashboard({
     orders = [],
     customers = [],
     revenueGraph = [],
+    analytics,
 }) {
+    console.log("Dashboard data:", analytics);
     return (
         <Layout
             variant="header"
@@ -402,72 +412,97 @@ export default function Dashboard({
                                         Key metrics from your store
                                     </CardDescription>
                                 </CardHeader>
-                                <CardContent className="flex justify-center items-center h-10/12">
-                                    <p>Analytics coming soon</p>
-                                    {/* <div className="space-y-6">
-                                        <div className="flex items-center justify-between">
-                                            <div className="flex items-center gap-3">
-                                                <div className="bg-[#2C2C2C] p-2 rounded-lg">
-                                                    <Store className="h-5 w-5 text-primary-orange" />
+                                <CardContent>
+                                    {analytics ? (
+                                        <div className="space-y-6">
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                                        <Store className="h-5 w-5 text-primary-orange" />
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-sm font-medium dark:text-white">
+                                                            Store Views
+                                                        </p>
+                                                        <p className="text-sm text-gray-500">
+                                                            {analytics.views.toLocaleString()}{" "}
+                                                            views this month
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <p className="text-sm font-medium dark:text-white">
-                                                        Store Views
-                                                    </p>
-                                                    <p className="text-sm text-gray-500">
-                                                        1,234 views this month
-                                                    </p>
-                                                </div>
+                                                {analytics.growth.views && (
+                                                    <div className="text-emerald-500 text-sm font-medium">
+                                                        ↑{" "}
+                                                        {analytics.growth.views}
+                                                        %
+                                                    </div>
+                                                )}
                                             </div>
-                                            <div className="text-emerald-500 text-sm font-medium">
-                                                ↑ 12%
-                                            </div>
-                                        </div>
 
-                                        <div className="flex items-center justify-between">
-                                            <div className="flex items-center gap-3">
-                                                <div className="bg-[#2C2C2C] p-2 rounded-lg">
-                                                    <TrendingUp className="h-5 w-5 text-primary-orange" />
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                                        <TrendingUp className="h-5 w-5 text-primary-orange" />
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-sm font-medium dark:text-white">
+                                                            Conversion Rate
+                                                        </p>
+                                                        <p className="text-sm text-gray-500">
+                                                            {analytics.conversionRate.toFixed(
+                                                                2,
+                                                            )}
+                                                            % this month
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <p className="text-sm font-medium dark:text-white">
-                                                        Conversion Rate
-                                                    </p>
-                                                    <p className="text-sm text-gray-500">
-                                                        3.2% this month
-                                                    </p>
-                                                </div>
+                                                {analytics.growth.conversionRate && (
+                                                    <div className="text-emerald-500 text-sm font-medium">
+                                                        ↑{" "}
+                                                        {analytics.growth.conversionRate}
+                                                        %
+                                                    </div>
+                                                )}
                                             </div>
-                                            <div className="text-emerald-500 text-sm font-medium">
-                                                ↑ 8%
-                                            </div>
-                                        </div>
 
-                                        <div className="flex items-center justify-between">
-                                            <div className="flex items-center gap-3">
-                                                <div className="bg-[#2C2C2C] p-2 rounded-lg">
-                                                    <ArrowUpRight className="h-5 w-5 text-primary-orange" />
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                                        <ArrowUpRight className="h-5 w-5 text-primary-orange" />
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-sm font-medium dark:text-white">
+                                                            Avg. Order Value
+                                                        </p>
+                                                        <p className="text-sm text-gray-500">
+                                                            {
+                                                                new Intl.NumberFormat(
+                                                                    "en-US",
+                                                                    {
+                                                                        style: "currency",
+                                                                        currency:
+                                                                            currentStore?.currency,
+                                                                    },
+                                                                ).format(
+                                                                    analytics.avgOrderValue ?? 0,
+                                                                )
+                                                            }{" "}
+                                                            per order
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <p className="text-sm font-medium dark:text-white">
-                                                        Avg. Order Value
-                                                    </p>
-                                                    <p className="text-sm text-gray-500">
-                                                        $
-                                                        {(
-                                                            revenue /
-                                                                orders.length ||
-                                                            0
-                                                        ).toFixed(2)}{" "}
-                                                        per order
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div className="text-emerald-500 text-sm font-medium">
-                                                ↑ 15%
+                                                {analytics.growth.avgOrderValue && (
+                                                    <div className="text-emerald-500 text-sm font-medium">
+                                                        ↑{" "}
+                                                        {analytics.growth.avgOrderValue}
+                                                        %
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
-                                    </div> */}
+                                    ) : (
+                                        <div>Could not load analytics</div>
+                                    )}
                                 </CardContent>
                             </Card>
                         </div>
