@@ -18,14 +18,18 @@ class RegisterController extends Controller
 
     public function google()
     {
-        $referralCode = request()->get('ref');
+        $data = [];
 
-        return response()->redirect(
-            auth()->client('google')->getAuthorizationUrl([
+        if ($referralCode = request()->get('ref')) {
+            $data = [
                 'state' => json_encode([
                     'ref' => $referralCode,
                 ]),
-            ])
+            ];
+        }
+
+        return response()->redirect(
+            auth()->client('google')->getAuthorizationUrl($data)
         );
     }
 
