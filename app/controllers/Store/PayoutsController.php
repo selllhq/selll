@@ -103,6 +103,17 @@ class PayoutsController extends Controller
             'store_activated_at' => $currentStore->updated_at
         ]);
 
+        $geoData = request()->getUserLocation();
+
+        app()->mixpanel->track('Store Activated', [
+            '$user_id' => auth()->id(),
+            'store_id' => $currentStore->id,
+            '$region' => $geoData['region'] ?? null,
+            '$city' => $geoData['city'] ?? null,
+            'mp_country_code' => $geoData['countryCode'] ?? null,
+            '$country_code' => $geoData['countryCode'] ?? null,
+        ]);
+
         return response()->redirect('/payouts/setup', 303);
     }
 }
