@@ -3,6 +3,7 @@
 namespace App\Controllers\Store;
 
 use App\Helpers\ProductImportHelper;
+use App\Models\Analytics;
 use App\Models\Store;
 use App\Models\User;
 
@@ -279,6 +280,11 @@ class ProductsController extends Controller
                 ->with('customer')
                 ->latest()
                 ->get(),
+            'views' => Analytics::where('store_id', $currentStore->id)
+                ->where('action_id', $id)
+                ->where('event', 'page_view')
+                ->whereMonth('created_at', date('m'))
+                ->count(),
         ]);
     }
 

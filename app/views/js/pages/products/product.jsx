@@ -43,7 +43,7 @@ import { useDialog } from "@/components/ui/dialog";
 import StockTopUpModal from "@/components/modals/stock-topup";
 import { toast } from "sonner";
 
-export default function Products({ product, currentStore, orders, purchases }) {
+export default function Products({ product, currentStore, orders, purchases, views }) {
     const stockTopUpDialog = useDialog("stockTopUp");
     const productImages = parseProductImages(product.images);
     const [activeImage, setActiveImage] = useState(
@@ -63,7 +63,8 @@ export default function Products({ product, currentStore, orders, purchases }) {
                 router.post(
                     `/products/${product.id}/edit`,
                     {
-                        quantity: newStock === Infinity ? "unlimited" : "limited",
+                        quantity:
+                            newStock === Infinity ? "unlimited" : "limited",
                         quantity_items: newStock,
                     },
                     {
@@ -300,36 +301,14 @@ export default function Products({ product, currentStore, orders, purchases }) {
                                         }).format(product.price)}
                                     </div>
                                     <div className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-2">
-                                        <span className="inline-flex items-center justify-center bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full text-xs">
+                                        {/* <span className="inline-flex items-center justify-center bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full text-xs">
                                             Included in{" "}
                                             {orders.filter(
                                                 (order) =>
                                                     order.status === "paid",
                                             ).length || 0}{" "}
                                             orders
-                                        </span>
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
-
-                        <Card className="border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow transition-all">
-                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                <CardTitle className="dark:text-white">
-                                    Stock Status
-                                </CardTitle>
-                                <div className="bg-gray-100 dark:bg-[#2C2C2C] p-2 rounded-lg">
-                                    <Package className="h-5 w-5 text-primary-orange" />
-                                </div>
-                            </CardHeader>
-                            <CardContent>
-                                <div>
-                                    <div className="text-4xl font-bold mb-2 dark:text-white">
-                                        {product.quantity === "unlimited"
-                                            ? "∞"
-                                            : product.quantity_items}
-                                    </div>
-                                    <div className="flex items-center gap-2">
+                                        </span> */}
                                         <Badge
                                             className="px-3 py-1 text-xs font-medium rounded-full shadow-sm"
                                             variant={
@@ -354,6 +333,27 @@ export default function Products({ product, currentStore, orders, purchases }) {
                                                   ? `${product.quantity_items} in stock`
                                                   : "Out of Stock"}
                                         </Badge>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+
+                        <Card className="border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow transition-all">
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                <CardTitle className="dark:text-white">
+                                    Product Views
+                                </CardTitle>
+                                <div className="bg-gray-100 dark:bg-[#2C2C2C] p-2 rounded-lg">
+                                    <Package className="h-5 w-5 text-primary-orange" />
+                                </div>
+                            </CardHeader>
+                            <CardContent>
+                                <div>
+                                    <div className="text-4xl font-bold mb-2 dark:text-white">
+                                        {views}
+                                    </div>
+                                    <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 gap-2">
+                                        This month
                                     </div>
                                 </div>
                             </CardContent>
