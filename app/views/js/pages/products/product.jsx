@@ -43,7 +43,13 @@ import { useDialog } from "@/components/ui/dialog";
 import StockTopUpModal from "@/components/modals/stock-topup";
 import { toast } from "sonner";
 
-export default function Products({ product, currentStore, orders, purchases, views }) {
+export default function Products({
+    product,
+    currentStore,
+    orders,
+    purchases,
+    views,
+}) {
     const stockTopUpDialog = useDialog("stockTopUp");
     const productImages = parseProductImages(product.images);
     const [activeImage, setActiveImage] = useState(
@@ -379,7 +385,9 @@ export default function Products({ product, currentStore, orders, purchases, vie
                                         orders
                                             .filter(
                                                 (order) =>
-                                                    order.status === "paid",
+                                                    order.status === "paid" ||
+                                                    order.status ===
+                                                        "completed",
                                             )
                                             .reduce(
                                                 (acc, order) =>
@@ -399,8 +407,10 @@ export default function Products({ product, currentStore, orders, purchases, vie
                                             orders
                                                 .filter(
                                                     (order) =>
-                                                        order.status ===
-                                                            "paid" &&
+                                                        (order.status ===
+                                                            "paid" ||
+                                                            order.status ===
+                                                                "completed") &&
                                                         dayjs(
                                                             order.created_at,
                                                         ).isAfter(
@@ -543,14 +553,18 @@ export default function Products({ product, currentStore, orders, purchases, vie
                                             }).format(
                                                 orders.filter(
                                                     (order) =>
-                                                        order.status ===
-                                                            "paid" &&
+                                                        (order.status ===
+                                                            "paid" ||
+                                                            order.status ===
+                                                                "completed") &&
                                                         order.customer_id,
                                                 ).length /
                                                     (orders.filter(
                                                         (order) =>
                                                             order.status ===
-                                                            "paid",
+                                                                "paid" ||
+                                                            order.status ===
+                                                                "completed",
                                                     ).length || 1),
                                             )}
                                         </div>

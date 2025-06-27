@@ -145,7 +145,9 @@ export default function Dashboard({
                                                     .filter(
                                                         (order) =>
                                                             order.status ===
-                                                            "paid",
+                                                                "paid" ||
+                                                            order.status ===
+                                                                "completed",
                                                     )
                                                     .reduce(
                                                         (acc, order) =>
@@ -170,8 +172,10 @@ export default function Dashboard({
                                                     orders
                                                         .filter(
                                                             (order) =>
-                                                                order.status ===
-                                                                    "paid" &&
+                                                                (order.status ===
+                                                                    "paid" ||
+                                                                    order.status ===
+                                                                        "completed") &&
                                                                 dayjs(
                                                                     order.created_at,
                                                                 ).isAfter(
@@ -218,8 +222,10 @@ export default function Dashboard({
                                                 {orders
                                                     .filter(
                                                         (order) =>
-                                                            order.status ===
-                                                                "paid" &&
+                                                            (order.status ===
+                                                                "paid" ||
+                                                                order.status ===
+                                                                    "completed") &&
                                                             dayjs(
                                                                 order.created_at,
                                                             ).isAfter(
@@ -456,10 +462,14 @@ export default function Dashboard({
                                                         </p>
                                                     </div>
                                                 </div>
-                                                {analytics.growth.conversionRate && (
+                                                {analytics.growth
+                                                    .conversionRate && (
                                                     <div className="text-emerald-500 text-sm font-medium">
                                                         ↑{" "}
-                                                        {analytics.growth.conversionRate}
+                                                        {
+                                                            analytics.growth
+                                                                .conversionRate
+                                                        }
                                                         %
                                                     </div>
                                                 )}
@@ -475,26 +485,29 @@ export default function Dashboard({
                                                             Avg. Order Value
                                                         </p>
                                                         <p className="text-sm text-gray-500">
-                                                            {
-                                                                new Intl.NumberFormat(
-                                                                    "en-US",
-                                                                    {
-                                                                        style: "currency",
-                                                                        currency:
-                                                                            currentStore?.currency,
-                                                                    },
-                                                                ).format(
-                                                                    analytics.avgOrderValue ?? 0,
-                                                                )
-                                                            }{" "}
+                                                            {new Intl.NumberFormat(
+                                                                "en-US",
+                                                                {
+                                                                    style: "currency",
+                                                                    currency:
+                                                                        currentStore?.currency,
+                                                                },
+                                                            ).format(
+                                                                analytics.averageOrderValue ??
+                                                                    0,
+                                                            )}{" "}
                                                             per order
                                                         </p>
                                                     </div>
                                                 </div>
-                                                {analytics.growth.avgOrderValue && (
+                                                {analytics.growth
+                                                    .averageOrderValue && (
                                                     <div className="text-emerald-500 text-sm font-medium">
                                                         ↑{" "}
-                                                        {analytics.growth.avgOrderValue}
+                                                        {
+                                                            analytics.growth
+                                                                .averageOrderValue
+                                                        }
                                                         %
                                                     </div>
                                                 )}
