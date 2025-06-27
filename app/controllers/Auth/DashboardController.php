@@ -27,7 +27,6 @@ class DashboardController extends Controller
             return response()->redirect('/dashboard/getting-started', 303);
         }
 
-
         response()->inertia('dashboard', [
             'stores' => $stores,
             'currentStore' => $currentStore,
@@ -36,6 +35,7 @@ class DashboardController extends Controller
             'orders' => $orders,
             'customers' => $customers,
             'revenueGraph' => AnalyticsHelper::getRevenue6Months($currentStoreId),
+            'analytics' => AnalyticsHelper::getQuickAnalyticsThisMonth($currentStoreId),
         ]);
     }
 
