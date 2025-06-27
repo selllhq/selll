@@ -38,7 +38,9 @@ export default function Orders({ orders = [], currentStore }) {
     const [filter, setFilter] = useState("all");
 
     const totalRevenue = orders
-        .filter((order) => order.status === "paid")
+        .filter(
+            (order) => order.status === "paid" || order.status === "completed",
+        )
         .reduce((acc, order) => acc + Number(order.total), 0);
 
     const filteredOrders = orders?.filter((order) => {
@@ -61,6 +63,8 @@ export default function Orders({ orders = [], currentStore }) {
         switch (filter) {
             case "paid":
                 return order.status === "paid";
+            case "completed":
+                return order.status === "completed";
             case "pending":
                 return order.status === "pending";
             case "cancelled":
@@ -72,6 +76,13 @@ export default function Orders({ orders = [], currentStore }) {
 
     const getStatusBadge = (status) => {
         switch (status) {
+            case "completed":
+                return (
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-500">
+                        <CheckCircle className="w-3 h-3 mr-1" />
+                        Completed
+                    </span>
+                );
             case "paid":
                 return (
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-500">
@@ -235,8 +246,10 @@ export default function Orders({ orders = [], currentStore }) {
                                                     orders
                                                         .filter(
                                                             (order) =>
-                                                                order.status ===
-                                                                    "paid" &&
+                                                                (order.status ===
+                                                                    "paid" ||
+                                                                    order.status ===
+                                                                        "completed") &&
                                                                 dayjs(
                                                                     order.created_at,
                                                                 ).isAfter(
@@ -277,7 +290,10 @@ export default function Orders({ orders = [], currentStore }) {
                                             {orders
                                                 .filter(
                                                     (order) =>
-                                                        order.status === "paid",
+                                                        order.status ===
+                                                            "paid" ||
+                                                        order.status ===
+                                                            "completed",
                                                 )
                                                 .length.toLocaleString()}
                                         </div>
@@ -287,7 +303,9 @@ export default function Orders({ orders = [], currentStore }) {
                                                     (orders.filter(
                                                         (order) =>
                                                             order.status ===
-                                                            "paid",
+                                                                "paid" ||
+                                                            order.status ===
+                                                                "completed",
                                                     ).length /
                                                         orders.length) *
                                                         100,
@@ -320,13 +338,18 @@ export default function Orders({ orders = [], currentStore }) {
                                             }).format(
                                                 orders.filter(
                                                     (order) =>
-                                                        order.status === "paid",
+                                                        order.status ===
+                                                            "paid" ||
+                                                        order.status ===
+                                                            "completed",
                                                 ).length > 0
                                                     ? totalRevenue /
                                                           orders.filter(
                                                               (order) =>
                                                                   order.status ===
-                                                                  "paid",
+                                                                      "paid" ||
+                                                                  order.status ===
+                                                                      "completed",
                                                           ).length
                                                     : 0,
                                             )}
@@ -385,6 +408,12 @@ export default function Orders({ orders = [], currentStore }) {
                                     Paid Orders
                                 </option>
                                 <option
+                                    value="completed"
+                                    className="bg-[#141414] text-gray-400"
+                                >
+                                    Completed Orders
+                                </option>
+                                <option
                                     value="pending"
                                     className="bg-[#141414] text-gray-400"
                                 >
@@ -405,9 +434,11 @@ export default function Orders({ orders = [], currentStore }) {
                                     ? "All Orders"
                                     : filter === "paid"
                                       ? "Paid Orders"
-                                      : filter === "pending"
-                                        ? "Pending Orders"
-                                        : "Cancelled Orders"}{" "}
+                                      : filter === "completed"
+                                        ? "Completed Orders"
+                                        : filter === "pending"
+                                          ? "Pending Orders"
+                                          : "Cancelled Orders"}{" "}
                                 ({filteredOrders.length})
                             </h3>
 

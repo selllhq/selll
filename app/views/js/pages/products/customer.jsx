@@ -31,14 +31,15 @@ export default function CustomerDetail({
     currentStore,
     orders = [],
 }) {
-    // Calculate customer metrics
     const totalOrdersCount = orders.length;
     const totalSpent = orders
-        .filter((order) => order.status === "paid")
+        .filter(
+            (order) => order.status === "paid" || order.status === "completed",
+        )
         .reduce((acc, order) => acc + Number(order.total), 0);
 
     const completedOrdersCount = orders.filter(
-        (order) => order.status === "paid",
+        (order) => order.status === "paid" || order.status === "completed",
     ).length;
 
     const lastOrderDate =
@@ -54,6 +55,7 @@ export default function CustomerDetail({
     const getOrderStatusIcon = (status) => {
         switch (status) {
             case "paid":
+            case "completed":
                 return <CheckCircle className="h-4 w-4 text-green-500" />;
             case "pending":
                 return <AlertCircle className="h-4 w-4 text-yellow-500" />;

@@ -40,7 +40,9 @@ export default function Customers({
     const [filter, setFilter] = useState("all");
 
     const totalSpent = orders
-        .filter((order) => order.status === "paid")
+        .filter(
+            (order) => order.status === "paid" || order.status === "completed",
+        )
         .reduce((acc, order) => acc + Number(order.total), 0);
 
     const averageSpentPerCustomer =
@@ -62,9 +64,6 @@ export default function Customers({
             (order) => order.customer_id === customer.id,
         );
         const totalOrdersCount = customerOrders.length;
-        const completedOrdersCount = customerOrders.filter(
-            (order) => order.status === "paid",
-        ).length;
 
         switch (filter) {
             case "repeat":
@@ -77,7 +76,11 @@ export default function Customers({
                 // Customers who have spent more than average
                 return (
                     customerOrders
-                        .filter((order) => order.status === "paid")
+                        .filter(
+                            (order) =>
+                                order.status === "paid" ||
+                                order.status === "completed",
+                        )
                         .reduce((acc, order) => acc + Number(order.total), 0) >
                     averageSpentPerCustomer
                 );
@@ -93,11 +96,14 @@ export default function Customers({
 
         const totalOrdersCount = customerOrders.length;
         const totalSpent = customerOrders
-            .filter((order) => order.status === "paid")
+            .filter(
+                (order) =>
+                    order.status === "paid" || order.status === "completed",
+            )
             .reduce((acc, order) => acc + Number(order.total), 0);
 
         const completedOrdersCount = customerOrders.filter(
-            (order) => order.status === "paid",
+            (order) => order.status === "paid" || order.status === "completed",
         ).length;
 
         const lastOrderDate =
@@ -248,8 +254,10 @@ export default function Customers({
                                                     orders
                                                         .filter(
                                                             (order) =>
-                                                                order.status ===
-                                                                    "paid" &&
+                                                                (order.status ===
+                                                                    "paid" ||
+                                                                    order.status ===
+                                                                        "completed") &&
                                                                 dayjs(
                                                                     order.created_at,
                                                                 ).isAfter(

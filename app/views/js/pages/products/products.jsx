@@ -209,7 +209,9 @@ export default function Products({ orders = [], products, currentStore }) {
                                                     .filter(
                                                         (order) =>
                                                             order.status ===
-                                                            "paid",
+                                                                "paid" ||
+                                                            order.status ===
+                                                                "completed",
                                                     )
                                                     .reduce(
                                                         (acc, order) =>
@@ -234,8 +236,10 @@ export default function Products({ orders = [], products, currentStore }) {
                                                     orders
                                                         .filter(
                                                             (order) =>
-                                                                order.status ===
-                                                                    "paid" &&
+                                                                (order.status ===
+                                                                    "paid" ||
+                                                                    order.status ===
+                                                                        "completed") &&
                                                                 dayjs(
                                                                     order.created_at,
                                                                 ).isAfter(

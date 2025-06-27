@@ -16,6 +16,7 @@ class AnalyticsHelper
             ->select('carts', 'SUM(total::NUMERIC) AS revenue, TO_CHAR(created_at, \'YYYY-MM\') AS month')
             ->where('store_id', (int) $currentStoreId)
             ->where('status', 'paid')
+            ->orWhere('status', 'completed')
             ->where('created_at', '>=', date('Y-m-01', strtotime('-5 months')))
             ->groupBy('month')
             ->get();
@@ -107,7 +108,7 @@ class AnalyticsHelper
         SUM(total::NUMERIC) AS revenue
     FROM carts
     WHERE store_id = ?
-      AND status = 'paid'
+      AND (status = 'paid' OR status = 'completed')
       AND (
           created_at >= ?
           OR created_at BETWEEN ? AND ?
