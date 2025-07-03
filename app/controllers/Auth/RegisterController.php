@@ -141,13 +141,15 @@ class RegisterController extends Controller
                     ->redirect('/auth/register', 303);
             }
 
-            app()->mixpanel->identify(auth()->id());
-            app()->mixpanel->track('User Registered', [
-                '$user_id' => auth()->id(),
-                'email' => $user->getEmail(),
-                'type' => 'google',
-                'source' => request()->headers('Referer') ?? 'unknown',
-            ]);
+            if (tick(auth()->user()->created_at)->fromNow() === 'less than a minute ago') {
+                app()->mixpanel->identify(auth()->id());
+                app()->mixpanel->track('User Registered', [
+                    '$user_id' => auth()->id(),
+                    'email' => $user->getEmail(),
+                    'type' => 'google',
+                    'source' => request()->headers('Referer') ?? 'unknown',
+                ]);
+            }
 
             return response()->redirect('/dashboard', 303);
         } catch (\Throwable $th) {
