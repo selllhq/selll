@@ -11,7 +11,7 @@ import {
     AvatarImage,
 } from "@/components/shared/avatar";
 import { Link } from "@inertiajs/react";
-import { CreditCard, LogOut, PenBox, Settings, Store } from "lucide-react";
+import { ArrowDownCircle, CreditCard, LogOut, PenBox, Settings } from "lucide-react";
 import { getInitials } from "@/utils";
 
 export function UserMenuContent({ user, showEmail = false }) {
@@ -68,13 +68,13 @@ export function UserMenuContent({ user, showEmail = false }) {
                 <DropdownMenuItem asChild>
                     <Link
                         className="block w-full"
-                        href="/store/customize"
+                        href="/payouts"
                         as="button"
                         prefetch
                         onClick={cleanup}
                     >
-                        <Store className="mr-2" />
-                        Customize Store
+                        <ArrowDownCircle className="mr-2" />
+                        Your Payouts
                     </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>

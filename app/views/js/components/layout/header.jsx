@@ -36,13 +36,13 @@ import { useIsMobile } from "@/utils/use-mobile";
 import { Link, usePage } from "@inertiajs/react";
 import {
     AlertTriangle,
-    ArrowDownCircle,
     BookOpen,
     ChevronsUpDown,
     HelpCircle,
     LayoutGrid,
     Menu,
     MessagesSquare,
+    Paintbrush,
     ShoppingBasket,
     ShoppingCart,
     Users,
@@ -88,9 +88,9 @@ const mainNavItems = [
     //     icon: Mail,
     // },
     {
-        title: "Payouts",
-        url: "/payouts",
-        icon: ArrowDownCircle,
+        title: "Store Branding",
+        url: "/store/customize",
+        icon: Paintbrush,
     },
 ];
 
