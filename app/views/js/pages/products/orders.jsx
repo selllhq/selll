@@ -116,7 +116,7 @@ export default function Orders({ orders = [], currentStore }) {
     return (
         <Layout
             variant="header"
-            className="p-4 pt-2"
+            className="dark:bg-[#141414] p-4 pt-2"
             breadcrumbs={[
                 {
                     title: "Orders",
@@ -143,23 +143,23 @@ export default function Orders({ orders = [], currentStore }) {
                         />
                     </div>
                 ) : (
-                    <div className="space-y-8 py-4 px-4">
+                    <div className="space-y-8 py-0 md:py-4 px-0 md:px-4">
                         <div className="md:flex items-center justify-between">
                             <div>
-                                <h2 className="text-4xl font-bold text-white mb-2">
+                                <h2 className="text-2xl md:text-4xl font-bold md:mb-2">
                                     Orders
                                 </h2>
-                                <p className="text-gray-400">
+                                <p className="text-muted-foreground text-sm md:text-base">
                                     Manage and track your store's orders
                                 </p>
                             </div>
 
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-3 mt-2 md:mt-0">
                                 <Button
                                     as={Link}
                                     href="/products"
                                     variant="outline"
-                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C]"
+                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] w-full md:w-auto"
                                 >
                                     <Package className="h-4 w-4" />
                                     View Products
@@ -167,7 +167,7 @@ export default function Orders({ orders = [], currentStore }) {
                                 <Button
                                     as={Link}
                                     href={`https://${currentStore?.slug}.selll.store`}
-                                    className="bg-primary-orange hover:bg-primary-orange/90"
+                                    className="bg-primary-orange hover:bg-primary-orange/90 w-full md:w-auto"
                                     target="_blank"
                                 >
                                     <Store className="h-4 w-4" />
@@ -374,7 +374,7 @@ export default function Orders({ orders = [], currentStore }) {
                                     <Input
                                         type="search"
                                         placeholder="Search orders by ID, customer, or product..."
-                                        className="pl-8 h-9 bg-[#141414] border-[#2C2C2C] rounded-md focus:ring-1 focus:ring-[#2C2C2C] focus:border-[#2C2C2C] hover:bg-[#2C2C2C]/10 transition-colors w-full text-sm placeholder:text-gray-500"
+                                        className="pl-8 h-9 bg-gray-100 dark:bg-[#141414] dark:border-[#2C2C2C] rounded-md focus:ring-1 focus:ring-[#2C2C2C] focus:border-[#2C2C2C] hover:bg-[#2C2C2C]/10 transition-colors w-full text-sm dark:placeholder:text-gray-500"
                                         value={search}
                                         onChange={(e) =>
                                             setSearch(e.target.value)
@@ -384,7 +384,7 @@ export default function Orders({ orders = [], currentStore }) {
                             </div>
 
                             <select
-                                className="ml-6 h-9 bg-[#141414] border-[#2C2C2C] rounded-md focus:ring-1 focus:ring-[#2C2C2C] focus:border-[#2C2C2C] hover:bg-[#2C2C2C]/10 transition-colors text-sm font-medium text-gray-400 px-2.5 appearance-none cursor-pointer min-w-[140px]"
+                                className="ml-6 h-9 bg-gray-100 dark:bg-[#141414] dark:border-[#2C2C2C] rounded-md focus:ring-1 focus:ring-[#2C2C2C] focus:border-[#2C2C2C] hover:bg-[#2C2C2C]/10 transition-colors text-sm font-medium dark:text-gray-400 px-2.5 appearance-none cursor-pointer max-w-[150px]"
                                 value={filter}
                                 onChange={(e) => setFilter(e.target.value)}
                                 style={{
@@ -429,7 +429,7 @@ export default function Orders({ orders = [], currentStore }) {
                         </div>
 
                         <div className="flex items-center justify-between mb-6">
-                            <h3 className="text-lg font-medium text-white">
+                            <h3 className="text-lg font-medium">
                                 {filter === "all"
                                     ? "All Orders"
                                     : filter === "paid"
@@ -467,25 +467,15 @@ export default function Orders({ orders = [], currentStore }) {
                                 className="mt-6"
                             />
                         ) : (
-                            <div className="rounded-md border border-[#2C2C2C] overflow-hidden">
+                            <div className="overflow-x-auto rounded-lg border border-muted-foreground/15">
                                 <Table>
-                                    <TableHeader className="bg-[#1A1A1A]">
-                                        <TableRow className="hover:bg-[#1A1A1A] border-[#2C2C2C]">
-                                            <TableHead className="text-white">
-                                                Order
-                                            </TableHead>
-                                            <TableHead className="text-white">
-                                                Customer
-                                            </TableHead>
-                                            <TableHead className="text-white">
-                                                Products
-                                            </TableHead>
-                                            <TableHead className="text-white">
-                                                Date
-                                            </TableHead>
-                                            <TableHead className="text-white">
-                                                Status
-                                            </TableHead>
+                                    <TableHeader className="text-xs uppercase bg-gray-100 dark:bg-[#1A1A1A] dark:text-gray-400 border-b border-muted-foreground/15">
+                                        <TableRow>
+                                            <TableHead>Order</TableHead>
+                                            <TableHead>Customer</TableHead>
+                                            <TableHead>Products</TableHead>
+                                            <TableHead>Date</TableHead>
+                                            <TableHead>Status</TableHead>
                                             <TableHead className="text-white text-right">
                                                 Total
                                             </TableHead>
@@ -496,7 +486,7 @@ export default function Orders({ orders = [], currentStore }) {
                                         {filteredOrders.map((order) => (
                                             <TableRow
                                                 key={order.id}
-                                                className="hover:bg-[#2C2C2C] border-[#2C2C2C] cursor-pointer"
+                                                className="border-b border-muted-foreground/15 hover:bg-gray-100 hover:dark:bg-[#1A1A1A]/50 cursor-pointer"
                                                 onClick={() =>
                                                     router.visit(
                                                         `/orders/${order.id}`,
@@ -509,7 +499,7 @@ export default function Orders({ orders = [], currentStore }) {
                                                             <ShoppingCart className="h-5 w-5 text-primary-orange" />
                                                         </div>
                                                         <div>
-                                                            <p className="font-medium text-white">
+                                                            <p className="font-medium">
                                                                 Order #
                                                                 {order.id}
                                                             </p>
@@ -518,8 +508,8 @@ export default function Orders({ orders = [], currentStore }) {
                                                 </TableCell>
                                                 <TableCell>
                                                     <div className="flex items-center gap-2">
-                                                        <User className="h-4 w-4 text-gray-400" />
-                                                        <span className="text-sm text-gray-300 truncate max-w-[150px]">
+                                                        <User className="h-4 w-4 text-muted-foreground" />
+                                                        <span className="text-sm text-muted-foreground truncate max-w-[150px]">
                                                             {order.customer
                                                                 ?.name ||
                                                                 "Anonymous Customer"}
@@ -539,7 +529,7 @@ export default function Orders({ orders = [], currentStore }) {
                                                                         key={
                                                                             index
                                                                         }
-                                                                        className="bg-[#1A1A1A] rounded-md px-2 py-0.5 text-xs text-gray-300 truncate max-w-[100px]"
+                                                                        className="bg-[#1A1A1A] rounded-md px-2 py-0.5 text-xs text-muted-foreground truncate max-w-[100px]"
                                                                     >
                                                                         {
                                                                             product.name
@@ -549,7 +539,7 @@ export default function Orders({ orders = [], currentStore }) {
                                                             )}
                                                         {order.products
                                                             ?.length > 2 && (
-                                                            <div className="bg-[#1A1A1A] rounded-md px-2 py-0.5 text-xs text-gray-300">
+                                                            <div className="bg-[#1A1A1A] rounded-md px-2 py-0.5 text-xs text-muted-foreground/80">
                                                                 +
                                                                 {order.products
                                                                     .length -
@@ -558,7 +548,7 @@ export default function Orders({ orders = [], currentStore }) {
                                                             </div>
                                                         )}
                                                     </div>
-                                                    <div className="text-xs text-gray-400 mt-1">
+                                                    <div className="text-xs text-muted-foreground mt-1">
                                                         {order.products
                                                             ?.length || 0}{" "}
                                                         {order.products
@@ -568,7 +558,7 @@ export default function Orders({ orders = [], currentStore }) {
                                                     </div>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <div className="text-sm text-gray-300">
+                                                    <div className="text-sm text-muted-foreground">
                                                         {dayjs(
                                                             order.created_at,
                                                         ).format("MMM D, YYYY")}

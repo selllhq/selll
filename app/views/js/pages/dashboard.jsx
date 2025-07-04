@@ -38,7 +38,6 @@ export default function Dashboard({
     revenueGraph = [],
     analytics,
 }) {
-    console.log("Dashboard data:", analytics);
     return (
         <Layout
             variant="header"
