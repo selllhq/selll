@@ -8,7 +8,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/shared/card";
-import { Wallet, Clock, Search, BanknoteIcon } from "lucide-react";
+import { Wallet, Search, BanknoteIcon } from "lucide-react";
 import Button from "@/components/form/button";
 import Input from "@/components/form/input";
 import dayjs from "dayjs";
@@ -25,7 +25,6 @@ import {
 export default function Payouts({
     payouts = [],
     currentStore,
-    wallets = [],
     orders = 0,
     payoutWallet = null,
 }) {
@@ -53,20 +52,19 @@ export default function Payouts({
     });
 
     return (
-        <Layout variant="header" className="p-2 pt-2 mt-5 md:mt-20">
+        <Layout variant="header" className="dark:bg-[#141414] p-4 pt-2">
             <Head title="Payouts" />
 
-            <div className="space-y-8 py-4 px-4">
-                <div className="flex items-center justify-between">
-                    <div>
-                        <h2 className="text-2xl md:text-4xl font-bold md:mb-2">
-                            Payouts
-                        </h2>
-                        <p className="text-muted-foreground text-sm md:text-base">
-                            Manage your store's payouts and withdraw your
-                            earnings
-                        </p>
-                    </div>
+            <div className="space-y-8 py-0 md:py-4 px-0 md:px-4">
+                <div>
+                    <h2 className="text-2xl md:text-4xl font-bold md:mb-2">
+                        Payouts
+                    </h2>
+                    <p className="text-muted-foreground text-sm md:text-base">
+                        View all payouts made to your store. Payouts are
+                        automatic, so just sit back and relax while we process
+                        your earnings.
+                    </p>
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mt-8">
@@ -111,14 +109,17 @@ export default function Payouts({
                                                 ? "Mobile Money"
                                                 : payoutWallet.type === "bank"
                                                   ? "Bank Account"
-                                                  : payoutWallet.type === "other"
+                                                  : payoutWallet.type ===
+                                                      "other"
                                                     ? "Other"
-                                                    : payoutWallet.type} - {payoutWallet.provider || "N/A"}
+                                                    : payoutWallet.type}{" "}
+                                            - {payoutWallet.provider || "N/A"}
                                         </p>
                                     </div>
                                     <div>
                                         <p className="font-medium">
-                                            {payoutWallet.account_number || "N/A"}
+                                            {payoutWallet.account_number ||
+                                                "N/A"}
                                         </p>
                                     </div>
                                 </div>
@@ -127,7 +128,7 @@ export default function Payouts({
                     )}
                 </div>
 
-                <div className="flex items-center justify-between mb-6">
+                {/* <div className="flex items-center justify-between mb-6">
                     <div className="flex-1 max-w-md">
                         <div className="relative">
                             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
@@ -178,10 +179,10 @@ export default function Payouts({
                             Failed
                         </option>
                     </select>
-                </div>
+                </div> */}
 
                 <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-lg font-medium text-white">
+                    <h3 className="text-lg font-medium">
                         {filter === "all"
                             ? "All Payouts"
                             : filter === "pending"
@@ -248,58 +249,61 @@ export default function Payouts({
                         )}
                     </>
                 ) : (
-                    <div className="rounded-md border border-[#2C2C2C] overflow-hidden">
-                        <Table>
-                            <TableHeader>
-                                <TableRow className="dark:border-neutral-800">
-                                    <TableHead>Reference</TableHead>
-                                    <TableHead>Amount</TableHead>
-                                    <TableHead>Requested</TableHead>
-                                    <TableHead>Payment Method</TableHead>
-                                    <TableHead>Processed</TableHead>
-                                    <TableHead>Status</TableHead>
-                                    <TableHead className="text-right">
+                    <>
+                        <div className="overflow-x-auto rounded-lg border border-muted-foreground/15">
+                            <Table>
+                                <TableHeader>
+                                    <TableRow className="dark:border-neutral-800">
+                                        <TableHead>Reference</TableHead>
+                                        <TableHead>Amount</TableHead>
+                                        <TableHead>Requested</TableHead>
+                                        <TableHead className="text-nowrap">
+                                            Payment Method
+                                        </TableHead>
+                                        {/* <TableHead>Processed</TableHead>
+                                    <TableHead>Status</TableHead> */}
+                                        {/* <TableHead className="text-right">
                                         Actions
-                                    </TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {filteredPayouts.map((payout) => (
-                                    <TableRow
-                                        key={payout.id}
-                                        className="cursor-pointer hover:bg-muted/50 dark:hover:bg-neutral-800/50 dark:border-neutral-800"
-                                        onClick={() =>
-                                            router.visit(
-                                                `/store/payouts/${payout.id}`,
-                                            )
-                                        }
-                                    >
-                                        <TableCell className="font-medium text-white">
-                                            #{payout.reference}
-                                        </TableCell>
-                                        <TableCell className="text-white">
-                                            {new Intl.NumberFormat("en-US", {
-                                                style: "currency",
-                                                currency:
-                                                    currentStore?.currency ||
-                                                    "USD",
-                                            }).format(payout.amount)}
-                                        </TableCell>
-                                        <TableCell className="text-gray-400">
-                                            {dayjs(payout.created_at).format(
-                                                "MMM D, YYYY",
-                                            )}
-                                        </TableCell>
-                                        <TableCell className="text-gray-400 truncate max-w-[200px]">
-                                            {payout.wallet.type === "momo"
-                                                ? "Mobile Money"
-                                                : payout.wallet.type === "bank"
-                                                  ? "Bank Account"
-                                                  : payout.wallet.type === "other"
-                                                    ? "Other"
-                                                    : payout.wallet.type}
-                                        </TableCell>
-                                        <TableCell className="text-gray-400">
+                                    </TableHead> */}
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {filteredPayouts.map((payout) => (
+                                        <TableRow
+                                            key={payout.id}
+                                            className="cursor-pointer hover:bg-muted/50 dark:hover:bg-neutral-800/50 dark:border-neutral-800"
+                                        >
+                                            <TableCell className="font-medium">
+                                                #{payout.reference || payout.id}
+                                            </TableCell>
+                                            <TableCell>
+                                                {new Intl.NumberFormat(
+                                                    "en-US",
+                                                    {
+                                                        style: "currency",
+                                                        currency:
+                                                            currentStore?.currency ||
+                                                            "USD",
+                                                    },
+                                                ).format(payout.amount)}
+                                            </TableCell>
+                                            <TableCell className="text-gray-400">
+                                                {dayjs(
+                                                    payout.created_at,
+                                                ).format("MMM D, YYYY")}
+                                            </TableCell>
+                                            <TableCell className="text-gray-400 truncate max-w-[200px]">
+                                                {payout.wallet.type === "momo"
+                                                    ? "Mobile Money"
+                                                    : payout.wallet.type ===
+                                                        "bank"
+                                                      ? "Bank Account"
+                                                      : payout.wallet.type ===
+                                                          "other"
+                                                        ? "Other"
+                                                        : payout.wallet.type}
+                                            </TableCell>
+                                            {/* <TableCell className="text-gray-400">
                                             {payout.processed_at
                                                 ? dayjs(
                                                       payout.processed_at,
@@ -310,8 +314,8 @@ export default function Payouts({
                                             <StatusBadge
                                                 status={payout.status}
                                             />
-                                        </TableCell>
-                                        <TableCell className="text-right">
+                                        </TableCell> */}
+                                            {/* <TableCell className="text-right">
                                             <Button
                                                 variant="ghost"
                                                 size="sm"
@@ -325,24 +329,46 @@ export default function Payouts({
                                             >
                                                 View
                                             </Button>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                        <div className="bg-gray-100 dark:bg-[#1A1A1A] px-4 py-3 text-xs text-gray-400 border-t dark:border-neutral-800">
-                            <div>
-                                {Intl.NumberFormat("en-US", {
-                                    style: "decimal",
-                                }).format(filteredPayouts.length)}{" "}
-                                {filteredPayouts.length === 1
-                                    ? "payout"
-                                    : "payouts"}{" "}
-                                found
-                                {search && <span> matching "{search}"</span>}
+                                        </TableCell> */}
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                            <div className="bg-gray-100 dark:bg-[#1A1A1A] px-4 py-3 text-xs text-gray-400 border-t dark:border-neutral-800">
+                                <div>
+                                    {Intl.NumberFormat("en-US", {
+                                        style: "decimal",
+                                    }).format(filteredPayouts.length)}{" "}
+                                    {filteredPayouts.length === 1
+                                        ? "payout"
+                                        : "payouts"}{" "}
+                                    found
+                                    {search && (
+                                        <span> matching "{search}"</span>
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    </div>
+
+                        {/* report payout not received after 2 working days */}
+                        <div className="mt-6 text-sm text-gray-400">
+                            <p>
+                                If you have not received your payout within 2
+                                working days, please{" "}
+                                <Button
+                                    variant="link"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        window.Tawk_API?.toggle();
+                                    }}
+                                    className="text-primary-orange p-0"
+                                >
+                                    contact support
+                                </Button>{" "}
+                                for assistance.
+                            </p>
+                        </div>
+                    </>
                 )}
             </div>
         </Layout>

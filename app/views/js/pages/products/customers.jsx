@@ -124,7 +124,7 @@ export default function Customers({
     return (
         <Layout
             variant="header"
-            className="p-4 pt-2"
+            className="dark:bg-[#141414] p-4 pt-2"
             breadcrumbs={[
                 {
                     title: "Customers",
@@ -151,7 +151,7 @@ export default function Customers({
                         />
                     </div>
                 ) : (
-                    <div className="space-y-8 py-4">
+                    <div className="space-y-8 py-0 md:py-4 px-0 md:px-4">
                         <div className="md:flex items-center justify-between">
                             <div>
                                 <h2 className="text-2xl md:text-4xl font-bold md:mb-2">
@@ -162,7 +162,7 @@ export default function Customers({
                                 </p>
                             </div>
 
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-3 mt-2 md:mt-0">
                                 <Button
                                     as={Link}
                                     href="/orders"
