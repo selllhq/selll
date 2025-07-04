@@ -86,7 +86,7 @@ const Customize = ({ store }) => {
                                 defaultValue="layout"
                                 className="space-y-8"
                             >
-                                <Tabs.List className="flex space-x-1 border-b border-gray-800">
+                                <Tabs.List className="flex overflow-x-auto space-x-1 border-b border-gray-800">
                                     <Tabs.Trigger
                                         value="layout"
                                         className={cn(
@@ -102,7 +102,7 @@ const Customize = ({ store }) => {
                                         value="hero"
                                         className={cn(
                                             "flex items-center gap-2 px-4 py-2 text-sm font-medium text-muted-foreground",
-                                            "border-b-2 border-transparent",
+                                            "border-b-2 border-transparent text-nowrap",
                                             "hover:text-secondary-foreground data-[state=active]:text-secondary-foreground data-[state=active]:border-primary-orange",
                                         )}
                                     >
@@ -138,28 +138,44 @@ const Customize = ({ store }) => {
                                         value="layout"
                                         className="space-y-6"
                                     >
-                                        <LayoutTab data={data} setData={setData} errors={errors} />
+                                        <LayoutTab
+                                            data={data}
+                                            setData={setData}
+                                            errors={errors}
+                                        />
                                     </Tabs.Content>
 
                                     <Tabs.Content
                                         value="hero"
                                         className="space-y-6"
                                     >
-                                        <HeroTab data={data} setData={setData} errors={errors} />
+                                        <HeroTab
+                                            data={data}
+                                            setData={setData}
+                                            errors={errors}
+                                        />
                                     </Tabs.Content>
 
                                     <Tabs.Content
                                         value="theme"
                                         className="space-y-6"
                                     >
-                                        <ThemeTab data={data} setData={setData} errors={errors} />
+                                        <ThemeTab
+                                            data={data}
+                                            setData={setData}
+                                            errors={errors}
+                                        />
                                     </Tabs.Content>
 
                                     <Tabs.Content
                                         value="contact"
                                         className="space-y-6"
                                     >
-                                        <ContactTab data={data} setData={setData} errors={errors} />
+                                        <ContactTab
+                                            data={data}
+                                            setData={setData}
+                                            errors={errors}
+                                        />
                                     </Tabs.Content>
                                 </div>
                             </Tabs.Root>
@@ -168,12 +184,26 @@ const Customize = ({ store }) => {
                                 <div className="block sm:hidden">
                                     <Button
                                         type="button"
-                                        onClick={() => setShowPreview(!showPreview)}
-                                        className="w-full mb-4 bg-[#2C2C2C] hover:bg-[#3C3C3C]"
+                                        onClick={() =>
+                                            setShowPreview(!showPreview)
+                                        }
+                                        className="w-full mb-0 bg-[#2C2C2C] hover:bg-[#3C3C3C]"
                                     >
-                                        {showPreview ? 'Hide Preview' : 'Show Preview'}
+                                        {showPreview
+                                            ? "Hide Preview"
+                                            : "Show Preview"}
                                     </Button>
                                 </div>
+
+                                <Button
+                                    as="a"
+                                    href={`https://${store?.slug}.selll.store`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-full hidden sm:flex bg-[#2C2C2C] hover:bg-[#3C3C3C]"
+                                >
+                                    View Store
+                                </Button>
 
                                 <Button
                                     type="submit"
@@ -187,7 +217,9 @@ const Customize = ({ store }) => {
                     </div>
                 </div>
 
-                <div className={`fixed inset-0 sm:static w-full sm:w-[40%] bg-gray-50 dark:bg-[#1C1C1C] overflow-y-auto transition-transform duration-300 ${showPreview ? 'translate-x-0 mt-28' : 'translate-x-full sm:translate-x-0'}`}>
+                <div
+                    className={`fixed inset-0 sm:static w-full sm:w-[40%] bg-gray-50 dark:bg-[#1C1C1C] overflow-y-auto transition-transform duration-300 ${showPreview ? "translate-x-0 mt-28" : "translate-x-full sm:translate-x-0"}`}
+                >
                     <div className="p-8">
                         <button
                             onClick={() => setShowPreview(false)}
@@ -295,9 +327,13 @@ const Customize = ({ store }) => {
                                                 {data.show_hero_button && (
                                                     <button
                                                         className="inline-block px-6 py-2 rounded-lg text-white text-sm font-medium"
-                                                        style={{ backgroundColor: data.theme_color }}
+                                                        style={{
+                                                            backgroundColor:
+                                                                data.theme_color,
+                                                        }}
                                                     >
-                                                        {data.hero_button_text || "Shop Now"}
+                                                        {data.hero_button_text ||
+                                                            "Shop Now"}
                                                     </button>
                                                 )}
                                                 {data.show_hero_search && (
@@ -309,7 +345,10 @@ const Customize = ({ store }) => {
                                                         />
                                                         <button
                                                             className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-md text-white/70 hover:text-white hover:bg-white/10"
-                                                            style={{ backgroundColor: data.theme_color }}
+                                                            style={{
+                                                                backgroundColor:
+                                                                    data.theme_color,
+                                                            }}
                                                         >
                                                             <svg
                                                                 className="w-4 h-4"
@@ -334,7 +373,7 @@ const Customize = ({ store }) => {
 
                                 {/* Products Grid */}
                                 <div
-                                    className={`flex-1 p-4 grid gap-4 ${data.two_cards_on_mobile ? 'grid-cols-2' : 'grid-cols-1'}`}
+                                    className={`flex-1 p-4 grid gap-4 ${data.two_cards_on_mobile ? "grid-cols-2" : "grid-cols-1"}`}
                                 >
                                     <div
                                         className="rounded-lg overflow-hidden"
@@ -431,7 +470,8 @@ const Customize = ({ store }) => {
                                             <button
                                                 className="w-full mt-3 py-2 rounded-lg text-white text-sm"
                                                 style={{
-                                                    backgroundColor: data.theme_color,
+                                                    backgroundColor:
+                                                        data.theme_color,
                                                 }}
                                             >
                                                 Buy Now
@@ -479,9 +519,26 @@ const Customize = ({ store }) => {
                                                     Contact Us
                                                 </h4>
                                                 <ul className="space-y-1 text-sm opacity-70">
-                                                    <li>{data.contact_email || "test@test.com"}</li>
-                                                    <li>{data.contact_phone || "+233 123 456 789"}</li>
-                                                    {data.contact_address ? <li>{data.contact_address}</li> : <li>123 Store Street, City</li>}
+                                                    <li>
+                                                        {data.contact_email ||
+                                                            "test@test.com"}
+                                                    </li>
+                                                    <li>
+                                                        {data.contact_phone ||
+                                                            "+233 123 456 789"}
+                                                    </li>
+                                                    {data.contact_address ? (
+                                                        <li>
+                                                            {
+                                                                data.contact_address
+                                                            }
+                                                        </li>
+                                                    ) : (
+                                                        <li>
+                                                            123 Store Street,
+                                                            City
+                                                        </li>
+                                                    )}
                                                 </ul>
                                             </div>
                                         </div>
@@ -495,7 +552,7 @@ const Customize = ({ store }) => {
                                                 href={data.facebook_url || "#"}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className={`text-gray-500 hover:text-gray-400 ${!data.facebook_url ? 'opacity-50' : ''}`}
+                                                className={`text-gray-500 hover:text-gray-400 ${!data.facebook_url ? "opacity-50" : ""}`}
                                             >
                                                 <svg
                                                     className="w-4 h-4"
@@ -510,7 +567,7 @@ const Customize = ({ store }) => {
                                                 href={data.twitter_url || "#"}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className={`text-gray-500 hover:text-gray-400 ${!data.twitter_url ? 'opacity-50' : ''}`}
+                                                className={`text-gray-500 hover:text-gray-400 ${!data.twitter_url ? "opacity-50" : ""}`}
                                             >
                                                 <svg
                                                     className="w-4 h-4"
@@ -525,7 +582,7 @@ const Customize = ({ store }) => {
                                                 href={data.instagram_url || "#"}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className={`text-gray-500 hover:text-gray-400 ${!data.instagram_url ? 'opacity-50' : ''}`}
+                                                className={`text-gray-500 hover:text-gray-400 ${!data.instagram_url ? "opacity-50" : ""}`}
                                             >
                                                 <svg
                                                     className="w-4 h-4"
