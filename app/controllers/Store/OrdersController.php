@@ -3,15 +3,15 @@
 namespace App\Controllers\Store;
 
 use App\Helpers\SMSHelper;
+use App\Helpers\StoreHelper;
 use App\Mailers\UserMailer;
-use App\Models\Store;
 use App\Models\Cart;
 
 class OrdersController extends Controller
 {
     public function index()
     {
-        $currentStore = Store::find(auth()->user()->current_store_id);
+        $currentStore = StoreHelper::find();
 
         response()->inertia('products/orders', [
             'currentStore' => $currentStore,
@@ -22,7 +22,7 @@ class OrdersController extends Controller
 
     public function show($id)
     {
-        $currentStore = Store::find(auth()->user()->current_store_id);
+        $currentStore = StoreHelper::find();
         $order = Cart::with(['customer', 'items.product', 'shippingUpdates'])->find($id);
 
         if (!$order || $order->store_id !== $currentStore->id) {
@@ -37,7 +37,7 @@ class OrdersController extends Controller
 
     public function shipping($id)
     {
-        $currentStore = Store::find(auth()->user()->current_store_id);
+        $currentStore = StoreHelper::find();
         $order = Cart::with('customer')->find($id);
 
         if (!$order || $order->store_id !== $currentStore->id) {
@@ -81,7 +81,7 @@ class OrdersController extends Controller
 
     public function cancel($id)
     {
-        $currentStore = Store::find(auth()->user()->current_store_id);
+        $currentStore = StoreHelper::find();
         $order = Cart::with('customer')->find($id);
 
         if (!$order || $order->store_id !== $currentStore->id) {
@@ -95,7 +95,7 @@ class OrdersController extends Controller
 
     public function complete($id)
     {
-        $currentStore = Store::find(auth()->user()->current_store_id);
+        $currentStore = StoreHelper::find();
         $order = Cart::with(['customer', 'shippingUpdates'])->find($id);
 
         if (!$order || $order->store_id !== $currentStore->id) {

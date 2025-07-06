@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Store;
 
+use App\Helpers\StoreHelper;
 use App\Models\Store;
 use App\Models\User;
 
@@ -9,7 +10,7 @@ class PayoutsController extends Controller
 {
     public function index()
     {
-        $currentStore = Store::find(auth()->user()->current_store_id);
+        $currentStore = StoreHelper::find();
 
         response()->inertia('payouts/payouts', [
             'currentStore' => $currentStore,
@@ -23,7 +24,7 @@ class PayoutsController extends Controller
 
     public function setup()
     {
-        $currentStore = Store::find(auth()->user()->current_store_id);
+        $currentStore = StoreHelper::find();
         $billingProvider = billing(in_array($currentStore->currency, ['GHS', 'NGN', 'KES', 'ZAR']) ? 'paystack' : 'stripe');
 
         $banks = $billingProvider->provider()->getAvailableBanks([

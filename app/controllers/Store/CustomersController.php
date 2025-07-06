@@ -2,14 +2,14 @@
 
 namespace App\Controllers\Store;
 
-use App\Models\Store;
+use App\Helpers\StoreHelper;
 use App\Models\Customer;
 
 class CustomersController extends Controller
 {
     public function index()
     {
-        $currentStore = Store::find(auth()->user()->current_store_id);
+        $currentStore = StoreHelper::find();
 
         response()->inertia('products/customers', [
             'currentStore' => $currentStore,
@@ -20,7 +20,7 @@ class CustomersController extends Controller
 
     public function show($id)
     {
-        $currentStore = Store::find(auth()->user()->current_store_id);
+        $currentStore = StoreHelper::find();
         $customer = Customer::find($id);
 
         if (!$customer || $customer->store_id !== $currentStore->id) {
