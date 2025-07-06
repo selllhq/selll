@@ -3,6 +3,7 @@
 namespace App\Controllers\Store;
 
 use App\Helpers\ProductImportHelper;
+use App\Helpers\StoreHelper;
 use App\Models\Analytics;
 use App\Models\Store;
 use App\Models\User;
@@ -11,11 +12,7 @@ class ProductsController extends Controller
 {
     public function index()
     {
-        $currentStore = Store::find(auth()->user()->current_store_id);
-
-        if (!$currentStore) {
-            return response()->redirect('/store/new', 303);
-        }
+        $currentStore = StoreHelper::find();
 
         response()->inertia('products/products', [
             'currentStore' => $currentStore,
@@ -44,7 +41,7 @@ class ProductsController extends Controller
 
     public function import()
     {
-        $currentStore = Store::find(auth()->user()->current_store_id);
+        $currentStore = StoreHelper::find();
 
         response()->inertia('products/import', [
             'currentStore' => $currentStore,

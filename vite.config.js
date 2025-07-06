@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import leaf from "@leafphp/vite-plugin";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
-import eslintPlugin from "vite-plugin-eslint";
+// import eslintPlugin from "vite-plugin-eslint";
 
 export default defineConfig({
     plugins: [
@@ -10,6 +10,7 @@ export default defineConfig({
         leaf({
             input: ["app/views/js/app.jsx"],
             refresh: true,
+            inertia: 'app/views'
         }),
         react(),
         // eslintPlugin({
