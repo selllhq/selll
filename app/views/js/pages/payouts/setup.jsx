@@ -49,7 +49,7 @@ export default function PayoutSetupPage({ banks, mobileMoney }) {
     return (
         <Layout
             variant="header"
-            className="dark:bg-[#141414] p-4 pt-2"
+            className="p-4 pt-2"
             breadcrumbs={[
                 {
                     title: "Dashboard",
@@ -69,7 +69,7 @@ export default function PayoutSetupPage({ banks, mobileMoney }) {
         >
             <Head title="Setup Payouts" />
 
-            <div className="space-y-6 py-0 md:py-6 md:mt-8 px-0">
+            <div className="space-y-6 md:px-4 md:py-6 md:mt-8 px-0">
                 <div className="mb-10">
                     <h2 className="text-2xl md:text-3xl font-bold mb-1">
                         Set up we pay you
@@ -82,225 +82,160 @@ export default function PayoutSetupPage({ banks, mobileMoney }) {
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div className="md:col-span-2">
-                        <Card className="border-0 dark:border-0 shadow-none">
-                            <CardHeader className="p-0 pb-3">
-                                <CardTitle className="text-base font-medium">
-                                    Account Details
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent className="p-0">
-                                <div className="dark:bg-[#1A1A1A] border border-[#2C2C2C] rounded-lg p-5">
-                                    <form
-                                        onSubmit={submit}
-                                        className="space-y-5"
+                        <form onSubmit={submit} className="space-y-5">
+                            <div>
+                                <h3 className="text-base font-medium">
+                                    How would you like to get paid?
+                                </h3>
+                                <p className="mb-2 text-xs text-muted-foreground">
+                                    Payouts will be sent in GHS
+                                </p>
+                                <div className="border rounded-lg divide-x grid grid-cols-2 bg-background dark:border-[#333] dark:divide-[#333] overflow-hidden">
+                                    <div
+                                        className="flex items-start gap-4 p-4 cursor-pointer hover:bg-primary-orange/10 dark:hover:bg-muted"
+                                        onClick={() => {
+                                            setData("type", "momo");
+                                        }}
                                     >
-                                        <div>
-                                            <Label
-                                                htmlFor="type"
-                                                className="block text-xs font-medium mb-2"
-                                            >
-                                                Payout Type
-                                            </Label>
-                                            <div className="grid grid-cols-2 gap-2">
-                                                <div
-                                                    className={`flex items-center gap-2 p-2.5 rounded-lg cursor-pointer border ${data.type === "momo" ? "border-primary-orange bg-primary-orange/10 dark:bg-[#2C2C2C]" : "border-[#2C2C2C]"}`}
-                                                    onClick={() =>
-                                                        setData("type", "momo")
-                                                    }
-                                                >
-                                                    <div
-                                                        className={`p-1.5 rounded-full ${data.type === "momo" ? "bg-primary-orange text-white" : "bg-[#2C2C2C] text-gray-400"}`}
-                                                    >
-                                                        <Wallet className="h-4 w-4" />
-                                                    </div>
-                                                    <div>
-                                                        <span className="text-sm font-medium">
-                                                            Mobile Money
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    className={`flex items-center gap-2 p-2.5 rounded-lg cursor-pointer border ${data.type === "bank" ? "border-primary-orange bg-primary-orange/10 dark:bg-[#2C2C2C]" : "border-[#2C2C2C]"}`}
-                                                    onClick={() =>
-                                                        setData("type", "bank")
-                                                    }
-                                                >
-                                                    <div
-                                                        className={`p-1.5 rounded-full ${data.type === "bank" ? "bg-primary-orange text-white" : "bg-[#2C2C2C] text-gray-400"}`}
-                                                    >
-                                                        <Banknote className="h-4 w-4" />
-                                                    </div>
-                                                    <div>
-                                                        <span className="text-sm font-medium">
-                                                            Bank Account
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {errors.type && (
-                                                <InputError
-                                                    message={errors.type}
-                                                />
-                                            )}
-                                        </div>
-
-                                        <div>
-                                            <Label
-                                                htmlFor="provider"
-                                                className="block text-xs font-medium mb-2"
-                                            >
-                                                {data.type === "momo"
-                                                    ? "Mobile Money Provider"
-                                                    : "Bank Name"}
-                                            </Label>
-                                            <Input
-                                                as="select"
-                                                id="provider"
-                                                value={data.provider}
-                                                onChange={(e) => {
-                                                    setData(
-                                                        "provider",
-                                                        e.target.value,
-                                                    );
-                                                }}
-                                                className="w-full dark:bg-[#141414] border-[#2C2C2C]"
-                                            >
-                                                <option value="">
-                                                    Select{" "}
-                                                    {data.type === "momo"
-                                                        ? "provider"
-                                                        : "bank"}
-                                                </option>
-                                                {(
-                                                    providers[data.type] || []
-                                                ).map((prov) => (
-                                                    <option
-                                                        key={prov.slug}
-                                                        value={`${prov.code}:${prov.name}`}
-                                                    >
-                                                        {prov.name}
-                                                    </option>
-                                                ))}
-                                            </Input>
-                                            {errors.provider && (
-                                                <InputError
-                                                    message={errors.provider}
-                                                />
-                                            )}
-                                        </div>
-
-                                        <div>
-                                            <Label
-                                                htmlFor="account_number"
-                                                className="block text-xs font-medium mb-2"
-                                            >
-                                                {data.type === "momo"
-                                                    ? "Mobile Money Number"
-                                                    : "Account Number"}
-                                            </Label>
-                                            <Input
-                                                id="account_number"
-                                                type="text"
-                                                value={data.account_number}
-                                                onChange={(e) =>
-                                                    setData(
-                                                        "account_number",
-                                                        e.target.value,
-                                                    )
-                                                }
-                                                placeholder={
-                                                    data.type === "momo"
-                                                        ? "e.g. 024xxxxxxx"
-                                                        : "e.g. 1234567890123"
-                                                }
-                                                className="dark:bg-[#141414] border-[#2C2C2C]"
-                                            />
-                                            {errors.account_number && (
-                                                <InputError
-                                                    message={
-                                                        errors.account_number
-                                                    }
-                                                />
-                                            )}
-                                        </div>
-
-                                        <div className="pt-2">
-                                            <Button
-                                                type="submit"
-                                                disabled={processing}
-                                                className="bg-primary-orange hover:bg-primary-orange/90 w-full md:w-auto"
-                                            >
-                                                {processing
-                                                    ? "Saving..."
-                                                    : "Save Payout Details"}
-                                            </Button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </div>
-
-                    <div>
-                        <Card className="border-0 dark:border-0 shadow-none bg-transparent dark:bg-transparent">
-                            <CardHeader className="p-0 pb-3">
-                                <CardTitle className="text-base font-medium">
-                                    Important Notice
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent className="p-0">
-                                <div className="dark:bg-[#1A1A1A] border border-[#2C2C2C] rounded-lg p-5 text-xs">
-                                    <div className="flex items-start gap-3">
-                                        <div className="mt-1">
-                                            <AlertTriangle className="h-5 w-5 text-primary-orange" />
-                                        </div>
-                                        <div className="space-y-4">
-                                            <p>
-                                                Please double-check your account
-                                                details before submitting. Selll
-                                                will not be responsible for
-                                                payouts made to incorrect
-                                                account numbers.
+                                        <Wallet className="h-6 w-6 text-primary-orange mt-1" />
+                                        <div className="flex-1">
+                                            <p className="font-medium">
+                                                Mobile money
                                             </p>
-                                            <div className="pt-3">
-                                                <h4 className="text-xs font-medium mb-2">
-                                                    Payout Schedule
-                                                </h4>
-                                                <ul className="space-y-2 ml-2">
-                                                    <li className="flex items-center gap-2">
-                                                        <div className="h-1.5 w-1.5 rounded-full bg-primary-orange"></div>
-                                                        <span className="text-gray-400">
-                                                            Payouts are
-                                                            processed every 7
-                                                            days
-                                                        </span>
-                                                    </li>
-                                                    <li className="flex items-center gap-2">
-                                                        <div className="h-1.5 w-1.5 rounded-full bg-primary-orange"></div>
-                                                        <span className="text-gray-400">
-                                                            Minimum payout
-                                                            amount: GHS{" "}
-                                                            {data.provider ===
-                                                            "momo"
-                                                                ? "50"
-                                                                : "10"}
-                                                        </span>
-                                                    </li>
-                                                    <li className="flex items-center gap-2">
-                                                        <div className="h-1.5 w-1.5 rounded-full bg-primary-orange"></div>
-                                                        <span className="text-gray-400">
-                                                            Our payment
-                                                            processor charges 2%
-                                                            per payout
-                                                        </span>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                            <ul className="list-disc list-inside text-xs text-muted-foreground space-y-0.5">
+                                                <li>1-3 business days</li>
+                                                <li>Minimum payout GHS 10</li>
+                                                <li>Fees - 1.95%</li>
+                                            </ul>
                                         </div>
+                                        <input
+                                            type="radio"
+                                            checked={data.type === "momo"}
+                                            className="bg-primary-orange"
+                                        />
+                                    </div>
+                                    <div
+                                        className="flex items-start gap-4 p-4 cursor-pointer hover:bg-primary-orange/10 dark:hover:bg-muted"
+                                        onClick={() => {
+                                            setData("type", "bank");
+                                        }}
+                                    >
+                                        <Banknote className="h-6 w-6 text-primary-orange mt-1" />
+                                        <div className="flex-1">
+                                            <p className="font-medium">
+                                                Bank account
+                                            </p>
+                                            <ul className="list-disc list-inside text-xs text-muted-foreground space-y-0.5">
+                                                <li>1-3 business days</li>
+                                                <li>Minimum payout GHS 50</li>
+                                                <li>Fees - 1.95%</li>
+                                            </ul>
+                                        </div>
+                                        <input
+                                            type="radio"
+                                            checked={data.type === "bank"}
+                                            className="bg-primary-orange"
+                                        />
                                     </div>
                                 </div>
-                            </CardContent>
-                        </Card>
+                                {errors.type && (
+                                    <InputError message={errors.type} />
+                                )}
+                            </div>
+
+                            <div>
+                                <Label
+                                    htmlFor="provider"
+                                    className="block text-xs font-medium mb-2"
+                                >
+                                    {data.type === "momo"
+                                        ? "Mobile Money Provider"
+                                        : "Bank Name"}
+                                </Label>
+                                <Input
+                                    as="select"
+                                    id="provider"
+                                    value={data.provider}
+                                    onChange={(e) => {
+                                        setData("provider", e.target.value);
+                                    }}
+                                    className="w-full dark:bg-[#141414] dark:border-[#333]"
+                                >
+                                    <option value="">
+                                        Select{" "}
+                                        {data.type === "momo"
+                                            ? "provider"
+                                            : "bank"}
+                                    </option>
+                                    {(providers[data.type] || []).map(
+                                        (prov) => (
+                                            <option
+                                                key={prov.slug}
+                                                value={`${prov.code}:${prov.name}`}
+                                            >
+                                                {prov.name}
+                                            </option>
+                                        ),
+                                    )}
+                                </Input>
+                                {errors.provider && (
+                                    <InputError message={errors.provider} />
+                                )}
+                            </div>
+
+                            <div>
+                                <Label
+                                    htmlFor="account_number"
+                                    className="block text-xs font-medium mb-2"
+                                >
+                                    {data.type === "momo"
+                                        ? "Mobile Money Number"
+                                        : "Account Number"}
+                                </Label>
+                                <Input
+                                    id="account_number"
+                                    type="text"
+                                    value={data.account_number}
+                                    onChange={(e) =>
+                                        setData(
+                                            "account_number",
+                                            e.target.value,
+                                        )
+                                    }
+                                    placeholder={
+                                        data.type === "momo"
+                                            ? "e.g. 024xxxxxxx"
+                                            : "e.g. 1234567890123"
+                                    }
+                                    className="dark:bg-[#141414] dark:border-[#333]"
+                                />
+                                {errors.account_number ? (
+                                    <InputError
+                                        message={errors.account_number}
+                                    />
+                                ) : (
+                                    <>
+                                        {data.account_number.length > 8 && (
+                                            <small className="text-muted-foreground">
+                                                Double-check your details before submitting, funds cannot be reversed once sent.
+                                            </small>
+                                        )}
+                                    </>
+                                )}
+                            </div>
+
+                            <div className="pt-2">
+                                <Button
+                                    type="submit"
+                                    disabled={processing}
+                                    className="bg-primary-orange hover:bg-primary-orange/90 w-full md:w-auto"
+                                >
+                                    {processing
+                                        ? "Saving..."
+                                        : "Save Payout Details"}
+                                </Button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
