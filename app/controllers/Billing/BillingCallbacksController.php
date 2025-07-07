@@ -81,7 +81,7 @@ class BillingCallbacksController extends Controller
 
             $geoData = request()->getUserLocation();
 
-            app()->mixpanel->track('Order Paid', [
+            app()->mixpanel->track('New Successful Order', [
                 'store_id' => $userCart->store_id,
                 'customer_id' => $userCart->customer_id,
                 'cart_id' => $userCart->id,
@@ -90,6 +90,7 @@ class BillingCallbacksController extends Controller
                 'payment_provider' => $provider,
                 '$region' => $geoData['region'] ?? null,
                 '$city' => $geoData['city'] ?? null,
+                'is_first_order' => $userCart->store->carts()->count() === 1,
                 'mp_country_code' => $geoData['countryCode'] ?? null,
                 '$country_code' => $geoData['countryCode'] ?? null,
             ]);

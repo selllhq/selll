@@ -89,7 +89,7 @@ class AnalyticsController extends Controller
             'user_device' => $data['user_device'],
         ]);
 
-        return response()->noContent();
+        return response()->json($geoData);
     }
 
     public function addToCart()
