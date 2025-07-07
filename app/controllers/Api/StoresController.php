@@ -26,6 +26,10 @@ class StoresController extends Controller
             'source' => request()->headers('Referer') ?? 'unknown',
             '$latitude' => $geoData['lat'] ?? null,
             '$longitude' => $geoData['lon'] ?? null,
+            '$region' => $geoData['region'] ?? null,
+            '$city' => $geoData['city'] ?? null,
+            'mp_country_code' => $geoData['countryCode'] ?? null,
+            '$country_code' => $geoData['countryCode'] ?? null,
         ]);
 
         Analytics::create([
