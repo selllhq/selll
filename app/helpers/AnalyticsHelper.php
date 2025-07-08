@@ -13,13 +13,19 @@ class AnalyticsHelper
         }
 
         $midyearRevenueList = db()
-            ->select('carts', 'SUM(total::NUMERIC) AS revenue, TO_CHAR(created_at, \'YYYY-MM\') AS month')
-            ->where('store_id', (int) $currentStoreId)
-            ->where('status', 'paid')
-            ->orWhere('status', 'completed')
-            ->where('created_at', '>=', date('Y-m-01', strtotime('-5 months')))
-            ->groupBy('month')
-            ->get();
+            ->query(
+                "SELECT
+                SUM(total::NUMERIC) AS revenue,
+                TO_CHAR(created_at, 'YYYY-MM') AS month
+            FROM carts
+            WHERE store_id = ?
+              AND (status = 'paid' OR status = 'completed')
+              AND created_at >= ?
+            GROUP BY month",
+            )->bind(
+                (int) $currentStoreId,
+                date('Y-m-01', strtotime('-5 months'))
+            )->get();
 
         $revenueData = [];
         foreach ($midyearRevenueList as $row) {

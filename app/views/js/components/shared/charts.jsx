@@ -95,10 +95,11 @@ export function BarChart({ data, currentStore }) {
                     tickLine={false}
                     axisLine={false}
                     tickFormatter={(value) =>
-                        new Intl.NumberFormat("en-US", {
-                            style: "currency",
-                            currency: currentStore?.currency,
-                        }).format(value)
+                        // new Intl.NumberFormat("en-US", {
+                        //     style: "currency",
+                        //     currency: currentStore?.currency,
+                        // }).format(value)
+                        value.toLocaleString()
                     }
                 />
                 <Tooltip

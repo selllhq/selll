@@ -140,20 +140,12 @@ export default function Dashboard({
                                                 currency:
                                                     currentStore?.currency,
                                             }).format(
-                                                orders
-                                                    .filter(
-                                                        (order) =>
-                                                            order.status ===
-                                                                "paid" ||
-                                                            order.status ===
-                                                                "completed",
-                                                    )
-                                                    .reduce(
-                                                        (acc, order) =>
-                                                            acc +
-                                                            Number(order.total),
-                                                        0,
-                                                    ),
+                                                orders.reduce(
+                                                    (acc, order) =>
+                                                        acc +
+                                                        Number(order.total),
+                                                    0,
+                                                ),
                                             )}
                                         </div>
                                         <div className="flex items-center gap-1 text-emerald-500">
@@ -169,20 +161,15 @@ export default function Dashboard({
                                                     },
                                                 ).format(
                                                     orders
-                                                        .filter(
-                                                            (order) =>
-                                                                (order.status ===
-                                                                    "paid" ||
-                                                                    order.status ===
-                                                                        "completed") &&
-                                                                dayjs(
-                                                                    order.created_at,
-                                                                ).isAfter(
-                                                                    dayjs().subtract(
-                                                                        1,
-                                                                        "month",
-                                                                    ),
+                                                        .filter((order) =>
+                                                            dayjs(
+                                                                order.created_at,
+                                                            ).isAfter(
+                                                                dayjs().subtract(
+                                                                    1,
+                                                                    "month",
                                                                 ),
+                                                            ),
                                                         )
                                                         .reduce(
                                                             (acc, order) =>
@@ -219,20 +206,15 @@ export default function Dashboard({
                                             <span className="text-sm">
                                                 ↑{" "}
                                                 {orders
-                                                    .filter(
-                                                        (order) =>
-                                                            (order.status ===
-                                                                "paid" ||
-                                                                order.status ===
-                                                                    "completed") &&
-                                                            dayjs(
-                                                                order.created_at,
-                                                            ).isAfter(
-                                                                dayjs().subtract(
-                                                                    1,
-                                                                    "month",
-                                                                ),
+                                                    .filter((order) =>
+                                                        dayjs(
+                                                            order.created_at,
+                                                        ).isAfter(
+                                                            dayjs().subtract(
+                                                                1,
+                                                                "month",
                                                             ),
+                                                        ),
                                                     )
                                                     .reduce((acc) => acc + 1, 0)
                                                     .toLocaleString()}
@@ -405,7 +387,7 @@ export default function Dashboard({
                                             .slice(0, 5)
                                             .map((product) => ({
                                                 name: product.name,
-                                                total: product.sales || 0,
+                                                total: product.purchases_count || 0,
                                             }))}
                                     />
                                 </CardContent>
