@@ -438,17 +438,8 @@ export default function Orders({ orders = [], currentStore }) {
                         </div>
 
                         <div className="flex items-center justify-between mb-6">
-                            <h3 className="text-lg font-medium">
-                                {filter === "all"
-                                    ? "All Orders"
-                                    : filter === "paid"
-                                      ? "Paid Orders"
-                                      : filter === "completed"
-                                        ? "Completed Orders"
-                                        : filter === "pending"
-                                          ? "Pending Orders"
-                                          : "Cancelled Orders"}{" "}
-                                ({filteredOrders.length})
+                            <h3 className="text-lg font-medium capitalize">
+                                {filter} Orders ({filteredOrders.length})
                             </h3>
 
                             <div className="text-sm text-gray-400">
@@ -482,10 +473,10 @@ export default function Orders({ orders = [], currentStore }) {
                                         <TableRow>
                                             <TableHead>Order</TableHead>
                                             <TableHead>Customer</TableHead>
-                                            <TableHead>Date</TableHead>
+                                            <TableHead>Total</TableHead>
                                             <TableHead>Status</TableHead>
                                             <TableHead className="text-white text-right">
-                                                Total
+                                                Order Date
                                             </TableHead>
                                         </TableRow>
                                     </TableHeader>
@@ -514,28 +505,6 @@ export default function Orders({ orders = [], currentStore }) {
                                                     </span>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <div className="text-sm text-muted-foreground text-nowrap">
-                                                        {dayjs(
-                                                            order.created_at,
-                                                        ).format("MMM D, YYYY")}
-                                                    </div>
-                                                    <div className="text-xs text-gray-400">
-                                                        {dayjs(
-                                                            order.created_at,
-                                                        ).format("h:mm A")}
-                                                    </div>
-                                                    <div className="text-xs text-gray-500">
-                                                        {dayjs(
-                                                            order.created_at,
-                                                        ).fromNow()}
-                                                    </div>
-                                                </TableCell>
-                                                <TableCell>
-                                                    {getStatusBadge(
-                                                        order.status,
-                                                    )}
-                                                </TableCell>
-                                                <TableCell className="text-right">
                                                     <div className="font-bold text-white">
                                                         {new Intl.NumberFormat(
                                                             "en-US",
@@ -546,6 +515,29 @@ export default function Orders({ orders = [], currentStore }) {
                                                                     "USD",
                                                             },
                                                         ).format(order.total)}
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell>
+                                                    {getStatusBadge(
+                                                        order.status,
+                                                    )}
+                                                </TableCell>
+                                                <TableCell className="text-right">
+                                                    <div className="text-sm text-muted-foreground text-nowrap">
+                                                        {dayjs(
+                                                            order.created_at,
+                                                        ).format(
+                                                            "MMM D, YYYY",
+                                                        )}{" "}
+                                                        at{" "}
+                                                        {dayjs(
+                                                            order.created_at,
+                                                        ).format("h:mm A")}
+                                                    </div>
+                                                    <div className="text-xs text-gray-500">
+                                                        {dayjs(
+                                                            order.created_at,
+                                                        ).fromNow()}
                                                     </div>
                                                 </TableCell>
                                             </TableRow>
