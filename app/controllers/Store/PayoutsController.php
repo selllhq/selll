@@ -66,55 +66,61 @@ class PayoutsController extends Controller
 
         [$bankCode, $provider] = explode(':', $data['provider']);
 
-        $subaccount = $billingProvider->provider()->subaccounts()->create([
-            'business_name' => $currentStore->name,
-            'settlement_bank' => $bankCode,
-            'account_number' => $data['account_number'],
-            'percentage_charge' => 2,
-            'description' => "Selll payout account for {$currentStore->name}",
-            'primary_contact_email' => $currentStore->email,
-            'primary_contact_name' => $currentStore->name,
-            'metadata' => [
-                'store_id' => $currentStore->id,
-                'user_id' => auth()->user()->id,
-            ],
-        ]);
+        try {
+            $subaccount = $billingProvider->provider()->subaccounts()->create([
+                'business_name' => $currentStore->name,
+                'settlement_bank' => $bankCode,
+                'account_number' => $data['account_number'],
+                'percentage_charge' => 2,
+                'description' => "Selll payout account for {$currentStore->name}",
+                'primary_contact_email' => $currentStore->email,
+                'primary_contact_name' => $currentStore->name,
+                'metadata' => [
+                    'store_id' => $currentStore->id,
+                    'user_id' => auth()->user()->id,
+                ],
+            ]);
 
-        if (!$subaccount) {
+            if (!$subaccount) {
+                return response()
+                    ->withFlash('errors', ['type' => 'Unable to create subaccount. Please try again later.'])
+                    ->redirect('/payouts/setup', 303);
+            }
+
+            $wallet = $currentStore->wallets()->create([
+                'type' => $data['type'],
+                'provider' => $provider,
+                'account_code' => $subaccount->subaccount_code,
+                'account_number' => $data['account_number'],
+                'account_identifier' => $bankCode,
+                'currency' => $subaccount->currency,
+            ]);
+
+            $currentStore->update([
+                'status' => 'live',
+                'payout_account_id' => $wallet->id,
+            ]);
+
+            User::find(auth()->id())->referral()->first()?->update([
+                'store_activated_at' => $currentStore->updated_at
+            ]);
+
+            $geoData = request()->getUserLocation();
+
+            app()->mixpanel->track('Store Activated', [
+                '$user_id' => auth()->id(),
+                'store_id' => $currentStore->id,
+                '$region' => $geoData['region'] ?? null,
+                '$city' => $geoData['city'] ?? null,
+                'mp_country_code' => $geoData['countryCode'] ?? null,
+                '$country_code' => $geoData['countryCode'] ?? null,
+            ]);
+
+            return response()->redirect('/payouts/setup', 303);
+        } catch (\Throwable $th) {
             return response()
-                ->withFlash('errors', ['type' => 'Unable to create subaccount. Please try again later.'])
+                ->withFlash('errors', ['account_number' => $th->getMessage()])
                 ->redirect('/payouts/setup', 303);
         }
-
-        $wallet = $currentStore->wallets()->create([
-            'type' => $data['type'],
-            'provider' => $provider,
-            'account_code' => $subaccount->subaccount_code,
-            'account_number' => $data['account_number'],
-            'account_identifier' => $bankCode,
-            'currency' => $subaccount->currency,
-        ]);
-
-        $currentStore->update([
-            'status' => 'live',
-            'payout_account_id' => $wallet->id,
-        ]);
-
-        User::find(auth()->id())->referral()->first()?->update([
-            'store_activated_at' => $currentStore->updated_at
-        ]);
-
-        $geoData = request()->getUserLocation();
-
-        app()->mixpanel->track('Store Activated', [
-            '$user_id' => auth()->id(),
-            'store_id' => $currentStore->id,
-            '$region' => $geoData['region'] ?? null,
-            '$city' => $geoData['city'] ?? null,
-            'mp_country_code' => $geoData['countryCode'] ?? null,
-            '$country_code' => $geoData['countryCode'] ?? null,
-        ]);
-
-        return response()->redirect('/payouts/setup', 303);
     }
 }
