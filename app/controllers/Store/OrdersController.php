@@ -15,8 +15,8 @@ class OrdersController extends Controller
 
         response()->inertia('products/orders', [
             'currentStore' => $currentStore,
-            'products' => $currentStore->products()->get(),
-            'orders' => $currentStore->carts()->with('customer')->get(),
+            // 'products' => $currentStore->products()->get(),
+            'orders' => $currentStore->carts()->with('customer')->latest()->get(),
         ]);
     }
 
