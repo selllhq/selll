@@ -67,7 +67,8 @@ class BillingController extends Controller
             $cart->save();
 
             return response()->json([
-                'error' => 'Unable to create billing session',
+                'error' => $e->getMessage(),
+                'message' => 'Failed to create billing session. Please try again later.',
             ], 500);
         }
 

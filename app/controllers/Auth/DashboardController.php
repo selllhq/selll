@@ -17,11 +17,19 @@ class DashboardController extends Controller
         }
 
         $stores = User::find(auth()->id())->ownedStores()->get();
-        $currentStore = $currentStoreId ? Store::find($currentStoreId) : [];
+        $currentStore = Store::find($currentStoreId) ?? [];
 
-        $products = $currentStoreId ? $currentStore->products()->get() : [];
-        $customers = $currentStoreId ? $currentStore->customers()->get() : [];
-        $orders = $currentStoreId ? $currentStore->carts()->with('customer')->latest()->get() : [];
+        $products = $currentStore->products()->withCount('purchases')->get() ?? [];
+        $customers = $currentStore->customers()->get() ?? [];
+        $orders = $currentStore
+            ->carts()
+            ->with('customer')
+            ->where(function ($query) {
+                $query->where('status', 'completed')
+                    ->orWhere('status', 'paid');
+            })
+            ->latest()
+            ->get() ?? [];
 
         if (count($products) === 0 && count($orders) === 0) {
             return response()->redirect('/dashboard/getting-started', 303);
@@ -29,10 +37,10 @@ class DashboardController extends Controller
 
         response()->inertia('dashboard', [
             'stores' => $stores,
+            'orders' => $orders,
             'currentStore' => $currentStore,
             'products' => $products,
             'productsSold' => $currentStore->productPurchases()->sum('quantity'),
-            'orders' => $orders,
             'customers' => $customers,
             'revenueGraph' => AnalyticsHelper::getRevenue6Months($currentStoreId),
             'analytics' => AnalyticsHelper::getQuickAnalyticsThisMonth($currentStoreId),

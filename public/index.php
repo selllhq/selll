@@ -82,4 +82,5 @@ try {
     \Leaf\Core::runApplication();
 } catch (\Throwable $exception) {
     \Sentry\captureException($exception);
+    throw $exception;
 }

@@ -69,6 +69,8 @@ export default function Orders({ orders = [], currentStore }) {
                 return order.status === "pending";
             case "cancelled":
                 return order.status === "cancelled";
+            case "failed":
+                return order.status === "failed";
             default:
                 return true;
         }
@@ -102,6 +104,13 @@ export default function Orders({ orders = [], currentStore }) {
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-500/10 text-red-500">
                         <XCircle className="w-3 h-3 mr-1" />
                         Cancelled
+                    </span>
+                );
+            case "failed":
+                return (
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-500/10 text-red-500">
+                        <XCircle className="w-3 h-3 mr-1" />
+                        Failed
                     </span>
                 );
             default:
@@ -165,7 +174,7 @@ export default function Orders({ orders = [], currentStore }) {
                                     View Products
                                 </Button>
                                 <Button
-                                    as={Link}
+                                    as="a"
                                     href={`https://${currentStore?.slug}.selll.store`}
                                     className="bg-primary-orange hover:bg-primary-orange/90 w-full md:w-auto"
                                     target="_blank"
@@ -429,17 +438,8 @@ export default function Orders({ orders = [], currentStore }) {
                         </div>
 
                         <div className="flex items-center justify-between mb-6">
-                            <h3 className="text-lg font-medium">
-                                {filter === "all"
-                                    ? "All Orders"
-                                    : filter === "paid"
-                                      ? "Paid Orders"
-                                      : filter === "completed"
-                                        ? "Completed Orders"
-                                        : filter === "pending"
-                                          ? "Pending Orders"
-                                          : "Cancelled Orders"}{" "}
-                                ({filteredOrders.length})
+                            <h3 className="text-lg font-medium capitalize">
+                                {filter} Orders ({filteredOrders.length})
                             </h3>
 
                             <div className="text-sm text-gray-400">
@@ -473,13 +473,11 @@ export default function Orders({ orders = [], currentStore }) {
                                         <TableRow>
                                             <TableHead>Order</TableHead>
                                             <TableHead>Customer</TableHead>
-                                            <TableHead>Products</TableHead>
-                                            <TableHead>Date</TableHead>
+                                            <TableHead>Total</TableHead>
                                             <TableHead>Status</TableHead>
                                             <TableHead className="text-white text-right">
-                                                Total
+                                                Order Date
                                             </TableHead>
-                                            <TableHead className="text-white w-[50px]"></TableHead>
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
@@ -495,92 +493,19 @@ export default function Orders({ orders = [], currentStore }) {
                                             >
                                                 <TableCell>
                                                     <div className="flex items-center gap-3">
-                                                        <div className="bg-[#1A1A1A] p-2 rounded-lg">
-                                                            <ShoppingCart className="h-5 w-5 text-primary-orange" />
-                                                        </div>
-                                                        <div>
-                                                            <p className="font-medium">
-                                                                Order #
-                                                                {order.id}
-                                                            </p>
-                                                        </div>
+                                                        <p className="font-medium text">
+                                                            Order #{order.id}
+                                                        </p>
                                                     </div>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <div className="flex items-center gap-2">
-                                                        <User className="h-4 w-4 text-muted-foreground" />
-                                                        <span className="text-sm text-muted-foreground truncate max-w-[150px]">
-                                                            {order.customer
-                                                                ?.name ||
-                                                                "Anonymous Customer"}
-                                                        </span>
-                                                    </div>
+                                                    <span className="text-sm text-muted-foreground truncate max-w-[150px]">
+                                                        {order.customer?.name ||
+                                                            "Anonymous Customer"}
+                                                    </span>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <div className="flex flex-wrap gap-1 max-w-[200px]">
-                                                        {order.products
-                                                            ?.slice(0, 2)
-                                                            .map(
-                                                                (
-                                                                    product,
-                                                                    index,
-                                                                ) => (
-                                                                    <div
-                                                                        key={
-                                                                            index
-                                                                        }
-                                                                        className="bg-[#1A1A1A] rounded-md px-2 py-0.5 text-xs text-muted-foreground truncate max-w-[100px]"
-                                                                    >
-                                                                        {
-                                                                            product.name
-                                                                        }
-                                                                    </div>
-                                                                ),
-                                                            )}
-                                                        {order.products
-                                                            ?.length > 2 && (
-                                                            <div className="bg-[#1A1A1A] rounded-md px-2 py-0.5 text-xs text-muted-foreground/80">
-                                                                +
-                                                                {order.products
-                                                                    .length -
-                                                                    2}{" "}
-                                                                more
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                    <div className="text-xs text-muted-foreground mt-1">
-                                                        {order.products
-                                                            ?.length || 0}{" "}
-                                                        {order.products
-                                                            ?.length === 1
-                                                            ? "product"
-                                                            : "products"}
-                                                    </div>
-                                                </TableCell>
-                                                <TableCell>
-                                                    <div className="text-sm text-muted-foreground">
-                                                        {dayjs(
-                                                            order.created_at,
-                                                        ).format("MMM D, YYYY")}
-                                                    </div>
-                                                    <div className="text-xs text-gray-400">
-                                                        {dayjs(
-                                                            order.created_at,
-                                                        ).format("h:mm A")}
-                                                    </div>
-                                                    <div className="text-xs text-gray-500">
-                                                        {dayjs(
-                                                            order.created_at,
-                                                        ).fromNow()}
-                                                    </div>
-                                                </TableCell>
-                                                <TableCell>
-                                                    {getStatusBadge(
-                                                        order.status,
-                                                    )}
-                                                </TableCell>
-                                                <TableCell className="text-right">
-                                                    <div className="font-bold text-white">
+                                                    <div className="font-bold">
                                                         {new Intl.NumberFormat(
                                                             "en-US",
                                                             {
@@ -593,20 +518,26 @@ export default function Orders({ orders = [], currentStore }) {
                                                     </div>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <div className="flex justify-center">
-                                                        <Button
-                                                            variant="ghost"
-                                                            size="sm"
-                                                            className="h-8 w-8 p-0 text-gray-400 hover:text-white"
-                                                            onClick={(e) => {
-                                                                e.stopPropagation();
-                                                                router.visit(
-                                                                    `/orders/${order.id}`,
-                                                                );
-                                                            }}
-                                                        >
-                                                            <Eye className="h-4 w-4" />
-                                                        </Button>
+                                                    {getStatusBadge(
+                                                        order.status,
+                                                    )}
+                                                </TableCell>
+                                                <TableCell className="text-right">
+                                                    <div className="text-sm text-muted-foreground text-nowrap">
+                                                        {dayjs(
+                                                            order.created_at,
+                                                        ).format(
+                                                            "MMM D, YYYY",
+                                                        )}{" "}
+                                                        at{" "}
+                                                        {dayjs(
+                                                            order.created_at,
+                                                        ).format("h:mm A")}
+                                                    </div>
+                                                    <div className="text-xs text-gray-500">
+                                                        {dayjs(
+                                                            order.created_at,
+                                                        ).fromNow()}
                                                     </div>
                                                 </TableCell>
                                             </TableRow>

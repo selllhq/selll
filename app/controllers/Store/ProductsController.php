@@ -160,7 +160,7 @@ class ProductsController extends Controller
         if (!$uploads) {
             return response()
                 ->withFlash('errors', request()->errors())
-                ->redirect('/products/create', 303);
+                ->redirect('/products/setup', 303);
         }
 
         $data['images'] = json_encode(array_map(
