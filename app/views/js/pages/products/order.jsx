@@ -38,11 +38,18 @@ import Input from "@/components/form/input";
 import { toast } from "sonner";
 import { DatePicker } from "@/components/ui/date-picker";
 
-export default function Order({ order, currentStore }) {
+export default function Order({ order, items, currentStore }) {
     const [isDeliveryModalOpen, setDeliveryModalOpen] = useState(false);
     const [deliveryUpdate, setDeliveryUpdate] = useState("");
     const [expectedDeliveryDate, setExpectedDeliveryDate] = useState();
     const [isUpdating, setIsUpdating] = useState(false);
+
+    const orderItems = order?.items?.length > 0 ? order?.items : (items ?? []);
+    const subtotal = orderItems.reduce((acc, item) => {
+        const price = item.product?.price || 0;
+        const quantity = item.quantity || 1;
+        return acc + price * quantity;
+    }, 0);
 
     const handleDeliveryUpdate = () => {
         setIsUpdating(true);
@@ -195,7 +202,7 @@ export default function Order({ order, currentStore }) {
                             </tr>
                         </thead>
                         <tbody>
-                            ${order?.items
+                            ${orderItems
                                 ?.map((item) => {
                                     const product = item.product || {};
                                     const price = product.price || 0;
@@ -217,7 +224,7 @@ export default function Order({ order, currentStore }) {
                             <tr>
                                 <td colspan="3" class="text-right">Subtotal</td>
                                 <td class="text-right">${formatCurrency(
-                                    order?.items?.reduce((acc, item) => {
+                                    orderItems?.reduce((acc, item) => {
                                         const price = item.product?.price || 0;
                                         const quantity = item.quantity || 1;
                                         return acc + price * quantity;
@@ -270,13 +277,6 @@ export default function Order({ order, currentStore }) {
             // };
         };
     };
-
-    const orderItems = order?.items || [];
-    const subtotal = orderItems.reduce((acc, item) => {
-        const price = item.product?.price || 0;
-        const quantity = item.quantity || 1;
-        return acc + price * quantity;
-    }, 0);
 
     return (
         <Layout
