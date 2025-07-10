@@ -36,11 +36,12 @@ import { formatCurrency } from "@/utils/store";
 import { useState } from "react";
 import Input from "@/components/form/input";
 import { toast } from "sonner";
+import { DatePicker } from "@/components/ui/date-picker";
 
 export default function Order({ order, currentStore }) {
     const [isDeliveryModalOpen, setDeliveryModalOpen] = useState(false);
     const [deliveryUpdate, setDeliveryUpdate] = useState("");
-    const [expectedDeliveryDate, setExpectedDeliveryDate] = useState("");
+    const [expectedDeliveryDate, setExpectedDeliveryDate] = useState();
     const [isUpdating, setIsUpdating] = useState(false);
 
     const handleDeliveryUpdate = () => {
@@ -764,15 +765,19 @@ export default function Order({ order, currentStore }) {
                     <div className="space-y-4 py-4">
                         <div className="space-y-6">
                             <div className="space-y-2">
-                                <Input
-                                    type="date"
+                                <DatePicker
+                                    required
                                     label="When will the order be delivered?"
                                     value={expectedDeliveryDate}
-                                    onChange={(e) =>
-                                        setExpectedDeliveryDate(e.target.value)
+                                    min={(date) =>
+                                        date <
+                                        new Date().setDate(
+                                            new Date().getDate() - 1,
+                                        )
                                     }
-                                    min={dayjs().format("YYYY-MM-DD")}
-                                    required
+                                    onChange={(value) =>
+                                        setExpectedDeliveryDate(value)
+                                    }
                                 />
                                 <p className="text-sm text-primary/65">
                                     Choose the expected date this order will be
@@ -784,17 +789,13 @@ export default function Order({ order, currentStore }) {
                                 <Input
                                     as="textarea"
                                     label="Update Message"
-                                    placeholder="Example: Your order has been picked up by our delivery partner and is on its way..."
+                                    placeholder="This message will be sent to the customer - Example: Your order has been picked up by our delivery partner and is on its way..."
                                     value={deliveryUpdate}
                                     onChange={(e) =>
                                         setDeliveryUpdate(e.target.value)
                                     }
                                     className="min-h-[100px]"
                                 />
-                                <p className="text-sm text-primary/65">
-                                    This message will be sent to the customer
-                                    via email
-                                </p>
                             </div>
                         </div>
 

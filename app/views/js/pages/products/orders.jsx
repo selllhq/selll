@@ -174,7 +174,7 @@ export default function Orders({ orders = [], currentStore }) {
                                     View Products
                                 </Button>
                                 <Button
-                                    as={Link}
+                                    as="a"
                                     href={`https://${currentStore?.slug}.selll.store`}
                                     className="bg-primary-orange hover:bg-primary-orange/90 w-full md:w-auto"
                                     target="_blank"
@@ -505,7 +505,7 @@ export default function Orders({ orders = [], currentStore }) {
                                                     </span>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <div className="font-bold text-white">
+                                                    <div className="font-bold">
                                                         {new Intl.NumberFormat(
                                                             "en-US",
                                                             {
