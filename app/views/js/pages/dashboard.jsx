@@ -387,7 +387,9 @@ export default function Dashboard({
                                             .slice(0, 5)
                                             .map((product) => ({
                                                 name: product.name,
-                                                total: product.purchases_count || 0,
+                                                total:
+                                                    product.purchases_count ||
+                                                    0,
                                             }))}
                                     />
                                 </CardContent>
@@ -412,17 +414,38 @@ export default function Dashboard({
                                                             Store Views
                                                         </p>
                                                         <p className="text-sm text-gray-500">
-                                                            {analytics.views.toLocaleString()}{" "}
+                                                            <span className="text-primary font-bold">
+                                                                {analytics.views.toLocaleString()}
+                                                            </span>{" "}
                                                             views this month
                                                         </p>
                                                     </div>
                                                 </div>
                                                 {analytics.growth.views && (
-                                                    <div className="text-emerald-500 text-sm font-medium">
-                                                        ↑{" "}
-                                                        {analytics.growth.views}
-                                                        %
-                                                    </div>
+                                                    <>
+                                                        {analytics.growth
+                                                            .views > 0 ? (
+                                                            <div className="text-emerald-500 text-sm font-medium">
+                                                                ↑{" "}
+                                                                {
+                                                                    analytics
+                                                                        .growth
+                                                                        .views
+                                                                }
+                                                                %
+                                                            </div>
+                                                        ) : (
+                                                            <div className="text-red-500 text-sm font-medium">
+                                                                ↓{" "}
+                                                                {Math.abs(
+                                                                    analytics
+                                                                        .growth
+                                                                        .views,
+                                                                )}
+                                                                %
+                                                            </div>
+                                                        )}
+                                                    </>
                                                 )}
                                             </div>
 
@@ -436,23 +459,43 @@ export default function Dashboard({
                                                             Conversion Rate
                                                         </p>
                                                         <p className="text-sm text-gray-500">
-                                                            {analytics.conversionRate.toFixed(
-                                                                2,
-                                                            )}
-                                                            % this month
+                                                            <span className="text-primary font-bold">
+                                                                {analytics.conversionRate.toFixed(
+                                                                    2,
+                                                                )}
+                                                                %
+                                                            </span>{" "}
+                                                            this month
                                                         </p>
                                                     </div>
                                                 </div>
                                                 {analytics.growth
                                                     .conversionRate && (
-                                                    <div className="text-emerald-500 text-sm font-medium">
-                                                        ↑{" "}
-                                                        {
-                                                            analytics.growth
-                                                                .conversionRate
-                                                        }
-                                                        %
-                                                    </div>
+                                                    <>
+                                                        {analytics.growth
+                                                            .conversionRate >
+                                                        0 ? (
+                                                            <div className="text-emerald-500 text-sm font-medium">
+                                                                ↑{" "}
+                                                                {
+                                                                    analytics
+                                                                        .growth
+                                                                        .conversionRate
+                                                                }
+                                                                %
+                                                            </div>
+                                                        ) : (
+                                                            <div className="text-red-500 text-sm font-medium">
+                                                                ↓{" "}
+                                                                {Math.abs(
+                                                                    analytics
+                                                                        .growth
+                                                                        .conversionRate,
+                                                                )}
+                                                                %
+                                                            </div>
+                                                        )}
+                                                    </>
                                                 )}
                                             </div>
 
@@ -466,31 +509,50 @@ export default function Dashboard({
                                                             Avg. Order Value
                                                         </p>
                                                         <p className="text-sm text-gray-500">
-                                                            {new Intl.NumberFormat(
-                                                                "en-US",
-                                                                {
-                                                                    style: "currency",
-                                                                    currency:
-                                                                        currentStore?.currency,
-                                                                },
-                                                            ).format(
-                                                                analytics.averageOrderValue ??
-                                                                    0,
-                                                            )}{" "}
+                                                            <span className="text-primary font-bold">
+                                                                {new Intl.NumberFormat(
+                                                                    "en-US",
+                                                                    {
+                                                                        style: "currency",
+                                                                        currency:
+                                                                            currentStore?.currency,
+                                                                    },
+                                                                ).format(
+                                                                    analytics.averageOrderValue ??
+                                                                        0,
+                                                                )}
+                                                            </span>{" "}
                                                             per order
                                                         </p>
                                                     </div>
                                                 </div>
                                                 {analytics.growth
                                                     .averageOrderValue && (
-                                                    <div className="text-emerald-500 text-sm font-medium">
-                                                        ↑{" "}
-                                                        {
-                                                            analytics.growth
-                                                                .averageOrderValue
-                                                        }
-                                                        %
-                                                    </div>
+                                                    <>
+                                                        {analytics.growth
+                                                            .averageOrderValue >
+                                                        0 ? (
+                                                            <div className="text-emerald-500 text-sm font-medium">
+                                                                ↑{" "}
+                                                                {
+                                                                    analytics
+                                                                        .growth
+                                                                        .averageOrderValue
+                                                                }
+                                                                %
+                                                            </div>
+                                                        ) : (
+                                                            <div className="text-red-500 text-sm font-medium">
+                                                                ↓{" "}
+                                                                {Math.abs(
+                                                                    analytics
+                                                                        .growth
+                                                                        .averageOrderValue,
+                                                                )}
+                                                                %
+                                                            </div>
+                                                        )}
+                                                    </>
                                                 )}
                                             </div>
                                         </div>
