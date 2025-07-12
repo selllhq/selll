@@ -26,25 +26,31 @@ class PayoutsController extends Controller
     public function setup()
     {
         $currentStore = StoreHelper::find();
+        $wallets = $currentStore->wallets()->with('payouts')->get();
+
+        if (count($wallets) === 5) {
+            return response()->redirect('/payouts');
+        }
+
         $billingProvider = billing(in_array($currentStore->currency, ['GHS', 'NGN', 'KES', 'ZAR']) ? 'paystack' : 'stripe');
 
         $banks = $billingProvider->provider()->getAvailableBanks([
-            'country' => $currentStore->country,
             'type' => 'ghipss',
+            'country' => $currentStore->country,
             'currency' => $currentStore->currency,
         ]);
 
         $mobileMoney = $billingProvider->provider()->getAvailableBanks([
-            'country' => $currentStore->country,
             'type' => 'mobile_money',
+            'country' => $currentStore->country,
             'currency' => $currentStore->currency,
         ]);
 
         response()->inertia('payouts/setup', [
             'currentStore' => $currentStore,
-            'banks' => $banks,
             'mobileMoney' => $mobileMoney,
-            'wallets' => $currentStore->wallets()->with('payouts')->get(),
+            'wallets' => $wallets,
+            'banks' => $banks,
         ]);
     }
 
