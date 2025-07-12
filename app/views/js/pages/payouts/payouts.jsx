@@ -1,6 +1,8 @@
+import dayjs from "dayjs";
 import { useState } from "react";
-import Layout from "@/layouts/app-layout";
 import { Head, router } from "@inertiajs/react";
+import { Wallet, BanknoteIcon, Plus } from "lucide-react";
+import Layout from "@/layouts/app-layout";
 import EmptyState from "@/components/layout/empty";
 import {
     Card,
@@ -8,11 +10,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/shared/card";
-import { Wallet, Search, BanknoteIcon } from "lucide-react";
 import Button from "@/components/form/button";
-import Input from "@/components/form/input";
-import dayjs from "dayjs";
-import { StatusBadge } from "@/components/shared/badge";
 import {
     Table,
     TableBody,
@@ -21,15 +19,20 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/shared/table";
+import { useDialog } from "@/components/ui/dialog";
+import { toast } from "sonner";
 
 export default function Payouts({
     payouts = [],
     currentStore,
     orders = 0,
-    payoutWallet = null,
+    payoutWallets = [],
+    activePayoutWallet = null,
 }) {
     const [search, setSearch] = useState("");
     const [filter, setFilter] = useState("all");
+
+    const confirmModal = useDialog("confirmAction");
 
     const totalPaidOut = payouts.reduce((sum, payout) => {
         return sum + parseFloat(payout.amount);
@@ -93,38 +96,88 @@ export default function Payouts({
                         </CardContent>
                     </Card>
 
-                    {payoutWallet && (
-                        <Card>
-                            <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
-                                <CardTitle>Payout Wallet</CardTitle>
-                                <div className="bg-[#2C2C2C] p-2 rounded-lg">
-                                    <Wallet className="h-5 w-5 text-primary-orange" />
-                                </div>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="space-y-3">
-                                    <div>
-                                        <p className="font-medium">
-                                            {payoutWallet.type === "momo"
-                                                ? "Mobile Money"
-                                                : payoutWallet.type === "bank"
-                                                  ? "Bank Account"
-                                                  : payoutWallet.type ===
-                                                      "other"
-                                                    ? "Other"
-                                                    : payoutWallet.type}{" "}
-                                            - {payoutWallet.provider || "N/A"}
-                                        </p>
+                    {payoutWallets && (
+                        <>
+                            {payoutWallets.map((wallet) => (
+                                <Card
+                                    key={wallet.id}
+                                    className={
+                                        activePayoutWallet === wallet.id
+                                            ? "border-2 border-primary-orange"
+                                            : "cursor-pointer hover:bg-muted/50 dark:hover:bg-neutral-800/50"
+                                    }
+                                    onClick={() => {
+                                        if (activePayoutWallet !== wallet.id) {
+                                            confirmModal.openDialog({
+                                                title: "Change Default Wallet",
+                                                description:
+                                                    "Are you sure you want to make this your default wallet to receive your payouts?",
+                                                cancelText: "Cancel",
+                                                confirmText: "Yes, Set Default",
+                                                onConfirm: () => {
+                                                    router.patch(
+                                                        `/payouts/wallet`,
+                                                        { wallet: wallet.id },
+                                                        {
+                                                            onFinish: () => {
+                                                                toast(
+                                                                    "Wallet updated successfully.",
+                                                                );
+                                                                confirmModal.closeDialog();
+                                                            },
+                                                        },
+                                                    );
+                                                },
+                                            });
+                                        }
+                                    }}
+                                >
+                                    <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
+                                        <CardTitle>Payout Wallet</CardTitle>
+                                        <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                            <Wallet className="h-5 w-5 text-primary-orange" />
+                                        </div>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="space-y-3">
+                                            <div>
+                                                <p className="font-medium">
+                                                    {wallet.type === "momo"
+                                                        ? "Mobile Money"
+                                                        : wallet.type === "bank"
+                                                          ? "Bank Account"
+                                                          : wallet.type ===
+                                                              "other"
+                                                            ? "Other"
+                                                            : wallet.type}{" "}
+                                                    - {wallet.provider || "N/A"}
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <p className="font-medium">
+                                                    {wallet.account_number ||
+                                                        "N/A"}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            ))}
+
+                            <Card
+                                className="cursor-pointer hover:bg-muted/50 dark:hover:bg-neutral-800/50"
+                                onClick={() => router.visit("/payouts/setup")}
+                            >
+                                <CardContent className="flex flex-col items-center justify-center text-center p-4">
+                                    <div className="bg-accent rounded-full flex justify-center items-center w-8 h-8">
+                                        <Plus className="h-6 w-6 text-primary-orange" />
                                     </div>
-                                    <div>
-                                        <p className="font-medium">
-                                            {payoutWallet.account_number ||
-                                                "N/A"}
-                                        </p>
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
+                                    <h3 className="text-lg font-medium mb-2">
+                                        New Payout Method
+                                    </h3>
+                                </CardContent>
+                            </Card>
+                        </>
                     )}
                 </div>
 
@@ -208,7 +261,7 @@ export default function Payouts({
 
                 {filteredPayouts.length === 0 ? (
                     <>
-                        {!payoutWallet ? (
+                        {!activePayoutWallet ? (
                             <Card className="mt-8">
                                 <CardContent className="p-6">
                                     <div className="flex flex-col items-center justify-center text-center p-4">
