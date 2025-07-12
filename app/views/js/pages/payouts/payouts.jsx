@@ -164,19 +164,23 @@ export default function Payouts({
                                 </Card>
                             ))}
 
-                            <Card
-                                className="cursor-pointer hover:bg-muted/50 dark:hover:bg-neutral-800/50"
-                                onClick={() => router.visit("/payouts/setup")}
-                            >
-                                <CardContent className="flex flex-col items-center justify-center text-center p-4">
-                                    <div className="bg-accent rounded-full flex justify-center items-center w-8 h-8">
-                                        <Plus className="h-6 w-6 text-primary-orange" />
-                                    </div>
-                                    <h3 className="text-lg font-medium mb-2">
-                                        New Payout Method
-                                    </h3>
-                                </CardContent>
-                            </Card>
+                            {payoutWallets.length < 5 && (
+                                <Card
+                                    className="cursor-pointer hover:bg-muted/50 dark:hover:bg-neutral-800/50"
+                                    onClick={() =>
+                                        router.visit("/payouts/setup")
+                                    }
+                                >
+                                    <CardContent className="flex flex-col items-center justify-center text-center p-4">
+                                        <div className="bg-accent rounded-full flex justify-center items-center w-8 h-8">
+                                            <Plus className="h-6 w-6 text-primary-orange" />
+                                        </div>
+                                        <h3 className="text-lg font-medium mb-2">
+                                            New Payout Method
+                                        </h3>
+                                    </CardContent>
+                                </Card>
+                            )}
                         </>
                     )}
                 </div>
