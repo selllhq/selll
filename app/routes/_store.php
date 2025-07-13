@@ -7,6 +7,7 @@ app()->group('/store', [
         app()->post('/new', 'Store\SetupController@store');
         app()->get('/customize', 'Store\SetupController@showCustomize');
         app()->post('/customize', 'Store\SetupController@customize');
+        app()->get('/domain', 'Store\SetupController@showDomain');
+        app()->post('/domain', 'Store\SetupController@domain');
     }
 ]);
-

@@ -25,12 +25,9 @@ import {
     Package,
     Plus,
     Search,
-    Trash,
-    X,
 } from "lucide-react";
 import { useState } from "react";
 import { CURRENCY_LIMITS, CURRENCY_SYMBOLS } from "@/utils/store";
-import { cn } from "@/utils";
 import { toast } from "sonner";
 
 export default function ImportProducts({ currentStore, categories, auth }) {

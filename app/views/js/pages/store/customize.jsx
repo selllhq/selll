@@ -1,16 +1,32 @@
+import { toast } from "sonner";
 import { useState } from "react";
-import { Head, useForm } from "@inertiajs/react";
-import { Store, LayoutDashboard, Palette, Image, Mail } from "lucide-react";
-import Button from "@/components/form/button";
+import { Head, Link, useForm } from "@inertiajs/react";
+import {
+    Store,
+    LayoutDashboard,
+    Palette,
+    Image,
+    Mail,
+    Link as LinkIcon,
+    Copy,
+    Pencil,
+} from "lucide-react";
 import { cn } from "@/utils";
 import Layout from "@/layouts/app-layout";
-import * as Tabs from "@radix-ui/react-tabs";
+import Button from "@/components/form/button";
 import { LayoutTab, HeroTab, ThemeTab, ContactTab } from "./tabs";
-import { toast } from "sonner";
+import * as Tabs from "@radix-ui/react-tabs";
 
 const Customize = ({ store }) => {
     const storeConfig = JSON.parse(store?.config ?? "{}");
     const [showPreview, setShowPreview] = useState(false);
+
+    const storeUrl = `https://${store?.slug}.selll.store`;
+
+    const copyStoreUrl = () => {
+        navigator.clipboard.writeText(storeUrl);
+        toast.success("Store link copied to clipboard");
+    };
 
     const { data, setData, post, errors, processing } = useForm({
         show_hero: storeConfig?.show_hero ?? false,
@@ -79,6 +95,43 @@ const Customize = ({ store }) => {
                             <p className="text-gray-500 dark:text-gray-400">
                                 Customize how your store looks and feels
                             </p>
+
+                            <div className="mt-6">
+                                <div className="flex items-start gap-4 bg-gray-100 dark:bg-[#141414] border border-gray-200 dark:border-[#2C2C2C] rounded-lg p-4">
+                                    <div className="h-10 w-10 flex items-center justify-center rounded-md bg-primary-orange/10 text-primary-orange">
+                                        <LinkIcon className="w-5 h-5" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <p className="text-xs font-medium text-muted-foreground mb-1">Store Link</p>
+                                        <div className="flex items-center gap-2 flex-wrap">
+                                            <a
+                                                href={storeUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="font-medium hover:underline truncate"
+                                            >
+                                                {storeUrl}
+                                            </a>
+                                            <button
+                                                type="button"
+                                                onClick={copyStoreUrl}
+                                                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+                                            >
+                                                <Copy className="w-4 h-4" />
+                                            </button>
+                                        </div>
+                                        <p className="text-xs text-gray-500 mt-1">
+                                            Eligible for custom links: {" "}
+                                            <Link
+                                                href="/store/domain"
+                                                className="inline-flex items-center gap-1 text-primary-orange hover:underline"
+                                            >
+                                                Edit Link <Pencil className="w-3 h-3" />
+                                            </Link>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <form onSubmit={submit}>
