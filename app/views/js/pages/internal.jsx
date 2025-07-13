@@ -21,6 +21,10 @@ const Internal = ({
     users = 0,
     stores = 0,
     purchases = 0,
+    usersThisWeek = 0,
+    usersThisMonth = 0,
+    purchasesThisMonth = 0,
+    activeStoresThisWeek = 0,
     activeStores = 0,
     activatedStores = 0,
     gmvThisMonth = 0,
@@ -89,12 +93,54 @@ const Internal = ({
 
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle>Users (This Week)</CardTitle>
+                        <Users className="h-5 w-5 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-2xl font-bold">{usersThisWeek.toLocaleString()}</p>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle>Users (This Month)</CardTitle>
+                        <Users className="h-5 w-5 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-2xl font-bold">{usersThisMonth.toLocaleString()}</p>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle>Stores</CardTitle>
                         <StoreIcon className="h-5 w-5 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
                         <p className="text-2xl font-bold">
                             {stores.toLocaleString()}
+                        </p>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle>Active Stores (This Week)</CardTitle>
+                        <Activity className="h-5 w-5 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-2xl font-bold">{activeStoresThisWeek.toLocaleString()}</p>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle>Active Stores (30d)</CardTitle>
+                        <Activity className="h-5 w-5 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-2xl font-bold">
+                            {activeStores.toLocaleString()}
                         </p>
                     </CardContent>
                 </Card>
@@ -113,13 +159,11 @@ const Internal = ({
 
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle>Active Stores (30d)</CardTitle>
-                        <Activity className="h-5 w-5 text-muted-foreground" />
+                        <CardTitle>Purchases (This Month)</CardTitle>
+                        <ShoppingCart className="h-5 w-5 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <p className="text-2xl font-bold">
-                            {activeStores.toLocaleString()}
-                        </p>
+                        <p className="text-2xl font-bold">{purchasesThisMonth.toLocaleString()}</p>
                     </CardContent>
                 </Card>
 

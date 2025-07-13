@@ -88,11 +88,31 @@ class InternalController extends Controller
                     date('Y-m-d H:i:s', strtotime('sunday last week 23:59:59')),
                 ])
                 ->count(),
+            'usersThisWeek' => User::where('created_at', '>=', date('Y-m-d H:i:s', strtotime('monday this week')))
+                ->count(),
+            'usersThisMonth' => User::whereMonth('created_at', date('m'))
+                ->whereYear('created_at', date('Y'))
+                ->count(),
+            'activeStoresThisWeek' => Store::whereHas('carts', function ($query) {
+                $query->where(function ($query) {
+                    $query->where('status', 'paid')
+                        ->orWhere('status', 'completed');
+                })
+                    ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime('monday this week')));
+            })
+                ->count(),
             'purchasesThisWeek' => Cart::where(function ($query) {
                 $query->where('status', 'paid')
                     ->orWhere('status', 'completed');
             })
                 ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime('monday this week')))
+                ->count(),
+            'purchasesThisMonth' => Cart::where(function ($query) {
+                $query->where('status', 'paid')
+                    ->orWhere('status', 'completed');
+            })
+                ->whereMonth('created_at', date('m'))
+                ->whereYear('created_at', date('Y'))
                 ->count(),
             'purchasesLastWeek' => Cart::where(function ($query) {
                 $query->where('status', 'paid')
@@ -109,9 +129,9 @@ class InternalController extends Controller
                 ->distinct('user_ip')
                 ->count('user_ip'),
             'storeViewsLastWeek' => Analytics::whereBetween('created_at', [
-                    date('Y-m-d H:i:s', strtotime('monday last week')),
-                    date('Y-m-d H:i:s', strtotime('sunday last week 23:59:59')),
-                ])
+                date('Y-m-d H:i:s', strtotime('monday last week')),
+                date('Y-m-d H:i:s', strtotime('sunday last week 23:59:59')),
+            ])
                 ->where('event', 'page_view')
                 ->where('page', 'home')
                 ->distinct('user_ip')
