@@ -14,9 +14,10 @@ class PayoutsController extends Controller
 
         response()->inertia('payouts/payouts', [
             'currentStore' => $currentStore,
+            'activePayoutWallet' => $currentStore->payout_account_id,
             'wallets' => $currentStore->wallets()->with('payouts')->get(),
             'payouts' => $currentStore->payouts()->with('wallet')->latest()->get(),
-            'payoutWallet' => $currentStore->wallets()->find($currentStore->payout_account_id),
+            'payoutWallets' => $currentStore->wallets()->get(),
             'orders' => $currentStore->carts()->where('status', 'paid')->count(),
             'errors' => flash()->display('errors'),
         ]);
@@ -25,25 +26,31 @@ class PayoutsController extends Controller
     public function setup()
     {
         $currentStore = StoreHelper::find();
+        $wallets = $currentStore->wallets()->with('payouts')->get();
+
+        if (count($wallets) === 5) {
+            return response()->redirect('/payouts');
+        }
+
         $billingProvider = billing(in_array($currentStore->currency, ['GHS', 'NGN', 'KES', 'ZAR']) ? 'paystack' : 'stripe');
 
         $banks = $billingProvider->provider()->getAvailableBanks([
-            'country' => $currentStore->country,
             'type' => 'ghipss',
+            'country' => $currentStore->country,
             'currency' => $currentStore->currency,
         ]);
 
         $mobileMoney = $billingProvider->provider()->getAvailableBanks([
-            'country' => $currentStore->country,
             'type' => 'mobile_money',
+            'country' => $currentStore->country,
             'currency' => $currentStore->currency,
         ]);
 
         response()->inertia('payouts/setup', [
             'currentStore' => $currentStore,
-            'banks' => $banks,
             'mobileMoney' => $mobileMoney,
-            'wallets' => $currentStore->wallets()->with('payouts')->get(),
+            'wallets' => $wallets,
+            'banks' => $banks,
         ]);
     }
 
@@ -122,5 +129,28 @@ class PayoutsController extends Controller
                 ->withFlash('errors', ['account_number' => $th->getMessage()])
                 ->redirect('/payouts/setup', 303);
         }
+    }
+
+    public function updateWallet()
+    {
+        $newWallet = request()->get('wallet');
+        $currentStore = StoreHelper::find();
+        $wallet = $currentStore->wallets()->find($newWallet);
+
+        if (!$wallet) {
+            return response()
+                ->withFlash('error', [
+                    'wallet' => 'Wallet not found'
+                ])
+                ->redirect('/payouts', 303);
+        }
+
+        $currentStore->update([
+            'payout_account_id' => $newWallet
+        ]);
+
+        return response()
+            ->withFlash('success', 'Wallet updated successfully')
+            ->redirect('/payouts', 303);
     }
 }

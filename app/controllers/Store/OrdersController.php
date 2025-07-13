@@ -22,6 +22,7 @@ class OrdersController extends Controller
 
     public function show($id)
     {
+        $items = [];
         $currentStore = StoreHelper::find();
         $order = Cart::with(['customer', 'items.product', 'shippingUpdates'])->find($id);
 
@@ -29,9 +30,32 @@ class OrdersController extends Controller
             return response()->redirect('/orders');
         }
 
+        if ($order->status === 'pending') {
+            $items = json_decode(Cart::find($id, [
+                'items'
+            ])['items'] ?? '[]', true);
+
+            $items = collect($items)->map(function ($item) use ($currentStore) {
+                $product = $currentStore->products()->find($item['id']);
+
+                if (!$product) {
+                    return null;
+                }
+
+                return [
+                    'id' => $item['id'],
+                    'product' => $product,
+                    'quantity' => $item['quantity'],
+                    'amount' => $item['amount'] / 100,
+                    'currency' => $item['currency'] ?? 'GHS',
+                ];
+            })->filter();
+        }
+
         response()->inertia('products/order', [
             'order' => $order,
             'currentStore' => $currentStore,
+            'items' => $items,
         ]);
     }
 

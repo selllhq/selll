@@ -6,6 +6,7 @@ app()->group('/payouts', [
         app()->get('/', 'Store\PayoutsController@index');
         app()->get('/setup', 'Store\PayoutsController@setup');
         app()->post('/setup', 'Store\PayoutsController@store');
+        app()->patch('/wallet', 'Store\PayoutsController@updateWallet');
     }
 ]);
 

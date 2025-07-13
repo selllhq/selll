@@ -38,11 +38,18 @@ import Input from "@/components/form/input";
 import { toast } from "sonner";
 import { DatePicker } from "@/components/ui/date-picker";
 
-export default function Order({ order, currentStore }) {
+export default function Order({ order, items, currentStore }) {
     const [isDeliveryModalOpen, setDeliveryModalOpen] = useState(false);
     const [deliveryUpdate, setDeliveryUpdate] = useState("");
     const [expectedDeliveryDate, setExpectedDeliveryDate] = useState();
     const [isUpdating, setIsUpdating] = useState(false);
+
+    const orderItems = order?.items?.length > 0 ? order?.items : (items ?? []);
+    const subtotal = orderItems.reduce((acc, item) => {
+        const price = item.product?.price || 0;
+        const quantity = item.quantity || 1;
+        return acc + price * quantity;
+    }, 0);
 
     const handleDeliveryUpdate = () => {
         setIsUpdating(true);
@@ -195,7 +202,7 @@ export default function Order({ order, currentStore }) {
                             </tr>
                         </thead>
                         <tbody>
-                            ${order?.items
+                            ${orderItems
                                 ?.map((item) => {
                                     const product = item.product || {};
                                     const price = product.price || 0;
@@ -217,7 +224,7 @@ export default function Order({ order, currentStore }) {
                             <tr>
                                 <td colspan="3" class="text-right">Subtotal</td>
                                 <td class="text-right">${formatCurrency(
-                                    order?.items?.reduce((acc, item) => {
+                                    orderItems?.reduce((acc, item) => {
                                         const price = item.product?.price || 0;
                                         const quantity = item.quantity || 1;
                                         return acc + price * quantity;
@@ -271,13 +278,6 @@ export default function Order({ order, currentStore }) {
         };
     };
 
-    const orderItems = order?.items || [];
-    const subtotal = orderItems.reduce((acc, item) => {
-        const price = item.product?.price || 0;
-        const quantity = item.quantity || 1;
-        return acc + price * quantity;
-    }, 0);
-
     return (
         <Layout
             variant="header"
@@ -321,44 +321,47 @@ export default function Order({ order, currentStore }) {
                                 status={order?.status}
                             />
 
-                            <div className="flex gap-2">
-                                <Button
-                                    size="sm"
-                                    className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
-                                    onClick={handlePrint}
-                                >
-                                    <Printer className="h-4 w-4" />
-                                    Print
-                                </Button>
+                            {order?.status !== "pending" &&
+                                order?.status !== "failed" && (
+                                    <div className="flex gap-2">
+                                        <Button
+                                            size="sm"
+                                            className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
+                                            onClick={handlePrint}
+                                        >
+                                            <Printer className="h-4 w-4" />
+                                            Print
+                                        </Button>
 
-                                {order?.status === "paid" &&
-                                orderItems?.some(
-                                    (item) => item.product?.physical,
-                                ) ? (
-                                    <Button
-                                        size="sm"
-                                        className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
-                                        onClick={() =>
-                                            setDeliveryModalOpen(true)
-                                        }
-                                    >
-                                        <Package className="h-4 w-4" />
-                                        Update Delivery
-                                    </Button>
-                                ) : (
-                                    <Button
-                                        as="a"
-                                        size="sm"
-                                        href={`${order?.store_url}/orders/${order?.id}`}
-                                        className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        <Eye className="h-4 w-4" />
-                                        View order
-                                    </Button>
+                                        {order?.status === "paid" &&
+                                        orderItems?.some(
+                                            (item) => item.product?.physical,
+                                        ) ? (
+                                            <Button
+                                                size="sm"
+                                                className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
+                                                onClick={() =>
+                                                    setDeliveryModalOpen(true)
+                                                }
+                                            >
+                                                <Package className="h-4 w-4" />
+                                                Update Delivery
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                as="a"
+                                                size="sm"
+                                                href={`${order?.store_url}/orders/${order?.id}`}
+                                                className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                <Eye className="h-4 w-4" />
+                                                View order
+                                            </Button>
+                                        )}
+                                    </div>
                                 )}
-                            </div>
                         </div>
                     </div>
 
