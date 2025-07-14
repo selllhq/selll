@@ -1,5 +1,14 @@
-import Layout from "@/layouts/app-layout";
+import { toast } from "sonner";
+import { useState } from "react";
 import { Head, Link, useForm } from "@inertiajs/react";
+import {
+    Instagram,
+    Loader2,
+    Package,
+    Plus,
+    Search,
+} from "lucide-react";
+import Layout from "@/layouts/app-layout";
 import {
     Card,
     CardContent,
@@ -19,16 +28,7 @@ import InputError from "@/components/form/input-error";
 import Label from "@/components/form/label";
 import Select from "@/components/form/creatable-select";
 import { MinimalTiptapEditor } from "@/components/ui/minimal-tiptap";
-import {
-    Instagram,
-    Loader2,
-    Package,
-    Plus,
-    Search,
-} from "lucide-react";
-import { useState } from "react";
-import { CURRENCY_LIMITS, CURRENCY_SYMBOLS } from "@/utils/store";
-import { toast } from "sonner";
+import { CURRENCY_LIMITS } from "@/utils/store";
 
 export default function ImportProducts({ currentStore, categories, auth }) {
     const [loading, setLoading] = useState(false);
@@ -47,13 +47,9 @@ export default function ImportProducts({ currentStore, categories, auth }) {
 
     const currencyLimits =
         CURRENCY_LIMITS[currentStore?.currency] || CURRENCY_LIMITS.USD;
-    const currencySymbol = CURRENCY_SYMBOLS[currentStore?.currency || "USD"];
 
     const [instagramPosts, setInstagramPosts] = useState([]);
     const [instagramPostSettings, setInstagramPostSettings] = useState({});
-
-    const [maxSelection] = useState(10);
-    const selectedCount = instagramPosts.filter((post) => post.selected).length;
 
     const handleFetchPosts = (id = null) => {
         if (instagramPosts.length > 0) {
@@ -150,8 +146,6 @@ export default function ImportProducts({ currentStore, categories, auth }) {
             },
         });
     };
-
-    console.log("selectedPost", selectedPost);
 
     return (
         <Layout

@@ -1,4 +1,3 @@
-import React from "react";
 import Label from "@/components/form/label";
 import { Switch } from "@/components/form/switch";
 

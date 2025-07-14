@@ -1,11 +1,11 @@
 import { toast } from "sonner";
+import { Head, useForm, router } from "@inertiajs/react";
 import {
     Instagram,
     MessageSquare,
     Smartphone,
     ShoppingCart,
 } from "lucide-react";
-import { Head, useForm, router } from "@inertiajs/react";
 import Layout from "@/layouts/app-layout";
 import Input from "@/components/form/input";
 import Button from "@/components/form/button";

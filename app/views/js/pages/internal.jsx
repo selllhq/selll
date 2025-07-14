@@ -1,10 +1,4 @@
 import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-} from "@/components/shared/card";
-import {
     Users,
     Store as StoreIcon,
     ShoppingCart,
@@ -15,6 +9,12 @@ import {
     DollarSign,
     Eye,
 } from "lucide-react";
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+} from "@/components/shared/card";
 import { cn } from "@/utils";
 
 const Internal = ({
