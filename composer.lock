@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "33c3c1affbdc1c3b8ef4708b9f5a5906",
+    "content-hash": "31f2f4585f8196b27d1e47761d603f7f",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1670,16 +1670,16 @@
         },
         {
             "name": "leafs/aloe",
-            "version": "v4.x-dev",
+            "version": "4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/aloe.git",
-                "reference": "3b71e41022f087063cfb1d3a144a8e25d5beba07"
+                "reference": "722c3fb57b508aba745c8ad9fd7f26c7b54d6d62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/aloe/zipball/3b71e41022f087063cfb1d3a144a8e25d5beba07",
-                "reference": "3b71e41022f087063cfb1d3a144a8e25d5beba07",
+                "url": "https://api.github.com/repos/leafsphp/aloe/zipball/722c3fb57b508aba745c8ad9fd7f26c7b54d6d62",
+                "reference": "722c3fb57b508aba745c8ad9fd7f26c7b54d6d62",
                 "shasum": ""
             },
             "require": {
@@ -1695,7 +1695,6 @@
                 "leafs/alchemy": "*",
                 "leafs/leaf": "*"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -1725,7 +1724,7 @@
             ],
             "support": {
                 "issues": "https://github.com/leafsphp/aloe/issues",
-                "source": "https://github.com/leafsphp/aloe/tree/v4.x"
+                "source": "https://github.com/leafsphp/aloe/tree/v4.5"
             },
             "funding": [
                 {
@@ -1737,7 +1736,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-06-20T11:02:07+00:00"
+            "time": "2025-07-15T16:01:43+00:00"
         },
         {
             "name": "leafs/anchor",
@@ -1800,7 +1799,7 @@
         },
         {
             "name": "leafs/auth",
-            "version": "v4.x-dev",
+            "version": "v4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/auth.git",
@@ -1826,7 +1825,6 @@
                 "leafs/alchemy": "^2.0",
                 "pestphp/pest": "^1.0 | ^2.0"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "files": [
@@ -1861,7 +1859,7 @@
             ],
             "support": {
                 "issues": "https://github.com/leafsphp/auth/issues",
-                "source": "https://github.com/leafsphp/auth/tree/v4.x"
+                "source": "https://github.com/leafsphp/auth/tree/v4.2"
             },
             "funding": [
                 {
@@ -2404,16 +2402,16 @@
         },
         {
             "name": "leafs/http",
-            "version": "v4.x-dev",
+            "version": "v4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/http.git",
-                "reference": "4ac870cfc17deb40dcf0d5f57d7d5e267428eb86"
+                "reference": "c41ef17db0eb3c05900d577eeea049668e816ccb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/http/zipball/4ac870cfc17deb40dcf0d5f57d7d5e267428eb86",
-                "reference": "4ac870cfc17deb40dcf0d5f57d7d5e267428eb86",
+                "url": "https://api.github.com/repos/leafsphp/http/zipball/c41ef17db0eb3c05900d577eeea049668e816ccb",
+                "reference": "c41ef17db0eb3c05900d577eeea049668e816ccb",
                 "shasum": ""
             },
             "require": {
@@ -2421,7 +2419,6 @@
                 "leafs/form": "^3.0",
                 "leafs/fs": "^4.0"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "files": [
@@ -2456,7 +2453,7 @@
             ],
             "support": {
                 "issues": "https://github.com/leafsphp/http/issues",
-                "source": "https://github.com/leafsphp/http/tree/v4.x"
+                "source": "https://github.com/leafsphp/http/tree/v4.2"
             },
             "funding": [
                 {
@@ -2468,7 +2465,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-06-25T12:02:09+00:00"
+            "time": "2025-07-15T23:40:51+00:00"
         },
         {
             "name": "leafs/inertia",
@@ -2539,7 +2536,7 @@
         },
         {
             "name": "leafs/leaf",
-            "version": "v4.x-dev",
+            "version": "v4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/leaf.git",
@@ -2562,7 +2559,6 @@
                 "leafs/alchemy": "^4.0",
                 "pestphp/pest": "*"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "files": [
@@ -2596,7 +2592,7 @@
             ],
             "support": {
                 "issues": "https://github.com/leafsphp/leaf/issues",
-                "source": "https://github.com/leafsphp/leaf/tree/v4.x"
+                "source": "https://github.com/leafsphp/leaf/tree/v4.2"
             },
             "funding": [
                 {
@@ -2739,16 +2735,16 @@
         },
         {
             "name": "leafs/mvc-core",
-            "version": "v4.x-dev",
+            "version": "v4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/mvc-core.git",
-                "reference": "cdd0cbbba9b440d05f61f77fd5ee987c8c273a61"
+                "reference": "eb891282f80623583b155b990bd0b76e1e1b5736"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/mvc-core/zipball/cdd0cbbba9b440d05f61f77fd5ee987c8c273a61",
-                "reference": "cdd0cbbba9b440d05f61f77fd5ee987c8c273a61",
+                "url": "https://api.github.com/repos/leafsphp/mvc-core/zipball/eb891282f80623583b155b990bd0b76e1e1b5736",
+                "reference": "eb891282f80623583b155b990bd0b76e1e1b5736",
                 "shasum": ""
             },
             "require": {
@@ -2762,7 +2758,6 @@
             "require-dev": {
                 "fakerphp/faker": "^1.24"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "files": [
@@ -2799,7 +2794,7 @@
             ],
             "support": {
                 "issues": "https://github.com/leafsphp/mvc-core/issues",
-                "source": "https://github.com/leafsphp/mvc-core/tree/v4.x"
+                "source": "https://github.com/leafsphp/mvc-core/tree/v4.4"
             },
             "funding": [
                 {
@@ -2811,7 +2806,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-06-20T13:42:08+00:00"
+            "time": "2025-07-17T10:58:50+00:00"
         },
         {
             "name": "leafs/password",
@@ -3068,7 +3063,7 @@
         },
         {
             "name": "leafs/s3",
-            "version": "dev-main",
+            "version": "v0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/s3.git",
@@ -3090,7 +3085,6 @@
                 "leafs/alchemy": "^4.0",
                 "pestphp/pest": "^1.21"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "files": [
@@ -3124,7 +3118,7 @@
             ],
             "support": {
                 "issues": "https://github.com/leafsphp/s3/issues",
-                "source": "https://github.com/leafsphp/s3/tree/main"
+                "source": "https://github.com/leafsphp/s3/tree/v0.1.0"
             },
             "funding": [
                 {
@@ -6400,16 +6394,10 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "leafs/aloe": 20,
-        "leafs/auth": 20,
         "leafs/billing": 20,
         "leafs/fs": 20,
-        "leafs/http": 20,
-        "leafs/leaf": 20,
-        "leafs/mvc-core": 20,
         "leafs/paystack": 20,
         "leafs/redis": 20,
-        "leafs/s3": 20,
         "leafs/stripe": 20
     },
     "prefer-stable": true,

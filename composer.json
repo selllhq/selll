@@ -11,27 +11,27 @@
     "license": "MIT",
     "require": {
         "leafs/blade": "^4.0",
-        "leafs/leaf": "4.x-dev",
+        "leafs/leaf": "^4.2",
         "leafs/logger": "^4.0",
         "leafs/vite": "^0.3.0",
         "leafs/date": "^2.2",
         "leafs/queue": "v4.0",
         "leafs/redis": "4.x-dev",
-        "leafs/aloe": "v4.x-dev",
+        "leafs/aloe": "^4.5",
         "leafs/inertia": "^4.0",
-        "leafs/auth": "v4.x-dev",
+        "leafs/auth": "^4.2",
         "leafs/cors": "^1.2",
-        "leafs/mvc-core": "v4.x-dev",
+        "leafs/mvc-core": "^4.4",
         "leafs/billing": "dev-main",
         "leafs/fs": "4.x-dev",
         "leafs/mail": "^2.2",
         "leafs/stripe": "dev-main",
         "leafs/paystack": "dev-main",
-        "leafs/s3": "dev-main",
+        "leafs/s3": "^0.1.0",
         "sentry/sentry": "^4.14",
         "mixpanel/mixpanel-php": "^2.11",
         "league/oauth2-google": "^4.0",
-        "leafs/http": "v4.x-dev"
+        "leafs/http": "^4.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.24"
