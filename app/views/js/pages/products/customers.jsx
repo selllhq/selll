@@ -59,10 +59,10 @@ export default function Customers({
             return false;
         }
 
-        // Get customer's orders
         const customerOrders = orders.filter(
             (order) => order.customer_id === customer.id,
         );
+
         const totalOrdersCount = customerOrders.length;
 
         switch (filter) {
@@ -73,7 +73,6 @@ export default function Customers({
             case "no_purchase":
                 return totalOrdersCount === 0;
             case "high_value":
-                // Customers who have spent more than average
                 return (
                     customerOrders
                         .filter(

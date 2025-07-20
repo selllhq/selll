@@ -1,6 +1,6 @@
-import { Package, Settings, Wallet, CheckCircle2 } from "lucide-react";
-import Layout from "@/layouts/app-layout";
 import { Head, Link } from "@inertiajs/react";
+import { Package, Wallet, CheckCircle2 } from "lucide-react";
+import Layout from "@/layouts/app-layout";
 import {
     Card,
     CardContent,

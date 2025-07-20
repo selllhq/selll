@@ -88,7 +88,7 @@ const mainNavItems = [
     //     icon: Mail,
     // },
     {
-        title: "Store Branding",
+        title: "Customize Store",
         url: "/store/customize",
         icon: Paintbrush,
     },

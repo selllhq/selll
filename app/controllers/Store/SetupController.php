@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Store;
 
+use App\Helpers\StoreHelper;
 use App\Mailers\StoreMailer;
 use App\Models\Store;
 use App\Models\User;
@@ -54,7 +55,7 @@ class SetupController extends Controller
 
         if (Store::where('slug', $data['slug'])->exists()) {
             return response()
-                ->withFlash('errors', ['slug' => "{$data['slug']}.selll.store is already taken, please choose another one"])
+                ->withFlash('errors', ['slug' => "{$data['slug']}.selll.store is already taken, please choose another URL"])
                 ->redirect('/store/new', 303);
         }
 
@@ -84,7 +85,7 @@ class SetupController extends Controller
     public function showCustomize()
     {
         response()->inertia('store/customize', [
-            'store' => User::find(auth()->id())->currentStore()->first(),
+            'store' => StoreHelper::find(),
             'errors' => flash()->display('errors') ?? [],
         ]);
     }
@@ -138,5 +139,39 @@ class SetupController extends Controller
         $store->save();
 
         return response()->redirect('/store/customize', 303);
+    }
+
+    public function showDomain()
+    {
+        response()->inertia('store/domain', [
+            'store' => StoreHelper::find(),
+            'errors' => flash()->display('errors') ?? [],
+        ]);
+    }
+
+    public function domain()
+    {
+        $currentStore = StoreHelper::find();
+
+        $data = request()->validate([
+            'slug' => 'string|min:1',
+        ]);
+
+        if (!$data) {
+            return response()
+                ->withFlash('errors', request()->errors())
+                ->redirect('/store/domain', 303);
+        }
+
+        if (Store::where('slug', $data['slug'])->exists()) {
+            return response()
+                ->withFlash('errors', ['slug' => "{$data['slug']}.selll.store is already taken, please choose another one"])
+                ->redirect('/store/domain', 303);
+        }
+
+        $currentStore->slug = $data['slug'];
+        $currentStore->save();
+
+        return response()->redirect('/store/domain', 303);
     }
 }

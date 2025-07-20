@@ -1,8 +1,5 @@
-import React, { useState } from "react";
-import { Link, Head } from "@inertiajs/react";
-import Navbar from "@/components/layout/navbar";
-import Button from "@/components/form/button";
-import { cn } from "@/utils";
+import { Head } from "@inertiajs/react";
+import { createElement, useState } from "react";
 import {
     ChevronDown,
     ShoppingBag,
@@ -11,8 +8,10 @@ import {
     Shield,
     Wallet,
     HelpCircle,
-    Globe,
 } from "lucide-react";
+import Navbar from "@/components/layout/navbar";
+import Button from "@/components/form/button";
+import { cn } from "@/utils";
 import Footer from "@/components/layout/footer";
 
 const Faqs = ({ auth }) => {
@@ -342,7 +341,7 @@ const Faqs = ({ auth }) => {
                                     {categories.find(
                                         (c) => c.id === activeCategory,
                                     )?.icon &&
-                                        React.createElement(
+                                        createElement(
                                             categories.find(
                                                 (c) => c.id === activeCategory,
                                             )?.icon,

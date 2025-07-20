@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Head } from "@inertiajs/react";
-import Navbar from "@/components/layout/navbar";
-import Button from "@/components/form/button";
+import { Instagram, Mail, Twitter } from "lucide-react";
 import Input from "@/components/form/input";
 import Label from "@/components/form/label";
-import { Instagram, Mail, Phone, Twitter } from "lucide-react";
+import Button from "@/components/form/button";
+import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 
 const Contact = ({ auth }) => {

@@ -1,7 +1,7 @@
 import { Head, Link } from "@inertiajs/react";
 import { RotatingWords } from "@/utils";
-import Navbar from "@/components/layout/navbar";
 import Button from "@/components/form/button";
+import Navbar from "@/components/layout/navbar";
 import SignUpMiniForm from "@/components/layout/sign-up-mini-form";
 
 const testimonials = [

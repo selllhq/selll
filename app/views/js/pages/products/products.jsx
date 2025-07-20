@@ -1,13 +1,8 @@
-import Layout from "@/layouts/app-layout";
-import { Head, router, Link } from "@inertiajs/react";
+import dayjs from "dayjs";
+import { toast } from "sonner";
 import { useState } from "react";
-import EmptyState from "@/components/layout/empty";
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-} from "@/components/shared/card";
+import { CaretDownIcon } from "@radix-ui/react-icons";
+import { Head, router, Link } from "@inertiajs/react";
 import {
     ShoppingBag,
     TrendingUp,
@@ -19,11 +14,17 @@ import {
     MoreHorizontal,
     Edit,
 } from "lucide-react";
+import Layout from "@/layouts/app-layout";
+import EmptyState from "@/components/layout/empty";
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+} from "@/components/shared/card";
 import Button from "@/components/form/button";
 import Input from "@/components/form/input";
-import dayjs from "dayjs";
 import { parseProductImages } from "@/utils/store";
-import { toast } from "sonner";
 import { useDialog } from "@/components/ui/dialog";
 import {
     DropdownMenu,
@@ -39,7 +40,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/shared/table";
-import { CaretDownIcon } from "@radix-ui/react-icons";
 
 export default function Products({ orders = [], products, currentStore }) {
     const [search, setSearch] = useState("");

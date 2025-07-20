@@ -1,4 +1,3 @@
-import React from "react";
 import Label from "@/components/form/label";
 import Input from "@/components/form/input";
 import InputError from "@/components/form/input-error";

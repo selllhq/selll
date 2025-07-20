@@ -90,7 +90,7 @@ class ProductsController extends Controller
                     ) {
                         $post['displayUrl'] = storage()->createFile(
                             withBucket("imports/$request/display.jpg"),
-                            file_get_contents($post['displayUrl']),
+                            $this->fetchRemoteImage($post['displayUrl']),
                             [
                                 'rename' => true,
                                 'recursive' => true,
@@ -101,7 +101,7 @@ class ProductsController extends Controller
                         //     $post['images'][] = $post['displayUrl'];
                         //     $post['images'][] = storage()->createFile(
                         //         withBucket("imports/$request/video.mp4"),
-                        //         file_get_contents($post['videoUrl']),
+                        //         $this->fetchRemoteImage($post['videoUrl']),
                         //         [
                         //             'rename' => true,
                         //             'recursive' => true,
@@ -114,7 +114,7 @@ class ProductsController extends Controller
                         if ((strpos($image, 'cdninstagram.com') !== false || strpos($image, 'fbcdn.net') !== false) && strpos($image, 'cdn1.selll.online') === false) {
                             return storage()->createFile(
                                 withBucket("imports/$request/display.jpg" . basename($image)),
-                                file_get_contents($image),
+                                $this->fetchRemoteImage($image),
                                 [
                                     'rename' => true,
                                     'recursive' => true,
@@ -140,6 +140,30 @@ class ProductsController extends Controller
 
         return response()->json($parsedData);
     }
+
+    protected function fetchRemoteImage($url)
+    {
+        $ch = curl_init($url);
+
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_TIMEOUT => 10,
+            CURLOPT_SSL_VERIFYPEER => true,
+        ]);
+
+        $data = curl_exec($ch);
+        $error = curl_error($ch);
+
+        curl_close($ch);
+
+        if ($data === false) {
+            throw new \Exception("Failed to fetch image: $error");
+        }
+
+        return $data;
+    }
+
 
     public function store()
     {

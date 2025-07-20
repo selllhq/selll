@@ -1,14 +1,15 @@
+import dayjs from "dayjs";
+import { toast } from "sonner";
 import { Head } from "@inertiajs/react";
-import Layout from "@/layouts/app-layout";
 import {
     ArrowDownCircle,
     Users,
-    DollarSign,
-    Share2,
     Copy,
     ExternalLink,
     CreditCard,
 } from "lucide-react";
+import Layout from "@/layouts/app-layout";
+import Button from "@/components/form/button";
 import {
     Card,
     CardContent,
@@ -18,9 +19,6 @@ import {
 } from "@/components/shared/card";
 import { StatusBadge } from "@/components/shared/badge";
 import { formatCurrency } from "@/utils/store";
-import Button from "@/components/form/button";
-import { toast } from "sonner";
-import dayjs from "dayjs";
 
 export default function Referrals({ referrals, referralCode }) {
     const referralUrl = `https://selll.online/auth/register?ref=${referralCode}`;

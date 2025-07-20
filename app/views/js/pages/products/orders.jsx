@@ -1,6 +1,18 @@
-import Layout from "@/layouts/app-layout";
-import { Head, Link, router } from "@inertiajs/react";
+import dayjs from "dayjs";
 import { useState } from "react";
+import { Head, Link, router } from "@inertiajs/react";
+import {
+    Package,
+    ShoppingCart,
+    Clock,
+    CheckCircle,
+    XCircle,
+    Store,
+    ShoppingBag,
+    TrendingUp,
+    Search,
+} from "lucide-react";
+import Layout from "@/layouts/app-layout";
 import EmptyState from "@/components/layout/empty";
 import {
     Card,
@@ -16,22 +28,8 @@ import {
     TableRow,
     TableCell,
 } from "@/components/shared/table";
-import {
-    Package,
-    ShoppingCart,
-    Clock,
-    CheckCircle,
-    XCircle,
-    User,
-    Eye,
-    Store,
-    ShoppingBag,
-    TrendingUp,
-    Search,
-} from "lucide-react";
-import Button from "@/components/form/button";
 import Input from "@/components/form/input";
-import dayjs from "dayjs";
+import Button from "@/components/form/button";
 
 export default function Orders({ orders = [], currentStore }) {
     const [search, setSearch] = useState("");

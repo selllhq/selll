@@ -1,14 +1,9 @@
-import Layout from "@/layouts/app-layout";
+import dayjs from "dayjs";
+import { toast } from "sonner";
+import { useState } from "react";
 import { Head, Link, router } from "@inertiajs/react";
-import Button from "@/components/form/button";
-import EmptyState from "@/components/layout/empty";
 import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-} from "@/components/shared/card";
-import {
+    Wallet,
     Package,
     User,
     Store,
@@ -19,11 +14,17 @@ import {
     Trash2,
     MoreHorizontal,
 } from "lucide-react";
-import dayjs from "dayjs";
-import { useState } from "react";
+import Layout from "@/layouts/app-layout";
+import Button from "@/components/form/button";
+import EmptyState from "@/components/layout/empty";
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+} from "@/components/shared/card";
 import { parseProductImages } from "@/utils/store";
 import { Badge, StatusBadge } from "@/components/shared/badge";
-import { Wallet } from "lucide-react";
 import {
     Table,
     TableBody,
@@ -41,7 +42,6 @@ import {
 import { cn } from "@/utils";
 import { useDialog } from "@/components/ui/dialog";
 import StockTopUpModal from "@/components/modals/stock-topup";
-import { toast } from "sonner";
 
 export default function Products({
     product,
