@@ -23,7 +23,7 @@ APP_DEBUG = 'true'
 APP_URL = 'https://selll.online/'
 APP_KEY = 'base64:XqCe5Dy/i1lEzfM5zxd3+jYzDM6jr9/ZJorVmHwkb2I='
 DB_CONNECTION = 'pgsql'
-BILLING_PROVIDER = 'stripe'
+BILLING_PROVIDER = 'paystack'
 
 DB_DATABASE = 'selll'
 DB_USERNAME = 'selll_owner'
