@@ -23,7 +23,7 @@ jobs:
     # Deploying apps with this "review" environment allows the URL for the app to be displayed in the PR UI.
     # Feel free to change the name of this environment.
     environment:
-      name: "review"
+      name: review
       url: ${{ steps.deploy.outputs.url }}
     steps:
       - name: Get code
