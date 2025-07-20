@@ -3,7 +3,7 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'selll'
+app = 'pr-18-selllhq-selll'
 primary_region = 'lhr'
 
 [build]
@@ -23,7 +23,7 @@ APP_DEBUG = 'true'
 APP_URL = 'https://selll.online/'
 APP_KEY = 'base64:XqCe5Dy/i1lEzfM5zxd3+jYzDM6jr9/ZJorVmHwkb2I='
 DB_CONNECTION = 'pgsql'
-BILLING_PROVIDER = 'stripe'
+BILLING_PROVIDER = 'paystack'
 
 DB_DATABASE = 'selll'
 DB_USERNAME = 'selll_owner'
@@ -58,3 +58,4 @@ AWS_USE_PATH_STYLE_ENDPOINT = 'false'
 memory = '1gb'
 cpu_kind = 'shared'
 cpus = 1
+
