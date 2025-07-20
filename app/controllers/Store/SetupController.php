@@ -55,7 +55,7 @@ class SetupController extends Controller
 
         if (Store::where('slug', $data['slug'])->exists()) {
             return response()
-                ->withFlash('errors', ['slug' => "{$data['slug']}.selll.store is already taken, please choose another one"])
+                ->withFlash('errors', ['slug' => "{$data['slug']}.selll.store is already taken, please choose another URL"])
                 ->redirect('/store/new', 303);
         }
 
