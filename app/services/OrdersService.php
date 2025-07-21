@@ -10,7 +10,7 @@ class OrdersService
     /**
      * Get all store orders
      */
-    public function getOrders(Store $store): array
+    public function getOrders(Store $store)
     {
         return $store->carts()->with('customer')->latest()->get();
     }
