@@ -6,6 +6,7 @@ use App\Helpers\SMSHelper;
 use App\Helpers\StoreHelper;
 use App\Mailers\UserMailer;
 use App\Models\Cart;
+use App\Services\OrdersService;
 
 class OrdersController extends Controller
 {
@@ -16,46 +17,23 @@ class OrdersController extends Controller
         response()->inertia('products/orders', [
             'currentStore' => $currentStore,
             // 'products' => $currentStore->products()->get(),
-            'orders' => $currentStore->carts()->with('customer')->latest()->get(),
+            'orders' => make(OrdersService::class)->getOrders($currentStore),
         ]);
     }
 
     public function show($id)
     {
-        $items = [];
         $currentStore = StoreHelper::find();
-        $order = Cart::with(['customer', 'items.product', 'shippingUpdates'])->find($id);
+        $data = make(OrdersService::class)->getOrderById($id, $currentStore);
 
-        if (!$order || $order->store_id !== $currentStore->id) {
+        if (!$data) {
             return response()->redirect('/orders');
         }
 
-        if ($order->status === 'pending') {
-            $items = json_decode(Cart::find($id, [
-                'items'
-            ])['items'] ?? '[]', true);
-
-            $items = collect($items)->map(function ($item) use ($currentStore) {
-                $product = $currentStore->products()->find($item['id']);
-
-                if (!$product) {
-                    return null;
-                }
-
-                return [
-                    'id' => $item['id'],
-                    'product' => $product,
-                    'quantity' => $item['quantity'],
-                    'amount' => $item['amount'] / 100,
-                    'currency' => $item['currency'] ?? 'GHS',
-                ];
-            })->filter();
-        }
-
         response()->inertia('products/order', [
-            'order' => $order,
+            'order' => $data['order'],
+            'items' => $data['items'],
             'currentStore' => $currentStore,
-            'items' => $items,
         ]);
     }
 
