@@ -4,6 +4,7 @@ namespace App\Controllers\Auth;
 
 use App\Mailers\UserMailer;
 use App\Models\Referral;
+use App\Services\LoginService;
 
 class RegisterController extends Controller
 {
@@ -90,65 +91,12 @@ class RegisterController extends Controller
     public function storeOAuth()
     {
         try {
-            $token = auth()->client('google')->getAccessToken('authorization_code', [
-                'code' => request()->get('code')
-            ]);
+            $response = make(LoginService::class)->handleGoogleOAuth();
 
-            if (!$token) {
+            if (!$response['success']) {
                 return response()
-                    ->withFlash('error', 'Could not sign in with Google.')
+                    ->withFlash('error', $response['error'])
                     ->redirect('/auth/register', 303);
-            }
-
-            /**
-             * @var \League\OAuth2\Client\Provider\GoogleUser $user
-             */
-            $user = auth()->client('google')->getResourceOwner($token);
-            $success = auth()->fromOAuth([
-                'token' => $token,
-                'user' => [
-                    'name' => $user->getName(),
-                    'email' => $user->getEmail(),
-                    'password' => 'GOOGLE_AUTH_PLACEHOLDER',
-                    'email_verified_at' => tick()->format('Y-M-D H:i:s'),
-                    'avatar' => $user->getAvatar() ?? null,
-                ]
-            ]);
-
-            if (!$success) {
-                return response()
-                    ->withFlash('form', request()->body())
-                    ->withFlash('error', auth()->errors())
-                    ->redirect('/auth/register', 303);
-            }
-
-            $state = json_decode(request()->get('state', false) ?? '{}', true);
-
-            if ($refCode = $state['ref'] ?? null) {
-                $referrer = auth()->verifyToken($refCode, 'referral');
-
-                if ($referrer) {
-                    Referral::create([
-                        'user_id' => auth()->id(),
-                        'referrer_id' => $referrer->id(),
-                    ]);
-                }
-            }
-
-            if (!$success) {
-                return response()
-                    ->withFlash('error', auth()->errors())
-                    ->redirect('/auth/register', 303);
-            }
-
-            if (tick(auth()->user()->created_at)->fromNow() === 'less than a minute ago') {
-                app()->mixpanel->identify(auth()->id());
-                app()->mixpanel->track('User Registered', [
-                    '$user_id' => auth()->id(),
-                    'email' => $user->getEmail(),
-                    'type' => 'google',
-                    'source' => request()->headers('Referer') ?? 'unknown',
-                ]);
             }
 
             return response()->redirect('/dashboard', 303);
