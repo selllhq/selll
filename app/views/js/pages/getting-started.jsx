@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { Head, Link } from "@inertiajs/react";
-import { Package, Wallet, CheckCircle2 } from "lucide-react";
+import { Package, Wallet, CheckCircle2, Link2Icon } from "lucide-react";
 import Layout from "@/layouts/app-layout";
 import {
     Card,
@@ -11,6 +12,8 @@ import {
 import Button from "@/components/form/button";
 
 const GetStarted = ({ products, wallets }) => {
+    const [linkCopied, setLinkCopied] = useState(false);
+
     const steps = [
         {
             title: "Set Up Payouts",
@@ -19,7 +22,9 @@ const GetStarted = ({ products, wallets }) => {
             content: (completed) => (
                 <Card>
                     <CardHeader className="mb-0">
-                        <CardTitle className="!text-primary">Connect your bank/momo</CardTitle>
+                        <CardTitle className="!text-primary">
+                            Connect your bank/momo
+                        </CardTitle>
                         <CardDescription className="text-muted-foreground">
                             Tell us where to send your money when customers buy
                             items from your store
@@ -40,13 +45,56 @@ const GetStarted = ({ products, wallets }) => {
             ),
         },
         {
+            title: "Share Your Store",
+            icon: <Link2Icon className="w-6 h-6" />,
+            complete: linkCopied,
+            content: (completed) => (
+                <Card>
+                    <CardHeader className="mb-0">
+                        <CardTitle className="!text-primary">
+                            Share Your Store Link
+                        </CardTitle>
+                        <CardDescription className="text-muted-foreground">
+                            Share your store link on social media, add it to your page description,
+                            link in bio, or send it directly to your customers. You can also
+                            generate brand graphics to let your customers know
+                            about your store.
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className="flex flex-col md:flex-row gap-2 mt-4">
+                        <Button
+                            onClick={() => {
+                                navigator.clipboard.writeText(
+                                    window.location.href
+                                );
+                                setLinkCopied(true);
+                            }}
+                            variant="outline"
+                        >
+                            {completed ? "Link Copied!" : "Copy Store Link"}
+                        </Button>
+                        <Button
+                            as={Link}
+                            href="/dashboard/brand"
+                            rel="noopener noreferrer"
+                            variant="outline"
+                        >
+                            Generate Brand Graphics
+                        </Button>
+                    </CardContent>
+                </Card>
+            ),
+        },
+        {
             title: "Add Products",
             icon: <Package className="w-6 h-6" />,
             complete: products && products.length > 0,
             content: (completed) => (
                 <Card>
                     <CardHeader className="mb-0">
-                        <CardTitle className="!text-primary">List Your First Product</CardTitle>
+                        <CardTitle className="!text-primary">
+                            List Your First Product
+                        </CardTitle>
                         <CardDescription className="text-muted-foreground">
                             Add products to your store with high-quality images,
                             detailed descriptions, and competitive prices. The
@@ -112,10 +160,7 @@ const GetStarted = ({ products, wallets }) => {
                                         </span>
                                     )}
                                 </div>
-                                <div
-                                >
-                                    {step.content(step.complete)}
-                                </div>
+                                <div>{step.content(step.complete)}</div>
                             </div>
                         </div>
                     ))}
