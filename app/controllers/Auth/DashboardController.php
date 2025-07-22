@@ -58,4 +58,13 @@ class DashboardController extends Controller
             'products' => $currentStore->products()->get()
         ]);
     }
+
+    public function brand()
+    {
+        $currentStore = StoreHelper::find();
+
+        response()->inertia('brand-assets', [
+            'currentStore' => $currentStore,
+        ]);
+    }
 }
