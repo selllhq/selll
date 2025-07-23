@@ -74,16 +74,7 @@ class OrdersController extends Controller
             return response()->redirect('/orders');
         }
 
-        SMSHelper::write([
-            'recipient' => $order->customer->phone,
-            'senderId' => 'Selll Order',
-            'message' => "Woohoo! Your order from {$currentStore->name} has been completed. Thank you for shopping with us!",
-        ])
-            ->withArkesel()
-            ->send();
-
-        $order->status = 'completed';
-        $order->save();
+        make(OrdersService::class)->completeOrder($order, $currentStore);
 
         return response()->redirect("/orders/$id");
     }

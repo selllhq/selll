@@ -99,4 +99,24 @@ class OrdersService
                 ->send();
         }
     }
+
+    /**
+     * Complete an order
+     * @param Cart $order
+     * @param Store $currentStore
+     * @return void
+     */
+    public function completeOrder(Cart $order, Store $currentStore)
+    {
+        SMSHelper::write([
+            'recipient' => $order->customer->phone,
+            'senderId' => 'Selll Order',
+            'message' => "Woohoo! Your order from {$currentStore->name} has been completed. Thank you for shopping with us!",
+        ])
+            ->withArkesel()
+            ->send();
+
+        $order->status = 'completed';
+        $order->save();
+    }
 }
