@@ -46,37 +46,7 @@ class OrdersController extends Controller
             return response()->redirect('/orders');
         }
 
-        $message = request()->get('message') ?? '';
-        $expectedDeliveryDate = request()->get('expected_delivery_date');
-
-        $order->shippingUpdates()->create([
-            'store_id' => $currentStore->id,
-            'customer_id' => $order->customer->id,
-            'message' => $message,
-            'estimated_delivery_date' => tick($expectedDeliveryDate)->format('Y-MM-DD H:i:s'),
-        ]);
-
-        $expectedDeliveryDate = tick($expectedDeliveryDate)->format('dd, DD MMMM YYYY');
-
-        if ($order->customer->email) {
-            UserMailer::shippingUpdate(
-                $order,
-                $currentStore,
-                $message,
-                $expectedDeliveryDate
-            )
-                ->send();
-        } else {
-            $message = $message ? ": $message" : '';
-
-            SMSHelper::write([
-                'recipient' => $order->customer->phone,
-                'senderId' => 'Selll Order',
-                'message' => "Update on your order #{$order->id} from {$currentStore->name} {$message}. Expected delivery date is {$expectedDeliveryDate}. Visit {$order->store_url}/orders/{$order->id} for more details.",
-            ])
-                ->withArkesel()
-                ->send();
-        }
+        make(OrdersService::class)->sendShippingUpdate($order, $currentStore);
 
         return response()->redirect("/orders/$id");
     }
