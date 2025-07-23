@@ -20,7 +20,7 @@ class LoginController extends Controller
         $response = make(LoginService::class)->login();
 
         if (!$response) {
-            response()
+            return response()
                 ->withFlash('form', request()->body())
                 ->withFlash('error', request()->errors())
                 ->redirect('/auth/login', 303);
