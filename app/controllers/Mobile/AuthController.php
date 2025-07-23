@@ -2,10 +2,16 @@
 
 namespace App\Controllers\Mobile;
 
+use App\Helpers\StoreHelper;
 use App\Services\LoginService;
 
 class AuthController extends Controller
 {
+    public function __middleware()
+    {
+        return true;
+    }
+
     public function index()
     {
         $response = make(LoginService::class)->login(false);
@@ -19,6 +25,7 @@ class AuthController extends Controller
         }
 
         response()->json(array_merge((array) auth()->data(), [
+            'store' => StoreHelper::find(),
             'success' => true,
         ]), 200);
     }
