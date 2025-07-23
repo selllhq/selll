@@ -4,9 +4,7 @@ namespace App\Controllers\Store;
 
 use App\Helpers\ProductImportHelper;
 use App\Helpers\StoreHelper;
-use App\Models\Analytics;
 use App\Models\Store;
-use App\Models\User;
 use App\Services\InventoryService;
 use App\Services\OrdersService;
 
@@ -158,7 +156,6 @@ class ProductsController extends Controller
 
         return $data;
     }
-
 
     public function store()
     {

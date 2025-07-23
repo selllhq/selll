@@ -11,8 +11,9 @@ class StatsController extends Controller
     {
         $currentStore = StoreHelper::find();
 
-        response()->json(
+        response()->json(array_merge(
+            ['success' => true],
             make(AnalyticsService::class)->getDashboardStats($currentStore)
-        );
+        ));
     }
 }
