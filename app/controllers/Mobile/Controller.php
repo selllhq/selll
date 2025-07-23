@@ -23,20 +23,20 @@ class Controller extends \App\Controllers\Controller
         return true;
     }
 
-    public function __call($method, $args)
-    {
-        if (method_exists($this, '__middleware') && !in_array($method, $this->__skipMiddlewareFor() ?? [])) {
-            $response = $this->__middleware();
+    // public function __call($method, $args)
+    // {
+    //     if (method_exists($this, '__middleware') && !in_array($method, $this->__skipMiddlewareFor() ?? [])) {
+    //         $response = $this->__middleware();
 
-            if ($response === false) {
-                return;
-            }
-        }
+    //         if ($response === false) {
+    //             return;
+    //         }
+    //     }
 
-        if (method_exists($this, $method)) {
-            return call_user_func_array([$this, $method], $args);
-        }
+    //     if (method_exists($this, $method)) {
+    //         return call_user_func_array([$this, $method], $args);
+    //     }
 
-        throw new \BadMethodCallException("Method {$method} does not exist on " . static::class);
-    }
+    //     throw new \BadMethodCallException("Method {$method} does not exist on " . static::class);
+    // }
 }
