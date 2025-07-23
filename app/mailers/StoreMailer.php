@@ -2,6 +2,8 @@
 
 namespace App\Mailers;
 
+use App\Models\User;
+
 class StoreMailer
 {
     /**
@@ -38,6 +40,27 @@ class StoreMailer
             'recipientEmail' => $email,
             'recipientName' => $email,
             'senderName' => 'Selll Receipts',
+        ]);
+    }
+
+    /**
+     * Create mail to follow up with store owners
+     * @param mixed $user The store owner
+     * @return \Leaf\Mail
+     */
+    public static function checkIn(User $user)
+    {
+        return mailer()->create([
+            'subject' => "Let's help you get to your first sale",
+            'body' => view('mail.store.check-in', [
+                'name' => $user->name,
+            ]),
+            'recipientEmail' => $user->email,
+            'recipientName' => $user->name,
+            'senderName' => 'Michael from Selll',
+            'senderEmail' => 'support@selll.online',
+            'replyToEmail' => 'support@selll.online',
+            'replyToName' => 'Selll Support',
         ]);
     }
 
