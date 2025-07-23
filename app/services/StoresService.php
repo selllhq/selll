@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Helpers\AnalyticsHelper;
 use App\Models\Store;
 use App\Models\User;
 
