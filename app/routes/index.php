@@ -1,30 +1,5 @@
 <?php
 
-/**
- * Cache and use a service
- *
- * @template T of object
- * @param class-string<T>|T $service
- * @return T
- */
-function make($service)
-{
-    if (is_string($service)) {
-        $serviceName = $service;
-        $service = (new $service);
-    } else {
-        $serviceName = get_class($service);
-    }
-
-    if (!\Leaf\Config::getStatic("classes.$serviceName")) {
-        \Leaf\Config::singleton("classes.$serviceName", function () use ($service) {
-            return $service;
-        });
-    }
-
-    return \Leaf\Config::get("classes.$serviceName");
-}
-
 /*
 |--------------------------------------------------------------------------
 | Set up 404 handler
