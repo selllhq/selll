@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "31f2f4585f8196b27d1e47761d603f7f",
+    "content-hash": "68ef6eb329d407b2f6f51fe9f6c18369",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -2536,16 +2536,16 @@
         },
         {
             "name": "leafs/leaf",
-            "version": "v4.2",
+            "version": "v4.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/leaf.git",
-                "reference": "6e6493254ad05401c41d7914bf27fefbd31376a6"
+                "reference": "fce40d3dc989da5ef9e8e50c89b7f8826bfe7608"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/leaf/zipball/6e6493254ad05401c41d7914bf27fefbd31376a6",
-                "reference": "6e6493254ad05401c41d7914bf27fefbd31376a6",
+                "url": "https://api.github.com/repos/leafsphp/leaf/zipball/fce40d3dc989da5ef9e8e50c89b7f8826bfe7608",
+                "reference": "fce40d3dc989da5ef9e8e50c89b7f8826bfe7608",
                 "shasum": ""
             },
             "require": {
@@ -2559,6 +2559,7 @@
                 "leafs/alchemy": "^4.0",
                 "pestphp/pest": "*"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "files": [
@@ -2592,7 +2593,7 @@
             ],
             "support": {
                 "issues": "https://github.com/leafsphp/leaf/issues",
-                "source": "https://github.com/leafsphp/leaf/tree/v4.2"
+                "source": "https://github.com/leafsphp/leaf/tree/v4.x"
             },
             "funding": [
                 {
@@ -2604,7 +2605,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-05-14T17:27:20+00:00"
+            "time": "2025-07-22T18:19:32+00:00"
         },
         {
             "name": "leafs/logger",
@@ -6396,6 +6397,7 @@
     "stability-flags": {
         "leafs/billing": 20,
         "leafs/fs": 20,
+        "leafs/leaf": 20,
         "leafs/paystack": 20,
         "leafs/redis": 20,
         "leafs/stripe": 20
