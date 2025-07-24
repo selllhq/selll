@@ -3,63 +3,32 @@
 namespace App\Controllers\Auth;
 
 use App\Helpers\AnalyticsHelper;
+use App\Helpers\StoreHelper;
 use App\Models\Store;
 use App\Models\User;
+use App\Services\AnalyticsService;
+use App\Services\StoresService;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $currentStoreId = auth()->user()->current_store_id;
+        $currentStore = StoreHelper::find();
+        $data = make(AnalyticsService::class)->getDashboardStats($currentStore);
 
-        if (!$currentStoreId) {
-            return response()->redirect('/store/new', 303);
-        }
-
-        $stores = User::find(auth()->id())->ownedStores()->get();
-        $currentStore = Store::find($currentStoreId) ?? [];
-
-        $products = $currentStore->products()->withCount('purchases')->get() ?? [];
-        $customers = $currentStore->customers()->get() ?? [];
-        $orders = $currentStore
-            ->carts()
-            ->with('customer')
-            ->where(function ($query) {
-                $query->where('status', 'completed')
-                    ->orWhere('status', 'paid');
-            })
-            ->latest()
-            ->get() ?? [];
-
-        if (count($products) === 0 && count($orders) === 0) {
+        if (count($data['products']) === 0 && count($data['orders']) === 0) {
             return response()->redirect('/dashboard/getting-started', 303);
         }
 
-        response()->inertia('dashboard', [
-            'stores' => $stores,
-            'orders' => $orders,
+        response()->inertia('dashboard', array_merge($data, [
+            'stores' => make(StoresService::class)->getUserStores(),
             'currentStore' => $currentStore,
-            'products' => $products,
-            'productsSold' => $currentStore->productPurchases()->sum('quantity'),
-            'customers' => $customers,
-            'revenueGraph' => AnalyticsHelper::getRevenue6Months($currentStoreId),
-            'analytics' => AnalyticsHelper::getQuickAnalyticsThisMonth($currentStoreId),
-        ]);
+        ]));
     }
 
     public function referrals()
     {
-        $currentStoreId = auth()->user()->current_store_id;
-
-        if (!$currentStoreId) {
-            return response()->redirect('/store/new', 303);
-        }
-
-        $currentStore = $currentStoreId ? Store::find($currentStoreId) : [];
-
-        if (!$currentStore) {
-            return response()->redirect('/store/new', 303);
-        }
+        $currentStore = StoreHelper::find();
 
         $referrals = User::find(auth()->id())
             ->referrals()
@@ -81,18 +50,21 @@ class DashboardController extends Controller
 
     public function gettingStarted()
     {
-        $currentStoreId = auth()->user()->current_store_id;
-
-        if (!$currentStoreId) {
-            return response()->redirect('/store/new', 303);
-        }
-
-        $currentStore = $currentStoreId ? Store::find($currentStoreId) : [];
+        $currentStore = StoreHelper::find();
 
         response()->inertia('getting-started', [
             'currentStore' => $currentStore,
             'wallets' => $currentStore->wallets()->get(),
             'products' => $currentStore->products()->get()
+        ]);
+    }
+
+    public function brand()
+    {
+        $currentStore = StoreHelper::find();
+
+        response()->inertia('brand-assets', [
+            'currentStore' => $currentStore,
         ]);
     }
 }

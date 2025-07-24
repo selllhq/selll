@@ -6,6 +6,7 @@ use App\Helpers\SMSHelper;
 use App\Helpers\StoreHelper;
 use App\Mailers\UserMailer;
 use App\Models\Cart;
+use App\Services\OrdersService;
 
 class OrdersController extends Controller
 {
@@ -16,46 +17,23 @@ class OrdersController extends Controller
         response()->inertia('products/orders', [
             'currentStore' => $currentStore,
             // 'products' => $currentStore->products()->get(),
-            'orders' => $currentStore->carts()->with('customer')->latest()->get(),
+            'orders' => make(OrdersService::class)->getOrders($currentStore),
         ]);
     }
 
     public function show($id)
     {
-        $items = [];
         $currentStore = StoreHelper::find();
-        $order = Cart::with(['customer', 'items.product', 'shippingUpdates'])->find($id);
+        $data = make(OrdersService::class)->getOrderById($id, $currentStore);
 
-        if (!$order || $order->store_id !== $currentStore->id) {
+        if (!$data) {
             return response()->redirect('/orders');
         }
 
-        if ($order->status === 'pending') {
-            $items = json_decode(Cart::find($id, [
-                'items'
-            ])['items'] ?? '[]', true);
-
-            $items = collect($items)->map(function ($item) use ($currentStore) {
-                $product = $currentStore->products()->find($item['id']);
-
-                if (!$product) {
-                    return null;
-                }
-
-                return [
-                    'id' => $item['id'],
-                    'product' => $product,
-                    'quantity' => $item['quantity'],
-                    'amount' => $item['amount'] / 100,
-                    'currency' => $item['currency'] ?? 'GHS',
-                ];
-            })->filter();
-        }
-
         response()->inertia('products/order', [
-            'order' => $order,
+            'order' => $data['order'],
+            'items' => $data['items'],
             'currentStore' => $currentStore,
-            'items' => $items,
         ]);
     }
 
@@ -68,37 +46,7 @@ class OrdersController extends Controller
             return response()->redirect('/orders');
         }
 
-        $message = request()->get('message') ?? '';
-        $expectedDeliveryDate = request()->get('expected_delivery_date');
-
-        $order->shippingUpdates()->create([
-            'store_id' => $currentStore->id,
-            'customer_id' => $order->customer->id,
-            'message' => $message,
-            'estimated_delivery_date' => tick($expectedDeliveryDate)->format('Y-MM-DD H:i:s'),
-        ]);
-
-        $expectedDeliveryDate = tick($expectedDeliveryDate)->format('dd, DD MMMM YYYY');
-
-        if ($order->customer->email) {
-            UserMailer::shippingUpdate(
-                $order,
-                $currentStore,
-                $message,
-                $expectedDeliveryDate
-            )
-                ->send();
-        } else {
-            $message = $message ? ": $message" : '';
-
-            SMSHelper::write([
-                'recipient' => $order->customer->phone,
-                'senderId' => 'Selll Order',
-                'message' => "Update on your order #{$order->id} from {$currentStore->name} {$message}. Expected delivery date is {$expectedDeliveryDate}. Visit {$order->store_url}/orders/{$order->id} for more details.",
-            ])
-                ->withArkesel()
-                ->send();
-        }
+        make(OrdersService::class)->sendShippingUpdate($order, $currentStore);
 
         return response()->redirect("/orders/$id");
     }
@@ -126,16 +74,7 @@ class OrdersController extends Controller
             return response()->redirect('/orders');
         }
 
-        SMSHelper::write([
-            'recipient' => $order->customer->phone,
-            'senderId' => 'Selll Order',
-            'message' => "Woohoo! Your order from {$currentStore->name} has been completed. Thank you for shopping with us!",
-        ])
-            ->withArkesel()
-            ->send();
-
-        $order->status = 'completed';
-        $order->save();
+        make(OrdersService::class)->completeOrder($order, $currentStore);
 
         return response()->redirect("/orders/$id");
     }

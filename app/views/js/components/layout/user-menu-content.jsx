@@ -1,3 +1,13 @@
+import { Link } from "@inertiajs/react";
+import {
+    ArrowDownCircle,
+    CreditCard,
+    Image,
+    LinkIcon,
+    LogOut,
+    PenBox,
+} from "lucide-react";
+import { getInitials } from "@/utils";
 import {
     DropdownMenuGroup,
     DropdownMenuItem,
@@ -10,9 +20,6 @@ import {
     AvatarFallback,
     AvatarImage,
 } from "@/components/shared/avatar";
-import { Link } from "@inertiajs/react";
-import { ArrowDownCircle, CreditCard, LinkIcon, LogOut, PenBox, Settings } from "lucide-react";
-import { getInitials } from "@/utils";
 
 export function UserMenuContent({ user, showEmail = false }) {
     const cleanup = useMobileNavigation();
@@ -42,16 +49,16 @@ export function UserMenuContent({ user, showEmail = false }) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
                 <DropdownMenuItem asChild>
-                    <a
+                    <Link
                         className="block w-full"
-                        href="https://selll.canny.io/feature-requests"
+                        href="/dashboard/brand"
                         as="button"
-                        target="_blank"
+                        prefetch
                         onClick={cleanup}
                     >
-                        <PenBox className="mr-2" />
-                        Leave Feedback
-                    </a>
+                        <Image className="mr-2" />
+                        Your brand assets
+                    </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                     <Link
@@ -88,6 +95,18 @@ export function UserMenuContent({ user, showEmail = false }) {
                         <ArrowDownCircle className="mr-2" />
                         Your Payouts
                     </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                    <a
+                        className="block w-full"
+                        href="https://selll.canny.io/feature-requests"
+                        as="button"
+                        target="_blank"
+                        onClick={cleanup}
+                    >
+                        <PenBox className="mr-2" />
+                        Leave Feedback
+                    </a>
                 </DropdownMenuItem>
                 {/* <DropdownMenuItem asChild>
                     <Link

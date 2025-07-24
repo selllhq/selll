@@ -175,7 +175,7 @@ function TipsSection() {
                             clear call-to-action like:
                             <br />
                             “Tap the link to shop all our products directly on
-                            WhatsApp.”
+                            our website.”
                         </p>
                     </div>
                 </div>

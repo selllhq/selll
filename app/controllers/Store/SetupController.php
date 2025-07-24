@@ -6,6 +6,7 @@ use App\Helpers\StoreHelper;
 use App\Mailers\StoreMailer;
 use App\Models\Store;
 use App\Models\User;
+use App\Services\SettingsService;
 
 class SetupController extends Controller
 {
@@ -151,26 +152,15 @@ class SetupController extends Controller
 
     public function domain()
     {
-        $currentStore = StoreHelper::find();
+        $data = make(SettingsService::class)->updateUrl(
+            StoreHelper::find()
+        );
 
-        $data = request()->validate([
-            'slug' => 'string|min:1',
-        ]);
-
-        if (!$data) {
+        if (!$data['success']) {
             return response()
-                ->withFlash('errors', request()->errors())
+                ->withFlash('errors', $data['errors'])
                 ->redirect('/store/domain', 303);
         }
-
-        if (Store::where('slug', $data['slug'])->exists()) {
-            return response()
-                ->withFlash('errors', ['slug' => "{$data['slug']}.selll.store is already taken, please choose another one"])
-                ->redirect('/store/domain', 303);
-        }
-
-        $currentStore->slug = $data['slug'];
-        $currentStore->save();
 
         return response()->redirect('/store/domain', 303);
     }

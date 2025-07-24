@@ -2,6 +2,8 @@
 
 namespace App\Controllers\Auth;
 
+use App\Services\LoginService;
+
 class LoginController extends Controller
 {
     public function show()
@@ -15,22 +17,10 @@ class LoginController extends Controller
 
     public function store()
     {
-        $data = request()->validate([
-            'email' => 'email',
-            'password' => 'min:8',
-        ]);
+        $response = make(LoginService::class)->login();
 
-        if (!$data) {
-            response()
-                ->withFlash('form', request()->body())
-                ->withFlash('error', request()->errors())
-                ->redirect('/auth/login', 303);
-        }
-
-        $success = auth()->login($data);
-
-        if (!$success) {
-            response()
+        if (!$response) {
+            return response()
                 ->withFlash('form', request()->body())
                 ->withFlash('error', request()->errors())
                 ->redirect('/auth/login', 303);
