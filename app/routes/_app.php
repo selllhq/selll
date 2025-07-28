@@ -7,4 +7,5 @@ app()->inertia('/faqs', 'faqs');
 app()->inertia('/privacy', 'privacy');
 app()->inertia('/terms', 'terms');
 app()->inertia('/contact', 'contact');
+app()->inertia('/about', 'about');
 app()->get('/__internal__', 'InternalController@index');

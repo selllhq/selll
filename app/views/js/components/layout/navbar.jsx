@@ -1,3 +1,4 @@
+import { Menu } from "lucide-react";
 import { Link } from "@inertiajs/react";
 import {
     NavigationMenu,
@@ -15,14 +16,11 @@ import {
     SheetHeader,
     SheetTitle,
 } from "./sheet";
-import { Book, Menu, Sunset, Trees, Zap } from "lucide-react";
 
 const Navbar = ({
     logo = {
         url: "/",
-        src: "https://zero.leafphp.dev/assets/img/logo.png",
         alt: "logo",
-        title: "Selll",
     },
     menu = [
         // {
@@ -57,8 +55,8 @@ const Navbar = ({
         //     ],
         // },
         {
-            title: "Selll for Social Media",
-            url: "/social",
+            title: "Features",
+            url: "/#features",
         },
         {
             title: "Pricing",
@@ -82,14 +80,15 @@ const Navbar = ({
                             className="flex items-center gap-2"
                         >
                             <img
-                                src={logo.src}
-                                className="size-5"
+                                src="/assets/img/logo/text.png"
+                                className="dark:hidden w-16"
                                 alt={logo.alt}
                             />
-                            <span className="text-lg font-semibold">
-                                {logo.title}
-                            </span>
-                            <small className="italic">by Leaf PHP</small>
+                            <img
+                                src="/assets/img/logo/text-white-alt.png"
+                                className="hidden dark:block w-16"
+                                alt={logo.alt}
+                            />
                         </Link>
                         <div className="flex items-center">
                             <NavigationMenu>
@@ -132,16 +131,15 @@ const Navbar = ({
                     <div className="flex items-center justify-between">
                         <a href={logo.url} className="flex items-center gap-1">
                             <img
-                                src={logo.src}
-                                className="w-3"
+                                src="/assets/img/logo/text.png"
+                                className="dark:hidden w-16"
                                 alt={logo.alt}
                             />
-                            <span className="text-lg font-semibold">
-                                {logo.title}
-                                <small className="italic ml-1">
-                                    by Leaf PHP
-                                </small>
-                            </span>
+                            <img
+                                src="/assets/img/logo/text-white-alt.png"
+                                className="hidden dark:block w-16"
+                                alt={logo.alt}
+                            />
                         </a>
                         <Sheet>
                             <SheetTrigger asChild>
@@ -157,13 +155,15 @@ const Navbar = ({
                                             className="flex items-center gap-2"
                                         >
                                             <img
-                                                src={logo.src}
-                                                className="w-8"
+                                                src="/assets/img/logo/text.png"
+                                                className="dark:hidden w-16"
                                                 alt={logo.alt}
                                             />
-                                            <span className="text-lg font-semibold">
-                                                {logo.title}
-                                            </span>
+                                            <img
+                                                src="/assets/img/logo/text-white-alt.png"
+                                                className="hidden dark:block w-16"
+                                                alt={logo.alt}
+                                            />
                                         </a>
                                     </SheetTitle>
                                 </SheetHeader>

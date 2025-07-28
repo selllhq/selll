@@ -3,6 +3,8 @@ import { Head, Link } from "@inertiajs/react";
 import Navbar from "@/components/layout/navbar";
 import Button from "@/components/form/button";
 import SignUpMiniForm from "@/components/layout/sign-up-mini-form";
+import { Card } from "@/components/shared/card";
+import Footer from "@/components/layout/footer";
 
 const Lander = ({ auth, activeStores = 0 }) => {
     return (
@@ -17,79 +19,38 @@ const Lander = ({ auth, activeStores = 0 }) => {
 
             <Navbar auth={auth} />
 
-            <section className="relative pt-60 bg-[url(/assets/img/bg-vector.svg)] bg-cover bg-[20px_-1000px] bg-rota bg-no-repeat">
-                <div className="max-w-screen-xl mx-auto px-2 sm:px-4 text-center">
-                    <h1 className="text-4xl md:text-7xl tracking-[-1.44px] font-bold max-w-[766px] mx-auto mt-[14px] mb-6">
-                        Skip the Setup, Start Sellling{" "}
+            <section className="container mx-auto grid md:grid-cols-2 pt-60">
+                <div className="max-w-xl">
+                    <h1 className="text-4xl md:text-[78px] tracking-[-1.44px] font-bold max-w-[766px] mt-[14px] mb-6">
+                        Create your own online store in just{" "}
                         <span className="bg-[linear-gradient(315deg,var(--color-primary-orange)_25%,var(--color-primary-red))] bg-clip-text [-webkit-text-fill-color:transparent] inline-block italic pr-2">
-                            for free
+                            2 minutes
                         </span>
                     </h1>
 
-                    <p className="max-w-[667px] mx-auto md:text-xl text-gray-500 dark:text-gray-300">
-                        No setup stress. No payment accounts to figure out. No
-                        tech stuff to worry about. Just create your store, add
-                        your products, and share your link with the world
-                        to start selling online.
+                    <p className="max-w-5/6 font-light md:text-xl text-gray-500 dark:text-gray-300">
+                        Manage your orders, payments, and customers — all in one
+                        place, whether you sell through DMs or at the market.
+                        Selll handles the logistics, so you can focus on making
+                        your customers happy.
                     </p>
 
-                    <SignUpMiniForm auth={auth} />
-
-                    <ul className="hidden md:flex w-fit mx-auto gap-12 mb-[100px]">
-                        <li>
-                            <p className="flex items-center gap-[10px] text-sm font-medium">
-                                <CheckCircle className="text-primary-orange" />
-                                <span>No credit card required</span>
-                            </p>
-                        </li>
-                        {/* <li>
-                            <p className="flex items-center gap-[10px] text-sm font-medium">
-                                <CheckCircle className="text-primary-orange" />
-                                <span>No hidden Fees</span>
-                            </p>
-                        </li> */}
-                        <li>
-                            <p className="flex items-center gap-[10px] text-sm font-medium">
-                                <CheckCircle className="text-primary-orange" />
-                                <span>Free website</span>
-                            </p>
-                        </li>
-                        <li>
-                            <p className="flex items-center gap-[10px] text-sm font-medium">
-                                <CheckCircle className="text-primary-orange" />
-                                <span>Free analytics</span>
-                            </p>
-                        </li>
-                    </ul>
-
-                    <div className="relative">
-                        <div className="relative rounded-2xl shadow-lg p-2 h-full border flex flex-col overflow-hidden lg:order-last bg-default w-full max-w-6xl mx-auto">
-                            <div className="w-full px-2 pt-1 pb-3 relative flex items-center gap-1.5 lg:gap-2">
-                                <div className="w-2 h-2 bg-border rounded-full"></div>
-                                <div className="w-2 h-2 bg-border rounded-full"></div>
-                                <div className="w-2 h-2 bg-border rounded-full"></div>
-                            </div>
-                            <div className="h-full w-full aspect-video border overflow-hidden rounded-lg">
-                                <div className="relative w-full max-w-full h-full opacity-100">
-                                    <div className="relative h-full w-full">
-                                        <img
-                                            width="1885"
-                                            alt="image"
-                                            className="w-full h-full hidden dark:block"
-                                            src="/assets/img/screenshots/dash-dark.jpg"
-                                        />
-                                        <img
-                                            width="1883"
-                                            alt="image"
-                                            className="w-full h-full block dark:hidden"
-                                            src="/assets/img/screenshots/dash-light.jpg"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="h-36 md:h-96 absolute -bottom-10 w-full left-0 bg-gradient-to-br from-transparent to-background blur-2xl bg-cover"></div>
-                    </div>
+                    {/* <SignUpMiniForm auth={auth} /> */}
+                    <Button
+                        as={Link}
+                        href="/auth/register"
+                        className="p-6 my-10 font-medium rounded-full active:scale-95 transition-all duration-150 ease-in-out border-none bg-primary-red hover:bg-primary-red/80 text-white flex-shrink-0"
+                    >
+                        Create your store
+                    </Button>
+                </div>
+                <div className="relative">
+                    <img
+                        alt="image"
+                        className="w-full h-full -mt-18"
+                        src="/assets/img/random/nav.png"
+                    />
+                    <div className="h-36 md:h-96 absolute -bottom-10 w-full left-0 bg-gradient-to-br from-transparent to-background blur-2xl bg-cover"></div>
                 </div>
             </section>
 
@@ -149,196 +110,341 @@ const Lander = ({ auth, activeStores = 0 }) => {
             </section> */}
 
             <section
-                id="features"
-                className="relative bg-black text-white py-24 mt-32 overflow-hidden"
+                id="skip-dm"
+                className="relative py-24 mt-32 overflow-hidden bg-[url('/assets/img/grid-bg.png')] bg-contain bg-center bg-no-repeat"
             >
                 <div className="pointer-events-none absolute -top-32 -left-32 w-[600px] h-[600px] bg-gradient-to-br from-primary-orange/20 to-primary-red/20 rounded-full blur-[120px] opacity-40 animate-float-rotate-slow"></div>
                 <div className="pointer-events-none absolute bottom-0 right-0 w-[400px] h-[400px] bg-gradient-to-tr from-primary-red/20 to-primary-orange/10 rounded-full blur-[100px] opacity-30 animate-float-rotate-slow-reverse"></div>
 
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r text-white">
-                            Instant Storefronts, No Coding Needed
+                    <div className="text-center max-w-2xl mx-auto mb-16">
+                        <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r dark:text-white">
+                            Tired of answering “how much?” all day?
                         </h2>
-                        <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-                            Add your products, start accepting payments, track
-                            your sales, and more—without the usual headaches.
+                        <p className="text-lg md:text-xl font-light dark:text-gray-300">
+                            We get it — it’s annoying. The same question on
+                            repeat, you get stuck copying prices, answering DMs,
+                            and trying to keep up when you could just be
+                            selling. With your own online store, customers can
+                            browse all your products and check out all by
+                            themselves.
+                        </p>
+
+                        <Button
+                            as={Link}
+                            href="/auth/register"
+                            className="p-6 my-10 rounded-full active:scale-95 transition-all duration-150 ease-in-out border-none bg-primary-red hover:bg-primary-red/80 text-white text-base font-normal flex-shrink-0"
+                        >
+                            Skip the DMs, start selling
+                        </Button>
+
+                        <img
+                            src="/assets/img/random/dms.jpg"
+                            alt="Selll store"
+                            className="w-full rounded-3xl mt-14 shadow-inner group-hover:scale-[1.02] transition-transform duration-700"
+                        />
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div className="container mx-auto px-4 py-16">
+                    <p className="text-lg md:text-5xl font-light dark:text-gray-300 mb-8">
+                        Selll isn’t just where your store lives — it’s how you{" "}
+                        <span className="text-primary-orange">
+                            run your business
+                        </span>{" "}
+                        From the moment you list a product to the second it
+                        reaches your customer’s hands, we’re right there with
+                        you.
+                    </p>
+                </div>
+            </section>
+
+            <section id="features">
+                <div className="container mx-auto px-4 py-16">
+                    <div className="mb-16">
+                        <h3 className="text-lg md:text-3xl mb-2">
+                            Everything You Need to Sell Smarter
+                        </h3>
+                        <p className="text-sm md:text-lg max-w-4xl font-light">
+                            At Selll, we actually care about your business —
+                            whether you’re just starting out or already growing
+                            fast, we’ve got your back with tools that make
+                            selling easier every step of the way.
                         </p>
                     </div>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <Card className="bg-gray-700 !text-white rounded-3xl p-10">
+                            <h4 className="text-xl md:text-3xl mb-2">
+                                Know Your People
+                            </h4>
+                            <p>
+                                See who's buying, what they love, and keep all
+                                your customer information in one place
+                            </p>
+                            <div className="h-48"></div>
+                        </Card>
+                        <Card className="!bg-primary-orange !text-black rounded-3xl p-10 lg:col-span-2">
+                            <h4 className="text-xl md:text-3xl mb-2">
+                                Inventory That Manages Itself
+                            </h4>
+                            <p className="lg:max-w-lg">
+                                Selll automatically updates your inventory on
+                                every order, and quickly alerts you when
+                                something is almost out of stock
+                            </p>
+                            <div className="h-48"></div>
+                        </Card>
+                        <Card className="!bg-indigo-950 !text-white rounded-3xl p-10">
+                            <h4 className="text-xl md:text-3xl mb-2">
+                                Checkout, Anywhere
+                            </h4>
+                            <p>
+                                Online or in person — your customers can pay you
+                                with a simple link
+                            </p>
+                            <div className="h-48"></div>
+                        </Card>
+                        <Card className="bg-black dark:bg-white text-white dark:text-black rounded-3xl p-10">
+                            <h4 className="text-xl md:text-3xl mb-2">
+                                Your Store, by the Numbers
+                            </h4>
+                            <p>
+                                See what’s selling, what’s trending, and how
+                                your store is performing over time
+                            </p>
+                            <div className="h-48"></div>
+                        </Card>
+                        <Card className="!bg-[#DA5811] !text-white rounded-3xl p-10">
+                            <h4 className="text-xl md:text-3xl mb-2">
+                                Stay in the Know, Always
+                            </h4>
+                            <p>
+                                Never miss an order, customer update, or
+                                delivery — we’ll keep you posted, wherever you
+                                are.
+                            </p>
+                            <div className="h-48"></div>
+                        </Card>
+                    </div>
+                </div>
+            </section>
 
-                    <div className="max-w-7xl mx-auto mb-16 relative">
-                        <div className="relative w-full group">
-                            <div className="absolute -inset-4 bg-gradient-to-br from-white/5 to-primary-orange/10 rounded-3xl blur-2xl opacity-60 group-hover:opacity-80 transition-all duration-700"></div>
+            <section>
+                <div className="container mx-auto px-4 py-16">
+                    <h3 className="text-lg md:text-6xl mb-16">
+                        Real businesses <br /> crushing it with Selll
+                    </h3>
 
-                            <div className="relative rounded-2xl shadow-lg p-2 h-full border flex flex-col overflow-hidden lg:order-last bg-default w-full mx-auto">
-                                <div className="w-full px-2 pt-1 pb-3 relative flex items-center gap-1.5 lg:gap-2">
-                                    <div className="w-2 h-2 bg-border rounded-full"></div>
-                                    <div className="w-2 h-2 bg-border rounded-full"></div>
-                                    <div className="w-2 h-2 bg-border rounded-full"></div>
-                                    <div className="text-gray-100/45 ml-[20%] sm:ml-[32%] md:ml-[36%] lg:ml-[40%]">
-                                        place.selll.store
-                                    </div>
-                                </div>
-                                <div className="h-full w-full aspect-video border overflow-hidden rounded-lg">
-                                    <div className="relative w-full max-w-full h-full opacity-100">
-                                        <div className="relative h-full w-full">
-                                            {/* <img
-                                                width="1885"
-                                                alt="image"
-                                                className="w-full h-full hidden dark:block"
-                                                src="/assets/img/screenshots/dash-dark.jpg"
-                                            />
-                                            <img
-                                                width="1883"
-                                                alt="image"
-                                                className="w-full h-full block dark:hidden"
-                                                src="/assets/img/screenshots/dash-light.jpg"
-                                            /> */}
-                                            <img
-                                                src="/assets/img/screenshots/store.jpg"
-                                                alt="Selll store"
-                                                className="w-full rounded-b-3xl shadow-inner group-hover:scale-[1.02] transition-transform duration-700"
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="absolute -right-12 top-1/4 bg-[#2C2C2C] border border-gray-800 px-5 py-4 rounded-2xl hidden lg:flex items-center gap-3 shadow-xl backdrop-blur-xl hover:border-primary-orange/40 transition-all duration-300">
-                                <div className="w-10 h-10 rounded-full bg-primary-orange/20 flex items-center justify-center animate-pulse-slow">
-                                    <svg width="20" height="20" fill="none">
-                                        <circle
-                                            cx="10"
-                                            cy="10"
-                                            r="8"
-                                            stroke="#FFAA49"
-                                            strokeWidth="3"
-                                        />
-                                    </svg>
-                                </div>
-                                <div>
-                                    <p className="text-xs text-gray-400">
-                                        Unlimited selling
-                                    </p>
-                                    <p className="text-sm font-medium text-white">
-                                        Sell with no restrictions
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className="absolute -left-12 bottom-1/4 bg-[#2C2C2C] border border-gray-800 px-5 py-4 rounded-2xl hidden lg:flex items-center gap-3 shadow-xl backdrop-blur-xl hover:border-primary-red/40 transition-all duration-300">
-                                <div className="w-10 h-10 rounded-full bg-primary-red/20 flex items-center justify-center animate-pulse-slow">
-                                    <svg width="20" height="20" fill="none">
-                                        <path
-                                            d="M10 2v8l6 4"
-                                            stroke="#EC504B"
-                                            strokeWidth="2.5"
-                                            strokeLinecap="round"
-                                        />
-                                    </svg>
-                                </div>
-                                <div>
-                                    <p className="text-xs text-gray-400">
-                                        Lightning Fast
-                                    </p>
-                                    <p className="text-sm font-medium text-white">
-                                        Setup your store in 2 mins
-                                    </p>
-                                </div>
-                            </div>
+                    <div className="grid md:grid-cols-2 items-center gap-20">
+                        <img
+                            src="/assets/img/testimonials/1.jpg"
+                            className="rounded-3xl"
+                            alt=""
+                        />
+                        <div>
+                            <img
+                                src="https://leafphp.dev/logo-circle.png"
+                                className="w-14 mb-6"
+                                alt=""
+                            />
+                            <h4 className="text-2xl md:text-5xl font-light mb-4">
+                                “I was able to create my store and receive my
+                                first order in just 5 minutes. Finally, a
+                                platform that actually gets small businesses.”
+                            </h4>
+                            <p>Kwesi Wolff @ FunGuy</p>
+                            <Button
+                                as="a"
+                                variant="link"
+                                href="https://funguy.selll.store"
+                                className="p-0 my-10 underline font-medium active:scale-95 transition-all duration-150 ease-in-out flex-shrink-0"
+                            >
+                                Order from FunGuy
+                            </Button>
                         </div>
                     </div>
 
-                    <div className="max-w-7xl mx-auto">
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                            <div className="bg-[#141414] border border-gray-900 rounded-xl p-6 shadow-lg flex flex-col gap-3 hover:border-primary-orange/40 hover:scale-[1.02] transition-all duration-300">
-                                <div className="w-12 h-12 rounded-xl bg-primary-orange/20 flex items-center justify-center mb-2 animate-pulse-slow">
-                                    <svg width="28" height="28" fill="none">
-                                        <rect
-                                            x="6"
-                                            y="6"
-                                            width="16"
-                                            height="16"
-                                            rx="4"
-                                            stroke="#FFAA49"
-                                            strokeWidth="2.5"
-                                        />
-                                    </svg>
-                                </div>
-                                <h3 className="text-xl font-medium text-white">
-                                    Your Store, <br /> Your Domain
-                                </h3>
-                                <p className="text-gray-300">
-                                    Get a free <b>.selll.store</b> domain and a
-                                    beautiful dashboard to manage your store.
-                                    Add products, request payouts and more.
+                    <div className="my-36">
+                        <div className="grid grid-cols-3 mb-28">
+                            <div className="text-center">
+                                <h5 className="text-8xl">75</h5>
+                                <p className="text-2xl font-light">
+                                    Stores Created
                                 </p>
                             </div>
-
-                            <div className="bg-[#141414] border border-gray-900 rounded-xl p-6 shadow-lg flex flex-col gap-3 hover:border-primary-red/40 hover:scale-[1.02] transition-all duration-300">
-                                <div className="w-12 h-12 rounded-xl bg-primary-red/20 flex items-center justify-center mb-2 animate-pulse-slow">
-                                    <svg width="28" height="28" fill="none">
-                                        <path
-                                            d="M8 14h12M14 8v12"
-                                            stroke="#EC504B"
-                                            strokeWidth="2.5"
-                                            strokeLinecap="round"
-                                        />
-                                    </svg>
-                                </div>
-                                <h3 className="text-xl font-medium text-white">
-                                    Track Sales <br /> with Analytics
-                                </h3>
-                                <p className="text-gray-300">
-                                    Get insights into your sales, track your
-                                    performance, and make data-driven decisions
-                                    to grow your business.
+                            <div className="text-center">
+                                <h5 className="text-8xl">106</h5>
+                                <p className="text-2xl font-light">
+                                    Orders processed
                                 </p>
                             </div>
-
-                            <div className="bg-[#141414] border border-gray-900 rounded-xl p-6 shadow-lg flex flex-col gap-3 hover:border-primary-orange/40 hover:scale-[1.02] transition-all duration-300">
-                                <div className="w-12 h-12 rounded-xl bg-primary-orange/20 flex items-center justify-center mb-2 animate-pulse-slow">
-                                    <svg width="28" height="28" fill="none">
-                                        <path
-                                            d="M6 18v-2a4 4 0 014-4h8a4 4 0 014 4v2"
-                                            stroke="#FFAA49"
-                                            strokeWidth="2.5"
-                                            strokeLinecap="round"
-                                        />
-                                        <circle
-                                            cx="14"
-                                            cy="10"
-                                            r="4"
-                                            stroke="#FFAA49"
-                                            strokeWidth="2.5"
-                                        />
-                                    </svg>
-                                </div>
-                                <h3 className="text-xl font-medium text-white">
-                                    Manage Inventory <br /> right on your store
-                                </h3>
-                                <p className="text-gray-300">
-                                    You can easily add, edit, and manage your
-                                    products, track stock levels, and ensure
-                                    your store is always up-to-date.
+                            <div className="text-center">
+                                <h5 className="text-8xl">2 mins</h5>
+                                <p className="text-2xl font-light">
+                                    Avg Setup Time
                                 </p>
                             </div>
                         </div>
 
-                        <div className="flex justify-center mb-8">
+                        <div className="text-center">
+                            <h4 className="text-5xl">
+                                Join our happy{" "}
+                                <span className="bg-[linear-gradient(315deg,var(--color-primary-orange)_25%,var(--color-primary-red))] bg-clip-text [-webkit-text-fill-color:transparent]">
+                                    Selllers
+                                </span>
+                            </h4>
+                            <p className="text-lg md:text-xl font-light mt-4 max-w-2xl mx-auto">
+                                We’re not just here to help you sell — we’re
+                                here to cheer you on, fix the tech headaches,
+                                and help your brand shine every step of the way.
+                            </p>
                             <Button
                                 as={Link}
                                 href="/auth/register"
-                                className="bg-primary-orange/90 hover:bg-primary-orange text-white p-6 rounded-md"
+                                className="p-6 my-10 font-medium rounded-full active:scale-95 transition-all duration-150 ease-in-out border-none bg-primary-red hover:bg-primary-red/80 text-white flex-shrink-0"
                             >
-                                Create Your Store
+                                Start Selling Now
                             </Button>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section
+            <section className="bg-black text-white rounded-t-3xl">
+                <div className="container mx-auto px-4 py-16">
+                    <div>
+                        <h3 className="text-2xl md:text-5xl">
+                            What’s the catch?
+                        </h3>
+                        <p className="md:text-2xl font-light mt-4 max-w-2xl text-[#b7b7b7]">
+                            We only win when you do. That’s why we keep things
+                            simple, fair, and transparent — so you can focus on
+                            growing your business while we handle the rest.
+                        </p>
+                    </div>
+                    <div className="grid md:grid-cols-2 md:items-center mt-10 gap-20">
+                        <img
+                            src="/assets/img/random/catch.jpg"
+                            className="rounded-3xl"
+                            alt=""
+                        />
+                        <div className="grid gap-8">
+                            {[
+                                {
+                                    title: "Automatic payouts",
+                                    description:
+                                        "Get paid fast. Payments are sent straight to your bank or mobile money, usually the next business day.",
+                                },
+                                {
+                                    title: "3.95% transaction fee",
+                                    description:
+                                        "No setup fees, no hidden costs. If you sell something for GHS 100, you keep GHS 96.05 — that’s it.",
+                                },
+                                {
+                                    title: "Unlimited Orders",
+                                    description:
+                                        "Add as many products and categories as you need — no hidden limits, no “pro” upgrade needed.",
+                                },
+                            ].map((i) => (
+                                <div className="grid grid-cols-[35px_1fr]">
+                                    <svg
+                                        width="35"
+                                        height="35"
+                                        viewBox="0 0 35 35"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            opacity="0.3"
+                                            d="M29.1666 17.5002C29.1666 20.5944 27.9374 23.5618 25.7495 25.7497C23.5616 27.9377 20.5941 29.1668 17.4999 29.1668C14.4057 29.1668 11.4383 27.9377 9.25034 25.7497C7.06242 23.5618 5.83325 20.5944 5.83325 17.5002C5.83325 14.406 7.06242 11.4385 9.25034 9.25058C11.4383 7.06266 14.4057 5.8335 17.4999 5.8335C20.5941 5.8335 23.5616 7.06266 25.7495 9.25058C27.9374 11.4385 29.1666 14.406 29.1666 17.5002Z"
+                                            stroke="#FDFDFD"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                        <path
+                                            d="M13.2446 17.4998L16.5186 20.7737L22.4715 14.8208"
+                                            stroke="#FDFDFD"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+
+                                    <div>
+                                        <h4 className="text-3xl">{i.title}</h4>
+                                        <p className="text-lg font-light mt-2 text-[#b7b7b7]">
+                                            {i.description}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className="bg-black text-white pt-16">
+                <div className="container mx-auto px-4 pt-24 pb-16">
+                    <div className="text-center mb-16">
+                        <small className="text-xs md:text-sm">
+                            Grow with Selll
+                        </small>
+                        <h3 className="text-2xl md:text-5xl mt-2">
+                            Lets help you reach more customers
+                        </h3>
+                        <p className="md:text-2xl font-light mt-4 max-w-2xl mx-auto text-[#b7b7b7]">
+                            We don’t just give you a storefront — we help you
+                            get discovered, build trust, and turn visitors into
+                            loyal customers.
+                        </p>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-8 mb-8">
+                        {[
+                            {
+                                title: "Shareable Storefront Links",
+                                description:
+                                    "Selll gives you a simple link you can post anywhere — WhatsApp, Instagram, TikTok, or even on flyers. No complicated setup, just copy and share.",
+                            },
+                            {
+                                title: "Smart Checkout Links",
+                                description:
+                                    "Turn conversations into conversions. Create checkout links for specific products or carts and send them directly to customers — online or in-person.",
+                            },
+                            {
+                                title: "Visibility Boosts",
+                                description:
+                                    "From product views to sales insights, Selll shows you what’s working — so you can double down and sell more, while we help more people find your store.",
+                            },
+                        ].map((i) => (
+                            <Card className="!bg-[#222] !text-white rounded-3xl p-8">
+                                <h4 className="text-xl md:text-2xl mb-1">
+                                    {i.title}
+                                </h4>
+                                <p className="font-light">{i.description}</p>
+                            </Card>
+                        ))}
+                    </div>
+
+                    <Card className="!bg-primary-red !text-white rounded-3xl p-8 md:p-20 flex flex-col items-center justify-center">
+                        <h3 className="text-2xl md:text-6xl max-w-lg text-center">
+                            Get started for free in just 2 minutes
+                        </h3>
+                        <Button
+                            as={Link}
+                            href="/auth/register"
+                            className="p-6 mt-6 font-medium rounded-full active:scale-95 transition-all duration-150 ease-in-out border-none bg-white hover:bg-white/90 text-primary-red flex-shrink-0 cursor-pointer"
+                        >
+                            Create your store
+                        </Button>
+                    </Card>
+                </div>
+            </section>
+
+            {/* <section
                 id="video-demo"
                 className="relative py-32 bg-gradient-to-b from-[#141414] to-primary-red/90"
             >
@@ -445,14 +551,14 @@ const Lander = ({ auth, activeStores = 0 }) => {
                             </div>
                             <p className="text-gray-100">Active Stores</p>
                         </div>
-                        {/* <div className="text-center">
+                        <div className="text-center">
                             <div className="text-3xl sm:text-4xl font-bold text-white mb-2">
                                 5+
                             </div>
                             <p className="text-gray-100">
                                 Supported Currencies
                             </p>
-                        </div> */}
+                        </div>
                         <div className="text-center">
                             <div className="text-3xl sm:text-4xl font-bold text-white mb-2">
                                 2 mins
@@ -461,7 +567,7 @@ const Lander = ({ auth, activeStores = 0 }) => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
 
             {/* Commented out redundant sections that have been merged into the video-demo section above */}
             {/*
@@ -548,7 +654,7 @@ const Lander = ({ auth, activeStores = 0 }) => {
             </section>
             */}
 
-            <footer className="bg-[size:1540px] bg-left-top bg-no-repeat px-6 text-default">
+            {/* <footer className="bg-[size:1540px] bg-left-top bg-no-repeat px-6 text-default">
                 <div className="relative mx-auto w-full max-w-xl lg:container">
                     <div className="pb-10 pt-32">
                         <div className="grid grid-cols-1 gap-x-12 gap-y-20 lg:grid-cols-2 lg:gap-y-36">
@@ -598,7 +704,9 @@ const Lander = ({ auth, activeStores = 0 }) => {
                         </div>
                     </div>
                 </div>
-            </footer>
+            </footer> */}
+
+            <Footer />
         </div>
     );
 };

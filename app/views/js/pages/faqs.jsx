@@ -47,7 +47,7 @@ const Faqs = ({ auth }) => {
             {
                 id: "how-much-does-it-cost",
                 question: "How much does Selll cost?",
-                answer: "You can start selling online for free with Selll's Starter plan, you don't have to pay anything until you're ready to scale.",
+                answer: "We charge 3.95% per transaction on all sales made through your store. There are no monthly fees or hidden costs, so you only pay when you make sales. This makes it easy to start selling without any upfront investment.",
             },
             {
                 id: "technical-knowledge",
@@ -102,7 +102,7 @@ const Faqs = ({ auth }) => {
             {
                 id: "transaction-fees",
                 question: "What are the transaction fees?",
-                answer: "Selll charges a small transaction fee of 2% per transaction. In addition, the payment processor fees which vary by provider, but range from 1.9% to 3%. Not to worry though, we are always working to reduce these fees and provide the best value for our users.",
+                answer: "Selll charges a small transaction fee of 3.95% per transaction. This means that if a customer buys a product for GHS 100, we take GHS 3.95 and send you GHS 96.05. There are no monthly fees or hidden costs, so you only pay when you make sales.",
             },
             {
                 id: "payment-security",
