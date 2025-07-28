@@ -19,8 +19,8 @@ const Lander = ({ auth, activeStores = 0 }) => {
 
             <Navbar auth={auth} />
 
-            <section className="container mx-auto grid md:grid-cols-2 pt-60">
-                <div className="max-w-xl">
+            <section className="container mx-auto grid md:grid-cols-2 pt-36 sm:pt-60 px-4 sm:px-0">
+                <div className="max-w-xl text-center md:text-left">
                     <h1 className="text-4xl md:text-[78px] tracking-[-1.44px] font-bold max-w-[766px] mt-[14px] mb-6">
                         Create your own online store in just{" "}
                         <span className="bg-[linear-gradient(315deg,var(--color-primary-orange)_25%,var(--color-primary-red))] bg-clip-text [-webkit-text-fill-color:transparent] inline-block italic pr-2">
@@ -28,7 +28,7 @@ const Lander = ({ auth, activeStores = 0 }) => {
                         </span>
                     </h1>
 
-                    <p className="max-w-5/6 font-light md:text-xl text-gray-500 dark:text-gray-300">
+                    <p className="mx-auto md:mx-0 max-w-5/6 font-light md:text-xl text-gray-500 dark:text-gray-300">
                         Manage your orders, payments, and customers — all in one
                         place, whether you sell through DMs or at the market.
                         Selll handles the logistics, so you can focus on making
@@ -44,7 +44,7 @@ const Lander = ({ auth, activeStores = 0 }) => {
                         Create your store
                     </Button>
                 </div>
-                <div className="relative">
+                <div className="relative hidden md:block">
                     <img
                         alt="image"
                         className="w-full h-full -mt-18"
@@ -111,7 +111,7 @@ const Lander = ({ auth, activeStores = 0 }) => {
 
             <section
                 id="skip-dm"
-                className="relative py-24 mt-32 overflow-hidden bg-[url('/assets/img/grid-bg.png')] bg-contain bg-center bg-no-repeat"
+                className="relative pb-0 sm:pb-24 pt-24 mt-12 sm:mt-32 overflow-hidden bg-[url('/assets/img/grid-bg.png')] bg-contain bg-center bg-no-repeat"
             >
                 <div className="pointer-events-none absolute -top-32 -left-32 w-[600px] h-[600px] bg-gradient-to-br from-primary-orange/20 to-primary-red/20 rounded-full blur-[120px] opacity-40 animate-float-rotate-slow"></div>
                 <div className="pointer-events-none absolute bottom-0 right-0 w-[400px] h-[400px] bg-gradient-to-tr from-primary-red/20 to-primary-orange/10 rounded-full blur-[100px] opacity-30 animate-float-rotate-slow-reverse"></div>
@@ -233,7 +233,7 @@ const Lander = ({ auth, activeStores = 0 }) => {
 
             <section>
                 <div className="container mx-auto px-4 py-16">
-                    <h3 className="text-lg md:text-6xl mb-16">
+                    <h3 className="text-2xl md:text-6xl mb-8 md:mb-16">
                         Real businesses <br /> crushing it with Selll
                     </h3>
 
@@ -267,7 +267,7 @@ const Lander = ({ auth, activeStores = 0 }) => {
                     </div>
 
                     <div className="my-36">
-                        <div className="grid grid-cols-3 mb-28">
+                        <div className="hidden md:grid grid-cols-3 mb-28">
                             <div className="text-center">
                                 <h5 className="text-8xl">75</h5>
                                 <p className="text-2xl font-light">
@@ -348,7 +348,7 @@ const Lander = ({ auth, activeStores = 0 }) => {
                                         "Add as many products and categories as you need — no hidden limits, no “pro” upgrade needed.",
                                 },
                             ].map((i) => (
-                                <div className="grid grid-cols-[35px_1fr]">
+                                <div className="grid grid-cols-[35px_1fr] gap-2 md:gap-0">
                                     <svg
                                         width="35"
                                         height="35"
@@ -374,8 +374,8 @@ const Lander = ({ auth, activeStores = 0 }) => {
                                     </svg>
 
                                     <div>
-                                        <h4 className="text-3xl">{i.title}</h4>
-                                        <p className="text-lg font-light mt-2 text-[#b7b7b7]">
+                                        <h4 className="text-2xl md:text-3xl">{i.title}</h4>
+                                        <p className="md:text-lg font-light mt-2 text-[#b7b7b7]">
                                             {i.description}
                                         </p>
                                     </div>
@@ -386,7 +386,7 @@ const Lander = ({ auth, activeStores = 0 }) => {
                 </div>
             </section>
 
-            <section className="bg-black text-white pt-16">
+            <section className="bg-black text-white pt-16 hidden sm:block">
                 <div className="container mx-auto px-4 pt-24 pb-16">
                     <div className="text-center mb-16">
                         <small className="text-xs md:text-sm">

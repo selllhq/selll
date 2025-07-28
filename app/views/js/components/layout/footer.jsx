@@ -16,9 +16,16 @@ const footerLinks = [
         { name: "Developers/SDK", href: "/developers" },
     ],
     [
-        { name: "Contact Support", href: "#" },
-        { name: "Feedback", href: "#" },
-        { name: "Visit Help Centre", href: "#" },
+        {
+            name: "Contact Support",
+            href: "javascript:void(0)",
+            onClick: (e) => {
+                e.preventDefault();
+                window.Tawk_API?.toggle();
+            },
+        },
+        { name: "Feedback", href: "https://selll.canny.io/feature-requests" },
+        { name: "Visit Help Centre", href: "https://selll.tawk.help" },
     ],
 ];
 
@@ -53,6 +60,11 @@ const Footer = () => {
                                         <Link
                                             href={link.href}
                                             className="text-white hover:underline text-sm transition-all duration-150 cursor-pointer"
+                                            onClick={(e) => {
+                                                if (link.onClick) {
+                                                    link.onClick(e);
+                                                }
+                                            }}
                                         >
                                             {link.name}
                                         </Link>

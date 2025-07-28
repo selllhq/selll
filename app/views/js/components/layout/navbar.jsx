@@ -114,13 +114,17 @@ const Navbar = ({
                                     as={Link}
                                     href="/auth/login"
                                     variant="outline"
-                                    size="sm"
+                                    className="rounded-full"
                                 >
                                     Login
                                 </Button>
-                                {/* <Button as={Link} href="/auth/register" size="sm" className="bg-primary-red hover:bg-primary-red/80 text-white">
-                                    Sign up</Link>
-                                </Button> */}
+                                <Button
+                                    as={Link}
+                                    href="/auth/register"
+                                    className="bg-primary-red hover:bg-primary-red/80 text-white rounded-full"
+                                >
+                                    Get Started
+                                </Button>
                             </>
                         )}
                     </div>
@@ -222,7 +226,7 @@ const renderMenuItem = (item) => {
     return (
         <Link
             key={item.title}
-            className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-accent-foreground"
+            className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-muted hover:text-muted-foreground"
             href={item.url}
         >
             {item.title}

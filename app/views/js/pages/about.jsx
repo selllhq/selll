@@ -18,8 +18,8 @@ const About = ({ auth }) => {
 
             <Navbar auth={auth} />
 
-            <section className="container mx-auto grid md:grid-cols-2 py-40">
-                <div className="max-w-xl">
+            <section className="container mx-auto grid md:grid-cols-2 py-40 px-4 md:px-0">
+                <div className="max-w-xl text-center md:text-left mx-auto md:mx-0">
                     <h1 className="text-4xl md:text-[78px] tracking-[-1.44px] font-bold max-w-[766px] mt-[14px] mb-6">
                         Enabling commerce for everyday people
                     </h1>

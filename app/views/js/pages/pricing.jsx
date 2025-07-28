@@ -20,12 +20,12 @@ const Pricing = ({ auth }) => {
             <Navbar auth={auth} />
 
             <section className="container mx-auto grid md:grid-cols-2 py-40">
-                <div className="max-w-xl">
+                <div className="max-w-xl text-center md:text-left">
                     <h1 className="text-4xl md:text-[78px] tracking-[-1.44px] font-bold max-w-[766px] mt-[14px] mb-6">
                         Fair pricing for everyone
                     </h1>
 
-                    <p className="max-w-5/6 font-light md:text-xl text-gray-500 dark:text-gray-300">
+                    <p className="max-w-5/6 font-light md:text-xl text-gray-500 dark:text-gray-300 mx-auto md:mx-0">
                         Just getting started? Already growing fast? Wherever you
                         are, Selll meets you there. Start free, grow on your
                         terms, and level up when you’re ready.
