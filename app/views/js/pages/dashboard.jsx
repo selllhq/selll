@@ -45,7 +45,7 @@ export default function Dashboard({
             className="p-4 pt-2"
             breadcrumbs={[
                 {
-                    title: "Dashboard",
+                    title: "Home",
                     href: "/dashboard",
                 },
             ]}
@@ -73,6 +73,16 @@ export default function Dashboard({
                                     Here's everything new with{" "}
                                     {currentStore?.name}
                                 </p>
+                                <Button
+                                    as="a"
+                                    variant="link"
+                                    className="w-auto p-0 md:w-auto gap-2 underline"
+                                    href={`https://${currentStore?.slug}.selll.store`}
+                                    target="_blank"
+                                >
+                                    <Store className="h-4 w-4" />
+                                    https://{currentStore?.slug}.selll.store
+                                </Button>
                             </div>
 
                             <div className="flex items-center gap-3 mt-2 md:mt-0">
@@ -80,7 +90,7 @@ export default function Dashboard({
                                     as={Link}
                                     variant="outline"
                                     href="/products/new"
-                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] hover:text-neutral-200 w-full md:w-auto rounded-full"
+                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] hover:text-neutral-200 w-full md:w-auto"
                                 >
                                     <Plus className="h-4 w-4" />
                                     Add Product
@@ -89,19 +99,10 @@ export default function Dashboard({
                                     as={Link}
                                     variant="outline"
                                     href="/invoices/new"
-                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] hover:text-neutral-200 w-full md:w-auto rounded-full"
+                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] hover:text-neutral-200 w-full md:w-auto"
                                 >
                                     <Wallet className="h-4 w-4" />
                                     Payment Link
-                                </Button>
-                                <Button
-                                    as="a"
-                                    className="bg-primary-orange hover:bg-primary-orange/90 text-black w-full md:w-auto gap-2 rounded-full"
-                                    href={`https://${currentStore?.slug}.selll.store`}
-                                    target="_blank"
-                                >
-                                    <Store className="h-4 w-4" />
-                                    View Store
                                 </Button>
                             </div>
                         </div>
@@ -135,8 +136,8 @@ export default function Dashboard({
                             </div>
                         )}
 
-                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                            <Card>
+                        <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
+                            <Card className="rounded-3xl">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
                                     <CardTitle>Total Revenue</CardTitle>
                                     <div className="bg-[#2C2C2C] p-2 rounded-lg">
@@ -199,7 +200,7 @@ export default function Dashboard({
                                     </div>
                                 </CardContent>
                             </Card>
-                            <Card>
+                            <Card className="rounded-3xl">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
                                     <CardTitle>
                                         Total No. Products Sold
@@ -237,7 +238,7 @@ export default function Dashboard({
                                     </div>
                                 </CardContent>
                             </Card>
-                            <Card>
+                            <Card className="rounded-3xl">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
                                     <CardTitle>Active Products</CardTitle>
                                     <div className="bg-[#2C2C2C] p-2 rounded-lg">
@@ -272,7 +273,7 @@ export default function Dashboard({
                                     </div>
                                 </CardContent>
                             </Card>
-                            <Card>
+                            <Card className="rounded-3xl">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
                                     <CardTitle>Total Customers</CardTitle>
                                     <div className="bg-[#2C2C2C] p-2 rounded-lg">
@@ -310,7 +311,7 @@ export default function Dashboard({
                         </div>
 
                         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 mt-8">
-                            <Card className="col-span-4">
+                            <Card className=" rounded-3xl col-span-4">
                                 <CardHeader>
                                     <CardTitle>Revenue Over Time</CardTitle>
                                     <CardDescription>
@@ -325,7 +326,7 @@ export default function Dashboard({
                                     />
                                 </CardContent>
                             </Card>
-                            <Card className="col-span-4 md:col-span-3">
+                            <Card className=" rounded-3xl col-span-4 md:col-span-3">
                                 <CardHeader>
                                     <CardTitle>Recent Orders</CardTitle>
                                     <CardDescription>
