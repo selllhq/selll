@@ -3,6 +3,7 @@ import { Head, Link } from "@inertiajs/react";
 import {
     ArrowUpRight,
     Package,
+    Plus,
     ShoppingCart,
     Store,
     TrendingUp,
@@ -79,13 +80,23 @@ export default function Dashboard({
                                     as={Link}
                                     variant="outline"
                                     href="/products/new"
-                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] w-full md:w-auto"
+                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] hover:text-neutral-200 w-full md:w-auto rounded-full"
                                 >
+                                    <Plus className="h-4 w-4" />
                                     Add Product
                                 </Button>
                                 <Button
+                                    as={Link}
+                                    variant="outline"
+                                    href="/invoices/new"
+                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] hover:text-neutral-200 w-full md:w-auto rounded-full"
+                                >
+                                    <Wallet className="h-4 w-4" />
+                                    Payment Link
+                                </Button>
+                                <Button
                                     as="a"
-                                    className="bg-primary-orange hover:bg-primary-orange/90 text-white w-full md:w-auto gap-2"
+                                    className="bg-primary-orange hover:bg-primary-orange/90 text-black w-full md:w-auto gap-2 rounded-full"
                                     href={`https://${currentStore?.slug}.selll.store`}
                                     target="_blank"
                                 >
