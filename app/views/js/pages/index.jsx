@@ -47,8 +47,8 @@ const Lander = ({ auth, activeStores = 0 }) => {
                 <div className="relative hidden md:block">
                     <img
                         alt="image"
-                        className="w-full h-full -mt-18"
-                        src="/assets/img/random/nav.png"
+                        className="w-full h-full -mt-18 aspect-square"
+                        src="/assets/img/random/hero.png"
                     />
                     <div className="h-36 md:h-96 absolute -bottom-10 w-full left-0 bg-gradient-to-br from-transparent to-background blur-2xl bg-cover"></div>
                 </div>
@@ -175,7 +175,7 @@ const Lander = ({ auth, activeStores = 0 }) => {
                         </p>
                     </div>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <Card className="bg-gray-700 !text-white rounded-3xl p-10">
+                        <Card className="bg-gray-700 !text-white rounded-3xl p-10 overflow-hidden">
                             <h4 className="text-xl md:text-3xl mb-2">
                                 Know Your People
                             </h4>
@@ -183,9 +183,15 @@ const Lander = ({ auth, activeStores = 0 }) => {
                                 See who's buying, what they love, and keep all
                                 your customer information in one place
                             </p>
-                            <div className="h-48"></div>
+                            <div className="h-48">
+                                <img
+                                    src="/assets/img/random/customers-2.png"
+                                    className="w-full pt-8"
+                                    alt=""
+                                />
+                            </div>
                         </Card>
-                        <Card className="!bg-primary-orange !text-black rounded-3xl p-10 lg:col-span-2">
+                        <Card className="!bg-primary-orange !text-black rounded-3xl p-10 lg:col-span-2 overflow-hidden">
                             <h4 className="text-xl md:text-3xl mb-2">
                                 Inventory That Manages Itself
                             </h4>
@@ -194,19 +200,31 @@ const Lander = ({ auth, activeStores = 0 }) => {
                                 every order, and quickly alerts you when
                                 something is almost out of stock
                             </p>
-                            <div className="h-48"></div>
+                            <div className="h-48">
+                                <img
+                                    src="/assets/img/random/inventory.png"
+                                    className="w-full pt-8"
+                                    alt=""
+                                />
+                            </div>
                         </Card>
-                        <Card className="!bg-indigo-950 !text-white rounded-3xl p-10">
+                        <Card className="!bg-indigo-950 !text-white rounded-3xl p-10 overflow-hidden">
                             <h4 className="text-xl md:text-3xl mb-2">
                                 Checkout, Anywhere
                             </h4>
                             <p>
                                 Online or in person — your customers can pay you
-                                with a simple link
+                                through momo, bank or card with a simple link
                             </p>
-                            <div className="h-48"></div>
+                            <div className="h-48">
+                                <img
+                                    src="/assets/img/random/pay-2.png"
+                                    className="w-full pt-4"
+                                    alt=""
+                                />
+                            </div>
                         </Card>
-                        <Card className="bg-black dark:bg-white text-white dark:text-black rounded-3xl p-10">
+                        <Card className="bg-black dark:bg-white text-white dark:text-black rounded-3xl p-10 overflow-hidden">
                             <h4 className="text-xl md:text-3xl mb-2">
                                 Your Store, by the Numbers
                             </h4>
@@ -214,7 +232,13 @@ const Lander = ({ auth, activeStores = 0 }) => {
                                 See what’s selling, what’s trending, and how
                                 your store is performing over time
                             </p>
-                            <div className="h-48"></div>
+                            <div className="h-48">
+                                <img
+                                    src="/assets/img/random/by-the-numbers-2.png"
+                                    className="w-full pt-8"
+                                    alt=""
+                                />
+                            </div>
                         </Card>
                         <Card className="!bg-[#DA5811] !text-white rounded-3xl p-10">
                             <h4 className="text-xl md:text-3xl mb-2">
@@ -225,7 +249,13 @@ const Lander = ({ auth, activeStores = 0 }) => {
                                 delivery — we’ll keep you posted, wherever you
                                 are.
                             </p>
-                            <div className="h-48"></div>
+                            <div className="h-48">
+                                <img
+                                    src="/assets/img/random/notis.png"
+                                    className="w-full pt-8"
+                                    alt=""
+                                />
+                            </div>
                         </Card>
                     </div>
                 </div>
@@ -239,20 +269,20 @@ const Lander = ({ auth, activeStores = 0 }) => {
 
                     <div className="grid md:grid-cols-2 items-center gap-20">
                         <img
-                            src="/assets/img/testimonials/1.jpg"
+                            src="https://cdn1.selll.online/stores/7/image.jpg"
                             className="rounded-3xl"
                             alt=""
                         />
                         <div>
-                            <img
-                                src="https://leafphp.dev/logo-circle.png"
+                            {/* <img
+                                src="https://cdn1.selll.online/stores/7/image.jpg"
                                 className="w-14 mb-6"
                                 alt=""
-                            />
+                            /> */}
                             <h4 className="text-2xl md:text-5xl font-light mb-4">
                                 “I was able to create my store and receive my
                                 first order in just 5 minutes. Finally, a
-                                platform that actually gets small businesses.”
+                                platform that actually gets simplicity.”
                             </h4>
                             <p>Kwesi Wolff @ FunGuy</p>
                             <Button
@@ -374,7 +404,9 @@ const Lander = ({ auth, activeStores = 0 }) => {
                                     </svg>
 
                                     <div>
-                                        <h4 className="text-2xl md:text-3xl">{i.title}</h4>
+                                        <h4 className="text-2xl md:text-3xl">
+                                            {i.title}
+                                        </h4>
                                         <p className="md:text-lg font-light mt-2 text-[#b7b7b7]">
                                             {i.description}
                                         </p>

@@ -111,7 +111,7 @@ const Pricing = ({ auth }) => {
 
                                 <Button
                                     as={Link}
-                                    className="relative isolate mt-6"
+                                    className="relative isolate mt-6 rounded-full bg-white text-black"
                                     href="/auth/register"
                                 >
                                     {auth.user
@@ -127,13 +127,10 @@ const Pricing = ({ auth }) => {
                                 </span>
                                 <p>
                                     <i className="font-light">
-                                        Setting up an online store used to be a
-                                        nightmare—business registrations,
-                                        payment gateways, and endless red tape.
-                                        With Selll, I skipped all the hassle and
-                                        had my storefront live in minutes. No
-                                        complicated setup, no business
-                                        registration—just effortless selling!
+                                        It's crazy how fast I was able to
+                                        set up my store, add products, and start
+                                        selling. This has been a beautiful
+                                        experience for me.
                                     </i>
                                     ”
                                 </p>
@@ -141,25 +138,25 @@ const Pricing = ({ auth }) => {
                                 <div className="mt-6 flex items-center gap-3 text-base">
                                     <div className="size-12 overflow-hidden rounded shadow-inner">
                                         <img
-                                            src="https://pbs.twimg.com/profile_images/1896126751102619648/lEsHUBx3_400x400.jpg"
-                                            alt="Sebastian Livingstone"
+                                            src="https://cdn1.selll.online/stores/69/514CE09C-1930-4885-BDC4-B3BAC7DC079D.PNG"
+                                            alt="Montana’s Tech Hub"
                                             className="size-full"
                                         />
                                     </div>
 
                                     <div>
                                         <p className="text-strong">
-                                            Sebastian Livingstone
+                                            Montana’s Tech Hub
                                         </p>
                                         <p className="text-default">
-                                            Digital Creator (
+                                            Electronics Store (
                                             <a
-                                                href="https://osemuix.selll.store"
+                                                href="https://tanatechub.selll.store"
                                                 target="_blank"
                                                 rel="pricing_testimonial"
                                                 className="text-primary-orange"
                                             >
-                                                osemuix.selll.store
+                                                tanatechub.selll.store
                                             </a>
                                             )
                                         </p>
