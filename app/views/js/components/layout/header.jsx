@@ -39,7 +39,7 @@ import {
     BookOpen,
     ChevronsUpDown,
     HelpCircle,
-    LayoutGrid,
+    Home,
     Menu,
     MessagesSquare,
     Paintbrush,
@@ -63,9 +63,9 @@ import {
 
 const mainNavItems = [
     {
-        title: "Dashboard",
+        title: "Home",
         url: "/dashboard",
-        icon: LayoutGrid,
+        icon: Home,
     },
     {
         title: "Products",

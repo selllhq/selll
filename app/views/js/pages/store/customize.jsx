@@ -73,7 +73,7 @@ const Customize = ({ store }) => {
             variant="header"
             breadcrumbs={[
                 {
-                    title: "Dashboard",
+                    title: "Home",
                     href: "/dashboard",
                 },
                 {

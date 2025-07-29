@@ -139,14 +139,14 @@ export default function Dashboard({
                         <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
                             <Card className="rounded-3xl">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
-                                    <CardTitle>Total Revenue</CardTitle>
-                                    <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                    <CardTitle>Your Sales</CardTitle>
+                                    <div className="bg-[#2C2C2C] p-2 rounded-lg hidden sm:block">
                                         <Wallet className="h-5 w-5 text-primary-orange" />
                                     </div>
                                 </CardHeader>
                                 <CardContent>
                                     <div>
-                                        <div className="text-4xl font-bold mb-2">
+                                        <div className="text-xl sm:text-2xl md:text-4xl font-bold mb-2">
                                             {new Intl.NumberFormat("en-US", {
                                                 style: "currency",
                                                 currency:
@@ -160,7 +160,7 @@ export default function Dashboard({
                                                 ),
                                             )}
                                         </div>
-                                        <div className="flex items-center gap-1 text-emerald-500">
+                                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 text-emerald-500">
                                             <span className="text-sm">
                                                 ↑{" "}
                                                 {new Intl.NumberFormat(
@@ -193,8 +193,11 @@ export default function Dashboard({
                                                         ),
                                                 )}
                                             </span>
-                                            <span className="text-sm text-gray-500">
+                                            <span className="text-sm text-gray-500 hidden sm:inline-block">
                                                 from last month
+                                            </span>
+                                            <span className="text-sm text-gray-500 sm:hidden">
+                                                this month
                                             </span>
                                         </div>
                                     </div>
@@ -202,19 +205,17 @@ export default function Dashboard({
                             </Card>
                             <Card className="rounded-3xl">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
-                                    <CardTitle>
-                                        Total No. Products Sold
-                                    </CardTitle>
-                                    <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                    <CardTitle>Products Sold</CardTitle>
+                                    <div className="bg-[#2C2C2C] p-2 rounded-lg hidden sm:block">
                                         <ShoppingCart className="h-5 w-5 text-primary-orange" />
                                     </div>
                                 </CardHeader>
                                 <CardContent>
                                     <div>
-                                        <div className="text-4xl font-bold mb-2">
+                                        <div className="text-xl sm:text-2xl md:text-4xl font-bold mb-2">
                                             {productsSold.toLocaleString()}
                                         </div>
-                                        <div className="flex items-center gap-1 text-emerald-500">
+                                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 text-emerald-500">
                                             <span className="text-sm">
                                                 ↑{" "}
                                                 {orders
@@ -231,8 +232,11 @@ export default function Dashboard({
                                                     .reduce((acc) => acc + 1, 0)
                                                     .toLocaleString()}
                                             </span>
-                                            <span className="text-sm text-gray-500">
+                                            <span className="text-sm text-gray-500 hidden sm:inline-block">
                                                 from last month
+                                            </span>
+                                            <span className="text-sm text-gray-500 sm:hidden">
+                                                this month
                                             </span>
                                         </div>
                                     </div>
@@ -241,16 +245,16 @@ export default function Dashboard({
                             <Card className="rounded-3xl">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
                                     <CardTitle>Active Products</CardTitle>
-                                    <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                    <div className="bg-[#2C2C2C] p-2 rounded-lg hidden sm:block">
                                         <Package className="h-5 w-5 text-primary-orange" />
                                     </div>
                                 </CardHeader>
                                 <CardContent>
                                     <div>
-                                        <div className="text-4xl font-bold mb-2">
+                                        <div className="text-xl sm:text-2xl md:text-4xl font-bold mb-2">
                                             {products.length.toLocaleString()}
                                         </div>
-                                        <div className="flex items-center gap-1 text-emerald-500">
+                                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 text-emerald-500">
                                             <span className="text-sm">
                                                 ↑{" "}
                                                 {products
@@ -266,8 +270,11 @@ export default function Dashboard({
                                                     )
                                                     .length.toLocaleString()}
                                             </span>
-                                            <span className="text-sm text-gray-500">
+                                            <span className="text-sm text-gray-500 hidden sm:inline-block">
                                                 from last month
+                                            </span>
+                                            <span className="text-sm text-gray-500 sm:hidden">
+                                                this month
                                             </span>
                                         </div>
                                     </div>
@@ -275,17 +282,17 @@ export default function Dashboard({
                             </Card>
                             <Card className="rounded-3xl">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
-                                    <CardTitle>Total Customers</CardTitle>
-                                    <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                    <CardTitle>Customers</CardTitle>
+                                    <div className="bg-[#2C2C2C] p-2 rounded-lg hidden sm:block">
                                         <Users className="h-5 w-5 text-primary-orange" />
                                     </div>
                                 </CardHeader>
                                 <CardContent>
                                     <div>
-                                        <div className="text-4xl font-bold mb-2">
+                                        <div className="text-xl sm:text-2xl md:text-4xl font-bold mb-2">
                                             {customers.length.toLocaleString()}
                                         </div>
-                                        <div className="flex items-center gap-1 text-emerald-500">
+                                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 text-emerald-500">
                                             <span className="text-sm">
                                                 ↑{" "}
                                                 {customers
@@ -301,8 +308,11 @@ export default function Dashboard({
                                                     )
                                                     .length.toLocaleString()}
                                             </span>
-                                            <span className="text-sm text-gray-500">
+                                            <span className="text-sm text-gray-500 hidden sm:inline-block">
                                                 from last month
+                                            </span>
+                                            <span className="text-sm text-gray-500 sm:hidden">
+                                                this month
                                             </span>
                                         </div>
                                     </div>
@@ -311,7 +321,7 @@ export default function Dashboard({
                         </div>
 
                         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 mt-8">
-                            <Card className=" rounded-3xl col-span-4">
+                            <Card className="rounded-3xl col-span-4">
                                 <CardHeader>
                                     <CardTitle>Revenue Over Time</CardTitle>
                                     <CardDescription>
@@ -326,7 +336,7 @@ export default function Dashboard({
                                     />
                                 </CardContent>
                             </Card>
-                            <Card className=" rounded-3xl col-span-4 md:col-span-3">
+                            <Card className="rounded-3xl col-span-4 md:col-span-3">
                                 <CardHeader>
                                     <CardTitle>Recent Orders</CardTitle>
                                     <CardDescription>
@@ -385,7 +395,7 @@ export default function Dashboard({
                         </div>
 
                         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-                            <Card className="col-span-4">
+                            <Card className="rounded-3xl col-span-4">
                                 <CardHeader>
                                     <CardTitle>Top Products</CardTitle>
                                     <CardDescription>
@@ -406,7 +416,7 @@ export default function Dashboard({
                                     />
                                 </CardContent>
                             </Card>
-                            <Card className="col-span-4 md:col-span-3">
+                            <Card className="rounded-3xl col-span-4 md:col-span-3">
                                 <CardHeader>
                                     <CardTitle>Quick Stats</CardTitle>
                                     <CardDescription>

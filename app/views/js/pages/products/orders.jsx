@@ -11,6 +11,7 @@ import {
     ShoppingBag,
     TrendingUp,
     Search,
+    Wallet,
 } from "lucide-react";
 import Layout from "@/layouts/app-layout";
 import EmptyState from "@/components/layout/empty";
@@ -166,10 +167,19 @@ export default function Orders({ orders = [], currentStore }) {
                                     as={Link}
                                     href="/products"
                                     variant="outline"
-                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] w-full md:w-auto"
+                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] hover:text-neutral-200 w-full md:w-auto hidden md:flex"
                                 >
                                     <Package className="h-4 w-4" />
                                     View Products
+                                </Button>
+                                <Button
+                                    as={Link}
+                                    variant="outline"
+                                    href="/invoices/new"
+                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] hover:text-neutral-200 w-full md:w-auto"
+                                >
+                                    <Wallet className="h-4 w-4" />
+                                    Payment Link
                                 </Button>
                                 <Button
                                     as="a"
