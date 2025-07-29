@@ -6,14 +6,16 @@ const footerLinks = [
         { name: "Features", href: "/#features" },
         { name: "Pricing", href: "/pricing" },
         { name: "About Selll", href: "/about" },
-        { name: "Privacy Policy", href: "/privacy" },
-        { name: "Terms of use", href: "/terms" },
     ],
     [
         { name: "Blog", href: "/blog" },
         { name: "FAQs", href: "/faqs" },
-        { name: "Careers", href: "/careers" },
+        // { name: "Careers", href: "/careers" },
         // { name: "Developers/SDK", href: "/developers" },
+    ],
+    [
+        { name: "Privacy Policy", href: "/privacy" },
+        { name: "Terms of use", href: "/terms" },
     ],
     [
         {
