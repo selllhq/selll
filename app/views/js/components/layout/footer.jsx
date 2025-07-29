@@ -75,7 +75,7 @@ const Footer = () => {
                     ))}
                 </div>
 
-                <div className="pt-8 grid gap-4 md:grid-cols-3">
+                <div className="pt-8 grid gap-20 md:gap-4 md:grid-cols-3">
                     <div className="flex items-center justify-start gap-6">
                         <img
                             src="/assets/img/logo/text-white-alt.png"
@@ -100,7 +100,7 @@ const Footer = () => {
                             </a>
                         ))}
                     </div>
-                    <div></div>
+                    <div className="hidden md:block"></div>
                 </div>
             </div>
         </footer>

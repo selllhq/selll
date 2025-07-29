@@ -19,7 +19,7 @@ const Lander = ({ auth, activeStores = 0 }) => {
 
             <Navbar auth={auth} />
 
-            <section className="container mx-auto grid md:grid-cols-2 pt-36 sm:pt-60 px-4 sm:px-0">
+            <section className="container mx-auto grid lg:grid-cols-2 pt-36 sm:pt-60 px-4 sm:px-0">
                 <div className="max-w-xl text-center md:text-left">
                     <h1 className="text-4xl md:text-[78px] tracking-[-1.44px] font-bold max-w-[766px] mt-[14px] mb-6">
                         Create your own online store in just{" "}
@@ -44,7 +44,7 @@ const Lander = ({ auth, activeStores = 0 }) => {
                         Create your store
                     </Button>
                 </div>
-                <div className="relative hidden md:block">
+                <div className="relative hidden lg:block">
                     <img
                         alt="image"
                         className="w-full h-full -mt-18 aspect-square"
