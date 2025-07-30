@@ -175,7 +175,7 @@ export default function Orders({ orders = [], currentStore }) {
                                 <Button
                                     as={Link}
                                     variant="outline"
-                                    href="/invoices/new"
+                                    href="/links/new"
                                     className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] hover:text-neutral-200 w-full md:w-auto"
                                 >
                                     <Wallet className="h-4 w-4" />
