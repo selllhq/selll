@@ -47,7 +47,7 @@ class BillingController extends Controller
                 'currency' => $store->currency,
                 'description' => 'Purchase of items in cart',
                 'customer' => $customer->email,
-                'url' => request()->getUrl() . '/billing/callback', // only for paystack
+                'url' => rtrim(_env('APP_URL', 'https://selll.online'), '/') . '/billing/callback', // only for paystack
                 '_paystack' => [
                     'subaccount' => $storePayoutWallet->account_code,
                     'bearer' => 'subaccount',

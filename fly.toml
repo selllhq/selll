@@ -18,7 +18,7 @@ processes = ['app']
 
 [env]
 APP_NAME = 'Selll'
-APP_ENV = 'local'
+APP_ENV = 'production'
 APP_DEBUG = 'true'
 APP_URL = 'https://selll.online/'
 APP_KEY = 'base64:XqCe5Dy/i1lEzfM5zxd3+jYzDM6jr9/ZJorVmHwkb2I='
