@@ -3,83 +3,57 @@
 ARG PHP_VERSION=8.2
 ARG NODE_VERSION=18
 
-FROM php:${PHP_VERSION}-fpm-bookworm AS base
-
+FROM php:${PHP_VERSION}-fpm-alpine as base
 LABEL fly_launch_runtime="leaf"
 
-# Arguments repeated after FROM
-ARG PHP_VERSION
+# Install system dependencies
+RUN apk --no-cache add \
+    nginx supervisor curl git unzip bash rsync tzdata \
+    libpng libjpeg-turbo freetype libpq postgresql-client \
+    php82-pecl-pdo_pgsql php82-pdo_mysql php82-pdo_sqlite php82-mbstring php82-opcache php82-xml \
+    php82-fileinfo php82-tokenizer php82-ctype php82-curl php82-dom php82-gd php82-mysqli \
+    php82-simplexml php82-xmlwriter php82-session php82-bcmath php82-exif php82-iconv php82-json \
+    php82-phar php82-posix php82-zip php82-zlib php82-openssl
 
-ENV DEBIAN_FRONTEND=noninteractive \
-    COMPOSER_ALLOW_SUPERUSER=1 \
-    COMPOSER_HOME=/composer \
-    COMPOSER_MAX_PARALLEL_HTTP=24 \
-    PHP_DATE_TIMEZONE=UTC \
-    PHP_MEMORY_LIMIT=256M \
-    PHP_UPLOAD_MAX_FILESIZE=100M \
-    PHP_POST_MAX_SIZE=100M \
-    PHP_MAX_EXECUTION_TIME=90
-
-# Install dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl ca-certificates gnupg unzip zip git nginx supervisor cron \
-    libpq-dev postgresql-client \
-    libzip-dev libpng-dev libjpeg-dev libfreetype6-dev libxml2-dev \
-    vim sqlite3 rsync \
-    && docker-php-ext-install pdo pdo_pgsql zip gd \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Install Composer
+# Composer install
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# PHP config overrides
-COPY .fly/fpm/ /usr/local/etc/php-fpm.d/
-
-# Nginx + Supervisor configs
-COPY .fly/nginx/ /etc/nginx/
-COPY .fly/supervisor/ /etc/supervisor/
-COPY .fly/start-nginx.sh /usr/local/bin/start-nginx
-RUN chmod +x /usr/local/bin/start-nginx
-
-# Entrypoint
-COPY .fly/entrypoint.sh /entrypoint
-RUN chmod +x /entrypoint
-
-# Copy application
+# Setup directories
 WORKDIR /var/www/html
 COPY . .
 
-# Composer install
-RUN composer install --optimize-autoloader --no-dev \
-    && chown -R www-data:www-data /var/www/html \
-    && touch .env
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html
 
-# Static asset builder
-FROM node:${NODE_VERSION} AS node_modules_go_brrr
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader
 
+# Supervisor config
+COPY .fly/supervisor /etc/supervisor/
+
+# Nginx config
+COPY .fly/nginx /etc/nginx/
+
+# PHP-FPM config
+COPY .fly/fpm /usr/local/etc/php-fpm.d/
+
+# Entrypoint script
+COPY .fly/entrypoint.sh /entrypoint
+RUN chmod +x /entrypoint
+
+# Build frontend
+FROM node:${NODE_VERSION}-alpine as frontend
 WORKDIR /app
 COPY . .
-COPY --from=base /var/www/html/vendor /app/vendor
+RUN if [ -f "package-lock.json" ]; then npm install && npm run build; fi
 
-RUN if [ -f "yarn.lock" ]; then \
-    yarn install --frozen-lockfile && yarn build; \
-    elif [ -f "pnpm-lock.yaml" ]; then \
-    corepack enable && corepack prepare pnpm@latest-7 --activate && pnpm install --frozen-lockfile && pnpm run build; \
-    elif [ -f "package-lock.json" ]; then \
-    npm ci --no-audit && npm run build; \
-    elif [ -f "package.json" ]; then \
-    npm install --force && npm run build; \
-    fi;
-
-# Final image
+# Final stage
 FROM base
+COPY --from=frontend /app/public /var/www/html/public
 
-COPY --from=node_modules_go_brrr /app/public /var/www/html/public-npm
-RUN rsync -ar /var/www/html/public-npm/ /var/www/html/public/ \
-    && rm -rf /var/www/html/public-npm \
-    && chown -R www-data:www-data /var/www/html/public \
-    && php leaf link \
-    && rm -rf public/hot
+RUN chown -R www-data:www-data /var/www/html/public \
+    && rm -rf public/hot \
+    && php leaf link || true
 
 EXPOSE 8080
 ENTRYPOINT ["/entrypoint"]
