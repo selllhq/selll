@@ -96,7 +96,16 @@ export default function Dashboard({
                                     <Plus className="h-4 w-4" />
                                     Add Product
                                 </Button>
-                                <CreatePaylink store={currentStore} />
+                                {/* <CreatePaylink store={currentStore} /> */}
+                                <Button
+                                    as="a"
+                                    href={`https://${currentStore?.slug}.selll.store`}
+                                    className="bg-primary-orange hover:bg-primary-orange/90 w-full md:w-auto"
+                                    target="_blank"
+                                >
+                                    <Store className="h-4 w-4" />
+                                    View Store
+                                </Button>
                             </div>
                         </div>
 
