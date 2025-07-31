@@ -31,13 +31,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     nginx supervisor cron sqlite3 mysql-server postgresql-client libpq-dev libzip-dev \
     libpng-dev libjpeg-dev libfreetype6-dev libxml2-dev software-properties-common
 
-# Add Ondřej PHP PPA and PostgreSQL repo
-RUN add-apt-repository ppa:ondrej/php -y && \
-    echo "deb http://apt.postgresql.org/pub/repos/apt jammy-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
-    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-
-# Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+COPY .fly/php/ondrej_ubuntu_php.gpg /etc/apt/trusted.gpg.d/ondrej_ubuntu_php.gpg
 ADD .fly/php/packages/${PHP_VERSION}.txt /tmp/php-packages.txt
 
 RUN ln -sf /usr/bin/vim.tiny /etc/alternatives/vim && \
