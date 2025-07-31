@@ -39,7 +39,7 @@ import {
     BookOpen,
     ChevronsUpDown,
     HelpCircle,
-    LayoutGrid,
+    Home,
     Menu,
     MessagesSquare,
     Paintbrush,
@@ -63,9 +63,9 @@ import {
 
 const mainNavItems = [
     {
-        title: "Dashboard",
+        title: "Home",
         url: "/dashboard",
-        icon: LayoutGrid,
+        icon: Home,
     },
     {
         title: "Products",
@@ -156,16 +156,15 @@ export function AppHeader({ breadcrumbs = [], variant = "header" }) {
                                 <SheetHeader className="flex justify-start text-left">
                                     <span className="flex items-center gap-2">
                                         <img
-                                            src="https://zero.leafphp.dev/assets/img/logo.png"
-                                            className="size-6 mr-4"
-                                            alt=""
+                                            src="/assets/img/logo/text.png"
+                                            className="dark:hidden w-16"
+                                            alt="Selll"
                                         />
-                                        <span className="font-semibold">
-                                            Selll
-                                        </span>
-                                        <small className="italic pr-2">
-                                            by Leaf PHP
-                                        </small>
+                                        <img
+                                            src="/assets/img/logo/text-white-alt.png"
+                                            className="hidden dark:block w-16"
+                                            alt="Selll"
+                                        />
                                     </span>
                                 </SheetHeader>
 
@@ -228,16 +227,15 @@ export function AppHeader({ breadcrumbs = [], variant = "header" }) {
                         <div className="dark:text-sidebar-primary-foreground flex items-center justify-center rounded-md">
                             <span className="flex items-center gap-2">
                                 <img
-                                    src="https://zero.leafphp.dev/assets/img/logo.png"
-                                    className="size-6 mr-0"
-                                    alt=""
+                                    src="/assets/img/logo/text.png"
+                                    className="dark:hidden w-16"
+                                    alt="Selll"
                                 />
-                                <span className="font-semibold text-xl">
-                                    Selll
-                                </span>
-                                <small className="italic pr-2">
-                                    by Leaf PHP
-                                </small>
+                                <img
+                                    src="/assets/img/logo/text-white-alt.png"
+                                    className="hidden dark:block w-16"
+                                    alt="Selll"
+                                />
                             </span>
                         </div>
                     </Link>
@@ -417,16 +415,15 @@ export function AppSidebar({ showEmail }) {
                         >
                             <span className="flex items-center gap-2">
                                 <img
-                                    src="https://zero.leafphp.dev/assets/img/logo.png"
-                                    className="size-6"
+                                    src="/assets/img/logo/text.png"
+                                    className="dark:hidden w-16"
                                     alt=""
                                 />
-                                <span className="font-semibold text-xl">
-                                    Selll
-                                </span>
-                                <small className="italic pr-2">
-                                    by Leaf PHP
-                                </small>
+                                <img
+                                    src="/assets/img/logo/text-white-alt.png"
+                                    className="hidden dark:block w-16"
+                                    alt=""
+                                />
                             </span>
                         </SidebarMenuButton>
                     </SidebarMenuItem>

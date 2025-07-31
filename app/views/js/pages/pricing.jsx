@@ -19,167 +19,118 @@ const Pricing = ({ auth }) => {
 
             <Navbar auth={auth} />
 
-            <section className="mt-36 mb-16 flex items-center px-6">
-                <div className="mx-auto grid w-full container gap-y-8 lg:grid-cols-2">
-                    <div className="max-w-xl space-y-8">
-                        <h1 className="text-4xl !leading-[1.2] text-strong sm:text-5xl">
-                            Start Sellling for free in 2 minutes
-                        </h1>
+            <section className="container mx-auto grid md:grid-cols-2 py-40">
+                <div className="max-w-xl text-center md:text-left">
+                    <h1 className="text-4xl md:text-[78px] tracking-[-1.44px] font-bold max-w-[766px] mt-[14px] mb-6">
+                        Fair pricing for everyone
+                    </h1>
 
-                        <p className="max-w-lg text-base leading-normal sm:text-xl">
-                            Whether you're just getting started or scaling up,
-                            Selll has a plan that fits your needs. Start for
-                            free, upgrade only when you're ready, and grow your
-                            business with powerful tools.
-                        </p>
-                    </div>
+                    <p className="max-w-5/6 font-light md:text-xl text-gray-500 dark:text-gray-300 mx-auto md:mx-0">
+                        Just getting started? Already growing fast? Wherever you
+                        are, Selll meets you there. Start free, grow on your
+                        terms, and level up when you’re ready.
+                    </p>
+
+                    <Button
+                        as={Link}
+                        href="/auth/register"
+                        className="p-6 mt-10 font-medium rounded-full active:scale-95 transition-all duration-150 ease-in-out border-none bg-primary-red hover:bg-primary-red/80 text-white flex-shrink-0"
+                    >
+                        Create your store
+                    </Button>
                 </div>
             </section>
 
-            <section>
+            <section className="bg-black text-white rounded-t-3xl pt-10 lg:pt-0">
                 <div className="px-6 lg:pb-16">
-                    <div className="mx-auto w-full max-w-xl lg:container">
-                        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-x-px lg:gap-y-0 lg:border-b lg:border-t lg:border-primary-orange/20 lg:bg-primary-orange/20">
-                            <div className="grid grid-cols-1 grid-rows-[auto,1fr] gap-px divide-y divide-primary-orange/20 rounded-xl border border-primary-orange/20 lg:divide-none lg:rounded-none lg:border-0 lg:bg-primary-red/20">
-                                <div className="p-5 lg:bg-default xl:p-8 lg:!pb-0">
-                                    <h3 className="text-3xl font-normal tracking-tight text-strong xl:text-[32px]">
-                                        Starter
-                                    </h3>
-                                    <p className="mt-2 font-medium">
-                                        <span className="text-semibold text-xl">
-                                            $0/month
-                                        </span>
-                                        <br />
-                                        <small className="dark:text-primary-orange">
-                                            +2% fees + processor fees
-                                        </small>
-                                    </p>
-                                </div>
-                                <div className="flex flex-col items-stretch p-5 lg:bg-default xl:p-8">
-                                    <p className="font-medium text-strong">
-                                        Everything you need to earn your first
-                                        dollar
-                                    </p>
-                                    <ul className="mt-4 flex-1 space-y-2.5">
-                                        <li className="flex items-center gap-2 text-sm font-medium">
-                                            <Check className="size-4" />
-                                            <span>Simple storefront</span>
-                                        </li>
-                                        <li className="flex items-center gap-2 text-sm font-medium">
-                                            <Check className="size-4" />
-                                            <span>
-                                                Free .selll.store domain
-                                            </span>
-                                        </li>
-                                        <li className="flex items-center gap-2 text-sm font-medium">
-                                            <Check className="size-4" />
-                                            <span>
-                                                Paystack & Stripe integration
-                                            </span>
-                                        </li>
-                                        <li className="flex items-center gap-2 text-sm font-medium">
-                                            <Check className="size-4" />
-                                            <span>Easy Business dashboard</span>
-                                        </li>
-                                        <li className="flex items-center gap-2 text-sm font-medium">
-                                            <Check className="size-4" />
-                                            <span>Basic analytics</span>
-                                        </li>
-                                        <li className="flex items-center gap-2 text-sm font-medium">
-                                            <Check className="size-4" />
-                                            <span>
-                                                2% Selll fee + 2%
-                                                Stripe/Paystack fee
-                                            </span>
-                                        </li>
-                                    </ul>
-
-                                    <Button
-                                        as={Link}
-                                        className="relative isolate mt-6"
-                                        href="/auth/register"
-                                    >
-                                        {auth.user
-                                            ? "Go to dashboard"
-                                            : "Claim your free shop"}
-                                    </Button>
-                                </div>
+                    <div className="mx-auto grid xl:grid-cols-2 items-center w-full max-w-xl lg:container">
+                        <div className="grid grid-cols-1 grid-rows-[auto,1fr] lg:-mt-20 xl:max-w-2/3 gap-px divide-y divide-primary-orange/20 rounded-3xl border border-primary-orange/20 lg:divide-none lg:border-0 lg:bg-[#2f100f]">
+                            <div className="p-5 lg:bg-default xl:p-8 lg:!pb-0">
+                                <h3 className="text-3xl font-normal tracking-tight text-strong xl:text-[32px]">
+                                    3.95% per transaction
+                                </h3>
+                                <p className="mt-2 font-medium">
+                                    <span className="text-semibold text-xl">
+                                        If a customer buys a product for GHS
+                                        100, we take GHS 3.95 and send you GHS
+                                        96.05.
+                                    </span>
+                                    <br />
+                                    <small className="text-primary-orange">
+                                        No maintenance fees, no hidden costs.
+                                    </small>
+                                </p>
                             </div>
-                            <div className="grid grid-cols-1 grid-rows-[auto,1fr] gap-px divide-y divide-primary-orange/20 rounded-xl border border-primary-orange/20 lg:divide-none lg:rounded-none lg:border-0 lg:bg-primary-orange/20">
-                                <div className="p-5 lg:bg-default xl:p-8 lg:!pb-0">
-                                    <h3 className="text-3xl font-normal tracking-tight text-strong xl:text-[32px]">
-                                        Pro
-                                    </h3>
-                                    <p className="mt-2 font-medium">
-                                        <span className="text-semibold text-xl">
-                                            $20/month
+                            <div className="flex flex-col items-stretch p-5 lg:bg-default xl:p-8">
+                                <ul className="flex-1 space-y-2.5">
+                                    <li className="flex items-center gap-2 text-sm font-medium">
+                                        <Check className="size-4" />
+                                        <span>
+                                            Free storefront for self-checkout
                                         </span>
-                                        <br />
-                                        <small className="dark:text-primary-orange">
-                                            +2% fees + processor fees
-                                        </small>
-                                    </p>
-                                </div>
-                                <div className="flex flex-col items-stretch p-5 lg:bg-default xl:p-8">
-                                    <p className="font-medium text-strong">
-                                        Finer control + tools to help you grow
-                                        your store
-                                    </p>
-                                    <ul className="mt-4 flex-1 space-y-2.5">
-                                        <li className="flex items-center gap-2 text-sm font-medium">
-                                            <Check className="size-4" />
-                                            <span>Everything in Free</span>
-                                        </li>
-                                        <li className="flex items-center gap-2 text-sm font-medium">
-                                            <Check className="size-4" />
-                                            <span>Advanced analytics</span>
-                                        </li>
-                                        <li className="flex items-center gap-2 text-sm font-medium">
-                                            <Check className="size-4" />
-                                            <span>
-                                                Store customization (themes,
-                                                colors, fonts)
-                                            </span>
-                                        </li>
-                                        <li className="flex items-center gap-2 text-sm font-medium">
-                                            <Check className="size-4" />
-                                            <span>Automated invoicing</span>
-                                        </li>
-                                        <li className="flex items-center gap-2 text-sm font-medium">
-                                            <Check className="size-4" />
-                                            <span>
-                                                Discount codes & promotions
-                                            </span>
-                                        </li>
-                                        <li className="flex items-center gap-2 text-sm font-medium">
-                                            <Check className="size-4" />
-                                            <span>Priority support</span>
-                                        </li>
-                                    </ul>
+                                    </li>
+                                    <li className="flex items-center gap-2 text-sm font-medium">
+                                        <Check className="size-4" />
+                                        <span>
+                                            Customization options for your store
+                                        </span>
+                                    </li>
+                                    <li className="flex items-center gap-2 text-sm font-medium">
+                                        <Check className="size-4" />
+                                        <span>
+                                            Unlimited products + categories +
+                                            orders
+                                        </span>
+                                    </li>
+                                    <li className="flex items-center gap-2 text-sm font-medium">
+                                        <Check className="size-4" />
+                                        <span>
+                                            Mobile friendly Business dashboard
+                                        </span>
+                                    </li>
+                                    <li className="flex items-center gap-2 text-sm font-medium">
+                                        <Check className="size-4" />
+                                        <span>
+                                            Analytics & Reports on what's
+                                            selling
+                                        </span>
+                                    </li>
+                                    <li className="flex items-center gap-2 text-sm font-medium">
+                                        <Check className="size-4" />
+                                        <span>
+                                            Automated inventory tracking
+                                        </span>
+                                    </li>
+                                    <li className="flex items-center gap-2 text-sm font-medium">
+                                        <Check className="size-4" />
+                                        <span>
+                                            Real-time SMS & Email notifications
+                                        </span>
+                                    </li>
+                                </ul>
 
-                                    <Button
-                                        disabled
-                                        className="relative isolate mt-6"
-                                    >
-                                        Coming soon
-                                    </Button>
-                                </div>
+                                <Button
+                                    as={Link}
+                                    className="relative isolate mt-6 rounded-full bg-white text-black"
+                                    href="/auth/register"
+                                >
+                                    {auth.user
+                                        ? "Go to dashboard"
+                                        : "Claim your free shop"}
+                                </Button>
                             </div>
                         </div>
-                        {/* <div className="mx-auto max-w-2xl py-20 text-xl font-medium">
+                        <div className="mx-auto max-w-2xl py-20 text-xl font-medium">
                             <blockquote className="relative">
                                 <span className="absolute -left-2 top-0">
                                     “
                                 </span>
                                 <p>
                                     <i className="font-light">
-                                        Setting up an online store used to be a
-                                        nightmare—business registrations,
-                                        payment gateways, and endless red tape.
-                                        With Selll, I skipped all the hassle and
-                                        had my storefront live in minutes. No
-                                        complicated setup, no business
-                                        registration—just effortless selling!
+                                        It's crazy how fast I was able to
+                                        set up my store, add products, and start
+                                        selling. This has been a beautiful
+                                        experience for me.
                                     </i>
                                     ”
                                 </p>
@@ -187,32 +138,32 @@ const Pricing = ({ auth }) => {
                                 <div className="mt-6 flex items-center gap-3 text-base">
                                     <div className="size-12 overflow-hidden rounded shadow-inner">
                                         <img
-                                            src="https://pbs.twimg.com/profile_images/1896126751102619648/lEsHUBx3_400x400.jpg"
-                                            alt="Sebastian Livingstone"
+                                            src="https://cdn1.selll.online/stores/69/514CE09C-1930-4885-BDC4-B3BAC7DC079D.PNG"
+                                            alt="Montana’s Tech Hub"
                                             className="size-full"
                                         />
                                     </div>
 
                                     <div>
                                         <p className="text-strong">
-                                            Sebastian Livingstone
+                                            Montana’s Tech Hub
                                         </p>
                                         <p className="text-default">
-                                            Digital Creator (
+                                            Electronics Store (
                                             <a
-                                                href="https://osemuix.selll.store"
+                                                href="https://tanatechub.selll.store"
                                                 target="_blank"
                                                 rel="pricing_testimonial"
                                                 className="text-primary-orange"
                                             >
-                                                osemuix.selll.store
+                                                tanatechub.selll.store
                                             </a>
                                             )
                                         </p>
                                     </div>
                                 </div>
                             </blockquote>
-                        </div> */}
+                        </div>
                     </div>
                 </div>
             </section>

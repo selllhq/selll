@@ -9,7 +9,7 @@ export default function SignUpMiniForm({ auth }) {
         </Button>
     ) : (
         <form
-            className="my-16 rounded-full p-[6px] max-w-[508px] bg-background w-full border border-gray500 mx-auto flex items-center"
+            className="my-16 rounded-full p-[6px] max-w-[508px] bg-background w-full border border-gray500 flex items-center"
             method="get"
             action="/auth/register"
         >

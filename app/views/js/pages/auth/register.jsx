@@ -283,7 +283,7 @@ export default function Register({ request }) {
 
                     <blockquote className="text-xl font-medium text-white mb-6">
                         Selll made it super easy to set up my online store and
-                        start selling digital products in minutes.
+                        start selling my products in minutes.
                     </blockquote>
 
                     <div className="flex items-center justify-center space-x-3">
@@ -296,11 +296,15 @@ export default function Register({ request }) {
                         </div>
                         <div className="text-left">
                             <p className="text-white font-medium">
-                                @mychidarko
+                                LMK Catfish Haven
                             </p>
-                            <p className="text-white/70 text-sm">
-                                mychidarko.selll.store
-                            </p>
+                            <a
+                                href="https://lmk-catfish-haven.selll.store"
+                                target="_blank"
+                                className="text-primary-orange underline text-sm"
+                            >
+                                lmk-catfish-haven.selll.store
+                            </a>
                         </div>
                     </div>
                 </div>

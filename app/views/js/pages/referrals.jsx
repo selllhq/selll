@@ -50,7 +50,7 @@ export default function Referrals({ referrals, referralCode }) {
             className="dark:bg-[#141414] p-4 pt-2"
             breadcrumbs={[
                 {
-                    title: "Dashboard",
+                    title: "Home",
                     href: "/dashboard",
                 },
                 {

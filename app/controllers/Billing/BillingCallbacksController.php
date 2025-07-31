@@ -3,6 +3,7 @@
 namespace App\Controllers\Billing;
 
 use App\Controllers\Controller;
+use App\Helpers\SMSHelper;
 use App\Mailers\StoreMailer;
 use App\Models\Cart;
 use App\Models\Product;
@@ -94,6 +95,26 @@ class BillingCallbacksController extends Controller
                 'mp_country_code' => $geoData['countryCode'] ?? null,
                 '$country_code' => $geoData['countryCode'] ?? null,
             ]);
+
+            SMSHelper::write([
+                'recipient' => $userCart->customer->phone,
+                'senderId' => 'Selll Order',
+                'message' => "Your order has been successfully placed. Thank you for shopping with us! Your order ID is {$userCart->id}.",
+            ])
+                ->withArkesel()
+                ->send();
+
+            if ($userCart->store->phone) {
+                $customerFirstName = explode(' ', $userCart->customer->name)[0];
+
+                SMSHelper::write([
+                    'recipient' => $userCart->store->phone,
+                    'senderId' => 'Selll Order',
+                    'message' => "{$customerFirstName} just paid GHS {$userCart->total} for order #{$userCart->id} on your store. View order: selll.online/orders/{$userCart->id}",
+                ])
+                    ->withArkesel()
+                    ->send();
+            }
 
             StoreMailer::newOrder($ownerEmail, $userCart)->send();
         } else {

@@ -123,4 +123,9 @@ class Store extends Model
     {
         return $this->hasMany(ShippingUpdate::class);
     }
+
+    public function payLinks()
+    {
+        return $this->hasMany(Paylink::class);
+    }
 }

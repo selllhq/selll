@@ -67,7 +67,7 @@ const Blog = ({ auth, posts = [] }) => {
                             <input
                                 type="text"
                                 placeholder="Search articles..."
-                                className="w-full py-3 pl-10 pr-4 border border-gray-200 dark:border-gray-700 bg-muted dark:text-white rounded-md focus:ring-primary-orange focus:border-primary-orange"
+                                className="w-full py-3 pl-10 pr-4 border border-gray-200 dark:border-gray-700 bg-muted dark:text-white rounded-full focus:ring-primary-orange focus:border-primary-orange"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
@@ -76,7 +76,7 @@ const Blog = ({ auth, posts = [] }) => {
                 </div>
             </div>
 
-            <div className="border-t border-b border-gray-200 dark:border-gray-800">
+            {/* <div className="border-t border-b border-gray-200 dark:border-gray-800">
                 <div className="md:mx-auto">
                     <div className="flex overflow-x-auto py-3 gap-8 justify-center px-10">
                         {categories.map((category, index) => (
@@ -94,7 +94,7 @@ const Blog = ({ auth, posts = [] }) => {
                         ))}
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             <main className="py-12">
                 <div className="container mx-auto px-4 sm:px-6">
@@ -176,6 +176,14 @@ const Blog = ({ auth, posts = [] }) => {
                     </div>
 
                     {/* No pagination or footer links in the reference image */}
+                    <iframe
+                        src="https://selllhq.substack.com/embed"
+                        width="100%"
+                        height="320"
+                        frameborder="0"
+                        className="border border-gray-200 dark:border-neutral-900 rounded-lg mb-12"
+                        scrolling="no"
+                    ></iframe>
                 </div>
             </main>
 

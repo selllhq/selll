@@ -2,9 +2,7 @@
 
 namespace App\Controllers\Auth;
 
-use App\Helpers\AnalyticsHelper;
 use App\Helpers\StoreHelper;
-use App\Models\Store;
 use App\Models\User;
 use App\Services\AnalyticsService;
 use App\Services\StoresService;
@@ -23,6 +21,8 @@ class DashboardController extends Controller
         response()->inertia('dashboard', array_merge($data, [
             'stores' => make(StoresService::class)->getUserStores(),
             'currentStore' => $currentStore,
+            'customers' => $currentStore->customers()->get(),
+            'products' => $currentStore->products()->whereNot('status', 'archived')->get(),
         ]));
     }
 

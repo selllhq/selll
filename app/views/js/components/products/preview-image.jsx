@@ -6,7 +6,7 @@ const PreviewImage = ({ image, alt, onRemove }) => {
     }
 
     return (
-        <div className="aspect-square rounded-lg bg-gray-100 dark:bg-[#2C2C2C] relative overflow-hidden">
+        <div className="aspect-square rounded-3xl bg-gray-100 dark:bg-[#2C2C2C] relative overflow-hidden">
             <img src={image} alt={alt} className="w-full h-full object-cover" />
             <button
                 type="button"

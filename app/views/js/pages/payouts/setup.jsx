@@ -1,23 +1,11 @@
+import { toast } from "sonner";
 import { Head, router, useForm } from "@inertiajs/react";
+import { ArrowDownCircle, CreditCard, Wallet, Banknote } from "lucide-react";
 import Layout from "@/layouts/app-layout";
-import Button from "@/components/form/button";
 import Input from "@/components/form/input";
 import Label from "@/components/form/label";
+import Button from "@/components/form/button";
 import InputError from "@/components/form/input-error";
-import {
-    AlertTriangle,
-    ArrowDownCircle,
-    CreditCard,
-    Wallet,
-    Banknote,
-} from "lucide-react";
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-} from "@/components/shared/card";
-import { toast } from "sonner";
 
 export default function PayoutSetupPage({ banks, mobileMoney }) {
     const { data, setData, post, errors, processing } = useForm({
@@ -52,7 +40,7 @@ export default function PayoutSetupPage({ banks, mobileMoney }) {
             className="p-4 pt-2"
             breadcrumbs={[
                 {
-                    title: "Dashboard",
+                    title: "Home",
                     href: "/dashboard",
                 },
                 {
@@ -69,7 +57,7 @@ export default function PayoutSetupPage({ banks, mobileMoney }) {
         >
             <Head title="Setup Payouts" />
 
-            <div className="space-y-6 md:px-4 md:py-6 md:mt-8 px-0">
+            <div className="space-y-6 md:px-4 md:py-6 mt-8 px-0">
                 <div className="mb-10">
                     <h2 className="text-2xl md:text-3xl font-bold mb-1">
                         Set up we pay you
@@ -84,60 +72,24 @@ export default function PayoutSetupPage({ banks, mobileMoney }) {
                     <div className="md:col-span-2">
                         <form onSubmit={submit} className="space-y-5">
                             <div>
-                                <h3 className="text-base font-medium">
-                                    How would you like to get paid?
-                                </h3>
-                                <p className="mb-2 text-xs text-muted-foreground">
-                                    Payouts will be sent in GHS
-                                </p>
-                                <div className="border rounded-lg divide-x grid grid-cols-2 bg-background dark:border-[#333] dark:divide-[#333] overflow-hidden">
-                                    <div
-                                        className="flex items-start gap-4 p-4 cursor-pointer hover:bg-primary-orange/10 dark:hover:bg-muted"
-                                        onClick={() => {
-                                            setData("type", "momo");
-                                        }}
-                                    >
-                                        <Wallet className="h-6 w-6 text-primary-orange mt-1" />
-                                        <div className="flex-1">
-                                            <p className="font-medium">
-                                                Mobile money
-                                            </p>
-                                            <ul className="list-disc list-inside text-xs text-muted-foreground space-y-0.5">
-                                                <li>1-3 business days</li>
-                                                <li>Minimum payout GHS 10</li>
-                                                <li>Fees - 1.95%</li>
-                                            </ul>
-                                        </div>
-                                        <input
-                                            type="radio"
-                                            checked={data.type === "momo"}
-                                            className="bg-primary-orange"
-                                        />
-                                    </div>
-                                    <div
-                                        className="flex items-start gap-4 p-4 cursor-pointer hover:bg-primary-orange/10 dark:hover:bg-muted"
-                                        onClick={() => {
-                                            setData("type", "bank");
-                                        }}
-                                    >
-                                        <Banknote className="h-6 w-6 text-primary-orange mt-1" />
-                                        <div className="flex-1">
-                                            <p className="font-medium">
-                                                Bank account
-                                            </p>
-                                            <ul className="list-disc list-inside text-xs text-muted-foreground space-y-0.5">
-                                                <li>1-3 business days</li>
-                                                <li>Minimum payout GHS 50</li>
-                                                <li>Fees - 1.95%</li>
-                                            </ul>
-                                        </div>
-                                        <input
-                                            type="radio"
-                                            checked={data.type === "bank"}
-                                            className="bg-primary-orange"
-                                        />
-                                    </div>
-                                </div>
+                                <Label
+                                    htmlFor="type"
+                                    className="block text-xs font-medium mb-2"
+                                >
+                                    Account Type
+                                </Label>
+                                <Input
+                                    as="select"
+                                    id="type"
+                                    value={data.type}
+                                    onChange={(e) => {
+                                        setData("type", e.target.value);
+                                    }}
+                                    className="w-full dark:bg-[#141414] dark:border-[#333]"
+                                >
+                                    <option value="momo">Mobile Money</option>
+                                    <option value="bank">Bank Account</option>
+                                </Input>
                                 {errors.type && (
                                     <InputError message={errors.type} />
                                 )}
@@ -217,7 +169,9 @@ export default function PayoutSetupPage({ banks, mobileMoney }) {
                                     <>
                                         {data.account_number.length > 8 && (
                                             <small className="text-muted-foreground">
-                                                Double-check your details before submitting, funds cannot be reversed once sent.
+                                                Double-check your details before
+                                                submitting, funds cannot be
+                                                reversed once sent.
                                             </small>
                                         )}
                                     </>

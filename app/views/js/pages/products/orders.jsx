@@ -11,6 +11,7 @@ import {
     ShoppingBag,
     TrendingUp,
     Search,
+    Wallet,
 } from "lucide-react";
 import Layout from "@/layouts/app-layout";
 import EmptyState from "@/components/layout/empty";
@@ -30,6 +31,7 @@ import {
 } from "@/components/shared/table";
 import Input from "@/components/form/input";
 import Button from "@/components/form/button";
+import CreatePaylink from "@/components/modals/create-paylink";
 
 export default function Orders({ orders = [], currentStore }) {
     const [search, setSearch] = useState("");
@@ -166,11 +168,12 @@ export default function Orders({ orders = [], currentStore }) {
                                     as={Link}
                                     href="/products"
                                     variant="outline"
-                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] w-full md:w-auto"
+                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] hover:text-neutral-200 w-full"
                                 >
                                     <Package className="h-4 w-4" />
                                     View Products
                                 </Button>
+                                {/* <CreatePaylink store={currentStore} /> */}
                                 <Button
                                     as="a"
                                     href={`https://${currentStore?.slug}.selll.store`}
@@ -183,20 +186,20 @@ export default function Orders({ orders = [], currentStore }) {
                             </div>
                         </div>
 
-                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mt-8">
+                        <div className="grid gap-4 grid-cols-2 lg:grid-cols-4 mt-8">
                             <Card>
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
                                     <CardTitle>Total Orders</CardTitle>
-                                    <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                    <div className="bg-[#2C2C2C] p-2 rounded-lg hidden sm:block">
                                         <ShoppingCart className="h-5 w-5 text-primary-orange" />
                                     </div>
                                 </CardHeader>
                                 <CardContent>
                                     <div>
-                                        <div className="text-4xl font-bold mb-2">
+                                        <div className="text-xl sm:text-2xl md:text-4xl font-bold mb-2">
                                             {orders.length.toLocaleString()}
                                         </div>
-                                        <div className="flex items-center gap-1 text-emerald-500">
+                                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 text-emerald-500">
                                             <span className="text-sm">
                                                 ↑{" "}
                                                 {orders
@@ -212,8 +215,11 @@ export default function Orders({ orders = [], currentStore }) {
                                                     )
                                                     .length.toLocaleString()}
                                             </span>
-                                            <span className="text-sm text-gray-500">
+                                            <span className="text-sm text-gray-500 hidden sm:inline-block">
                                                 from last month
+                                            </span>
+                                            <span className="text-sm text-gray-500 sm:hidden">
+                                                this month
                                             </span>
                                         </div>
                                     </div>
@@ -223,13 +229,13 @@ export default function Orders({ orders = [], currentStore }) {
                             <Card>
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
                                     <CardTitle>Total Revenue</CardTitle>
-                                    <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                    <div className="bg-[#2C2C2C] p-2 rounded-lg hidden sm:block">
                                         <TrendingUp className="h-5 w-5 text-primary-orange" />
                                     </div>
                                 </CardHeader>
                                 <CardContent>
                                     <div>
-                                        <div className="text-4xl font-bold mb-2">
+                                        <div className="text-xl sm:text-2xl md:text-4xl font-bold mb-2">
                                             {new Intl.NumberFormat("en-US", {
                                                 style: "currency",
                                                 currency:
@@ -237,7 +243,7 @@ export default function Orders({ orders = [], currentStore }) {
                                                     "USD",
                                             }).format(totalRevenue)}
                                         </div>
-                                        <div className="flex items-center gap-1 text-emerald-500">
+                                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 text-emerald-500">
                                             <span className="text-sm">
                                                 ↑{" "}
                                                 {new Intl.NumberFormat(
@@ -276,8 +282,11 @@ export default function Orders({ orders = [], currentStore }) {
                                                         ),
                                                 )}
                                             </span>
-                                            <span className="text-sm text-gray-500">
+                                            <span className="text-sm text-gray-500 hidden sm:inline-block">
                                                 from last month
+                                            </span>
+                                            <span className="text-sm text-gray-500 sm:hidden">
+                                                this month
                                             </span>
                                         </div>
                                     </div>
@@ -286,14 +295,14 @@ export default function Orders({ orders = [], currentStore }) {
 
                             <Card>
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
-                                    <CardTitle>Completed Orders</CardTitle>
-                                    <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                    <CardTitle>Completed</CardTitle>
+                                    <div className="bg-[#2C2C2C] p-2 rounded-lg hidden sm:block">
                                         <CheckCircle className="h-5 w-5 text-primary-orange" />
                                     </div>
                                 </CardHeader>
                                 <CardContent>
                                     <div>
-                                        <div className="text-4xl font-bold mb-2">
+                                        <div className="text-xl sm:text-2xl md:text-4xl font-bold mb-2">
                                             {orders
                                                 .filter(
                                                     (order) =>
@@ -304,7 +313,7 @@ export default function Orders({ orders = [], currentStore }) {
                                                 )
                                                 .length.toLocaleString()}
                                         </div>
-                                        <div className="flex items-center gap-1 text-emerald-500">
+                                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 text-emerald-500">
                                             <span className="text-sm">
                                                 {Math.round(
                                                     (orders.filter(
@@ -330,13 +339,13 @@ export default function Orders({ orders = [], currentStore }) {
                             <Card>
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
                                     <CardTitle>Average Order</CardTitle>
-                                    <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                    <div className="bg-[#2C2C2C] p-2 rounded-lg hidden sm:block">
                                         <ShoppingBag className="h-5 w-5 text-primary-orange" />
                                     </div>
                                 </CardHeader>
                                 <CardContent>
                                     <div>
-                                        <div className="text-4xl font-bold mb-2">
+                                        <div className="text-xl sm:text-2xl md:text-4xl font-bold mb-2">
                                             {new Intl.NumberFormat("en-US", {
                                                 style: "currency",
                                                 currency:
@@ -361,12 +370,15 @@ export default function Orders({ orders = [], currentStore }) {
                                                     : 0,
                                             )}
                                         </div>
-                                        <div className="flex items-center gap-1 text-emerald-500">
+                                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 text-emerald-500">
                                             <span className="text-sm">
                                                 ↑ 4.3%
                                             </span>
-                                            <span className="text-sm text-gray-500">
+                                            <span className="text-sm text-gray-500 hidden sm:inline-block">
                                                 from last month
+                                            </span>
+                                            <span className="text-sm text-gray-500 sm:hidden">
+                                                this month
                                             </span>
                                         </div>
                                     </div>

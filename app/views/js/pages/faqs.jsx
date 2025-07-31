@@ -47,7 +47,7 @@ const Faqs = ({ auth }) => {
             {
                 id: "how-much-does-it-cost",
                 question: "How much does Selll cost?",
-                answer: "You can start selling online for free with Selll's Starter plan, you don't have to pay anything until you're ready to scale.",
+                answer: "We charge 3.95% per transaction on all sales made through your store. There are no monthly fees or hidden costs, so you only pay when you make sales. This makes it easy to start selling without any upfront investment.",
             },
             {
                 id: "technical-knowledge",
@@ -102,7 +102,7 @@ const Faqs = ({ auth }) => {
             {
                 id: "transaction-fees",
                 question: "What are the transaction fees?",
-                answer: "Selll charges a small transaction fee of 2% per transaction. In addition, the payment processor fees which vary by provider, but range from 1.9% to 3%. Not to worry though, we are always working to reduce these fees and provide the best value for our users.",
+                answer: "Selll charges a small transaction fee of 3.95% per transaction. This means that if a customer buys a product for GHS 100, we take GHS 3.95 and send you GHS 96.05. There are no monthly fees or hidden costs, so you only pay when you make sales.",
             },
             {
                 id: "payment-security",
@@ -285,16 +285,15 @@ const Faqs = ({ auth }) => {
                         </h2>
 
                         <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                            Selll and Leaf have compiled a list of frequently
-                            asked questions to help you get started selling your
-                            products online.
+                            Ready to get started with Selll? Here are some
+                            frequently asked questions to help you understand
+                            the platform and its features.
                         </p>
                     </div>
 
                     <div className="mt-16 max-w-7xl mx-auto">
-                        {/* Category Tabs */}
                         <div className="mb-12 relative">
-                            <div className="flex overflow-x-auto hide-scrollbar pb-2 gap-2 justify-center flex-wrap">
+                            <div className="flex max-w-4xl mx-auto overflow-x-auto hide-scrollbar pb-2 gap-2 justify-center flex-wrap">
                                 {categories.map((category) => {
                                     const Icon = category.icon;
                                     return (
@@ -421,10 +420,8 @@ const Faqs = ({ auth }) => {
                 </div>
             </div>
 
-            <section className="relative overflow-hidden py-24 bg-[#141414]">
-                <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-5"></div>
+            <section className="relative overflow-hidden py-24 bg-black rounded-t-3xl">
                 <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-orange/20 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-orange/20 to-transparent"></div>
                 <div className="absolute -left-20 -top-20 size-96 rounded-full bg-primary-orange/10 blur-3xl"></div>
                 <div className="absolute -right-20 -bottom-20 size-96 rounded-full bg-primary-orange/10 blur-3xl"></div>
 
@@ -440,7 +437,7 @@ const Faqs = ({ auth }) => {
                         </p>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
-                            <div className="bg-[#1A1A1A] rounded-xl p-6 border border-[#2C2C2C] hover:border-primary-orange/40 transition-colors group">
+                            <div className="bg-[#1A1A1A] rounded-3xl p-6 border border-[#2C2C2C] hover:border-primary-orange/40 transition-colors group">
                                 <div className="size-14 rounded-full bg-primary-orange/10 flex items-center justify-center mx-auto mb-5">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -465,7 +462,7 @@ const Faqs = ({ auth }) => {
                                     within 24 hours.
                                 </p>
                                 <Button
-                                    className="w-full bg-[#2C2C2C] hover:bg-primary-orange text-white font-medium py-2.5 transition-colors group-hover:bg-primary-orange/90 flex items-center justify-center"
+                                    className="rounded-full w-full bg-[#2C2C2C] hover:bg-primary-orange text-white font-medium py-2.5 transition-colors group-hover:bg-primary-orange/90 flex items-center justify-center"
                                     onClick={() => window.Tawk_API?.toggle()}
                                 >
                                     <span>Contact Support</span>
@@ -487,7 +484,7 @@ const Faqs = ({ auth }) => {
                                 </Button>
                             </div>
 
-                            <div className="bg-[#1A1A1A] rounded-xl p-6 border border-[#2C2C2C] hover:border-primary-orange/40 transition-colors group">
+                            <div className="bg-[#1A1A1A] rounded-3xl p-6 border border-[#2C2C2C] hover:border-primary-orange/40 transition-colors group">
                                 <div className="size-14 rounded-full bg-primary-orange/10 flex items-center justify-center mx-auto mb-5">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -516,7 +513,7 @@ const Faqs = ({ auth }) => {
                                     as="a"
                                     href="https://selll.tawk.help"
                                     target="_blank"
-                                    className="w-full bg-[#2C2C2C] hover:bg-primary-orange text-white font-medium py-2.5 transition-colors group-hover:bg-primary-orange/90 flex items-center justify-center"
+                                    className="rounded-full w-full bg-[#2C2C2C] hover:bg-primary-orange text-white font-medium py-2.5 transition-colors group-hover:bg-primary-orange/90 flex items-center justify-center"
                                 >
                                     <span>View Documentation</span>
                                     <svg

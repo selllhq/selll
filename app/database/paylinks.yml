@@ -1,0 +1,12 @@
+columns:
+  status:
+    type: enum
+    default: pending
+    values:
+      - pending
+      - paid
+      - expired
+
+relationships:
+  - Store
+  - Cart
