@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # syntax=docker/dockerfile:experimental
 
 ARG PHP_VERSION=8.2
@@ -20,7 +22,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PHP_MEMORY_LIMIT=256M \
     PHP_MAX_EXECUTION_TIME=90 \
     PHP_POST_MAX_SIZE=100M \
-    PHP_UPLOAD_MAX_FILE_SIZE=100M \
+    PHP_UPLOAD_MAX_FILE_SIZE=500M \
     PHP_ALLOW_URL_FOPEN=Off
 
 # Install system packages
@@ -34,33 +36,9 @@ RUN add-apt-repository ppa:ondrej/php -y && \
     echo "deb http://apt.postgresql.org/pub/repos/apt jammy-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
     wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 
-# Install PHP and extensions
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    php${PHP_VERSION}-fpm \
-    php${PHP_VERSION}-cli \
-    php${PHP_VERSION}-mbstring \
-    php${PHP_VERSION}-opcache \
-    php${PHP_VERSION}-xml \
-    php${PHP_VERSION}-fileinfo \
-    php${PHP_VERSION}-tokenizer \
-    php${PHP_VERSION}-ctype \
-    php${PHP_VERSION}-curl \
-    php${PHP_VERSION}-dom \
-    php${PHP_VERSION}-gd \
-    php${PHP_VERSION}-mysql \
-    php${PHP_VERSION}-pgsql \
-    php${PHP_VERSION}-sqlite3 \
-    php${PHP_VERSION}-simplexml \
-    php${PHP_VERSION}-xmlwriter \
-    php${PHP_VERSION}-bcmath \
-    php${PHP_VERSION}-exif \
-    php${PHP_VERSION}-iconv \
-    php${PHP_VERSION}-phar \
-    php${PHP_VERSION}-posix \
-    php${PHP_VERSION}-zip
-
 # Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+ADD .fly/php/packages/${PHP_VERSION}.txt /tmp/php-packages.txt
 
 RUN ln -sf /usr/bin/vim.tiny /etc/alternatives/vim && \
     ln -sf /etc/alternatives/vim /usr/bin/vim && \
