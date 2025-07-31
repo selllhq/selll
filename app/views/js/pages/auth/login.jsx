@@ -242,23 +242,23 @@ export default function Login({ request }) {
                     </div>
 
                     <blockquote className="text-xl font-medium text-white mb-6">
-                        I just got access to Selll and it's amazing! Already set
-                        up my store and products, and it's so easy to use.
+                        I just created my store and it's amazing! Already added
+                        my products, and it's so easy to use.
                     </blockquote>
 
                     <div className="flex items-center justify-center space-x-3">
                         <div className="flex-shrink-0">
                             <img
-                                src="https://github.com/identicons/jasonlong.png"
-                                alt="User"
+                                src="https://cdn1.selll.online/stores/55/IMG_0190.webp"
+                                alt="Big Unda"
                                 className="w-10 h-10 rounded-full"
                             />
                         </div>
                         <div className="text-left">
-                            <p className="text-white font-medium">@osemuix</p>
-                            <p className="text-white/70 text-sm">
-                                osemuix.selll.store
-                            </p>
+                            <p className="text-white font-medium">Big Unda</p>
+                            <a href="https://big-unda.selll.store" target="_blank" className="text-primary-orange underline text-sm">
+                                big-unda.selll.store
+                            </a>
                         </div>
                     </div>
                 </div>

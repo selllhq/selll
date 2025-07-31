@@ -104,11 +104,11 @@ const Setup = ({ currentStore, categories }) => {
             <div className="flex flex-col md:flex-row h-full w-full overflow-y-auto lg:overflow-hidden pt-28">
                 <div className="flex-1 min-w-0 flex flex-col order-2 md:order-1">
                     <div className="flex-1 overflow-y-auto pb-6">
-                        <div className="max-w-2xl px-6 py-20 relative">
+                        <div className="max-w-2xl px-6 pt-12 pb-20 relative">
                             <div className="flex items-center justify-between mb-8">
                                 <div>
                                     <h2 className="text-4xl font-bold mb-2">
-                                        Create New Product
+                                        Add Product
                                     </h2>
                                     <p className="text-gray-500 dark:text-gray-400">
                                         Add a new product to your store
@@ -149,7 +149,7 @@ const Setup = ({ currentStore, categories }) => {
                                         ))}
 
                                         {images.length < 8 && (
-                                            <label className="aspect-square rounded-lg bg-gray-100 dark:bg-[#2C2C2C] flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200 dark:hover:bg-[#3C3C3C] transition-colors gap-2">
+                                            <label className="aspect-square rounded-3xl bg-gray-100 dark:bg-[#2C2C2C] flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200 dark:hover:bg-[#3C3C3C] transition-colors gap-2">
                                                 <input
                                                     type="file"
                                                     accept="image/*"
@@ -173,7 +173,7 @@ const Setup = ({ currentStore, categories }) => {
                                     <Label htmlFor="name">Product Name</Label>
                                     <Input
                                         id="name"
-                                        className="block w-full bg-gray-100 dark:bg-[#2C2C2C] border-0 focus:ring-primary-orange/20 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
+                                        className="rounded-xl block w-full bg-gray-100 dark:bg-[#2C2C2C] border-0 focus:ring-primary-orange/20 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
                                         value={data.name}
                                         onChange={(e) =>
                                             setData("name", e.target.value)
@@ -211,7 +211,7 @@ const Setup = ({ currentStore, categories }) => {
                                         onChange={(value) =>
                                             setData("description", value)
                                         }
-                                        className="block w-full min-h-20 bg-gray-100 dark:bg-[#2C2C2C] border-0 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
+                                        className="rounded-2xl block w-full min-h-20 bg-gray-100 dark:bg-[#2C2C2C] border-0 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
                                         editorContentClassName="p-5"
                                         output="html"
                                         placeholder="Describe your product..."
@@ -250,7 +250,7 @@ const Setup = ({ currentStore, categories }) => {
                                                 max={currencyLimits.max}
                                                 step="0.01"
                                                 className={cn(
-                                                    "block w-full pl-14 bg-gray-100 dark:bg-[#2C2C2C] dark:border-0 focus:ring-primary-orange/20 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400",
+                                                    "rounded-xl block w-full pl-14 bg-gray-100 dark:bg-[#2C2C2C] dark:border-0 focus:ring-primary-orange/20 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400",
                                                     {
                                                         "border-red-500 focus:ring-red-500":
                                                             priceError,

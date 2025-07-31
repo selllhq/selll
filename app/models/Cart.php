@@ -26,6 +26,11 @@ class Cart extends Model
         return $this->hasOne(Payout::class);
     }
 
+    public function payLink()
+    {
+        return $this->hasOne(Payout::class);
+    }
+
     public function shippingUpdates()
     {
         return $this->hasMany(ShippingUpdate::class);

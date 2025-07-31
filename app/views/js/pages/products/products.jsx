@@ -153,20 +153,20 @@ export default function Products({ orders = [], products, currentStore }) {
                             </div>
                         </div>
 
-                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mt-8">
-                            <Card>
+                        <div className="grid gap-4 grid-cols-2 lg:grid-cols-4 mt-8">
+                            <Card className="rounded-3xl">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
-                                    <CardTitle>Total Products</CardTitle>
-                                    <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                    <CardTitle>Products</CardTitle>
+                                    <div className="bg-[#2C2C2C] p-2 rounded-lg hidden sm:block">
                                         <ShoppingBag className="h-5 w-5 text-primary-orange" />
                                     </div>
                                 </CardHeader>
                                 <CardContent>
                                     <div>
-                                        <div className="text-4xl font-bold mb-2">
+                                        <div className="text-xl sm:text-2xl md:text-4xl font-bold mb-2">
                                             {products.length.toLocaleString()}
                                         </div>
-                                        <div className="flex items-center gap-1 text-emerald-500">
+                                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 text-emerald-500">
                                             <span className="text-sm">
                                                 ↑{" "}
                                                 {products
@@ -182,24 +182,27 @@ export default function Products({ orders = [], products, currentStore }) {
                                                     )
                                                     .length.toLocaleString()}
                                             </span>
-                                            <span className="text-sm text-gray-500">
+                                            <span className="text-sm text-gray-500 hidden sm:inline-block">
                                                 from last month
+                                            </span>
+                                            <span className="text-sm text-gray-500 sm:hidden">
+                                                this month
                                             </span>
                                         </div>
                                     </div>
                                 </CardContent>
                             </Card>
 
-                            <Card>
+                            <Card className="rounded-3xl">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
-                                    <CardTitle>Total Sales</CardTitle>
-                                    <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                    <CardTitle>Your Sales</CardTitle>
+                                    <div className="bg-[#2C2C2C] p-2 rounded-lg hidden sm:block">
                                         <TrendingUp className="h-5 w-5 text-primary-orange" />
                                     </div>
                                 </CardHeader>
                                 <CardContent>
                                     <div>
-                                        <div className="text-4xl font-bold mb-2">
+                                        <div className="text-xl sm:text-2xl md:text-4xl font-bold mb-2">
                                             {new Intl.NumberFormat("en-US", {
                                                 style: "currency",
                                                 currency:
@@ -221,7 +224,7 @@ export default function Products({ orders = [], products, currentStore }) {
                                                     ),
                                             )}
                                         </div>
-                                        <div className="flex items-center gap-1 text-emerald-500">
+                                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 text-emerald-500">
                                             <span className="text-sm">
                                                 ↑{" "}
                                                 {new Intl.NumberFormat(
@@ -259,8 +262,11 @@ export default function Products({ orders = [], products, currentStore }) {
                                                         ),
                                                 )}
                                             </span>
-                                            <span className="text-sm text-gray-500">
+                                            <span className="text-sm text-gray-500 hidden sm:inline-block">
                                                 from last month
+                                            </span>
+                                            <span className="text-sm text-gray-500 sm:hidden">
+                                                this month
                                             </span>
                                         </div>
                                     </div>

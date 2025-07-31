@@ -20,9 +20,9 @@ const buttonVariants = cva(
                 link: "text-primary underline-offset-4 hover:underline",
             },
             size: {
-                default: "h-10 px-4 py-2",
-                sm: "h-9 rounded-lg px-3",
-                lg: "h-11 rounded-lg px-8",
+                default: "h-10 px-4 py-2 rounded-full",
+                sm: "h-9 rounded-full px-3",
+                lg: "h-11 rounded-full px-8",
                 icon: "h-10 w-10",
             },
         },
@@ -44,6 +44,8 @@ const Button = React.forwardRef(
                     "relative",
                 )}
                 ref={ref}
+                disabled={loading || props.disabled}
+                aria-busy={loading}
                 {...props}
             >
                 <span className="flex items-center justify-center gap-2">

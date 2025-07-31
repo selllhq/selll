@@ -26,6 +26,7 @@ import {
     Search,
     ShoppingCart,
     Phone,
+    Plus,
 } from "lucide-react";
 import Button from "@/components/form/button";
 import Input from "@/components/form/input";
@@ -164,39 +165,39 @@ export default function Customers({
                             <div className="flex items-center gap-3 mt-2 md:mt-0">
                                 <Button
                                     as={Link}
-                                    href="/orders"
                                     variant="outline"
-                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C]"
+                                    href="/customers/new"
+                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] hover:text-neutral-200 w-full md:w-auto"
+                                >
+                                    <Plus className="h-4 w-4" />
+                                    Add Customer
+                                </Button>
+                                <Button
+                                    as={Link}
+                                    variant="outline"
+                                    href="/orders"
+                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] hover:text-neutral-200 w-full md:w-auto"
                                 >
                                     <ShoppingCart className="h-4 w-4" />
                                     View Orders
                                 </Button>
-                                <Button
-                                    as={Link}
-                                    href={`https://${currentStore?.slug}.selll.store`}
-                                    className="bg-primary-orange hover:bg-primary-orange/90"
-                                    target="_blank"
-                                >
-                                    <Store className="h-4 w-4" />
-                                    View Store
-                                </Button>
                             </div>
                         </div>
 
-                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mt-8">
-                            <Card>
+                        <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
+                            <Card className="rounded-3xl">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
-                                    <CardTitle>Total Customers</CardTitle>
-                                    <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                    <CardTitle>Customers</CardTitle>
+                                    <div className="bg-[#2C2C2C] p-2 rounded-lg hidden sm:block">
                                         <Users className="h-5 w-5 text-primary-orange" />
                                     </div>
                                 </CardHeader>
                                 <CardContent>
                                     <div>
-                                        <div className="text-4xl font-bold mb-2">
+                                        <div className="text-xl sm:text-2xl md:text-4xl font-bold mb-2">
                                             {customers.length.toLocaleString()}
                                         </div>
-                                        <div className="flex items-center gap-1 text-emerald-500">
+                                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 text-emerald-500">
                                             <span className="text-sm">
                                                 ↑{" "}
                                                 {customers
@@ -212,24 +213,27 @@ export default function Customers({
                                                     )
                                                     .length.toLocaleString()}
                                             </span>
-                                            <span className="text-sm text-gray-500">
+                                            <span className="text-sm text-gray-500 hidden sm:inline-block">
                                                 from last month
+                                            </span>
+                                            <span className="text-sm text-gray-500 sm:hidden">
+                                                this month
                                             </span>
                                         </div>
                                     </div>
                                 </CardContent>
                             </Card>
 
-                            <Card>
+                            <Card className="rounded-3xl">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
-                                    <CardTitle>Total Revenue</CardTitle>
-                                    <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                    <CardTitle>Your Sales</CardTitle>
+                                    <div className="bg-[#2C2C2C] p-2 rounded-lg hidden sm:block">
                                         <TrendingUp className="h-5 w-5 text-primary-orange" />
                                     </div>
                                 </CardHeader>
                                 <CardContent>
                                     <div>
-                                        <div className="text-4xl font-bold mb-2">
+                                        <div className="text-xl sm:text-2xl md:text-4xl font-bold mb-2">
                                             {new Intl.NumberFormat("en-US", {
                                                 style: "currency",
                                                 currency:
@@ -237,7 +241,7 @@ export default function Customers({
                                                     "USD",
                                             }).format(totalSpent)}
                                         </div>
-                                        <div className="flex items-center gap-1 text-emerald-500">
+                                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 text-emerald-500">
                                             <span className="text-sm">
                                                 ↑{" "}
                                                 {new Intl.NumberFormat(
@@ -276,24 +280,27 @@ export default function Customers({
                                                         ),
                                                 )}
                                             </span>
-                                            <span className="text-sm text-gray-500">
+                                            <span className="text-sm text-gray-500 hidden sm:inline-block">
                                                 from last month
+                                            </span>
+                                            <span className="text-sm text-gray-500 sm:hidden">
+                                                this month
                                             </span>
                                         </div>
                                     </div>
                                 </CardContent>
                             </Card>
 
-                            <Card>
+                            <Card className="rounded-3xl">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
-                                    <CardTitle>Repeat Customers</CardTitle>
-                                    <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                    <CardTitle>Repeat Buyers</CardTitle>
+                                    <div className="bg-[#2C2C2C] p-2 rounded-lg hidden sm:block">
                                         <ShoppingBag className="h-5 w-5 text-primary-orange" />
                                     </div>
                                 </CardHeader>
                                 <CardContent>
                                     <div>
-                                        <div className="text-4xl font-bold mb-2">
+                                        <div className="text-xl sm:text-2xl md:text-4xl font-bold mb-2">
                                             {customers
                                                 .filter((customer) => {
                                                     const customerOrders =
@@ -309,7 +316,7 @@ export default function Customers({
                                                 })
                                                 .length.toLocaleString()}
                                         </div>
-                                        <div className="flex items-center gap-1 text-emerald-500">
+                                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 text-emerald-500">
                                             <span className="text-sm">
                                                 {Math.round(
                                                     (customers.filter(
@@ -339,16 +346,16 @@ export default function Customers({
                                 </CardContent>
                             </Card>
 
-                            <Card>
+                            <Card className="rounded-3xl">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
                                     <CardTitle>Average Spend</CardTitle>
-                                    <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                    <div className="bg-[#2C2C2C] p-2 rounded-lg hidden sm:block">
                                         <User className="h-5 w-5 text-primary-orange" />
                                     </div>
                                 </CardHeader>
                                 <CardContent>
                                     <div>
-                                        <div className="text-4xl font-bold mb-2">
+                                        <div className="text-xl sm:text-2xl md:text-4xl font-bold mb-2">
                                             {new Intl.NumberFormat("en-US", {
                                                 style: "currency",
                                                 currency:
@@ -356,12 +363,15 @@ export default function Customers({
                                                     "USD",
                                             }).format(averageSpentPerCustomer)}
                                         </div>
-                                        <div className="flex items-center gap-1 text-emerald-500">
+                                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 text-emerald-500">
                                             <span className="text-sm">
                                                 ↑ 5.2%
                                             </span>
-                                            <span className="text-sm text-gray-500">
+                                            <span className="text-sm text-gray-500 hidden sm:inline-block">
                                                 from last month
+                                            </span>
+                                            <span className="text-sm text-gray-500 sm:hidden">
+                                                this month
                                             </span>
                                         </div>
                                     </div>
