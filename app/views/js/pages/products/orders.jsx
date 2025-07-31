@@ -31,6 +31,7 @@ import {
 } from "@/components/shared/table";
 import Input from "@/components/form/input";
 import Button from "@/components/form/button";
+import CreatePaylink from "@/components/modals/create-paylink";
 
 export default function Orders({ orders = [], currentStore }) {
     const [search, setSearch] = useState("");
@@ -172,15 +173,7 @@ export default function Orders({ orders = [], currentStore }) {
                                     <Package className="h-4 w-4" />
                                     View Products
                                 </Button>
-                                <Button
-                                    as={Link}
-                                    variant="outline"
-                                    href="/links/new"
-                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] hover:text-neutral-200 w-full md:w-auto"
-                                >
-                                    <Wallet className="h-4 w-4" />
-                                    Payment Link
-                                </Button>
+                                <CreatePaylink store={currentStore} />
                                 <Button
                                     as="a"
                                     href={`https://${currentStore?.slug}.selll.store`}

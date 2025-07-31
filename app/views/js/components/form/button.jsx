@@ -44,6 +44,8 @@ const Button = React.forwardRef(
                     "relative",
                 )}
                 ref={ref}
+                disabled={loading || props.disabled}
+                aria-busy={loading}
                 {...props}
             >
                 <span className="flex items-center justify-center gap-2">

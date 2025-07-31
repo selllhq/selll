@@ -7,6 +7,7 @@ use App\Helpers\StoreHelper;
 use App\Mailers\UserMailer;
 use App\Models\Cart;
 use App\Services\OrdersService;
+use App\Services\PaylinksService;
 
 class OrdersController extends Controller
 {
@@ -35,6 +36,21 @@ class OrdersController extends Controller
             'items' => $data['items'],
             'currentStore' => $currentStore,
         ]);
+    }
+
+    public function storeLinks()
+    {
+        $link = make(PaylinksService::class)->createLink();
+
+        if (!$link) {
+            return response()->redirect('/orders');
+        }
+
+        // Optionally send email or SMS notification
+        // UserMailer::sendLinkCreatedNotification($link, $currentStore);
+        // SMSHelper::sendLinkCreatedNotification($link, $currentStore);
+
+        return response()->redirect("/orders/{$link['cart_id']}", 303);
     }
 
     public function shipping($id)

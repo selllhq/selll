@@ -10,3 +10,13 @@ app()->group('/orders', [
         app()->post('/(\d+)/complete', 'Store\OrdersController@complete');
     }
 ]);
+
+app()->group('/paylinks', [
+    'middleware' => ['auth.required', 'auth.verified'],
+    function () {
+        // app()->get('/', 'Store\OrdersController@links');
+        // app()->get('/new', 'Store\InvoicesController@create');
+        app()->post('/new', 'Store\OrdersController@storeLinks');
+        // app()->get('/(\d+)', 'Store\InvoicesController@show');
+    }
+]);
