@@ -74,7 +74,7 @@ class BillingCallbacksController extends Controller
                 'wallet_id' => $userCart->store->payout_account_id,
             ]);
 
-            if ($userCart->store->carts()->count() === 1) {
+            if ($userCart->store->carts()->count() === 1 && User::find(auth()->id())) {
                 User::find(auth()->id())->referral()->first()?->update([
                     'store_first_order_at' => $payout->updated_at
                 ]);
