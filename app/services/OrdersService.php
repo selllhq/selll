@@ -17,6 +17,11 @@ class OrdersService
         return $store->carts()->with('customer')->latest()->get();
     }
 
+    public function getPaidOrders(Store $store)
+    {
+        return $store->carts()->where('status', 'paid')->with('customer')->latest()->get();
+    }
+
     /**
      * Get a single order by ID
      * @param int $id

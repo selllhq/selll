@@ -27,7 +27,8 @@ import {
 import { BarChart, LineChart } from "@/components/shared/charts";
 import EmptyState from "@/components/layout/empty";
 import Button from "@/components/form/button";
-import CreatePaylink from "@/components/modals/create-paylink";
+import { cn } from "@/utils";
+// import CreatePaylink from "@/components/modals/create-paylink";
 
 export default function Dashboard({
     auth,
@@ -37,9 +38,16 @@ export default function Dashboard({
     currentStore,
     orders = [],
     customers = [],
+    paidOrders = [],
     revenueGraph = [],
+    lowStockProducts = [],
     analytics,
 }) {
+    console.log({
+        paidOrders,
+        lowStockProducts,
+    });
+
     return (
         <Layout
             variant="header"
@@ -108,6 +116,139 @@ export default function Dashboard({
                                 </Button>
                             </div>
                         </div>
+
+                        {(paidOrders.length > 0 ||
+                            lowStockProducts.length > 0) && (
+                            <div className="grid md:grid-cols-2 gap-6 md:gap-4">
+                                {paidOrders.length > 0 && (
+                                    <Card className="text-sm rounded-3xl border border-primary-orange/10">
+                                        <CardHeader className="mb-4">
+                                            <CardTitle>
+                                                You have {paidOrders.length}{" "}
+                                                orders to process
+                                            </CardTitle>
+                                        </CardHeader>
+                                        <CardContent>
+                                            {paidOrders.map((order) => (
+                                                <div
+                                                    key={order.id}
+                                                    className="flex gap-2 mt-2"
+                                                >
+                                                    <Avatar className="h-8 w-8">
+                                                        <AvatarImage
+                                                            src={
+                                                                order.customer
+                                                                    ?.avatar
+                                                            }
+                                                            alt="Avatar"
+                                                        />
+                                                        <AvatarFallback className="bg-primary-orange/10 text-primary-orange">
+                                                            {order.customer.name
+                                                                .split(" ")
+                                                                .map(
+                                                                    (n) => n[0],
+                                                                )
+                                                                .join("")}
+                                                        </AvatarFallback>
+                                                    </Avatar>
+                                                    <div className="flex-1">
+                                                        <h4>
+                                                            {
+                                                                order.customer
+                                                                    .name
+                                                            }
+                                                        </h4>
+                                                        <div className="font-medium text-emerald-500">
+                                                            {new Intl.NumberFormat(
+                                                                "en-US",
+                                                                {
+                                                                    style: "currency",
+                                                                    currency:
+                                                                        currentStore?.currency,
+                                                                },
+                                                            ).format(
+                                                                order.total,
+                                                            )}
+                                                        </div>
+                                                        <span className="text-xs text-gray-500">
+                                                            {dayjs(
+                                                                order.created_at,
+                                                            ).fromNow()}
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <Button
+                                                            as={Link}
+                                                            href={`/orders/${order.id}`}
+                                                            variant="outline"
+                                                            className="text-xs bg-[#2C2C2C]"
+                                                        >
+                                                            View Order
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </CardContent>
+                                    </Card>
+                                )}
+
+                                {lowStockProducts.length > 0 && (
+                                    <Card className="text-sm rounded-3xl border border-primary-red/10">
+                                        <CardHeader className="mb-4">
+                                            <CardTitle>
+                                                {lowStockProducts.length}{" "}
+                                                products need restocking.
+                                            </CardTitle>
+                                        </CardHeader>
+                                        <CardContent>
+                                            {lowStockProducts.map((product) => {
+                                                const image = JSON.parse(
+                                                    product.images || "[]",
+                                                )[0];
+
+                                                return (
+                                                    <div
+                                                        key={product.id}
+                                                        className="flex items-center gap-2 mt-2"
+                                                    >
+                                                        <Avatar className="h-8 w-8">
+                                                            <AvatarImage
+                                                                src={image}
+                                                                alt={
+                                                                    product.name
+                                                                }
+                                                            />
+                                                            <AvatarFallback>
+                                                                {product.name[0].toUpperCase()}
+                                                            </AvatarFallback>
+                                                        </Avatar>
+                                                        <div className="flex-1">
+                                                            <h4>
+                                                                {product.name}
+                                                            </h4>
+                                                            <span className="text-xs text-gray-500">
+                                                                {
+                                                                    product.quantity_items
+                                                                }{" "}
+                                                                items left
+                                                            </span>
+                                                        </div>
+                                                        <Button
+                                                            as={Link}
+                                                            href={`/products/${product.id}`}
+                                                            variant="outline"
+                                                            className="text-xs bg-[#2C2C2C]"
+                                                        >
+                                                            Restock
+                                                        </Button>
+                                                    </div>
+                                                );
+                                            })}
+                                        </CardContent>
+                                    </Card>
+                                )}
+                            </div>
+                        )}
 
                         {dayjs(currentStore?.created_at).isAfter(
                             dayjs().subtract(30, "minutes"),
@@ -323,7 +464,14 @@ export default function Dashboard({
                         </div>
 
                         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 mt-8">
-                            <Card className="rounded-3xl col-span-4">
+                            <Card
+                                className={cn(
+                                    "rounded-3xl",
+                                    paidOrders.length > 0
+                                        ? "col-span-full"
+                                        : "col-span-4",
+                                )}
+                            >
                                 <CardHeader>
                                     <CardTitle>Revenue Over Time</CardTitle>
                                     <CardDescription>
@@ -338,62 +486,70 @@ export default function Dashboard({
                                     />
                                 </CardContent>
                             </Card>
-                            <Card className="rounded-3xl col-span-4 md:col-span-3">
-                                <CardHeader>
-                                    <CardTitle>Recent Orders</CardTitle>
-                                    <CardDescription>
-                                        Latest {Math.min(orders.length, 5)}{" "}
-                                        orders from your store
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="space-y-6">
-                                        {orders.slice(0, 5).map((order) => (
-                                            <div
-                                                className="flex items-center"
-                                                key={order.id}
-                                            >
-                                                <Avatar className="h-9 w-9 ring-2 ring-primary-orange/20">
-                                                    <AvatarImage
-                                                        src={
-                                                            order.customer
-                                                                ?.avatar
-                                                        }
-                                                        alt="Avatar"
-                                                    />
-                                                    <AvatarFallback className="bg-primary-orange/10 text-primary-orange">
-                                                        {order.customer.name
-                                                            .split(" ")
-                                                            .map((n) => n[0])
-                                                            .join("")}
-                                                    </AvatarFallback>
-                                                </Avatar>
-                                                <div className="ml-4 space-y-1">
-                                                    <p className="text-sm font-medium leading-none">
-                                                        {order.customer.name}
-                                                    </p>
-                                                    <p className="text-sm text-gray-500">
-                                                        {dayjs(
-                                                            order.created_at,
-                                                        ).fromNow()}
-                                                    </p>
+
+                            {paidOrders.length === 0 && (
+                                <Card className="rounded-3xl col-span-4 md:col-span-3">
+                                    <CardHeader>
+                                        <CardTitle>Recent Orders</CardTitle>
+                                        <CardDescription>
+                                            Latest {Math.min(orders.length, 5)}{" "}
+                                            orders from your store
+                                        </CardDescription>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="space-y-6">
+                                            {orders.slice(0, 5).map((order) => (
+                                                <div
+                                                    className="flex items-center"
+                                                    key={order.id}
+                                                >
+                                                    <Avatar className="h-9 w-9 ring-2 ring-primary-orange/20">
+                                                        <AvatarImage
+                                                            src={
+                                                                order.customer
+                                                                    ?.avatar
+                                                            }
+                                                            alt="Avatar"
+                                                        />
+                                                        <AvatarFallback className="bg-primary-orange/10 text-primary-orange">
+                                                            {order.customer.name
+                                                                .split(" ")
+                                                                .map(
+                                                                    (n) => n[0],
+                                                                )
+                                                                .join("")}
+                                                        </AvatarFallback>
+                                                    </Avatar>
+                                                    <div className="ml-4 space-y-1">
+                                                        <p className="text-sm font-medium leading-none">
+                                                            {
+                                                                order.customer
+                                                                    .name
+                                                            }
+                                                        </p>
+                                                        <p className="text-sm text-gray-500">
+                                                            {dayjs(
+                                                                order.created_at,
+                                                            ).fromNow()}
+                                                        </p>
+                                                    </div>
+                                                    <div className="ml-auto font-medium text-emerald-500">
+                                                        +
+                                                        {Intl.NumberFormat(
+                                                            "en-US",
+                                                            {
+                                                                style: "currency",
+                                                                currency:
+                                                                    currentStore?.currency,
+                                                            },
+                                                        ).format(order.total)}
+                                                    </div>
                                                 </div>
-                                                <div className="ml-auto font-medium text-emerald-500">
-                                                    +
-                                                    {Intl.NumberFormat(
-                                                        "en-US",
-                                                        {
-                                                            style: "currency",
-                                                            currency:
-                                                                currentStore?.currency,
-                                                        },
-                                                    ).format(order.total)}
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </CardContent>
-                            </Card>
+                                            ))}
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            )}
                         </div>
 
                         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
