@@ -48,6 +48,28 @@ class BillingCallbacksController extends Controller
                 if ($product->quantity === 'limited') {
                     $product->quantity_items -= $item['quantity'];
                     $product->save();
+
+                    if ($product->quantity_items === 0) {
+                        SMSHelper::write([
+                            'recipient' => $userCart->store->phone,
+                            'senderId' => 'Selll',
+                            'message' => "{$product->name} is now out of stock on your store. Please update the product quantity.",
+                        ])
+                            ->withArkesel()
+                            ->send();
+
+                        StoreMailer::outOfStock($product, $userCart->store)->send();
+                    } else if ($product->quantity_items <= 5) {
+                        SMSHelper::write([
+                            'recipient' => $userCart->store->phone,
+                            'senderId' => 'Selll',
+                            'message' => "{$product->name} is running low on stock. Only {$product->quantity_items} left.",
+                        ])
+                            ->withArkesel()
+                            ->send();
+
+                        StoreMailer::lowStock($product, $userCart->store)->send();
+                    }
                 }
             }
 
@@ -109,7 +131,7 @@ class BillingCallbacksController extends Controller
 
                 SMSHelper::write([
                     'recipient' => $userCart->store->phone,
-                    'senderId' => 'Selll Order',
+                    'senderId' => 'Selll',
                     'message' => "{$customerFirstName} just paid GHS {$userCart->total} for order #{$userCart->id} on your store. View order: selll.online/orders/{$userCart->id}",
                 ])
                     ->withArkesel()

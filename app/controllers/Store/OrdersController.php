@@ -2,9 +2,7 @@
 
 namespace App\Controllers\Store;
 
-use App\Helpers\SMSHelper;
 use App\Helpers\StoreHelper;
-use App\Mailers\UserMailer;
 use App\Models\Cart;
 use App\Services\OrdersService;
 use App\Services\PaylinksService;

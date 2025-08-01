@@ -70,6 +70,44 @@ class StoreMailer
      * @param mixed $order The order details
      * @return \Leaf\Mail
      */
+    public static function lowStock($product, $store)
+    {
+        return mailer()->create([
+            'subject' => "Apology for Incorrect Charge - We've Got It Covered",
+            'body' => view('mail.store.low-stock', [
+                'product' => $product,
+            ]),
+            'recipientEmail' => $store->owner->email ?? $store->email,
+            'recipientName' => $store->name ?? $store->owner->name,
+            'senderName' => 'Ashley from Selll',
+        ]);
+    }
+
+    /**
+     * Create mail for store when a new order is placed
+     * @param mixed $email The email of the store owner
+     * @param mixed $order The order details
+     * @return \Leaf\Mail
+     */
+    public static function outOfStock($product, $store)
+    {
+        return mailer()->create([
+            'subject' => "Apology for Incorrect Charge - We've Got It Covered",
+            'body' => view('mail.store.out-of-stock', [
+                'product' => $product,
+            ]),
+            'recipientEmail' => $store->owner->email ?? $store->email,
+            'recipientName' => $store->name ?? $store->owner->name,
+            'senderName' => 'Ashley from Selll',
+        ]);
+    }
+
+    /**
+     * Create mail for store when a new order is placed
+     * @param mixed $email The email of the store owner
+     * @param mixed $order The order details
+     * @return \Leaf\Mail
+     */
     public static function wrongOrder()
     {
         return mailer()->create([
@@ -80,7 +118,7 @@ class StoreMailer
             ]),
             'recipientEmail' => 'kingvival@gmail.com',
             'recipientName' => 'Survival King',
-            'senderName' => 'Selll Receipts',
+            'senderName' => 'Ashley from Selll',
         ]);
     }
 }

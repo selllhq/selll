@@ -5,6 +5,7 @@ namespace App\Controllers\Auth;
 use App\Helpers\StoreHelper;
 use App\Models\User;
 use App\Services\AnalyticsService;
+use App\Services\OrdersService;
 use App\Services\StoresService;
 
 class DashboardController extends Controller
@@ -19,10 +20,17 @@ class DashboardController extends Controller
         }
 
         response()->inertia('dashboard', array_merge($data, [
-            'stores' => make(StoresService::class)->getUserStores(),
             'currentStore' => $currentStore,
             'customers' => $currentStore->customers()->get(),
+            'stores' => make(StoresService::class)->getUserStores(),
+            'paidOrders' => make(OrdersService::class)->getPaidOrders($currentStore),
             'products' => $currentStore->products()->whereNot('status', 'archived')->get(),
+            'lowStockProducts' => $currentStore->products()
+                ->where('quantity', 'limited')
+                ->whereRaw('CAST(quantity_items AS INTEGER) < ?', [5])
+                ->where('status', 'active')
+                ->orderByRaw('CAST(quantity_items AS INTEGER) ASC')
+                ->get(),
         ]));
     }
 

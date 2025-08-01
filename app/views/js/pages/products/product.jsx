@@ -105,20 +105,26 @@ export default function Products({
 
             <div className="py-6 px-4 mt-28 space-y-10 w-full">
                 {isLowStock && (
-                    <div className="mb-6 bg-yellow-50 border border-yellow-200 text-yellow-900 dark:bg-yellow-900/10 dark:border-yellow-700 dark:text-yellow-200 px-6 py-4 rounded-lg flex items-center justify-between gap-4">
-                        <div>
-                            <strong>Low Stock:</strong> You have less than 3
-                            items left in stock for this product. Top up soon to
-                            avoid missing sales!
-                        </div>
-                        <Button
-                            variant="outline"
-                            className="bg-yellow-100 dark:bg-yellow-800 text-yellow-900 dark:text-yellow-100 border-yellow-200 dark:border-yellow-700 hover:bg-yellow-200 dark:hover:bg-yellow-700"
-                            onClick={handleTopUpClick}
-                        >
-                            Top Up
-                        </Button>
-                    </div>
+                    <Card className="text-sm rounded-3xl border border-primary-red/10">
+                        <CardHeader className="mb-2">
+                            <CardTitle>Low Stock</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="mb-2">
+                                You have only {product.quantity_items}{" "}
+                                {product.quantity_items == 1 ? "item" : "items"}{" "}
+                                left in stock for this product. Top up to avoid
+                                missing sales.
+                            </div>
+                            <Button
+                                variant="outline"
+                                className="text-xs bg-[#2C2C2C] w-full"
+                                onClick={handleTopUpClick}
+                            >
+                                Restock
+                            </Button>
+                        </CardContent>
+                    </Card>
                 )}
 
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 w-full">
@@ -248,11 +254,11 @@ export default function Products({
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10 w-full">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-4 md:mb-10 w-full">
                     <div className="md:col-span-1 lg:col-span-2">
                         <div className="aspect-square w-full h-[400px] relative">
                             {productImages.length > 0 ? (
-                                <div className="bg-white dark:bg-[#2C2C2C] rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800 transition-all h-full w-full">
+                                <div className="bg-white dark:bg-[#2C2C2C] rounded-3xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800 transition-all h-full w-full">
                                     <img
                                         src={productImages[activeImage]}
                                         alt={product.name}
@@ -260,7 +266,7 @@ export default function Products({
                                     />
                                 </div>
                             ) : (
-                                <div className="bg-white dark:bg-[#2C2C2C] rounded-xl overflow-hidden flex flex-col items-center justify-center p-8 h-full w-full border border-gray-100 dark:border-gray-800 shadow-sm">
+                                <div className="bg-white dark:bg-[#2C2C2C] rounded-3xl overflow-hidden flex flex-col items-center justify-center p-8 h-full w-full border border-gray-100 dark:border-gray-800 shadow-sm">
                                     <ImageIcon className="h-16 w-16 text-gray-400 dark:text-gray-500 mb-4" />
                                     <p className="text-gray-600 dark:text-gray-400 text-center">
                                         No product images available
@@ -288,19 +294,19 @@ export default function Products({
                         )}
                     </div>
 
-                    <div className="space-y-4">
-                        <Card className="border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow transition-all">
+                    <div className="grid gap-4 grid-cols-2 md:grid-cols-1">
+                        <Card className="rounded-3xl">
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                 <CardTitle className="dark:text-white">
                                     Price
                                 </CardTitle>
-                                <div className="bg-gray-100 dark:bg-[#2C2C2C] p-2 rounded-lg">
+                                <div className="bg-gray-100 dark:bg-[#2C2C2C] p-2 rounded-lg hidden sm:block">
                                     <TrendingUp className="h-5 w-5 text-primary-orange" />
                                 </div>
                             </CardHeader>
                             <CardContent>
                                 <div>
-                                    <div className="text-4xl font-bold mb-2 text-primary-orange">
+                                    <div className="text-xl sm:text-2xl md:text-4xl font-bold mb-2 text-primary-orange">
                                         {new Intl.NumberFormat("en-US", {
                                             style: "currency",
                                             currency: currentStore?.currency,
@@ -344,18 +350,18 @@ export default function Products({
                             </CardContent>
                         </Card>
 
-                        <Card className="border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow transition-all">
+                        <Card className="rounded-3xl">
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                 <CardTitle className="dark:text-white">
                                     Product Views
                                 </CardTitle>
-                                <div className="bg-gray-100 dark:bg-[#2C2C2C] p-2 rounded-lg">
+                                <div className="bg-gray-100 dark:bg-[#2C2C2C] p-2 rounded-lg hidden sm:block">
                                     <Package className="h-5 w-5 text-primary-orange" />
                                 </div>
                             </CardHeader>
                             <CardContent>
                                 <div>
-                                    <div className="text-4xl font-bold mb-2 dark:text-white">
+                                    <div className="text-xl sm:text-2xl md:text-4xl font-bold mb-2 dark:text-white">
                                         {views}
                                     </div>
                                     <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 gap-2">
@@ -367,17 +373,17 @@ export default function Products({
                     </div>
                 </div>
 
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 w-full">
-                    <Card>
+                <div className="grid gap-4 grid-cols-2 lg:grid-cols-4 w-full">
+                    <Card className="rounded-3xl">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
                             <CardTitle>Total Revenue</CardTitle>
-                            <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                            <div className="bg-[#2C2C2C] p-2 rounded-lg hidden sm:block">
                                 <Wallet className="h-5 w-5 text-primary-orange" />
                             </div>
                         </CardHeader>
                         <CardContent>
                             <div>
-                                <div className="text-4xl font-bold mb-2">
+                                <div className="text-xl sm:text-2xl md:text-4xl font-bold mb-2">
                                     {new Intl.NumberFormat("en-US", {
                                         style: "currency",
                                         currency: currentStore?.currency,
@@ -396,7 +402,7 @@ export default function Products({
                                             ),
                                     )}
                                 </div>
-                                <div className="flex items-center gap-1 text-emerald-500">
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-1 text-emerald-500">
                                     <span className="text-sm">
                                         ↑{" "}
                                         {new Intl.NumberFormat("en-US", {
@@ -428,24 +434,27 @@ export default function Products({
                                                 ),
                                         )}
                                     </span>
-                                    <span className="text-sm text-gray-500">
+                                    <span className="text-sm text-gray-500 hidden sm:inline-block">
                                         from last month
+                                    </span>
+                                    <span className="text-sm text-gray-500 sm:hidden">
+                                        this month
                                     </span>
                                 </div>
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card>
+                    <Card className="rounded-3xl">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
                             <CardTitle>Total Sales</CardTitle>
-                            <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                            <div className="bg-[#2C2C2C] p-2 rounded-lg hidden sm:block">
                                 <Wallet className="h-5 w-5 text-primary-orange" />
                             </div>
                         </CardHeader>
                         <CardContent>
                             <div>
-                                <div className="text-4xl font-bold mb-2">
+                                <div className="text-xl sm:text-2xl md:text-4xl font-bold mb-2">
                                     {purchases?.reduce(
                                         (acc, purchase) =>
                                             acc + purchase.quantity,
@@ -453,7 +462,7 @@ export default function Products({
                                     )}{" "}
                                     sold
                                 </div>
-                                <div className="flex items-center gap-1 text-emerald-500">
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-1 text-emerald-500">
                                     <span className="text-sm">
                                         ↑{" "}
                                         {purchases?.reduce((acc, purchase) => {
@@ -470,8 +479,11 @@ export default function Products({
                                             );
                                         }, 0) || 0}{" "}
                                     </span>
-                                    <span className="text-sm text-gray-500">
+                                    <span className="text-sm text-gray-500 hidden sm:inline-block">
                                         from last month
+                                    </span>
+                                    <span className="text-sm text-gray-500 sm:hidden">
+                                        this month
                                     </span>
                                 </div>
                             </div>
@@ -480,16 +492,16 @@ export default function Products({
 
                     {orders.length > 0 && (
                         <>
-                            <Card>
+                            <Card className="rounded-3xl">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
-                                    <CardTitle>Cart abandonment rate</CardTitle>
-                                    <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                    <CardTitle>Cart abandonment%</CardTitle>
+                                    <div className="bg-[#2C2C2C] p-2 rounded-lg hidden sm:block">
                                         <Wallet className="h-5 w-5 text-primary-orange" />
                                     </div>
                                 </CardHeader>
                                 <CardContent>
                                     <div>
-                                        <div className="text-4xl font-bold mb-2">
+                                        <div className="text-xl sm:text-2xl md:text-4xl font-bold mb-2">
                                             {new Intl.NumberFormat("en-US", {
                                                 style: "percent",
                                                 minimumFractionDigits: 0,
@@ -503,7 +515,7 @@ export default function Products({
                                         </div>
                                         <div
                                             className={cn(
-                                                "flex items-center gap-1",
+                                                "flex flex-col sm:flex-row sm:items-center gap-1",
                                                 orders.filter(
                                                     (order) =>
                                                         order.status ===
@@ -529,24 +541,27 @@ export default function Products({
                                                     ).length || 0,
                                                 )}
                                             </span>
-                                            <span className="text-sm text-gray-500">
+                                            <span className="text-sm text-gray-500 hidden sm:inline-block">
                                                 from last month
+                                            </span>
+                                            <span className="text-sm text-gray-500 sm:hidden">
+                                                this month
                                             </span>
                                         </div>
                                     </div>
                                 </CardContent>
                             </Card>
 
-                            <Card>
+                            <Card className="rounded-3xl">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
                                     <CardTitle>Repeat purchase rate</CardTitle>
-                                    <div className="bg-[#2C2C2C] p-2 rounded-lg">
+                                    <div className="bg-[#2C2C2C] p-2 rounded-lg hidden sm:block">
                                         <Wallet className="h-5 w-5 text-primary-orange" />
                                     </div>
                                 </CardHeader>
                                 <CardContent>
                                     <div>
-                                        <div className="text-4xl font-bold mb-2">
+                                        <div className="text-xl sm:text-2xl md:text-4xl font-bold mb-2">
                                             {new Intl.NumberFormat("en-US", {
                                                 style: "percent",
                                                 minimumFractionDigits: 0,
@@ -568,7 +583,7 @@ export default function Products({
                                                     ).length || 1),
                                             )}
                                         </div>
-                                        <div className="flex items-center gap-1 text-emerald-500">
+                                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 text-emerald-500">
                                             <span className="text-sm">
                                                 ↑{" "}
                                                 {new Intl.NumberFormat(
@@ -581,8 +596,11 @@ export default function Products({
                                                     0.15, // Placeholder value - would typically come from historical data
                                                 )}
                                             </span>
-                                            <span className="text-sm text-gray-500">
+                                            <span className="text-sm text-gray-500 hidden sm:inline-block">
                                                 from last month
+                                            </span>
+                                            <span className="text-sm text-gray-500 sm:hidden">
+                                                this month
                                             </span>
                                         </div>
                                     </div>
@@ -595,14 +613,14 @@ export default function Products({
                 <div className="w-full">
                     <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center gap-3">
-                            <div className="bg-primary-orange/10 p-3 rounded-full">
+                            <div className="bg-primary-orange/10 p-3 rounded-full hidden sm:block">
                                 <ShoppingCart className="h-5 w-5 text-primary-orange" />
                             </div>
                             <div>
                                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">
                                     Recent Orders
                                 </h2>
-                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                <p className="text-sm text-gray-500 dark:text-gray-400 hidden sm:block">
                                     Latest orders for this product
                                 </p>
                             </div>

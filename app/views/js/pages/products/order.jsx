@@ -19,6 +19,7 @@ import {
     Printer,
     Send,
     Check,
+    Pencil,
 } from "lucide-react";
 import Button from "@/components/form/button";
 import {
@@ -298,12 +299,16 @@ export default function Order({ order, items, currentStore }) {
                 <div className="flex flex-col gap-6">
                     <div className="flex flex-col md:flex-row justify-between gap-4 items-start md:items-center">
                         <div className="flex items-center gap-4">
-                            <div className="ring ring-muted-foreground/15 dark:bg-[#1A1A1A] p-3 rounded-lg">
+                            <div className="ring ring-muted-foreground/15 dark:bg-[#1A1A1A] p-3 rounded-lg hidden md:block">
                                 <ShoppingCart className="h-6 w-6 text-primary-orange" />
                             </div>
                             <div>
                                 <h1 className="text-2xl font-bold">
-                                    Order #{order?.id}
+                                    Order #{order?.id}{" "}
+                                    <StatusBadge
+                                        className="py-1 pl-1 pr-1.5 rounded-full"
+                                        status={order?.status}
+                                    />
                                 </h1>
                                 <p className="text-sm text-gray-400">
                                     Placed on{" "}
@@ -315,17 +320,12 @@ export default function Order({ order, items, currentStore }) {
                         </div>
 
                         <div className="flex flex-col md:flex-row gap-3 items-start md:items-center">
-                            <StatusBadge
-                                className="py-2.5"
-                                status={order?.status}
-                            />
-
                             {order?.status !== "pending" &&
                                 order?.status !== "failed" && (
                                     <div className="flex gap-2">
                                         <Button
                                             size="sm"
-                                            className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
+                                            className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C] hidden md:flex"
                                             onClick={handlePrint}
                                         >
                                             <Printer className="h-4 w-4" />
@@ -336,37 +336,155 @@ export default function Order({ order, items, currentStore }) {
                                         orderItems?.some(
                                             (item) => item.product?.physical,
                                         ) ? (
-                                            <Button
-                                                size="sm"
-                                                className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
-                                                onClick={() =>
-                                                    setDeliveryModalOpen(true)
-                                                }
-                                            >
-                                                <Package className="h-4 w-4" />
-                                                Update Delivery
-                                            </Button>
+                                            <>
+                                                <Button
+                                                    size="sm"
+                                                    className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
+                                                    onClick={() =>
+                                                        setDeliveryModalOpen(
+                                                            true,
+                                                        )
+                                                    }
+                                                >
+                                                    <Package className="h-4 w-4" />
+                                                    Update Delivery
+                                                </Button>
+                                                <Button
+                                                    size="sm"
+                                                    className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
+                                                    onClick={markAsDelivered}
+                                                >
+                                                    <Check className="h-4 w-4" />
+                                                    Complete Order
+                                                </Button>
+                                            </>
                                         ) : (
-                                            <Button
-                                                as="a"
-                                                size="sm"
-                                                href={`${order?.store_url}/orders/${order?.id}`}
-                                                className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                <Eye className="h-4 w-4" />
-                                                View order
-                                            </Button>
+                                            // <Button
+                                            //     as="a"
+                                            //     size="sm"
+                                            //     href={`${order?.store_url}/orders/${order?.id}`}
+                                            //     className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
+                                            //     target="_blank"
+                                            //     rel="noopener noreferrer"
+                                            // >
+                                            //     <Eye className="h-4 w-4" />
+                                            //     View order
+                                            // </Button>
+                                            <></>
                                         )}
                                     </div>
                                 )}
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="md:col-span-2 h-full flex flex-col">
-                            <Card className="flex-1 flex flex-col h-full">
+                    <Card className="h-full rounded-3xl md:hidden">
+                        <CardContent>
+                            {order?.customer ? (
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-3">
+                                        <div className="h-12 w-12 rounded-full bg-[#2C2C2C] flex items-center justify-center text-lg font-medium text-white">
+                                            {getInitials(order.customer.name)}
+                                        </div>
+                                        <div>
+                                            <h3 className="font-medium">
+                                                {order.customer.name}
+                                            </h3>
+                                            <p className="text-xs text-primary/65">
+                                                Customer since{" "}
+                                                {dayjs(
+                                                    order.customer.created_at,
+                                                ).format("MMM D, YYYY")}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-2 pt-2 ml-2">
+                                        {order.customer.email && (
+                                            <div className="flex items-center gap-2">
+                                                <Mail className="h-4 w-4 text-primary/75" />
+                                                <a
+                                                    className="text-sm text-primary/65 hover:underline"
+                                                    href={`mailto:${order.customer.email}`}
+                                                >
+                                                    {order.customer.email}
+                                                </a>
+                                            </div>
+                                        )}
+
+                                        {order.customer.phone && (
+                                            <div className="flex items-center gap-2">
+                                                <Phone className="h-4 w-4 text-primary/75" />
+                                                <a
+                                                    className="text-sm text-primary/65 hover:underline"
+                                                    href={`tel:${order.customer.phone}`}
+                                                >
+                                                    {order.customer.phone}
+                                                </a>
+                                            </div>
+                                        )}
+
+                                        {order.customer.address && (
+                                            <div className="flex items-start gap-2">
+                                                <MapPin className="h-4 w-4 text-primary/75 mt-0.5" />
+                                                <a
+                                                    className="text-sm text-primary/65 underline"
+                                                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(order.customer.address)}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    {order.customer.address}
+                                                </a>
+                                            </div>
+                                        )}
+
+                                        {order.customer.notes && (
+                                            <div className="flex items-start gap-2">
+                                                <Pencil className="h-4 w-4 text-primary/75 mt-0.5" />
+                                                <p className="text-sm text-primary/65">
+                                                    {order.customer.notes}
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <p className="text-xs text-primary/65 px-4 bg-muted-foreground/15 rounded-none py-4">
+                                        Let your customer know what’s happening.
+                                        Update delivery status and mark the
+                                        order complete when it’s done.
+                                    </p>
+
+                                    <div className="pt-2">
+                                        <Button
+                                            size="sm"
+                                            className="w-full bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C]"
+                                            onClick={() =>
+                                                router.visit(
+                                                    `/customers/${order.customer.id}`,
+                                                )
+                                            }
+                                        >
+                                            View Customer Profile
+                                        </Button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="text-center py-4">
+                                    <User className="h-12 w-12 text-gray-500 mx-auto mb-2" />
+                                    <h3 className="font-medium mb-1">
+                                        Anonymous Customer
+                                    </h3>
+                                    <p className="text-sm text-gray-400">
+                                        This order was placed without a customer
+                                        account.
+                                    </p>
+                                </div>
+                            )}
+                        </CardContent>
+                    </Card>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="lg:col-span-2 h-full flex flex-col">
+                            <Card className="flex-1 flex flex-col h-full rounded-3xl">
                                 <CardHeader>
                                     <CardTitle className="flex items-center gap-2">
                                         <Package className="h-5 w-5 text-primary-orange" />
@@ -519,7 +637,7 @@ export default function Order({ order, items, currentStore }) {
                         </div>
 
                         <div className="space-y-6 h-full flex flex-col">
-                            <Card>
+                            <Card className="h-full rounded-3xl hidden md:block">
                                 <CardContent>
                                     {order?.customer ? (
                                         <div className="space-y-4">
@@ -578,7 +696,7 @@ export default function Order({ order, items, currentStore }) {
                                                     <div className="flex items-start gap-2">
                                                         <MapPin className="h-4 w-4 text-primary/75 mt-0.5" />
                                                         <a
-                                                            className="text-sm text-primary/65 hover:underline"
+                                                            className="text-sm text-primary/65 underline"
                                                             href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(order.customer.address)}`}
                                                             target="_blank"
                                                             rel="noopener noreferrer"
@@ -590,7 +708,26 @@ export default function Order({ order, items, currentStore }) {
                                                         </a>
                                                     </div>
                                                 )}
+
+                                                {order.customer.notes && (
+                                                    <div className="flex items-start gap-2">
+                                                        <Pencil className="h-4 w-4 text-primary/75 mt-0.5" />
+                                                        <p className="text-sm text-primary/65">
+                                                            {
+                                                                order.customer
+                                                                    .notes
+                                                            }
+                                                        </p>
+                                                    </div>
+                                                )}
                                             </div>
+
+                                            <p className="text-xs text-primary/65 px-4 bg-muted-foreground/15 rounded-none py-4">
+                                                Let your customer know what’s
+                                                happening. Update delivery
+                                                status and mark the order
+                                                complete when it’s done.
+                                            </p>
 
                                             <div className="pt-2">
                                                 <Button
@@ -621,7 +758,7 @@ export default function Order({ order, items, currentStore }) {
                                 </CardContent>
                             </Card>
 
-                            <Card>
+                            <Card className="h-full rounded-3xl">
                                 <CardHeader>
                                     <CardTitle className="flex items-center gap-2">
                                         <Clock className="h-5 w-5 text-primary-orange" />
@@ -801,30 +938,18 @@ export default function Order({ order, items, currentStore }) {
                             </div>
                         </div>
 
-                        <div className="flex flex-col gap-2 pt-2">
-                            <Button
-                                onClick={handleDeliveryUpdate}
-                                disabled={
-                                    !deliveryUpdate.trim() ||
-                                    !expectedDeliveryDate ||
-                                    isUpdating
-                                }
-                                className="w-full"
-                            >
-                                <Send className="w-4 h-4 mr-2" />
-                                Send Update
-                            </Button>
-                            OR
-                            <Button
-                                onClick={markAsDelivered}
-                                disabled={isUpdating}
-                                variant="outline"
-                                className="w-full"
-                            >
-                                <Check className="w-4 h-4 mr-2" />
-                                Mark as Delivered
-                            </Button>
-                        </div>
+                        <Button
+                            onClick={handleDeliveryUpdate}
+                            disabled={
+                                !deliveryUpdate.trim() ||
+                                !expectedDeliveryDate ||
+                                isUpdating
+                            }
+                            className="w-full"
+                        >
+                            <Send className="w-4 h-4 mr-2" />
+                            Send Update
+                        </Button>
                     </div>
                 </DialogContent>
             </Dialog>

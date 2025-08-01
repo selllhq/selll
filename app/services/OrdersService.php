@@ -17,6 +17,11 @@ class OrdersService
         return $store->carts()->with('customer')->latest()->get();
     }
 
+    public function getPaidOrders(Store $store)
+    {
+        return $store->carts()->where('status', 'paid')->with('customer')->latest()->get();
+    }
+
     /**
      * Get a single order by ID
      * @param int $id
@@ -79,25 +84,23 @@ class OrdersService
 
         $expectedDeliveryDate = tick($expectedDeliveryDate)->format('dd, DD MMMM YYYY');
 
-        if ($order->customer->email) {
-            UserMailer::shippingUpdate(
-                $order,
-                $currentStore,
-                $message,
-                $expectedDeliveryDate
-            )
-                ->send();
-        } else {
-            $message = $message ? ": $message" : '';
+        UserMailer::shippingUpdate(
+            $order,
+            $currentStore,
+            $message,
+            $expectedDeliveryDate
+        )
+            ->send();
 
-            SMSHelper::write([
-                'recipient' => $order->customer->phone,
-                'senderId' => 'Selll Order',
-                'message' => "Update on your order #{$order->id} from {$currentStore->name} {$message}. Expected delivery date is {$expectedDeliveryDate}. Visit {$order->store_url}/orders/{$order->id} for more details.",
-            ])
-                ->withArkesel()
-                ->send();
-        }
+        $message = $message ? ": $message" : '';
+
+        SMSHelper::write([
+            'recipient' => $order->customer->phone,
+            'senderId' => 'Selll Order',
+            'message' => "Update on your order #{$order->id} from {$currentStore->name}{$message}. Expected delivery date is {$expectedDeliveryDate}. {$order->store_url}/orders/{$order->id}",
+        ])
+            ->withArkesel()
+            ->send();
     }
 
     /**
