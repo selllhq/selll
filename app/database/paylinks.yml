@@ -6,6 +6,9 @@ columns:
       - pending
       - paid
       - expired
+  provider:
+    type: string
+    default: paystack
 
 relationships:
   - Store

@@ -44,6 +44,7 @@ export default function Order({ order, items, currentStore, paylink }) {
     const [expectedDeliveryDate, setExpectedDeliveryDate] = useState();
     const [isUpdating, setIsUpdating] = useState(false);
 
+    const payLink = `${window.location.origin}/pay/${currentStore.id}/${order.id}`;
     const orderItems = order?.items?.length > 0 ? order?.items : (items ?? []);
     const subtotal = orderItems.reduce((acc, item) => {
         const price = item.product?.price || 0;
@@ -382,7 +383,7 @@ export default function Order({ order, items, currentStore, paylink }) {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div className="lg:col-span-2 h-full flex flex-col">
-                            {paylink?.id && (
+                            {paylink?.id && order.status === "pending" && (
                                 <Card className="h-full rounded-3xl mb-6">
                                     <CardHeader>
                                         <CardTitle className="flex items-center gap-2">
@@ -397,14 +398,14 @@ export default function Order({ order, items, currentStore, paylink }) {
                                     </CardHeader>
                                     <div className="flex items-center gap-3 py-2 pl-4 pr-2.5 bg-background border rounded-3xl mb-4">
                                         <div className="flex-1 truncate text-sm">
-                                            {`${window.location.origin}/pay/${order.id}`}
+                                            {payLink}
                                         </div>
                                         <Button
                                             size="sm"
                                             variant="outline"
                                             onClick={() => {
                                                 navigator.clipboard.writeText(
-                                                    `${window.location.origin}/pay/${order.id}`,
+                                                    payLink,
                                                 );
                                                 toast.success(
                                                     "Payment link copied to clipboard",
@@ -422,7 +423,7 @@ export default function Order({ order, items, currentStore, paylink }) {
                                             }
                                         >
                                             <img
-                                                src={`https://api.qrserver.com/v1/create-qr-code/?size=650x650&data=${encodeURIComponent(`${window.location.origin}/pay/${order.id}`)}`}
+                                                src={`https://api.qrserver.com/v1/create-qr-code/?size=650x650&data=${encodeURIComponent(payLink)}`}
                                                 alt="QR Code"
                                                 className="w-32 h-32"
                                             />
@@ -464,7 +465,7 @@ export default function Order({ order, items, currentStore, paylink }) {
                                                 <div className="w-full max-w-md bg-white p-6 rounded-2xl shadow-2xl">
                                                     <div className="w-full aspect-square">
                                                         <img
-                                                            src={`https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=${encodeURIComponent(`${window.location.origin}/pay/${order.id}`)}`}
+                                                            src={`https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=${encodeURIComponent(payLink)}`}
                                                             alt="Fullscreen QR Code"
                                                             className="w-full h-full object-contain"
                                                         />
@@ -472,12 +473,12 @@ export default function Order({ order, items, currentStore, paylink }) {
                                                 </div>
                                                 <div className="mt-6 p-4 bg-white/10 backdrop-blur-sm rounded-lg w-full max-w-md">
                                                     <p className="text-center text-white/90 break-all">
-                                                        {`${window.location.origin}/pay/${order.id}`}
+                                                        {payLink}
                                                     </p>
                                                     <button
                                                         onClick={() => {
                                                             navigator.clipboard.writeText(
-                                                                `${window.location.origin}/pay/${order.id}`,
+                                                                payLink,
                                                             );
                                                             toast.success(
                                                                 "Payment link copied to clipboard",
