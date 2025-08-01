@@ -73,7 +73,7 @@ class StoreMailer
     public static function lowStock($product, $store)
     {
         return mailer()->create([
-            'subject' => "Apology for Incorrect Charge - We've Got It Covered",
+            'subject' => "Your product is low on stock",
             'body' => view('mail.store.low-stock', [
                 'product' => $product,
             ]),
@@ -92,7 +92,7 @@ class StoreMailer
     public static function outOfStock($product, $store)
     {
         return mailer()->create([
-            'subject' => "Apology for Incorrect Charge - We've Got It Covered",
+            'subject' => "Your product is out of stock",
             'body' => view('mail.store.out-of-stock', [
                 'product' => $product,
             ]),
