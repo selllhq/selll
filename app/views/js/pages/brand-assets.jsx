@@ -101,25 +101,34 @@ const BrandAssets = ({ currentStore }) => {
         //         </svg>
         //     `,
         // },
-        // {
-        //     id: "email-signature",
-        //     title: "Email Signature",
-        //     description: "Add this to your email signature",
-        //     svg: `
-        //         <svg width="400" height="100" viewBox="0 0 400 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        //             <rect width="400" height="100" fill="white"/>
-        //             <rect x="20" y="20" width="60" height="60" rx="4" fill="#000"/>
-        //             <text x="100" y="40" font-family="Arial, sans-serif" font-size="14" font-weight="600" fill="#0F172A">${storeName}</text>
-        //             <text x="100" y="60" font-family="Arial, sans-serif" font-size="12" fill="#64748B">Shop now on Selll</text>
-        //             <text x="100" y="80" font-family="Arial, sans-serif" font-size="12" fill="#3B82F6" font-weight="500">${storeUrl}</text>
-        //         </svg>
-        //     `,
-        // },
+        {
+            id: "qr-code",
+            title: "Your Store QR Code",
+            description: "Scan this QR code to visit your store",
+            // geneare qr code using https://api.qrserver.com/v1/create-qr-code/?size=750x750&data=https://leafphp.selll.store
+            svg: `
+                <svg xmlns="http://www.w3.org/2000/svg" width="750" height="750" viewBox="0 0 750 750">
+                    <rect width="750" height="750" fill="#141414"/>
+                    <rect x="50" y="50" width="650" height="650" fill="#fff" rx="16"/>
+                    <rect x="100" y="100" width="550" height="550" fill="#000"/>
+                    <text x="50%" y="400" text-anchor="middle" font-family="Arial, sans-serif" font-size="48" font-weight="600" fill="#fff">
+                        ${storeName}
+                    </text>
+                    <text x="50%" y="460" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#fff">
+                        Scan to visit
+                    </text>
+                    <text x="50%" y="500" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#3B82F6" font-weight="500">
+                        ${storeUrl}
+                    </text>
+                    <image href="https://api.qrserver.com/v1/create-qr-code/?size=650x650&data=${encodeURIComponent(storeUrl)}" x="100" y="100" width="550" height="550" />
+                </svg>
+            `,
+        },
         {
             id: `${slugify(storeName)}-announcement`,
             title: "Selll Announcement",
             description:
-                "Announce that customers can place orders on your store",
+                "Let customers know about your store",
             svg: `
                 <svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="background-color: #141414; fill: #fff;" viewBox="0 0 1080 1080">
                     <style>
@@ -195,12 +204,12 @@ const BrandAssets = ({ currentStore }) => {
                     </p>
                 </div>
 
-                <div className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-4">
                     {brandAssets.map((asset) => (
-                        <Card key={asset.id} className="overflow-hidden">
+                        <Card key={asset.id} className="overflow-hidden rounded-3xl p-0">
                             <div className="p-6">
                                 <div className="flex justify-between items-center mb-4">
-                                    <div>
+                                    <div className="w-2/3">
                                         <h3 className="text-lg font-semibold">
                                             {asset.title}
                                         </h3>
@@ -225,7 +234,7 @@ const BrandAssets = ({ currentStore }) => {
                                     </Button>
                                 </div>
                                 <div
-                                    className="border rounded-lg p-4 bg-gray-50 flex justify-center items-center overflow-auto"
+                                    className="border rounded-lg p-4 bg-gray-50 flex justify-center items-center max-h-[350px] overflow-hidden"
                                     dangerouslySetInnerHTML={{
                                         __html: asset.svg,
                                     }}
