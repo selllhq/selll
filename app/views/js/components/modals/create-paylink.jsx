@@ -361,8 +361,8 @@ const PaylinkForm = ({ store }) => {
                 </div>
             )}
 
-            <div>
-                <Button loading={processing}>Create Link</Button>
+            <div className="mt-auto">
+                <Button loading={processing} className="w-full">Create Link</Button>
             </div>
         </form>
     );

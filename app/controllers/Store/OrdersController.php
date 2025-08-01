@@ -16,7 +16,9 @@ class OrdersController extends Controller
         response()->inertia('products/orders', [
             'currentStore' => $currentStore,
             // 'products' => $currentStore->products()->get(),
+            'customers' => $currentStore->customers()->get(),
             'orders' => make(OrdersService::class)->getOrders($currentStore),
+            'products' => $currentStore->products()->whereNot('status', 'archived')->get(),
         ]);
     }
 
@@ -33,6 +35,7 @@ class OrdersController extends Controller
             'order' => $data['order'],
             'items' => $data['items'],
             'currentStore' => $currentStore,
+            'paylink' => make(PaylinksService::class)->getLinkByCartId($data['order']->id, $currentStore),
         ]);
     }
 

@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Helpers\CustomerHelper;
 use App\Helpers\StoreHelper;
-use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Store;
 
@@ -33,6 +32,18 @@ class PaylinksService
             ->payLinks()
             ->with('order')
             ->find($id);
+    }
+
+    /**
+     * Get Link by Cart ID.
+     * @param int $id
+     */
+    public function getLinkByCartId(int $id, Store $store)
+    {
+        return $store
+            ->payLinks()
+            ->where('cart_id', $id)
+            ->first();
     }
 
     public function createLink()
@@ -98,15 +109,16 @@ class PaylinksService
             }
         }
 
+        $storePayoutWallet = $store->wallets()->find($store->payout_account_id);
+
         $cart = $customer->carts()->create([
             'total' => $total,
             'store_id' => $store->id,
             'items' => json_encode($items),
             'currency' => $store->currency,
             'store_url' => "https://{$store->slug}.selll.store",
+            'status' => 'pending',
         ]);
-
-        $storePayoutWallet = $store->wallets()->find($store->payout_account_id);
 
         try {
             $billingProvider = in_array($store->currency, ['GHS', 'NGN', 'KES', 'ZAR']) ? 'paystack' : 'stripe';

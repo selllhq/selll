@@ -173,11 +173,11 @@ export default function Orders({ orders = [], currentStore }) {
                                     <Package className="h-4 w-4" />
                                     View Products
                                 </Button>
-                                {/* <CreatePaylink store={currentStore} /> */}
+                                <CreatePaylink store={currentStore} />
                                 <Button
                                     as="a"
                                     href={`https://${currentStore?.slug}.selll.store`}
-                                    className="bg-primary-orange hover:bg-primary-orange/90 w-full md:w-auto"
+                                    className="bg-primary-orange hover:bg-primary-orange/90 w-full md:w-auto hidden sm:flex"
                                     target="_blank"
                                 >
                                     <Store className="h-4 w-4" />
