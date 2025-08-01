@@ -125,7 +125,10 @@ export default function Dashboard({
                                         <CardHeader className="mb-4">
                                             <CardTitle>
                                                 You have {paidOrders.length}{" "}
-                                                orders to process
+                                                {paidOrders.length === 1
+                                                    ? "order"
+                                                    : "orders"}{" "}
+                                                to process
                                             </CardTitle>
                                         </CardHeader>
                                         <CardContent>
@@ -197,7 +200,10 @@ export default function Dashboard({
                                         <CardHeader className="mb-4">
                                             <CardTitle>
                                                 {lowStockProducts.length}{" "}
-                                                products need restocking.
+                                                {lowStockProducts.length === 1
+                                                    ? "product"
+                                                    : "products"}{" "}
+                                                need restocking.
                                             </CardTitle>
                                         </CardHeader>
                                         <CardContent>
