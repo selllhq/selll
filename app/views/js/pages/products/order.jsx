@@ -359,17 +359,18 @@ export default function Order({ order, items, currentStore }) {
                                                 </Button>
                                             </>
                                         ) : (
-                                            <Button
-                                                as="a"
-                                                size="sm"
-                                                href={`${order?.store_url}/orders/${order?.id}`}
-                                                className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                <Eye className="h-4 w-4" />
-                                                View order
-                                            </Button>
+                                            // <Button
+                                            //     as="a"
+                                            //     size="sm"
+                                            //     href={`${order?.store_url}/orders/${order?.id}`}
+                                            //     className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
+                                            //     target="_blank"
+                                            //     rel="noopener noreferrer"
+                                            // >
+                                            //     <Eye className="h-4 w-4" />
+                                            //     View order
+                                            // </Button>
+                                            <></>
                                         )}
                                     </div>
                                 )}
