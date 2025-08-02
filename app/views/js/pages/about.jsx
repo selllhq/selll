@@ -1,4 +1,3 @@
-import { Check } from "lucide-react";
 import { Link, Head } from "@inertiajs/react";
 import Navbar from "@/components/layout/navbar";
 import Button from "@/components/form/button";
@@ -27,10 +26,10 @@ const About = ({ auth }) => {
                     <p className="font-light md:text-xl text-gray-500 dark:text-gray-300">
                         Selling online is still a nightmare for most people in
                         Africa, from payments to other logistics, it's a mess.
-                        That's why we are building Selll, your all-in-one that
-                        helps you go from “I have something to sell” to “I just
-                        got an order” — in minutes. No coding, no hectic
-                        paperwork.
+                        That's why we are building Selll, your all-in-one
+                        platform that helps you go from “I have something to
+                        sell” to “I just got an order” — in minutes. No coding,
+                        no hectic paperwork.
                     </p>
 
                     <Button

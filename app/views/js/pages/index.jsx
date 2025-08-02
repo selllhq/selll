@@ -1,12 +1,10 @@
-import { CheckCircle } from "lucide-react";
 import { Head, Link } from "@inertiajs/react";
 import Navbar from "@/components/layout/navbar";
 import Button from "@/components/form/button";
-import SignUpMiniForm from "@/components/layout/sign-up-mini-form";
 import { Card } from "@/components/shared/card";
 import Footer from "@/components/layout/footer";
 
-const Lander = ({ auth, activeStores = 0 }) => {
+const Lander = ({ auth, activeStores = 0, purchases = 0 }) => {
     return (
         <div>
             <Head>
@@ -289,6 +287,8 @@ const Lander = ({ auth, activeStores = 0 }) => {
                                 as="a"
                                 variant="link"
                                 href="https://funguy.selll.store"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="p-0 my-10 underline font-medium active:scale-95 transition-all duration-150 ease-in-out flex-shrink-0"
                             >
                                 Order from FunGuy
@@ -299,13 +299,13 @@ const Lander = ({ auth, activeStores = 0 }) => {
                     <div className="my-36">
                         <div className="hidden md:grid grid-cols-3 mb-28">
                             <div className="text-center">
-                                <h5 className="text-8xl">75</h5>
+                                <h5 className="text-8xl">{activeStores}</h5>
                                 <p className="text-2xl font-light">
                                     Stores Created
                                 </p>
                             </div>
                             <div className="text-center">
-                                <h5 className="text-8xl">106</h5>
+                                <h5 className="text-8xl">{purchases}</h5>
                                 <p className="text-2xl font-light">
                                     Orders processed
                                 </p>

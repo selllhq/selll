@@ -4,6 +4,12 @@ namespace App\Models;
 
 class Paylink extends Model
 {
+    protected $fillable = [
+        'store_id',
+        'cart_id',
+        'status',
+    ];
+
     public function store()
     {
         return $this->belongsTo(Store::class);

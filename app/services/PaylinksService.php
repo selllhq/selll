@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Helpers\CustomerHelper;
 use App\Helpers\StoreHelper;
-use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Store;
 
@@ -35,6 +34,18 @@ class PaylinksService
             ->find($id);
     }
 
+    /**
+     * Get Link by Cart ID.
+     * @param int $id
+     */
+    public function getLinkByCartId(int $id, Store $store)
+    {
+        return $store
+            ->payLinks()
+            ->where('cart_id', $id)
+            ->first();
+    }
+
     public function createLink()
     {
         $data = request()->get([
@@ -49,10 +60,10 @@ class PaylinksService
         $customer = null;
         $items = [];
 
-        if ($data['customer_id'] !== "") {
+        if ($data['customer_id'] !== "custom") {
             $customer = $store->customers()->find((int) $data['customer_id']);
         } else {
-            $customer = $store->customers()->where('current_store_id', auth()->user()->current_store_id)
+            $customer = $store->customers()
                 ->where(function ($query) use ($data) {
                     if (preg_match('/^\d{10,15}$/', $data['customer'])) {
                         $data['customer'] = '+' . $data['customer'];
@@ -67,7 +78,7 @@ class PaylinksService
                 $customer = $store->customers()->create([
                     'name' => 'Paylink Customer',
                     'email' => $data['customer'],
-                    'current_store_id' => auth()->user()->current_store_id,
+                    'store_id' => auth()->user()->current_store_id,
                 ]);
             }
         }
@@ -104,47 +115,7 @@ class PaylinksService
             'items' => json_encode($items),
             'currency' => $store->currency,
             'store_url' => "https://{$store->slug}.selll.store",
-        ]);
-
-        $storePayoutWallet = $store->wallets()->find($store->payout_account_id);
-
-        try {
-            $billingProvider = in_array($store->currency, ['GHS', 'NGN', 'KES', 'ZAR']) ? 'paystack' : 'stripe';
-
-            $session = billing($billingProvider)->charge([
-                'amount' => $total * 100,
-                'currency' => $store->currency,
-                'description' => 'Custom Order with Paylink',
-                'customer' => $customer->email,
-                'url' => request()->getUrl() . '/billing/callback', // only for paystack
-                '_paystack' => [
-                    'subaccount' => $storePayoutWallet->account_code,
-                    'bearer' => 'subaccount',
-                ],
-                'metadata' => [
-                    'cart_id' => $cart->id,
-                    'customer_id' => $customer->id,
-                    'store_id' => $store->id,
-                    'items' => $items,
-                ]
-            ]);
-
-            $cart->billing_session_id = $session->id();
-            $cart->save();
-        } catch (\Exception $e) {
-            $cart->status = 'failed';
-            $cart->save();
-
-            return false;
-        }
-
-        app()->mixpanel->track('Billing Session Created', [
-            'store_id' => $store->id,
-            'customer_id' => $customer->id,
-            'cart_id' => $cart->id,
-            'provider' => $billingProvider,
-            'amount' => $total,
-            'currency' => $store->currency,
+            'status' => 'pending',
         ]);
 
         return $store->payLinks()->create([

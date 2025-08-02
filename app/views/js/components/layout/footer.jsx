@@ -59,17 +59,29 @@ const Footer = () => {
                             <ul className="space-y-2">
                                 {section.map((link) => (
                                     <li key={link.name}>
-                                        <Link
-                                            href={link.href}
-                                            className="text-white hover:underline text-sm transition-all duration-150 cursor-pointer"
-                                            onClick={(e) => {
-                                                if (link.onClick) {
-                                                    link.onClick(e);
-                                                }
-                                            }}
-                                        >
-                                            {link.name}
-                                        </Link>
+                                        {link.href.startsWith("http") ? (
+                                            <a
+                                                href={link.href}
+                                                className="text-sm text-white hover:text-gray-300 transition-colors"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                aria-label={link.name}
+                                            >
+                                                {link.name}
+                                            </a>
+                                        ) : (
+                                            <Link
+                                                href={link.href}
+                                                className="text-white hover:underline text-sm transition-all duration-150 cursor-pointer"
+                                                onClick={(e) => {
+                                                    if (link.onClick) {
+                                                        link.onClick(e);
+                                                    }
+                                                }}
+                                            >
+                                                {link.name}
+                                            </Link>
+                                        )}
                                     </li>
                                 ))}
                             </ul>
