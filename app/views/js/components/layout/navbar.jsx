@@ -66,10 +66,10 @@ const Navbar = ({
             title: "FAQs",
             url: "/faqs",
         },
-        // {
-        //     title: "Blog",
-        //     url: "/blog",
-        // },
+        {
+            title: "Blog",
+            url: "/blog",
+        },
     ],
     auth,
 }) => {
