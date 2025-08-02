@@ -619,156 +619,167 @@ export default function Order({ order, items, currentStore, paylink }) {
                                 </CardContent>
                             </Card>
 
-                            <Card className="flex-1 flex flex-col h-full rounded-3xl">
-                                <CardHeader>
-                                    <CardTitle className="flex items-center gap-2">
-                                        <Package className="h-5 w-5 text-primary-orange" />
-                                        Order Items
-                                    </CardTitle>
-                                    <CardDescription>
-                                        {orderItems.length}{" "}
-                                        {orderItems.length === 1
-                                            ? "item"
-                                            : "items"}{" "}
-                                        in this order
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent className="flex-1 flex flex-col h-full">
-                                    {orderItems.length === 0 ? (
-                                        <div className="flex-1 flex flex-col items-center justify-center border border-muted-foreground/15 dark:border-[#2C2C2C] rounded-md bg-[#1A1A1A] p-8">
-                                            <Package className="h-12 w-12 text-gray-500 mb-4" />
-                                            <p className="text-gray-400 text-lg">
-                                                No items in this order
-                                            </p>
-                                        </div>
-                                    ) : (
-                                        <div className="rounded-md border border-muted-foreground/15 dark:border-[#2C2C2C] overflow-hidden h-full flex flex-col overflow-x-auto">
-                                            <div className="grid grid-cols-4 bg-[#1A1A1A] p-4 border-b border-muted-foreground/15 dark:border-[#2C2C2C] min-w-md">
-                                                <div className="col-span-1 font-medium text-white">
-                                                    Product
-                                                </div>
-                                                <div className="col-span-1 font-medium text-white text-right">
-                                                    Price
-                                                </div>
-                                                <div className="col-span-1 font-medium text-white text-center">
-                                                    Quantity
-                                                </div>
-                                                <div className="col-span-1 font-medium text-white text-right">
-                                                    Total
-                                                </div>
+                            {(orderItems?.length > 0 ||
+                                (order?.status !== "pending" &&
+                                    window.innerWidth > 580)) && (
+                                <Card className="flex-1 flex flex-col h-full rounded-3xl">
+                                    <CardHeader>
+                                        <CardTitle className="flex items-center gap-2">
+                                            <Package className="h-5 w-5 text-primary-orange" />
+                                            Order Items
+                                        </CardTitle>
+                                        <CardDescription>
+                                            {orderItems.length}{" "}
+                                            {orderItems.length === 1
+                                                ? "item"
+                                                : "items"}{" "}
+                                            in this order
+                                        </CardDescription>
+                                    </CardHeader>
+                                    <CardContent className="flex-1 flex flex-col h-full">
+                                        {orderItems.length === 0 ? (
+                                            <div className="flex-1 flex flex-col items-center justify-center border border-muted-foreground/15 dark:border-[#2C2C2C] rounded-md bg-[#1A1A1A] p-8">
+                                                <Package className="h-12 w-12 text-gray-500 mb-4" />
+                                                <p className="text-gray-400 text-lg">
+                                                    No items in this order
+                                                </p>
                                             </div>
-
-                                            <div className="flex-1 flex flex-col min-w-md">
-                                                {orderItems.map(
-                                                    (item, index) => {
-                                                        const product =
-                                                            item.product || {};
-                                                        const price =
-                                                            product.price || 0;
-                                                        const quantity =
-                                                            item.quantity || 1;
-                                                        const total =
-                                                            price * quantity;
-
-                                                        const productImage =
-                                                            product.images
-                                                                ? JSON.parse(
-                                                                      product.images,
-                                                                  )[0]
-                                                                : null;
-
-                                                        return (
-                                                            <div
-                                                                key={index}
-                                                                className="grid grid-cols-4 p-4 border-b border-muted-foreground/15 dark:border-[#2C2C2C] hover:bg-accent-foreground/10 dark:hover:bg-[#1A1A1A] transition-colors"
-                                                            >
-                                                                <div className="col-span-1">
-                                                                    <div className="flex items-center gap-3">
-                                                                        <div className="h-12 !w-12 rounded-md bg-[#2C2C2C] items-center justify-center overflow-hidden hidden lg:flex">
-                                                                            {productImage ? (
-                                                                                <img
-                                                                                    src={
-                                                                                        productImage
-                                                                                    }
-                                                                                    alt={
-                                                                                        product.name
-                                                                                    }
-                                                                                    className="h-full w-full object-cover"
-                                                                                />
-                                                                            ) : (
-                                                                                <Package className="h-6 w-6 text-gray-500" />
-                                                                            )}
-                                                                        </div>
-                                                                        <div>
-                                                                            <p className="font-medium text-primary">
-                                                                                {
-                                                                                    product.name
-                                                                                }
-                                                                            </p>
-                                                                            {product.description && (
-                                                                                <p
-                                                                                    className="text-xs text-primary/65 line-clamp-1"
-                                                                                    dangerouslySetInnerHTML={{
-                                                                                        __html: product.description,
-                                                                                    }}
-                                                                                ></p>
-                                                                            )}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="col-span-1 text-right self-center">
-                                                                    {formatCurrency(
-                                                                        price,
-                                                                        currentStore?.currency,
-                                                                    )}
-                                                                </div>
-                                                                <div className="col-span-1 text-center self-center">
-                                                                    {quantity}
-                                                                </div>
-                                                                <div className="col-span-1 text-right font-medium self-center">
-                                                                    {formatCurrency(
-                                                                        total,
-                                                                        currentStore?.currency,
-                                                                    )}
-                                                                </div>
-                                                            </div>
-                                                        );
-                                                    },
-                                                )}
-
-                                                {orderItems.length < 3 && (
-                                                    <div className="flex-1"></div>
-                                                )}
-                                            </div>
-
-                                            <div className="mt-auto dark:bg-[#1A1A1A] border-t border-muted-foreground/15 dark:border-[#2C2C2C] min-w-md">
-                                                <div className="grid grid-cols-4 p-4 border-b border-muted-foreground/15 dark:border-[#2C2C2C]">
-                                                    <div className="col-span-3 text-right font-medium">
-                                                        Subtotal
+                                        ) : (
+                                            <div className="rounded-md border border-muted-foreground/15 dark:border-[#2C2C2C] overflow-hidden h-full flex flex-col overflow-x-auto">
+                                                <div className="grid grid-cols-4 bg-[#1A1A1A] p-4 border-b border-muted-foreground/15 dark:border-[#2C2C2C] min-w-md">
+                                                    <div className="col-span-1 font-medium text-white">
+                                                        Product
                                                     </div>
-                                                    <div className="col-span-1 text-right font-medium">
-                                                        {formatCurrency(
-                                                            subtotal,
-                                                            currentStore?.currency,
-                                                        )}
+                                                    <div className="col-span-1 font-medium text-white text-right">
+                                                        Price
                                                     </div>
-                                                </div>
-                                                <div className="grid grid-cols-4 p-4">
-                                                    <div className="col-span-3 text-right font-medium">
+                                                    <div className="col-span-1 font-medium text-white text-center">
+                                                        Quantity
+                                                    </div>
+                                                    <div className="col-span-1 font-medium text-white text-right">
                                                         Total
                                                     </div>
-                                                    <div className="col-span-1 text-right font-bold text-primary-orange">
-                                                        {formatCurrency(
-                                                            order?.total || 0,
-                                                            currentStore?.currency,
-                                                        )}
+                                                </div>
+
+                                                <div className="flex-1 flex flex-col min-w-md">
+                                                    {orderItems.map(
+                                                        (item, index) => {
+                                                            const product =
+                                                                item.product ||
+                                                                {};
+                                                            const price =
+                                                                product.price ||
+                                                                0;
+                                                            const quantity =
+                                                                item.quantity ||
+                                                                1;
+                                                            const total =
+                                                                price *
+                                                                quantity;
+
+                                                            const productImage =
+                                                                product.images
+                                                                    ? JSON.parse(
+                                                                          product.images,
+                                                                      )[0]
+                                                                    : null;
+
+                                                            return (
+                                                                <div
+                                                                    key={index}
+                                                                    className="grid grid-cols-4 p-4 border-b border-muted-foreground/15 dark:border-[#2C2C2C] hover:bg-accent-foreground/10 dark:hover:bg-[#1A1A1A] transition-colors"
+                                                                >
+                                                                    <div className="col-span-1">
+                                                                        <div className="flex items-center gap-3">
+                                                                            <div className="h-12 !w-12 rounded-md bg-[#2C2C2C] items-center justify-center overflow-hidden hidden lg:flex">
+                                                                                {productImage ? (
+                                                                                    <img
+                                                                                        src={
+                                                                                            productImage
+                                                                                        }
+                                                                                        alt={
+                                                                                            product.name
+                                                                                        }
+                                                                                        className="h-full w-full object-cover"
+                                                                                    />
+                                                                                ) : (
+                                                                                    <Package className="h-6 w-6 text-gray-500" />
+                                                                                )}
+                                                                            </div>
+                                                                            <div>
+                                                                                <p className="font-medium text-primary">
+                                                                                    {
+                                                                                        product.name
+                                                                                    }
+                                                                                </p>
+                                                                                {product.description && (
+                                                                                    <p
+                                                                                        className="text-xs text-primary/65 line-clamp-1"
+                                                                                        dangerouslySetInnerHTML={{
+                                                                                            __html: product.description,
+                                                                                        }}
+                                                                                    ></p>
+                                                                                )}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="col-span-1 text-right self-center">
+                                                                        {formatCurrency(
+                                                                            price,
+                                                                            currentStore?.currency,
+                                                                        )}
+                                                                    </div>
+                                                                    <div className="col-span-1 text-center self-center">
+                                                                        {
+                                                                            quantity
+                                                                        }
+                                                                    </div>
+                                                                    <div className="col-span-1 text-right font-medium self-center">
+                                                                        {formatCurrency(
+                                                                            total,
+                                                                            currentStore?.currency,
+                                                                        )}
+                                                                    </div>
+                                                                </div>
+                                                            );
+                                                        },
+                                                    )}
+
+                                                    {orderItems.length < 3 && (
+                                                        <div className="flex-1"></div>
+                                                    )}
+                                                </div>
+
+                                                <div className="mt-auto dark:bg-[#1A1A1A] border-t border-muted-foreground/15 dark:border-[#2C2C2C] min-w-md">
+                                                    <div className="grid grid-cols-4 p-4 border-b border-muted-foreground/15 dark:border-[#2C2C2C]">
+                                                        <div className="col-span-3 text-right font-medium">
+                                                            Subtotal
+                                                        </div>
+                                                        <div className="col-span-1 text-right font-medium">
+                                                            {formatCurrency(
+                                                                subtotal,
+                                                                currentStore?.currency,
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-4 p-4">
+                                                        <div className="col-span-3 text-right font-medium">
+                                                            Total
+                                                        </div>
+                                                        <div className="col-span-1 text-right font-bold text-primary-orange">
+                                                            {formatCurrency(
+                                                                order?.total ||
+                                                                    0,
+                                                                currentStore?.currency,
+                                                            )}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    )}
-                                </CardContent>
-                            </Card>
+                                        )}
+                                    </CardContent>
+                                </Card>
+                            )}
                         </div>
 
                         <div className="space-y-6 h-full flex flex-col">

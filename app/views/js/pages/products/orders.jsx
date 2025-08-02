@@ -68,6 +68,7 @@ export default function Orders({ orders = [], currentStore }) {
             case "pending":
                 return order.status === "pending";
             case "cancelled":
+            case "abandoned":
                 return order.status === "cancelled";
             case "failed":
                 return order.status === "failed";
@@ -99,6 +100,7 @@ export default function Orders({ orders = [], currentStore }) {
                         Pending
                     </span>
                 );
+            case "abandoned":
             case "cancelled":
                 return (
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-500/10 text-red-500">

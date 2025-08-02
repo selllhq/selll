@@ -60,7 +60,7 @@ class PaylinksService
         $customer = null;
         $items = [];
 
-        if ($data['customer_id'] !== "") {
+        if ($data['customer_id'] !== "custom") {
             $customer = $store->customers()->find((int) $data['customer_id']);
         } else {
             $customer = $store->customers()

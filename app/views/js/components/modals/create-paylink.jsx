@@ -97,6 +97,25 @@ const PaylinkForm = ({ store }) => {
             return;
         }
 
+        if (!data.customer_id && !data.customer) {
+            alert(
+                "Please select a customer or provide an email to create a paylink."
+            );
+            return;
+        }
+
+        if (!data.use_amount && data.products.length === 0) {
+            alert(
+                "Please select at least one product or use a custom amount."
+            );
+            return;
+        }
+
+        if (data.use_amount && !data.amount) {
+            alert("Please enter a valid amount.");
+            return;
+        }
+
         post("/paylinks/new");
     };
 

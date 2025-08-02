@@ -34,6 +34,11 @@ class BillingCallbacksController extends Controller
             $itemsInCart = json_decode($userCart->items, true);
 
             foreach ($itemsInCart as $item) {
+                if ($item['id'] === null) {
+                    // paylink items do not have an ID, so we skip them
+                    continue;
+                }
+
                 $userCart->items()->create([
                     'store_id' => $userCart->store_id,
                     'product_id' => $item['id'],
@@ -50,31 +55,42 @@ class BillingCallbacksController extends Controller
                     $product->save();
 
                     if ($product->quantity_items === 0) {
-                        SMSHelper::write([
-                            'recipient' => $userCart->store->phone,
-                            'senderId' => 'Selll',
-                            'message' => "{$product->name} is now out of stock on your store. Please update the product quantity.",
-                        ])
-                            ->withArkesel()
-                            ->send();
+                        if ($userCart->store->phone) {
+                            SMSHelper::write([
+                                'recipient' => $userCart->store->phone,
+                                'senderId' => 'Selll',
+                                'message' => "{$product->name} is now out of stock on your store. Please update the product quantity.",
+                            ])
+                                ->withArkesel()
+                                ->send();
+                        }
 
                         StoreMailer::outOfStock($product, $userCart->store)->send();
                     } else if ($product->quantity_items <= 5) {
-                        SMSHelper::write([
-                            'recipient' => $userCart->store->phone,
-                            'senderId' => 'Selll',
-                            'message' => "{$product->name} is running low on stock. Only {$product->quantity_items} left.",
-                        ])
-                            ->withArkesel()
-                            ->send();
+                        if ($userCart->store->phone) {
+                            SMSHelper::write([
+                                'recipient' => $userCart->store->phone,
+                                'senderId' => 'Selll',
+                                'message' => "{$product->name} is running low on stock. Only {$product->quantity_items} left.",
+                            ])
+                                ->withArkesel()
+                                ->send();
+                        }
 
                         StoreMailer::lowStock($product, $userCart->store)->send();
                     }
                 }
             }
 
-            $userCart->status = 'paid';
-            $ownerEmail = $userCart->store->owner->email;
+            if ($userCart->payLink()->exists()) {
+                $userCart->payLink()->update([
+                    'status' => 'paid'
+                ]);
+
+                $userCart->status = 'completed';
+            } else {
+                $userCart->status = 'paid';
+            }
 
             $selllFee = 0.02;
             $selllCommission = $userCart->total * $selllFee;
@@ -118,13 +134,17 @@ class BillingCallbacksController extends Controller
                 '$country_code' => $geoData['countryCode'] ?? null,
             ]);
 
-            SMSHelper::write([
-                'recipient' => $userCart->customer->phone,
-                'senderId' => 'Selll Order',
-                'message' => "Your order has been successfully placed. Thank you for shopping with us! Your order ID is {$userCart->id}.",
-            ])
-                ->withArkesel()
-                ->send();
+            if ($userCart->customer->phone) {
+                $customerFirstName = explode(' ', $userCart->customer->name)[0];
+
+                SMSHelper::write([
+                    'recipient' => $userCart->customer->phone,
+                    'senderId' => 'Selll Order',
+                    'message' => "Your order has been successfully placed. Thank you for shopping with us! Your order ID is {$userCart->id}.",
+                ])
+                    ->withArkesel()
+                    ->send();
+            }
 
             if ($userCart->store->phone) {
                 $customerFirstName = explode(' ', $userCart->customer->name)[0];
@@ -138,7 +158,7 @@ class BillingCallbacksController extends Controller
                     ->send();
             }
 
-            StoreMailer::newOrder($ownerEmail, $userCart)->send();
+            StoreMailer::newOrder($userCart->store->owner->email, $userCart)->send();
         } else {
             $userCart->status = 'cancelled';
         }
