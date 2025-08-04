@@ -550,31 +550,49 @@ export default function Order({ order, items, currentStore, paylink }) {
                                                     </div>
                                                 )}
 
-                                                {order.customer.address && (
-                                                    <div className="flex items-start gap-2">
-                                                        <MapPin className="h-4 w-4 text-primary/75 mt-0.5" />
-                                                        <a
-                                                            className="text-sm text-primary/65 underline"
-                                                            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(order.customer.address)}`}
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                        >
-                                                            {
-                                                                order.customer
-                                                                    .address
-                                                            }
-                                                        </a>
-                                                    </div>
+                                                {(order.address ||
+                                                    order.customer
+                                                        ?.address) && (
+                                                    <>
+                                                        <div className="flex items-start gap-2">
+                                                            <MapPin className="h-4 w-4 text-primary/75 mt-0.5" />
+                                                            <a
+                                                                className="text-sm text-primary/65 underline"
+                                                                href={
+                                                                    order.longitude &&
+                                                                    order.latitude
+                                                                        ? `https://www.google.com/maps/search/?api=1&query=${order.latitude},${order.longitude}`
+                                                                        : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(order.customer.address)}`
+                                                                }
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                            >
+                                                                {order.address ||
+                                                                    order
+                                                                        .customer
+                                                                        ?.address}
+                                                            </a>
+                                                        </div>
+
+                                                        {order.longitude &&
+                                                            order.latitude && (
+                                                                <iframe
+                                                                    width="100%"
+                                                                    height="400"
+                                                                    frameborder="0"
+                                                                    className="border-0"
+                                                                    src={`https://www.google.com/maps?q=${order.latitude},${order.longitude}&hl=en&z=14&output=embed`}
+                                                                    allowfullscreen
+                                                                ></iframe>
+                                                            )}
+                                                    </>
                                                 )}
 
-                                                {order.customer.notes && (
+                                                {order.notes && (
                                                     <div className="flex items-start gap-2">
                                                         <Pencil className="h-4 w-4 text-primary/75 mt-0.5" />
                                                         <p className="text-sm text-primary/65">
-                                                            {
-                                                                order.customer
-                                                                    .notes
-                                                            }
+                                                            {order.notes}
                                                         </p>
                                                     </div>
                                                 )}
@@ -838,31 +856,35 @@ export default function Order({ order, items, currentStore, paylink }) {
                                                     </div>
                                                 )}
 
-                                                {order.customer.address && (
+                                                {(order.address ||
+                                                    order.customer
+                                                        ?.address) && (
                                                     <div className="flex items-start gap-2">
                                                         <MapPin className="h-4 w-4 text-primary/75 mt-0.5" />
                                                         <a
                                                             className="text-sm text-primary/65 underline"
-                                                            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(order.customer.address)}`}
+                                                            href={
+                                                                order.longitude &&
+                                                                order.latitude
+                                                                    ? `https://www.google.com/maps/search/?api=1&query=${order.latitude},${order.longitude}`
+                                                                    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(order.customer.address)}`
+                                                            }
                                                             target="_blank"
                                                             rel="noopener noreferrer"
                                                         >
-                                                            {
+                                                            {order.address ||
                                                                 order.customer
-                                                                    .address
-                                                            }
+                                                                    ?.address} <br />
+                                                            Click to view on map
                                                         </a>
                                                     </div>
                                                 )}
 
-                                                {order.customer.notes && (
+                                                {order.notes && (
                                                     <div className="flex items-start gap-2">
                                                         <Pencil className="h-4 w-4 text-primary/75 mt-0.5" />
                                                         <p className="text-sm text-primary/65">
-                                                            {
-                                                                order.customer
-                                                                    .notes
-                                                            }
+                                                            {order.notes}
                                                         </p>
                                                     </div>
                                                 )}

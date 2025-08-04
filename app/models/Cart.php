@@ -4,7 +4,19 @@ namespace App\Models;
 
 class Cart extends Model
 {
-    protected $fillable = ['store_id', 'total', 'currency', 'status', 'store_url', 'items', 'billing_session_id'];
+    protected $fillable = [
+        'store_id',
+        'total',
+        'currency',
+        'status',
+        'store_url',
+        'items',
+        'billing_session_id',
+        'address',
+        'longitude',
+        'latitude',
+        'notes'
+    ];
 
     public function customer()
     {

@@ -10,6 +10,18 @@ columns:
   items:
     type: json
     nullable: true
+  address:
+    type: string
+    nullable: true
+  longitude:
+    type: string
+    nullable: true
+  latitude:
+    type: string
+    nullable: true
+  notes:
+    type: string
+    nullable: true
   status:
     type: enum
     default: pending

@@ -12,12 +12,18 @@ class BillingController extends Controller
     {
         $cartData = request()->get('cart');
         $customerData = request()->get('customer');
+        $customerDataToSave = array_merge($customerData, [
+            'phone' => CustomerHelper::formatPhone($customerData['phone'] ?? '', $customerData['country_code'] ?? '233'),
+            'address' => $customerData['deliveryLocation']['address'] ?? ''
+        ]);
+
+        unset($customerDataToSave['deliveryLocation']);
 
         $cartTotal = 0;
         $store = Store::find($storeId);
         $billingProvider = in_array($store->currency, ['GHS', 'NGN', 'KES', 'ZAR']) ? 'paystack' : 'stripe';
 
-        $customer = CustomerHelper::saveToStore($storeId, $customerData);
+        $customer = CustomerHelper::saveToStore($storeId, $customerDataToSave);
 
         $items = array_map(function ($cartItem) use ($store, &$cartTotal) {
             $item = $store->products()->find($cartItem['id']);
@@ -37,6 +43,10 @@ class BillingController extends Controller
             'currency' => $store->currency,
             'store_id' => $store->id,
             'store_url' => request()->get('store_url'),
+            'address' => $customerDataToSave['address'] ?? null,
+            'longitude' => $customerData['deliveryLocation']['lngLat'][0] ?? null,
+            'latitude' => $customerData['deliveryLocation']['lngLat'][1] ?? null,
+            'notes' => $customerData['notes'] ?? null,
         ]);
 
         $storePayoutWallet = $store->wallets()->find($store->payout_account_id);

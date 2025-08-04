@@ -185,7 +185,7 @@ const LayoutTab = ({ data, setData }) => {
                         />
                     </div>
 
-                    <div className="flex items-center justify-between">
+                    {/* <div className="flex items-center justify-between">
                         <div>
                             <h3 className="font-medium">Two Cards on Mobile</h3>
                             <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -198,7 +198,7 @@ const LayoutTab = ({ data, setData }) => {
                                 setData("two_cards_on_mobile", checked)
                             }
                         />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

@@ -104,7 +104,7 @@ const ThemeTab = ({ data, setData, errors }) => {
                         />
                     </div>
 
-                    <div>
+                    {/* <div>
                         <Label
                             htmlFor="border_color"
                             className="text-sm font-medium mb-2"
@@ -134,7 +134,7 @@ const ThemeTab = ({ data, setData, errors }) => {
                                 errors.border_color
                             }
                         />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
