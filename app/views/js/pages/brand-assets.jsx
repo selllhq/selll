@@ -15,9 +15,37 @@ const BrandAssets = ({ currentStore }) => {
         setTimeout(() => setCopied(null), 2000);
     };
 
-    const handleDownload = (svg, filename) => {
-        const blob = new Blob([svg], { type: "image/svg+xml" });
-        const url = URL.createObjectURL(blob);
+    const handleDownload = async (svg, filename) => {
+        const qrUrlMatch = svg.match(/<image[^>]+href="([^"]+)"/);
+        const qrUrl = qrUrlMatch?.[1];
+
+        let updatedSvg = svg;
+
+        if (qrUrl) {
+            try {
+                const response = await fetch(qrUrl);
+                const blob = await response.blob();
+
+                const base64 = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(blob);
+                });
+
+                // Replace the image href in the SVG with the base64-encoded image
+                updatedSvg = svg.replace(qrUrl, base64);
+            } catch (err) {
+                console.error("Failed to inline QR code image", err);
+                // You can decide to return early here if it's critical
+            }
+        } else {
+            console.warn("No QR code image URL found in SVG.");
+        }
+
+        // Now proceed with your original logic using `updatedSvg`
+        const svgBlob = new Blob([updatedSvg], { type: "image/svg+xml" });
+        const url = URL.createObjectURL(svgBlob);
 
         const img = new Image();
 
@@ -43,7 +71,7 @@ const BrandAssets = ({ currentStore }) => {
 
         img.onerror = (e) => {
             console.error("Image failed to load", e);
-            console.log("SVG content:", svg);
+            console.log("SVG content:", updatedSvg);
             console.log("Blob URL:", url);
         };
 
