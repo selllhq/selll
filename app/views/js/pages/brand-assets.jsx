@@ -133,7 +133,7 @@ const BrandAssets = ({ currentStore }) => {
             id: "qr-code",
             title: "Your Store QR Code",
             description: "Scan this QR code to visit your store",
-            // geneare qr code using https://api.qrserver.com/v1/create-qr-code/?size=750x750&data=https://leafphp.selll.store
+            download: `https://api.qrserver.com/v1/create-qr-code/?size=650x650&data=${encodeURIComponent(storeUrl)}`,
             svg: `
                 <svg xmlns="http://www.w3.org/2000/svg" width="750" height="750" viewBox="0 0 750 750">
                     <rect width="750" height="750" fill="#141414"/>
@@ -234,7 +234,10 @@ const BrandAssets = ({ currentStore }) => {
 
                 <div className="grid md:grid-cols-2 gap-4">
                     {brandAssets.map((asset) => (
-                        <Card key={asset.id} className="overflow-hidden rounded-3xl p-0">
+                        <Card
+                            key={asset.id}
+                            className="overflow-hidden rounded-3xl p-0"
+                        >
                             <div className="p-6">
                                 <div className="flex justify-between items-center mb-4">
                                     <div className="w-2/3">
@@ -246,20 +249,36 @@ const BrandAssets = ({ currentStore }) => {
                                         </p>
                                     </div>
 
-                                    <Button
-                                        variant="default"
-                                        size="sm"
-                                        onClick={() =>
-                                            handleDownload(
-                                                asset.svg,
-                                                `selll-${asset.id}`,
-                                            )
-                                        }
-                                        className="flex items-center gap-1"
-                                    >
-                                        <Download className="w-4 h-4" />
-                                        Download
-                                    </Button>
+                                    {asset.download ? (
+                                        <Button
+                                            variant="default"
+                                            size="sm"
+                                            as="a"
+                                            href={asset.download}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-1"
+                                            download
+                                        >
+                                            <Download className="w-4 h-4" />
+                                            Download
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            variant="default"
+                                            size="sm"
+                                            onClick={() =>
+                                                handleDownload(
+                                                    asset.svg,
+                                                    `selll-${asset.id}`,
+                                                )
+                                            }
+                                            className="flex items-center gap-1"
+                                        >
+                                            <Download className="w-4 h-4" />
+                                            Download
+                                        </Button>
+                                    )}
                                 </div>
                                 <div
                                     className="border rounded-lg p-4 bg-gray-50 flex justify-center items-center max-h-[350px] overflow-hidden"
