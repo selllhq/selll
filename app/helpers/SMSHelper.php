@@ -62,6 +62,8 @@ class SMSHelper
 
             if (isset($body['status']) && $body['status'] === 'success') {
                 return true;
+            } else if (isset($body['code']) && $body['code'] === 'ok') {
+                return true;
             } else {
                 throw new \Exception('SMS sending failed: ' . ($body['message'] ?? 'Unknown error'));
             }

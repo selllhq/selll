@@ -2,6 +2,7 @@
 
 namespace App\Mailers;
 
+use App\Models\Store;
 use App\Models\User;
 
 class StoreMailer
@@ -59,6 +60,44 @@ class StoreMailer
             'recipientName' => $user->name,
             'senderName' => 'Michael from Selll',
             'senderEmail' => 'support@selll.online',
+            'replyToEmail' => 'support@selll.online',
+            'replyToName' => 'Selll Support',
+        ]);
+    }
+
+    /**
+     * Create mail to follow up with store owners
+     * @param mixed $store The store owner
+     * @return \Leaf\Mail
+     */
+    public static function checkInForUnverifiedUsers(User $user)
+    {
+        return mailer()->create([
+            'subject' => "Let's help you get to your first sale",
+            'body' => view('mail.store.check-in-unverified', [
+                'name' => $user->name,
+            ]),
+            'recipientEmail' => $user->email,
+            'recipientName' => $user->name,
+            'senderName' => 'Ashley from Selll',
+        ]);
+    }
+
+    /**
+     * Create mail to follow up with store owners
+     * @param mixed $store The store owner
+     * @return \Leaf\Mail
+     */
+    public static function checkInForNoProduct(Store $store)
+    {
+        return mailer()->create([
+            'subject' => "You're missing out on sales",
+            'body' => view('mail.store.check-in-no-products', [
+                'name' => $store->name,
+            ]),
+            'recipientEmail' => $store->email,
+            'recipientName' => $store->name,
+            'senderName' => 'Ashley from Selll',
             'replyToEmail' => 'support@selll.online',
             'replyToName' => 'Selll Support',
         ]);
