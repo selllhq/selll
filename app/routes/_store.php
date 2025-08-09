@@ -24,5 +24,6 @@ app()->group('/deliveries', [
     'middleware' => ['auth.required', 'auth.verified'],
     function () {
         app()->get('/', 'Store\DeliveriesController@index');
+        app()->post('/defaults', 'Store\DeliveriesController@defaults');
     }
 ]);

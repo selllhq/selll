@@ -11,6 +11,7 @@ import {
 } from "@/components/shared/card";
 
 import Map from "./map";
+import { toast } from "sonner";
 
 const Delivery = ({
     auth,
@@ -35,14 +36,12 @@ const Delivery = ({
             return;
         }
 
-        post('/store/deliveries/defaults');
+        post('/deliveries/defaults', {
+            onFinish: () => {
+                toast.success("Delivery settings saved successfully!");
+            },
+        });
     };
-
-    console.log({
-        deliveries,
-        deliveryDefaults,
-        deliveryUpdates,
-    });
 
     return (
         <Layout
@@ -187,6 +186,8 @@ const Delivery = ({
                             </p>
                             <Button
                                 type="submit"
+                                loading={processing}
+                                disabled={processing}
                                 className="bg-primary-orange text-white w-full sm:w-auto px-6 py-2 mb-5 sm:mb-0"
                             >
                                 Save Delivery Settings
