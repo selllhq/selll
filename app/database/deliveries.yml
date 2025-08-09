@@ -1,0 +1,29 @@
+columns:
+  partner: string
+  price:
+    type: string
+    nullable: true
+  distance:
+    type: string
+    nullable: true
+  duration:
+    type: string
+    nullable: true
+  tracking_id:
+    type: string
+    nullable: true
+  message:
+    type: string
+    nullable: true
+  status:
+    type: enum
+    default: pending
+    values:
+      - pending
+      - failed
+      - success
+
+relationships:
+  - Store
+  - Cart
+  - Customer

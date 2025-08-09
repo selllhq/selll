@@ -11,3 +11,18 @@ app()->group('/store', [
         app()->post('/domain', 'Store\SetupController@domain');
     }
 ]);
+
+app()->group('/customers', [
+    'middleware' => ['auth.required', 'auth.verified'],
+    function () {
+        app()->get('/', 'Store\CustomersController@index');
+        app()->get('/(\d+)', 'Store\CustomersController@show');
+    }
+]);
+
+app()->group('/deliveries', [
+    'middleware' => ['auth.required', 'auth.verified'],
+    function () {
+        app()->get('/', 'Store\DeliveriesController@index');
+    }
+]);

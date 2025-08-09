@@ -119,9 +119,19 @@ class Store extends Model
         return $this->hasMany(Wallet::class);
     }
 
+    public function deliveryDefaults()
+    {
+        return $this->hasOne(DeliveryDefault::class);
+    }
+
+    public function deliveries()
+    {
+        return $this->hasMany(Delivery::class);
+    }
+
     public function shippingUpdates()
     {
-        return $this->hasMany(ShippingUpdate::class);
+        return $this->hasMany(DeliveryUpdate::class);
     }
 
     public function payLinks()

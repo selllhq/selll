@@ -1,0 +1,22 @@
+columns:
+  allow_pickups:
+    type: boolean
+    default: false
+  expected_delivery_days:
+    type: integer
+    default: 1
+  work_hours:
+    type: json
+    nullable: true
+  longitude:
+    type: string
+    nullable: true
+  latitude:
+    type: string
+    nullable: true
+  config:
+    type: json
+    nullable: true
+
+relationships:
+  - Store
