@@ -35,6 +35,7 @@ class OrdersController extends Controller
             'order' => $data['order'],
             'items' => $data['items'],
             'currentStore' => $currentStore,
+            'deliveryDefaults' => $currentStore->deliveryDefaults()->first(),
             'paylink' => make(PaylinksService::class)->getLinkByCartId($data['order']->id, $currentStore),
         ]);
     }

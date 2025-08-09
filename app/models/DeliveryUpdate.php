@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class ShippingUpdate extends Model
+class DeliveryUpdate extends Model
 {
     protected $fillable = [
         'cart_id',

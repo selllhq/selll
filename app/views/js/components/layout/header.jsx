@@ -36,6 +36,7 @@ import { useIsMobile } from "@/utils/use-mobile";
 import { Link, usePage } from "@inertiajs/react";
 import {
     AlertTriangle,
+    Bike,
     BookOpen,
     ChevronsUpDown,
     HelpCircle,
@@ -82,11 +83,11 @@ const mainNavItems = [
         url: "/customers",
         icon: Users,
     },
-    // {
-    //     title: "Invoices",
-    //     url: "/invoices",
-    //     icon: Mail,
-    // },
+    {
+        title: "Deliveries",
+        url: "/deliveries",
+        icon: Bike,
+    },
     {
         title: "Customize Store",
         url: "/store/customize",

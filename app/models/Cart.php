@@ -45,6 +45,6 @@ class Cart extends Model
 
     public function shippingUpdates()
     {
-        return $this->hasMany(ShippingUpdate::class);
+        return $this->hasMany(DeliveryUpdate::class);
     }
 }
