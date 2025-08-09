@@ -213,7 +213,7 @@ const Delivery = ({
                     <>
                         <Card className="mt-6 rounded-3xl">
                             <CardHeader className="mb-2 flex flex-row items-center justify-between">
-                                <CardTitle className="text-xl">
+                                <CardTitle className="text-xl dark:text-primary">
                                     Delivery Defaults
                                 </CardTitle>
                                 <Button
@@ -257,21 +257,22 @@ const Delivery = ({
                         </Card>
 
                         {deliveryUpdates && (
-                            <div className="mt-6">
-                                <h3 className="text-lg font-semibold mb-2">
-                                    Recent Updates
-                                </h3>
-                                <ul className="list-disc pl-5 space-y-1">
-                                    {deliveryUpdates.map((update, index) => (
-                                        <li key={index}>
-                                            {update.description} -{" "}
-                                            {new Date(
-                                                update.created_at,
-                                            ).toLocaleDateString()}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
+                            // <div className="mt-6">
+                            //     <h3 className="text-lg font-semibold mb-2">
+                            //         Recent Updates
+                            //     </h3>
+                            //     <ul className="list-disc pl-5 space-y-1">
+                            //         {deliveryUpdates.map((update, index) => (
+                            //             <li key={index}>
+                            //                 {update.description} -{" "}
+                            //                 {new Date(
+                            //                     update.created_at,
+                            //                 ).toLocaleDateString()}
+                            //             </li>
+                            //         ))}
+                            //     </ul>
+                            // </div>
+                            <></>
                         )}
                     </>
                 )}
