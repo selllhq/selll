@@ -257,22 +257,14 @@ const Delivery = ({
                         </Card>
 
                         {deliveryUpdates && (
-                            // <div className="mt-6">
-                            //     <h3 className="text-lg font-semibold mb-2">
-                            //         Recent Updates
-                            //     </h3>
-                            //     <ul className="list-disc pl-5 space-y-1">
-                            //         {deliveryUpdates.map((update, index) => (
-                            //             <li key={index}>
-                            //                 {update.description} -{" "}
-                            //                 {new Date(
-                            //                     update.created_at,
-                            //                 ).toLocaleDateString()}
-                            //             </li>
-                            //         ))}
-                            //     </ul>
-                            // </div>
-                            <></>
+                            <div className="mt-6">
+                                <Card className="rounded-3xl">
+                                    <CardContent>
+                                        You can request deliveries directly
+                                        on your the orders you get
+                                    </CardContent>
+                                </Card>
+                            </div>
                         )}
                     </>
                 )}
