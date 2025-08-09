@@ -1,4 +1,6 @@
+import { toast } from "sonner";
 import { useState } from "react";
+import { Edit } from "lucide-react";
 import { Head, useForm } from "@inertiajs/react";
 
 import Layout from "@/layouts/app-layout";
@@ -11,7 +13,6 @@ import {
 } from "@/components/shared/card";
 
 import Map from "./map";
-import { toast } from "sonner";
 
 const Delivery = ({
     auth,
@@ -20,11 +21,12 @@ const Delivery = ({
     deliveryDefaults,
     deliveryUpdates,
 }) => {
+    const [isEditing, setIsEditing] = useState(false);
     const { data, setData, post, errors, processing } = useForm({
-        allow_pickups: false,
-        expected_delivery_days: 1,
-        longitude: "",
-        latitude: "",
+        allow_pickups: deliveryDefaults?.allow_pickups ?? false,
+        expected_delivery_days: deliveryDefaults?.expected_delivery_days ?? 1,
+        longitude: deliveryDefaults?.longitude ?? "",
+        latitude: deliveryDefaults?.latitude ?? "",
         work_hours: [],
     });
 
@@ -36,9 +38,10 @@ const Delivery = ({
             return;
         }
 
-        post('/deliveries/defaults', {
+        post("/deliveries/defaults", {
             onFinish: () => {
                 toast.success("Delivery settings saved successfully!");
+                setIsEditing(false);
             },
         });
     };
@@ -57,7 +60,18 @@ const Delivery = ({
             <Head title="Delivery" />
 
             <div className="md:py-4 md:px-4">
-                {!deliveryDefaults && (
+                <div>
+                    <h2 className="text-2xl md:text-4xl font-bold md:mb-2">
+                        Hello, {auth.user.name.split(" ")[0]}
+                    </h2>
+                    <p className="text-muted-foreground text-sm md:text-base">
+                        {!deliveryDefaults
+                            ? `Let's setup deliveries for ${currentStore?.name}`
+                            : `You can update your delivery settings here.`}
+                    </p>
+                </div>
+
+                {!deliveryDefaults || isEditing ? (
                     // <Card className="text-sm rounded-3xl border border-primary-red/10">
                     //     <CardHeader className="mb-4">
                     //         <CardTitle>
@@ -70,15 +84,6 @@ const Delivery = ({
                     //     </CardContent>
                     // </Card>
                     <>
-                        <div>
-                            <h2 className="text-2xl md:text-4xl font-bold md:mb-2">
-                                Hello, {auth.user.name.split(" ")[0]}
-                            </h2>
-                            <p className="text-muted-foreground text-sm md:text-base">
-                                Let's setup deliveries for {currentStore?.name}
-                            </p>
-                        </div>
-
                         <form
                             className="space-y-10 mt-8"
                             onSubmit={handleDeliveryDefaults}
@@ -92,6 +97,7 @@ const Delivery = ({
                                         type="checkbox"
                                         checked={data.allow_pickups}
                                         className="mr-2 w-4 h-4 mt-1 sm:mt-0"
+                                        value={data.allow_pickups}
                                         onChange={(e) =>
                                             setData(
                                                 "allow_pickups",
@@ -141,10 +147,8 @@ const Delivery = ({
                                             latitude: data.latitude,
                                         }}
                                         onChange={(loc) => {
-                                            setData({
-                                                longitude: loc.lngLat[0],
-                                                latitude: loc.lngLat[1],
-                                            });
+                                            setData("longitude", loc.lngLat[0]);
+                                            setData("latitude", loc.lngLat[1]);
 
                                             // Try to extract city and country from loc.address or loc context
                                             // Use regex or split for city, country (Mapbox returns 'place_name' as 'city, region, country')
@@ -184,6 +188,7 @@ const Delivery = ({
                                 You can change these settings later by clicking
                                 on the "Deliveries" page.
                             </p>
+
                             <Button
                                 type="submit"
                                 loading={processing}
@@ -192,7 +197,82 @@ const Delivery = ({
                             >
                                 Save Delivery Settings
                             </Button>
+
+                            {isEditing && (
+                                <Button
+                                    variant="outline"
+                                    onClick={() => setIsEditing(false)}
+                                    className="w-full sm:w-auto px-6 py-2 -mt-5 mb-5 sm:mb-0"
+                                >
+                                    Cancel
+                                </Button>
+                            )}
                         </form>
+                    </>
+                ) : (
+                    <>
+                        <Card className="mt-6 rounded-3xl">
+                            <CardHeader className="mb-2 flex flex-row items-center justify-between">
+                                <CardTitle className="text-xl">
+                                    Delivery Defaults
+                                </CardTitle>
+                                <Button
+                                    className="p-2 h-8"
+                                    onClick={() => setIsEditing(true)}
+                                >
+                                    <Edit className="w-4" />
+                                </Button>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="space-y-2 text-sm">
+                                    <p>
+                                        Allow Direct Pickup:{" "}
+                                        {deliveryDefaults.allow_pickups
+                                            ? "Yes"
+                                            : "No"}
+                                    </p>
+                                    <p>
+                                        Expected Delivery Days:{" "}
+                                        {
+                                            deliveryDefaults.expected_delivery_days
+                                        }
+                                    </p>
+                                    <p>
+                                        Pickup Location:{" "}
+                                        {deliveryDefaults.latitude},{" "}
+                                        {deliveryDefaults.longitude}
+                                    </p>
+                                    {data.longitude && data.latitude && (
+                                        <iframe
+                                            width="100%"
+                                            height="400"
+                                            frameborder="0"
+                                            className="border-0 rounded-xl"
+                                            src={`https://www.google.com/maps?q=${data.latitude},${data.longitude}&hl=en&z=14&output=embed`}
+                                            allowfullscreen
+                                        ></iframe>
+                                    )}
+                                </div>
+                            </CardContent>
+                        </Card>
+
+                        {deliveryUpdates && (
+                            <div className="mt-6">
+                                <h3 className="text-lg font-semibold mb-2">
+                                    Recent Updates
+                                </h3>
+                                <ul className="list-disc pl-5 space-y-1">
+                                    {deliveryUpdates.map((update, index) => (
+                                        <li key={index}>
+                                            {update.description} -{" "}
+                                            {new Date(
+                                                update.created_at,
+                                            ).toLocaleDateString()}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
                     </>
                 )}
             </div>

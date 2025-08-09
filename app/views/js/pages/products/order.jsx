@@ -36,8 +36,15 @@ import { StatusBadge } from "@/components/shared/badge";
 import { formatCurrency } from "@/utils/store";
 import Input from "@/components/form/input";
 import { DatePicker } from "@/components/ui/date-picker";
+import YangoWidget from "../deliveries/yango";
 
-export default function Order({ order, items, currentStore, paylink }) {
+export default function Order({
+    order,
+    items,
+    paylink,
+    currentStore,
+    deliveryDefaults,
+}) {
     const [isQrModalOpen, setIsQrModalOpen] = useState(false);
     const [isDeliveryModalOpen, setDeliveryModalOpen] = useState(false);
     const [deliveryUpdate, setDeliveryUpdate] = useState("");
@@ -585,6 +592,13 @@ export default function Order({ order, items, currentStore, paylink }) {
                                                                     allowfullscreen
                                                                 ></iframe>
                                                             )}
+
+                                                        <YangoWidget
+                                                            order={order}
+                                                            deliveryDefaults={
+                                                                deliveryDefaults
+                                                            }
+                                                        />
                                                     </>
                                                 )}
 
@@ -874,7 +888,8 @@ export default function Order({ order, items, currentStore, paylink }) {
                                                         >
                                                             {order.address ||
                                                                 order.customer
-                                                                    ?.address} <br />
+                                                                    ?.address}{" "}
+                                                            <br />
                                                             Click to view on map
                                                         </a>
                                                     </div>
