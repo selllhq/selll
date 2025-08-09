@@ -593,12 +593,18 @@ export default function Order({
                                                                 ></iframe>
                                                             )}
 
-                                                        <YangoWidget
-                                                            order={order}
-                                                            deliveryDefaults={
-                                                                deliveryDefaults
-                                                            }
-                                                        />
+                                                        {deliveryDefaults &&
+                                                            order.latitude &&
+                                                            order.longitude && (
+                                                                <YangoWidget
+                                                                    order={
+                                                                        order
+                                                                    }
+                                                                    deliveryDefaults={
+                                                                        deliveryDefaults
+                                                                    }
+                                                                />
+                                                            )}
                                                     </>
                                                 )}
 
@@ -904,6 +910,17 @@ export default function Order({
                                                     </div>
                                                 )}
                                             </div>
+
+                                            {deliveryDefaults &&
+                                                order.latitude &&
+                                                order.longitude && (
+                                                    <YangoWidget
+                                                        order={order}
+                                                        deliveryDefaults={
+                                                            deliveryDefaults
+                                                        }
+                                                    />
+                                                )}
 
                                             {!paylink?.id && (
                                                 <p className="text-xs text-primary/65 px-4 bg-muted-foreground/15 rounded-none py-4">
