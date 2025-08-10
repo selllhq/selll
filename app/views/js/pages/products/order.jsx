@@ -592,19 +592,6 @@ export default function Order({
                                                                     allowfullscreen
                                                                 ></iframe>
                                                             )}
-
-                                                        {deliveryDefaults &&
-                                                            order.latitude &&
-                                                            order.longitude && (
-                                                                <YangoWidget
-                                                                    order={
-                                                                        order
-                                                                    }
-                                                                    deliveryDefaults={
-                                                                        deliveryDefaults
-                                                                    }
-                                                                />
-                                                            )}
                                                     </>
                                                 )}
 
@@ -629,6 +616,16 @@ export default function Order({
                                             )}
 
                                             <div className="pt-2">
+                                                {deliveryDefaults &&
+                                                    order.latitude &&
+                                                    order.longitude && (
+                                                        <YangoWidget
+                                                            order={order}
+                                                            deliveryDefaults={
+                                                                deliveryDefaults
+                                                            }
+                                                        />
+                                                    )}
                                                 <Button
                                                     size="sm"
                                                     className="w-full bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C]"

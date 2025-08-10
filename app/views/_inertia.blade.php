@@ -69,7 +69,6 @@
     {{-- End Google Tag Manager (noscript) --}}
 
     @inertia
-    <script src="https://yastatic.net/taxi-widget/ya-taxi-widget.js"></script>
 </body>
 
 </html>

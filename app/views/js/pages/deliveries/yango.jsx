@@ -14,10 +14,10 @@ export default function YangoWidget({ deliveryDefaults, order }) {
 
     return (
         <div
-            className="ya-taxi-widget rounded-3xl"
+            className="ya-taxi-widget rounded-3xl mb-2"
             data-ref="https://selll.online"
             data-size="xs"
-            data-theme="action"
+            data-theme="dark"
             data-title="Book a delivery"
             data-description={`Send out ${order?.customer.name}'s order`}
             data-use-location="true"
