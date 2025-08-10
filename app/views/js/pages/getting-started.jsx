@@ -11,7 +11,7 @@ import {
 } from "@/components/shared/card";
 import Button from "@/components/form/button";
 
-const GetStarted = ({ products, wallets }) => {
+const GetStarted = ({ currentStore, products, wallets }) => {
     const [linkCopied, setLinkCopied] = useState(false);
 
     const steps = [
@@ -65,7 +65,7 @@ const GetStarted = ({ products, wallets }) => {
                         <Button
                             onClick={() => {
                                 navigator.clipboard.writeText(
-                                    window.location.href
+                                    `https://${currentStore?.slug}.selll.store`
                                 );
                                 setLinkCopied(true);
                             }}
