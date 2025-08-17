@@ -4,13 +4,16 @@ namespace App\Controllers\Api;
 
 use App\Controllers\Controller;
 use App\Models\Analytics;
+use App\Models\CustomDomain;
 use App\Models\Store;
 
 class StoresController extends Controller
 {
     public function show($store)
     {
-        $store = Store::where('slug', $store)->with(['owner'])->first();
+        $store = (strpos($store, '==') !== false)
+            ? CustomDomain::where('domain', base64_decode(str_replace('==', '', $store)))->first()?->store()->with(['owner', 'deliveryDefaults'])->first()
+            : Store::where('slug', $store)->with(['owner', 'deliveryDefaults'])->first();
 
         if (!$store) {
             return response()->json([

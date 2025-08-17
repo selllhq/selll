@@ -28,6 +28,22 @@ export function slugify(text) {
         .replace(/^-+|-+$/g, ""); // Remove leading/trailing hyphens
 }
 
+export function urlify(url) {
+    if (!url) {
+        return "";
+    }
+
+    const formattedUrl = url
+        .replace(/(^\w+:|^)\/\//, "")
+        .replace(/\/+$/, "");
+
+    if (formattedUrl.startsWith("www.")) {
+        return formattedUrl.slice(4);
+    }
+
+    return formattedUrl;
+}
+
 export function useAuth() {
     return usePage().props.auth;
 }

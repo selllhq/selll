@@ -138,4 +138,9 @@ class Store extends Model
     {
         return $this->hasMany(Paylink::class);
     }
+
+    public function customDomains()
+    {
+        return $this->hasMany(CustomDomain::class);
+    }
 }

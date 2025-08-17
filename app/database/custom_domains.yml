@@ -1,0 +1,8 @@
+columns:
+  domain: string
+  is_primary:
+    type: boolean
+    default: true
+
+relationships:
+  - Store

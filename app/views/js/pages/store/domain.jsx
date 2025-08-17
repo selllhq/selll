@@ -6,22 +6,25 @@ import {
     Smartphone,
     ShoppingCart,
 } from "lucide-react";
+import * as Tabs from "@radix-ui/react-tabs";
 import Layout from "@/layouts/app-layout";
 import Input from "@/components/form/input";
 import Button from "@/components/form/button";
-import InputError from "@/components/form/input-error";
-import { slugify } from "@/utils";
-import * as Tabs from "@radix-ui/react-tabs";
 import { useDialog } from "@/components/ui/dialog";
+import InputError from "@/components/form/input-error";
+import { slugify, urlify } from "@/utils";
 
 export default function Domain({ store }) {
     const confirmModal = useDialog("confirmAction");
+
     const { data, setData, post, errors, processing } = useForm({
         slug: store?.slug || "",
+        domain: store?.custom_domains?.[0]?.domain || "",
     });
 
-    const submit = (e) => {
+    const handleStoreDomain = (e) => {
         e.preventDefault();
+
         confirmModal.openDialog({
             title: "Update Store URL",
             description:
@@ -34,6 +37,30 @@ export default function Domain({ store }) {
                         toast.success("Store URL updated successfully");
                         confirmModal.closeDialog();
                         router.visit("/store/customize", {
+                            preserveState: true,
+                            preserveScroll: true,
+                        });
+                    },
+                });
+            },
+        });
+    };
+
+    const handleCustomDomain = (e) => {
+        e.preventDefault();
+
+        confirmModal.openDialog({
+            title: "Add custom domain",
+            description:
+                "This will involve some advanced configuration of your domain name registrar. Please review this guide before you begin.",
+            cancelText: "Close",
+            confirmText: "Got it",
+            onConfirm: () => {
+                post("/store/domain/custom", {
+                    onSuccess: () => {
+                        toast.success("Custom domain added successfully.");
+                        confirmModal.closeDialog();
+                        router.visit("/store/domain/setup", {
                             preserveState: true,
                             preserveScroll: true,
                         });
@@ -76,15 +103,17 @@ export default function Domain({ store }) {
                             </Tabs.Trigger>
                             <Tabs.Trigger
                                 value="custom"
-                                disabled
-                                className="px-4 py-2 text-sm font-medium text-muted-foreground border-b-2 border-transparent opacity-60 cursor-not-allowed"
+                                className="px-4 py-2 text-sm font-medium text-muted-foreground border-b-2 border-transparent data-[state=active]:text-secondary-foreground data-[state=active]:border-primary-orange"
                             >
-                                Custom Domain (Coming Soon)
+                                Custom Domain
                             </Tabs.Trigger>
                         </Tabs.List>
 
                         <Tabs.Content value="selll" asChild>
-                            <form onSubmit={submit} className="space-y-6">
+                            <form
+                                onSubmit={handleStoreDomain}
+                                className="space-y-6"
+                            >
                                 <div className="mb-4">
                                     {/* <Label
                                         htmlFor="slug"
@@ -141,10 +170,61 @@ export default function Domain({ store }) {
                         </Tabs.Content>
 
                         <Tabs.Content value="custom" className="pt-6">
-                            <div className="text-sm text-muted-foreground">
-                                Custom domain support is coming soon. Stay
-                                tuned!
-                            </div>
+                            <form
+                                onSubmit={handleCustomDomain}
+                                className="space-y-6"
+                            >
+                                <p>
+                                    Custom domains help your store look more
+                                    professional and trustworthy. They also make
+                                    it easier for customers to remember your
+                                    store link.
+                                </p>
+                                <div className="mb-4">
+                                    {/* <Label
+                                        htmlFor="slug"
+                                        className="text-sm font-medium block mb-3"
+                                    >
+                                        Store URL
+                                    </Label> */}
+                                    <Input
+                                        id="slug"
+                                        className="block w-full dark:bg-[#2C2C2C] dark:border-0 focus:ring-primary-orange/20 pr-24"
+                                        value={data.domain}
+                                        onChange={(e) =>
+                                            setData("domain", urlify(e.target.value))
+                                        }
+                                        required
+                                        placeholder="myshopurl.com"
+                                    />
+                                    <InputError
+                                        message={errors.domain}
+                                        className="mt-2"
+                                    />
+                                </div>
+
+                                {data?.domain && (
+                                    <div className="text-sm text-muted-foreground">
+                                        Your store will be accessible at:{" "}
+                                        <a
+                                            href={data?.domain}
+                                            className="font-medium text-foreground"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            {data?.domain}
+                                        </a>
+                                    </div>
+                                )}
+
+                                <Button
+                                    type="submit"
+                                    disabled={processing}
+                                    className="bg-primary-orange hover:bg-primary-orange/90 w-full"
+                                >
+                                    Save Changes
+                                </Button>
+                            </form>
                         </Tabs.Content>
                     </Tabs.Root>
                 </div>

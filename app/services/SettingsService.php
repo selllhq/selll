@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\CustomDomain;
 use App\Models\Store;
 
 class SettingsService
@@ -33,6 +34,44 @@ class SettingsService
 
         $store->slug = $data['slug'];
         $store->save();
+
+        return [
+            'success' => true,
+        ];
+    }
+
+    /**
+     * Update store custom URL
+     * @param Store $store
+     * @return array
+     */
+    public function updateCustomUrl(Store $store): array
+    {
+        $data = request()->validate([
+            'domain' => 'string|min:1',
+        ]);
+
+        if (!$data) {
+            return [
+                'success' => false,
+                'errors' => request()->errors(),
+            ];
+        }
+
+        if (CustomDomain::where('domain', $data['domain'])->exists()) {
+            return [
+                'success' => false,
+                'errors' => ['domain' => "{$data['domain']} is already taken, please choose another one"],
+            ];
+        }
+
+        $store->customDomains()->updateOrCreate(
+            ['store_id' => $store->id],
+            [
+                'domain' => $data['domain'],
+                'store_id' => $store->id
+            ]
+        );
 
         return [
             'success' => true,

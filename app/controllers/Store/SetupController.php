@@ -145,7 +145,7 @@ class SetupController extends Controller
     public function showDomain()
     {
         response()->inertia('store/domain', [
-            'store' => StoreHelper::find(),
+            'store' => StoreHelper::find()->load(['customDomains']),
             'errors' => flash()->display('errors') ?? [],
         ]);
     }
@@ -159,6 +159,21 @@ class SetupController extends Controller
         if (!$data['success']) {
             return response()
                 ->withFlash('errors', $data['errors'])
+                ->redirect('/store/domain', 303);
+        }
+
+        return response()->redirect('/store/domain', 303);
+    }
+
+    public function customDomain()
+    {
+        $data = make(SettingsService::class)->updateCustomUrl(
+            StoreHelper::find()
+        );
+
+        if (!$data) {
+            return response()
+                ->withFlash('errors', request()->errors())
                 ->redirect('/store/domain', 303);
         }
 
