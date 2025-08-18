@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "68ef6eb329d407b2f6f51fe9f6c18369",
+    "content-hash": "c5fc5f791b12b261d647738bac245421",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -2406,16 +2406,16 @@
         },
         {
             "name": "leafs/http",
-            "version": "v4.2",
+            "version": "v4.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/http.git",
-                "reference": "c41ef17db0eb3c05900d577eeea049668e816ccb"
+                "reference": "fca29b500f4bf8419d1c5e1105501379f4415598"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/http/zipball/c41ef17db0eb3c05900d577eeea049668e816ccb",
-                "reference": "c41ef17db0eb3c05900d577eeea049668e816ccb",
+                "url": "https://api.github.com/repos/leafsphp/http/zipball/fca29b500f4bf8419d1c5e1105501379f4415598",
+                "reference": "fca29b500f4bf8419d1c5e1105501379f4415598",
                 "shasum": ""
             },
             "require": {
@@ -2423,6 +2423,7 @@
                 "leafs/form": "^3.0",
                 "leafs/fs": "^4.0"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "files": [
@@ -2457,7 +2458,7 @@
             ],
             "support": {
                 "issues": "https://github.com/leafsphp/http/issues",
-                "source": "https://github.com/leafsphp/http/tree/v4.2"
+                "source": "https://github.com/leafsphp/http/tree/v4.x"
             },
             "funding": [
                 {
@@ -2469,7 +2470,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-07-15T23:40:51+00:00"
+            "time": "2025-08-18T16:30:01+00:00"
         },
         {
             "name": "leafs/inertia",
@@ -6431,6 +6432,7 @@
     "stability-flags": {
         "leafs/billing": 20,
         "leafs/fs": 20,
+        "leafs/http": 20,
         "leafs/leaf": 20,
         "leafs/paystack": 20,
         "leafs/redis": 20,

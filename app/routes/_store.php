@@ -10,6 +10,7 @@ app()->group('/store', [
         app()->get('/domain', 'Store\SetupController@showDomain');
         app()->post('/domain', 'Store\SetupController@domain');
         app()->post('/domain/custom', 'Store\SetupController@customDomain');
+        app()->get('/domain/setup', 'Store\SetupController@showCustomDomainSetup');
     }
 ]);
 
