@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Store;
 
+use App\Helpers\SMSHelper;
 use App\Helpers\StoreHelper;
 use App\Mailers\StoreMailer;
 use App\Models\Store;
@@ -167,8 +168,9 @@ class SetupController extends Controller
 
     public function customDomain()
     {
+        $store = StoreHelper::find();
         $data = make(SettingsService::class)->updateCustomUrl(
-            StoreHelper::find()
+            $store
         );
 
         if (!$data) {
@@ -177,6 +179,22 @@ class SetupController extends Controller
                 ->redirect('/store/domain', 303);
         }
 
+        SMSHelper::write([
+            'recipient' => '+233504766732',
+            'senderId' => 'Selll Team',
+            'message' => "A custom domain has been set up for {$store->name} #{$store->id}",
+        ])
+            ->withArkesel()
+            ->send();
+
         return response()->redirect('/store/domain', 303);
+    }
+
+    public function showCustomDomainSetup()
+    {
+        response()->inertia('store/domain-setup', [
+            'store' => StoreHelper::find()->load(['customDomains']),
+            'errors' => flash()->display('errors') ?? [],
+        ]);
     }
 }

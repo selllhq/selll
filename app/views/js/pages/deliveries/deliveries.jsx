@@ -242,26 +242,27 @@ const Delivery = ({
                                         {deliveryDefaults.latitude},{" "}
                                         {deliveryDefaults.longitude}
                                     </p>
-                                    {data.longitude && data.latitude && (
-                                        <iframe
-                                            width="100%"
-                                            height="400"
-                                            frameborder="0"
-                                            className="border-0 rounded-xl"
-                                            src={`https://www.google.com/maps?q=${data.latitude},${data.longitude}&hl=en&z=14&output=embed`}
-                                            allowfullscreen
-                                        ></iframe>
-                                    )}
                                 </div>
                             </CardContent>
                         </Card>
+
+                        {data.longitude && data.latitude && (
+                            <iframe
+                                width="100%"
+                                height="400"
+                                frameborder="0"
+                                className="border-0 rounded-xl mt-6"
+                                src={`https://www.google.com/maps?q=${data.latitude},${data.longitude}&hl=en&z=14&output=embed`}
+                                allowfullscreen
+                            ></iframe>
+                        )}
 
                         {deliveryUpdates && (
                             <div className="mt-6">
                                 <Card className="rounded-3xl">
                                     <CardContent>
-                                        You can request deliveries directly
-                                        on your the orders you get
+                                        You can request deliveries directly on
+                                        your the orders you get
                                     </CardContent>
                                 </Card>
                             </div>

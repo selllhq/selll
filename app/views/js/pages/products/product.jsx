@@ -118,7 +118,7 @@ export default function Products({
                             </div>
                             <Button
                                 variant="outline"
-                                className="text-xs bg-[#2C2C2C] w-full"
+                                className="text-xs bg-[#2C2C2C] w-full text-white"
                                 onClick={handleTopUpClick}
                             >
                                 Restock
