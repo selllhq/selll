@@ -348,25 +348,30 @@ export default function Order({
                                             (item) => item.product?.physical,
                                         ) ? (
                                             <>
-                                                <Button
-                                                    size="sm"
-                                                    className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
-                                                    onClick={() =>
-                                                        setDeliveryModalOpen(
-                                                            true,
-                                                        )
-                                                    }
-                                                >
-                                                    <Package className="h-4 w-4" />
-                                                    Update Delivery
-                                                </Button>
+                                                {order.address !== "PICKUP" && (
+                                                    <Button
+                                                        size="sm"
+                                                        className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
+                                                        onClick={() =>
+                                                            setDeliveryModalOpen(
+                                                                true,
+                                                            )
+                                                        }
+                                                    >
+                                                        <Package className="h-4 w-4" />
+                                                        Update Delivery
+                                                    </Button>
+                                                )}
+
                                                 <Button
                                                     size="sm"
                                                     className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
                                                     onClick={markAsDelivered}
                                                 >
                                                     <Check className="h-4 w-4" />
-                                                    Complete Order
+                                                    {order.address === "PICKUP"
+                                                        ? "Order Picked Up"
+                                                        : "Order Delivered"}
                                                 </Button>
                                             </>
                                         ) : (
@@ -527,6 +532,14 @@ export default function Order({
                                             </div>
 
                                             <div className="space-y-2 pt-2 ml-2">
+                                                {order.address === "PICKUP" && (
+                                                    <p className="text-sm text-primary pb-2">
+                                                        The customer chose to
+                                                        pick up this order in
+                                                        person from your store.
+                                                    </p>
+                                                )}
+
                                                 {order.customer.email && (
                                                     <div className="flex items-center gap-2">
                                                         <Mail className="h-4 w-4 text-primary/75" />
@@ -558,42 +571,43 @@ export default function Order({
                                                 )}
 
                                                 {(order.address ||
-                                                    order.customer
-                                                        ?.address) && (
-                                                    <>
-                                                        <div className="flex items-start gap-2">
-                                                            <MapPin className="h-4 w-4 text-primary/75 mt-0.5" />
-                                                            <a
-                                                                className="text-sm text-primary/65 underline"
-                                                                href={
-                                                                    order.longitude &&
-                                                                    order.latitude
-                                                                        ? `https://www.google.com/maps/search/?api=1&query=${order.latitude},${order.longitude}`
-                                                                        : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(order.customer.address)}`
-                                                                }
-                                                                target="_blank"
-                                                                rel="noopener noreferrer"
-                                                            >
-                                                                {order.address ||
-                                                                    order
-                                                                        .customer
-                                                                        ?.address}
-                                                            </a>
-                                                        </div>
+                                                    order.customer?.address) &&
+                                                    order.address !==
+                                                        "PICKUP" && (
+                                                        <>
+                                                            <div className="flex items-start gap-2">
+                                                                <MapPin className="h-4 w-4 text-primary/75 mt-0.5" />
+                                                                <a
+                                                                    className="text-sm text-primary/65 underline"
+                                                                    href={
+                                                                        order.longitude &&
+                                                                        order.latitude
+                                                                            ? `https://www.google.com/maps/search/?api=1&query=${order.latitude},${order.longitude}`
+                                                                            : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(order.customer.address)}`
+                                                                    }
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                >
+                                                                    {order.address ||
+                                                                        order
+                                                                            .customer
+                                                                            ?.address}
+                                                                </a>
+                                                            </div>
 
-                                                        {order.longitude &&
-                                                            order.latitude && (
-                                                                <iframe
-                                                                    width="100%"
-                                                                    height="400"
-                                                                    frameborder="0"
-                                                                    className="border-0"
-                                                                    src={`https://www.google.com/maps?q=${order.latitude},${order.longitude}&hl=en&z=14&output=embed`}
-                                                                    allowfullscreen
-                                                                ></iframe>
-                                                            )}
-                                                    </>
-                                                )}
+                                                            {order.longitude &&
+                                                                order.latitude && (
+                                                                    <iframe
+                                                                        width="100%"
+                                                                        height="400"
+                                                                        frameborder="0"
+                                                                        className="border-0"
+                                                                        src={`https://www.google.com/maps?q=${order.latitude},${order.longitude}&hl=en&z=14&output=embed`}
+                                                                        allowfullscreen
+                                                                    ></iframe>
+                                                                )}
+                                                        </>
+                                                    )}
 
                                                 {order.notes && (
                                                     <div className="flex items-start gap-2">
@@ -605,18 +619,20 @@ export default function Order({
                                                 )}
                                             </div>
 
-                                            {!paylink?.id && (
-                                                <p className="text-xs text-primary/65 px-4 bg-muted-foreground/15 rounded-none py-4">
-                                                    Let your customer know
-                                                    what’s happening. Update
-                                                    delivery status and mark the
-                                                    order complete when it’s
-                                                    done.
-                                                </p>
-                                            )}
+                                            {!paylink?.id &&
+                                                order.address !== "PICKUP" && (
+                                                    <p className="text-xs text-primary/65 px-4 bg-muted-foreground/15 rounded-none py-4">
+                                                        Let your customer know
+                                                        what’s happening. Update
+                                                        delivery status and mark
+                                                        the order complete when
+                                                        it’s done.
+                                                    </p>
+                                                )}
 
                                             <div className="pt-2">
-                                                {deliveryDefaults &&
+                                                {order.address !== "PICKUP" &&
+                                                    deliveryDefaults &&
                                                     order.latitude &&
                                                     order.longitude && (
                                                         <YangoWidget
@@ -626,6 +642,7 @@ export default function Order({
                                                             }
                                                         />
                                                     )}
+
                                                 <Button
                                                     size="sm"
                                                     className="w-full bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C]"
@@ -843,6 +860,14 @@ export default function Order({
                                             </div>
 
                                             <div className="space-y-2 pt-2 ml-2">
+                                                {order.address === "PICKUP" && (
+                                                    <p className="text-sm text-primary pb-2">
+                                                        The customer chose to
+                                                        pick up this order in
+                                                        person from your store.
+                                                    </p>
+                                                )}
+
                                                 {order.customer.email && (
                                                     <div className="flex items-center gap-2">
                                                         <Mail className="h-4 w-4 text-primary/75" />
@@ -874,29 +899,32 @@ export default function Order({
                                                 )}
 
                                                 {(order.address ||
-                                                    order.customer
-                                                        ?.address) && (
-                                                    <div className="flex items-start gap-2">
-                                                        <MapPin className="h-4 w-4 text-primary/75 mt-0.5" />
-                                                        <a
-                                                            className="text-sm text-primary/65 underline"
-                                                            href={
-                                                                order.longitude &&
-                                                                order.latitude
-                                                                    ? `https://www.google.com/maps/search/?api=1&query=${order.latitude},${order.longitude}`
-                                                                    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(order.customer.address)}`
-                                                            }
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                        >
-                                                            {order.address ||
-                                                                order.customer
-                                                                    ?.address}{" "}
-                                                            <br />
-                                                            Click to view on map
-                                                        </a>
-                                                    </div>
-                                                )}
+                                                    order.customer?.address) &&
+                                                    order.address !==
+                                                        "PICKUP" && (
+                                                        <div className="flex items-start gap-2">
+                                                            <MapPin className="h-4 w-4 text-primary/75 mt-0.5" />
+                                                            <a
+                                                                className="text-sm text-primary/65 underline"
+                                                                href={
+                                                                    order.longitude &&
+                                                                    order.latitude
+                                                                        ? `https://www.google.com/maps/search/?api=1&query=${order.latitude},${order.longitude}`
+                                                                        : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(order.customer.address)}`
+                                                                }
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                            >
+                                                                {order.address ||
+                                                                    order
+                                                                        .customer
+                                                                        ?.address}{" "}
+                                                                <br />
+                                                                Click to view on
+                                                                map
+                                                            </a>
+                                                        </div>
+                                                    )}
 
                                                 {order.notes && (
                                                     <div className="flex items-start gap-2">
@@ -908,7 +936,8 @@ export default function Order({
                                                 )}
                                             </div>
 
-                                            {deliveryDefaults &&
+                                            {order.address !== "PICKUP" &&
+                                                deliveryDefaults &&
                                                 order.latitude &&
                                                 order.longitude && (
                                                     <YangoWidget
@@ -919,15 +948,16 @@ export default function Order({
                                                     />
                                                 )}
 
-                                            {!paylink?.id && (
-                                                <p className="text-xs text-primary/65 px-4 bg-muted-foreground/15 rounded-none py-4">
-                                                    Let your customer know
-                                                    what’s happening. Update
-                                                    delivery status and mark the
-                                                    order complete when it’s
-                                                    done.
-                                                </p>
-                                            )}
+                                            {!paylink?.id &&
+                                                order.address !== "PICKUP" && (
+                                                    <p className="text-xs text-primary/65 px-4 bg-muted-foreground/15 rounded-none py-4">
+                                                        Let your customer know
+                                                        what’s happening. Update
+                                                        delivery status and mark
+                                                        the order complete when
+                                                        it’s done.
+                                                    </p>
+                                                )}
 
                                             <div className="pt-2">
                                                 <Button
