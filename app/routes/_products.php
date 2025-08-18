@@ -14,5 +14,6 @@ app()->group('/products', [
         app()->get('/(\d+)/edit', 'Store\ProductsController@edit');
         app()->post('/(\d+)/edit', 'Store\ProductsController@update');
         app()->delete('/(\d+)', 'Store\ProductsController@destroy');
+        app()->post('/(\d+)/unarchive', 'Store\ProductsController@unarchive');
     }
 ]);

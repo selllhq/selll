@@ -7,11 +7,14 @@ class Product extends Model
     protected $fillable = [
         'name',
         'description',
-        'currency',
         'price',
         'quantity',
         'quantity_items',
-        'images'
+        'images',
+        'physical',
+        'is_featured',
+        'variants',
+        'status'
     ];
 
     public function store()

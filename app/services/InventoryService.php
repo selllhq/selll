@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Helpers\StoreHelper;
 use App\Models\Analytics;
-use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Store;
 use App\Models\User;
@@ -249,5 +248,29 @@ class InventoryService
         }
 
         return $success;
+    }
+
+    /**
+     * Unarchive a product.
+     * @param Product $product
+     * @return bool
+     */
+    public function unarchiveProduct(Product $product)
+    {
+        $geoData = request()->getUserLocation();
+
+        $product->update(['status' => 'active']);
+
+        app()->mixpanel->track('Product Unarchived', [
+            '$user_id' => auth()->id(),
+            'store_id' => auth()->user()->current_store_id,
+            'product_id' => $product->id,
+            '$region' => $geoData['region'] ?? null,
+            '$city' => $geoData['city'] ?? null,
+            'mp_country_code' => $geoData['countryCode'] ?? null,
+            '$country_code' => $geoData['countryCode'] ?? null,
+        ]);
+
+        return true;
     }
 }

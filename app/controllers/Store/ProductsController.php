@@ -279,4 +279,23 @@ class ProductsController extends Controller
             ->withFlash('success', 'Product disabled successfully.')
             ->redirect('/products', 303);
     }
+
+    public function unarchive($id)
+    {
+        $product = Store::find(auth()->user()->current_store_id)->products()->find($id);
+
+        if (!$product) {
+            return response()
+                ->withFlash('errors', [
+                    'product' => 'Product not found.',
+                ])
+                ->redirect("/products/$id", 303);
+        }
+
+        make(InventoryService::class)->unarchiveProduct($product);
+
+        return response()
+            ->withFlash('success', 'Product unarchived successfully.')
+            ->redirect("/products/$id", 303);
+    }
 }
