@@ -12,11 +12,13 @@ class BillingController extends Controller
     {
         $cartData = request()->get('cart');
         $customerData = request()->get('customer');
+
         $customerDataToSave = array_merge($customerData, [
             'phone' => CustomerHelper::formatPhone($customerData['phone'] ?? '', $customerData['country_code'] ?? '233'),
             'address' => $customerData['deliveryLocation']['address'] ?? ''
         ]);
 
+        unset($customerDataToSave['usePickup']);
         unset($customerDataToSave['deliveryLocation']);
 
         $cartTotal = 0;
@@ -43,9 +45,9 @@ class BillingController extends Controller
             'currency' => $store->currency,
             'store_id' => $store->id,
             'store_url' => request()->get('store_url'),
-            'address' => $customerDataToSave['address'] ?? null,
-            'longitude' => $customerData['deliveryLocation']['lngLat'][0] ?? null,
-            'latitude' => $customerData['deliveryLocation']['lngLat'][1] ?? null,
+            'address' => $customerData['usePickup'] ? 'PICKUP' : ($customerDataToSave['address'] ?? null),
+            'longitude' => $customerData['usePickup'] ? 'PICKUP' : ($customerData['deliveryLocation']['lngLat'][0] ?? null),
+            'latitude' => $customerData['usePickup'] ? 'PICKUP' : ($customerData['deliveryLocation']['lngLat'][1] ?? null),
             'notes' => $customerData['notes'] ?? null,
         ]);
 
