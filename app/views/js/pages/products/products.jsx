@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { Head, router, Link } from "@inertiajs/react";
 import {
@@ -13,6 +13,7 @@ import {
     Share,
     MoreHorizontal,
     Edit,
+    UndoIcon,
 } from "lucide-react";
 import Layout from "@/layouts/app-layout";
 import EmptyState from "@/components/layout/empty";
@@ -45,6 +46,10 @@ export default function Products({ orders = [], products, currentStore }) {
     const [search, setSearch] = useState("");
     const [filter, setFilter] = useState("all");
     const confirmModal = useDialog("confirmAction");
+
+    useEffect(() => {
+        confirmModal.closeDialog();
+    }, []);
 
     const filteredProducts = products?.filter((product) => {
         const matchesSearch =
@@ -407,14 +412,17 @@ export default function Products({ orders = [], products, currentStore }) {
                                                 parseProductImages(
                                                     product.images,
                                                 );
+
                                             const stockStatus =
-                                                product.quantity ===
-                                                    "unlimited" ||
-                                                parseInt(
-                                                    product.quantity_items,
-                                                ) > 0
-                                                    ? "Published"
-                                                    : "Out of Stock";
+                                                product.status === "archived"
+                                                    ? "Archived"
+                                                    : product.quantity ===
+                                                            "unlimited" ||
+                                                        parseInt(
+                                                            product.quantity_items,
+                                                        ) > 0
+                                                      ? "Published"
+                                                      : "Out of Stock";
 
                                             return (
                                                 <TableRow
@@ -563,59 +571,107 @@ export default function Products({ orders = [], products, currentStore }) {
                                                                             Share
                                                                         </Button>
                                                                     </DropdownMenuItem>
-                                                                    <DropdownMenuItem
-                                                                        asChild
-                                                                    >
-                                                                        <Button
-                                                                            variant="ghost"
-                                                                            className="w-full justify-start focus-visible:ring-0"
-                                                                            onClick={(
-                                                                                e,
-                                                                            ) => {
-                                                                                e.stopPropagation();
-                                                                                confirmModal.openDialog(
-                                                                                    {
-                                                                                        title: isDeletable
-                                                                                            ? "Delete Product"
-                                                                                            : `Archive "${product.name}"?`,
-                                                                                        description:
-                                                                                            isDeletable
-                                                                                                ? `Are you sure you want to delete the product "${product.name}"? This action cannot be undone.`
-                                                                                                : `Archiving will hide this product from your storefront, so customers won’t see it — but don’t worry, it will stay in your inventory and you can bring it back anytime.`,
-                                                                                        cancelText:
-                                                                                            "Cancel",
-                                                                                        confirmText:
-                                                                                            isDeletable
-                                                                                                ? "Delete"
-                                                                                                : "Archive",
-                                                                                        onConfirm:
-                                                                                            () => {
-                                                                                                router.delete(
-                                                                                                    `/products/${product.id}`,
-                                                                                                    {
-                                                                                                        preserveScroll: true,
-                                                                                                        preserveState: true,
-                                                                                                        onFinish:
-                                                                                                            () => {
-                                                                                                                toast(
-                                                                                                                    "Product deleted successfully.",
-                                                                                                                );
-                                                                                                                confirmModal.closeDialog();
-                                                                                                            },
-                                                                                                    },
-                                                                                                );
-                                                                                            },
-                                                                                    },
-                                                                                );
-                                                                            }}
+                                                                    {product.status !==
+                                                                    "archived" ? (
+                                                                        <DropdownMenuItem
+                                                                            asChild
                                                                         >
-                                                                            <Trash2 className="h-4 w-4 mr-2" />
-                                                                            {!isDeletable
-                                                                                ? "Archive"
-                                                                                : "Delete"}{" "}
-                                                                            Product
-                                                                        </Button>
-                                                                    </DropdownMenuItem>
+                                                                            <Button
+                                                                                variant="ghost"
+                                                                                className="w-full justify-start focus-visible:ring-0"
+                                                                                onClick={(
+                                                                                    e,
+                                                                                ) => {
+                                                                                    e.stopPropagation();
+                                                                                    confirmModal.openDialog(
+                                                                                        {
+                                                                                            title: isDeletable
+                                                                                                ? "Delete Product"
+                                                                                                : `Archive "${product.name}"?`,
+                                                                                            description:
+                                                                                                isDeletable
+                                                                                                    ? `Are you sure you want to delete the product "${product.name}"? This action cannot be undone.`
+                                                                                                    : `Archiving will hide this product from your storefront, so customers won’t see it — but don’t worry, it will stay in your inventory and you can bring it back anytime.`,
+                                                                                            cancelText:
+                                                                                                "Cancel",
+                                                                                            confirmText:
+                                                                                                isDeletable
+                                                                                                    ? "Delete"
+                                                                                                    : "Archive",
+                                                                                            onConfirm:
+                                                                                                () => {
+                                                                                                    router.delete(
+                                                                                                        `/products/${product.id}`,
+                                                                                                        {
+                                                                                                            preserveScroll: true,
+                                                                                                            preserveState: true,
+                                                                                                            onFinish:
+                                                                                                                () => {
+                                                                                                                    toast(
+                                                                                                                        "Product deleted successfully.",
+                                                                                                                    );
+                                                                                                                    confirmModal.closeDialog();
+                                                                                                                },
+                                                                                                        },
+                                                                                                    );
+                                                                                                },
+                                                                                        },
+                                                                                    );
+                                                                                }}
+                                                                            >
+                                                                                <Trash2 className="h-4 w-4 mr-2" />
+                                                                                {!isDeletable
+                                                                                    ? "Archive"
+                                                                                    : "Delete"}{" "}
+                                                                                Product
+                                                                            </Button>
+                                                                        </DropdownMenuItem>
+                                                                    ) : (
+                                                                        <DropdownMenuItem
+                                                                            asChild
+                                                                        >
+                                                                            <Button
+                                                                                variant="ghost"
+                                                                                className="w-full justify-start focus-visible:ring-0"
+                                                                                onClick={(e) => {
+                                                                                    e.stopPropagation();
+
+                                                                                    confirmModal.openDialog(
+                                                                                        {
+                                                                                            title: "Restore Product?",
+                                                                                            description:
+                                                                                                "Are you sure you want to restore this product? It will be visible on your store again.",
+                                                                                            cancelText:
+                                                                                                "Cancel",
+                                                                                            confirmText:
+                                                                                                "Restore",
+                                                                                            onConfirm:
+                                                                                                () => {
+                                                                                                    router.post(
+                                                                                                        `/products/${product.id}/unarchive`,
+                                                                                                        {
+                                                                                                            preserveScroll: true,
+                                                                                                            preserveState: true,
+                                                                                                            onFinish:
+                                                                                                                () => {
+                                                                                                                    toast(
+                                                                                                                        "Product restored successfully.",
+                                                                                                                    );
+                                                                                                                    confirmModal.closeDialog();
+                                                                                                                },
+                                                                                                        },
+                                                                                                    );
+                                                                                                },
+                                                                                        },
+                                                                                    );
+                                                                                }}
+                                                                            >
+                                                                                <UndoIcon className="h-4 w-4 mr-2" />
+                                                                                Restore
+                                                                                Product
+                                                                            </Button>
+                                                                        </DropdownMenuItem>
+                                                                    )}
                                                                 </DropdownMenuContent>
                                                             </DropdownMenu>
                                                         </div>

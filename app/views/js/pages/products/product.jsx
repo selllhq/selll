@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Head, Link, router } from "@inertiajs/react";
 import {
     Wallet,
@@ -64,6 +64,10 @@ export default function Products({
     const isLowStock =
         product.quantity !== "unlimited" &&
         parseInt(product.quantity_items) < 3;
+
+    useEffect(() => {
+        confirmModal.closeDialog();
+    }, []);
 
     const handleTopUpClick = () => {
         stockTopUpDialog.openDialog({
