@@ -3,6 +3,7 @@
 namespace App\Controllers\Api;
 
 use App\Controllers\Controller;
+use App\Models\Affiliate;
 use App\Models\Analytics;
 use App\Models\CustomDomain;
 use App\Models\Store;
@@ -113,6 +114,11 @@ class StoresController extends Controller
             return response()->json(['error' => 'Store not found'], 404);
         }
 
+        if (strpos($id, '==') !== false) {
+            $affiliate = Affiliate::where('slug', $id)->firstOrFail();
+            $id = $affiliate->product_id;
+        }
+
         $product = $currentStore->products()->where(['id' => $id, 'status' => 'active'])->first();
 
         if (!$product) {
@@ -141,6 +147,14 @@ class StoresController extends Controller
             'user_ip' => $geoData['ip'],
             'user_location' => $geoData['country'] ?? 'unknown',
         ]);
+
+        if (isset($affiliate)) {
+            $product->affiliate = [
+                'id' => $affiliate->id,
+                'slug' => $affiliate->slug,
+                'commission' => $affiliate->commission,
+            ];
+        }
 
         return response()->json($product);
     }
