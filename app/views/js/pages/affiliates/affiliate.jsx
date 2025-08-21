@@ -27,7 +27,7 @@ const Affiliates = ({ affiliate }) => {
                 </Link>
             </header>
 
-            <main className="pt-20 px-4 md:px-6">
+            <main className="py-20 px-4 md:px-6">
                 <div className="max-w-3xl mx-auto">
                     <Card className="p-0 rounded-3xl !bg-background !ring-0">
                         <img
