@@ -212,11 +212,8 @@ const Affiliates = ({ product, banks, mobileMoney }) => {
                                         required
                                     />
                                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                        Original Price:{" "}
-                                        {new Intl.NumberFormat("en-GH", {
-                                            style: "currency",
-                                            currency: "GHS",
-                                        }).format(parseFloat(product.price))}
+                                        Selll takes a 3% transaction fee on
+                                        commissions.
                                     </p>
                                 </div>
 
