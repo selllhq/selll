@@ -6,6 +6,7 @@ const footerLinks = [
         { name: "Features", href: "/#features" },
         { name: "Pricing", href: "/pricing" },
         { name: "About Selll", href: "/about" },
+        { name: "Affiliate Program", href: "/affiliates" },
     ],
     [
         { name: "Blog", href: "/blog" },

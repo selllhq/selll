@@ -1,6 +1,7 @@
 import { toast } from "sonner";
 import { Head, router, useForm } from "@inertiajs/react";
-import { ArrowDownCircle, CreditCard, Wallet, Banknote } from "lucide-react";
+import { ArrowDownCircle, CreditCard } from "lucide-react";
+
 import Layout from "@/layouts/app-layout";
 import Input from "@/components/form/input";
 import Label from "@/components/form/label";

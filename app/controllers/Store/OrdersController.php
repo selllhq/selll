@@ -15,10 +15,18 @@ class OrdersController extends Controller
 
         response()->inertia('products/orders', [
             'currentStore' => $currentStore,
-            // 'products' => $currentStore->products()->get(),
             'customers' => $currentStore->customers()->get(),
             'orders' => make(OrdersService::class)->getOrders($currentStore),
-            'products' => $currentStore->products()->whereNot('status', 'archived')->get(),
+            'products' => $currentStore->products()
+                ->whereNot('status', 'archived')
+                ->where(function ($query) {
+                    return $query->where('quantity', '==', 'unlimited')
+                        ->orWhere(function ($query) {
+                            $query->where('quantity', 'limited')
+                                ->whereRaw('CAST(quantity_items AS INTEGER) >= ?', [1]);
+                        });
+                })
+                ->get(),
         ]);
     }
 

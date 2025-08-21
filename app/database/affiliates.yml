@@ -1,0 +1,28 @@
+columns:
+  name: string
+  email: string
+  phone: string
+  slug:
+    type: string
+    nullable: true
+  type:
+    type: enum
+    values:
+      - momo
+      - bank
+      - other
+  provider: string
+  commission: string
+  account_code:
+    type: string
+  account_number: string
+  account_identifier: string
+  currency:
+    type: string
+    default: GHS
+  verified_at:
+    type: timestamp
+    nullable: true
+
+relationships:
+  - Product
