@@ -152,8 +152,9 @@ class StoresController extends Controller
             $product->affiliate = [
                 'id' => $affiliate->id,
                 'slug' => $affiliate->slug,
-                'commission' => $affiliate->commission,
             ];
+
+            $product->price = $product->price + $affiliate->commission;
         }
 
         return response()->json($product);

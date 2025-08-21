@@ -4,6 +4,7 @@ namespace App\Controllers\Billing;
 
 use App\Controllers\Controller;
 use App\Helpers\CustomerHelper;
+use App\Models\Affiliate;
 use App\Models\Store;
 
 class BillingController extends Controller
@@ -27,9 +28,19 @@ class BillingController extends Controller
 
         $customer = CustomerHelper::saveToStore($storeId, $customerDataToSave);
 
-        $items = array_map(function ($cartItem) use ($store, &$cartTotal) {
+        $affiliate = null;
+
+        $items = array_map(function ($cartItem) use ($store, &$cartTotal, &$affiliate) {
             $item = $store->products()->find($cartItem['id']);
             $cartTotal += ((float) $item->price * $cartItem['quantity']);
+
+            if ($cartItem['affiliate']['id'] ?? null) {
+                $affiliate = Affiliate::find($cartItem['affiliate']['id']);
+
+                if ($affiliate) {
+                    $affiliate->quantity = $cartItem['quantity'] ?? 1;
+                }
+            }
 
             return [
                 'id' => $item->id,
@@ -54,21 +65,46 @@ class BillingController extends Controller
         $storePayoutWallet = $store->wallets()->find($store->payout_account_id);
 
         try {
+            $billingAccountData = [
+                'subaccount' => $storePayoutWallet->account_code,
+                'bearer' => 'subaccount',
+            ];
+
+            if ($affiliate) {
+                $billingAccountData = [
+                    'split' => [
+                        'type' => 'flat',
+                        'bearer_type' => 'subaccount',
+                        'bearer_subaccount' => $affiliate->account_code,
+                        'subaccounts' => [
+                            [
+                                'subaccount' => $affiliate->account_code,
+                                'share' => (($affiliate->commission * $affiliate->quantity) * 100),
+                            ],
+                            [
+                                'subaccount' => $storePayoutWallet->account_code,
+                                'share' => ($cartTotal * 100) * 0.97,
+                            ],
+                        ],
+                    ],
+                ];
+
+                $cartTotal += ($affiliate->commission * $affiliate->quantity);
+            }
+
             $session = billing($billingProvider)->charge([
                 'amount' => $cartTotal * 100,
                 'currency' => $store->currency,
                 'description' => 'Purchase of items in cart',
                 'customer' => $customer->email,
                 'url' => rtrim(_env('APP_URL', 'https://selll.online'), '/') . '/billing/callback', // only for paystack
-                '_paystack' => [
-                    'subaccount' => $storePayoutWallet->account_code,
-                    'bearer' => 'subaccount',
-                ],
+                '_paystack' => $billingAccountData,
                 'metadata' => [
                     'cart_id' => $cart->id,
                     'customer_id' => $customer->id,
                     'store_id' => $store->id,
                     'items' => $items,
+                    'affiliate' => $affiliate ? $affiliate->slug : null,
                 ]
             ]);
 

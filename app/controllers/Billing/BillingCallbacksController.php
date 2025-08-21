@@ -5,6 +5,7 @@ namespace App\Controllers\Billing;
 use App\Controllers\Controller;
 use App\Helpers\SMSHelper;
 use App\Mailers\StoreMailer;
+use App\Models\Affiliate;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\User;
@@ -133,6 +134,20 @@ class BillingCallbacksController extends Controller
                 'mp_country_code' => $geoData['countryCode'] ?? null,
                 '$country_code' => $geoData['countryCode'] ?? null,
             ]);
+
+            if ($billingCallback->metadata()['affiliate'] ?? null) {
+                $affiliate = Affiliate::where('slug', $billingCallback->metadata()['affiliate'])->first();
+
+                if ($affiliate) {;
+                    SMSHelper::write([
+                        'recipient' => $affiliate->phone,
+                        'senderId' => 'Selll Team',
+                        'message' => "You just earned from a sale on {$userCart->store->name}. You will receive GHS {$affiliate->commission} minus Selll's fee on the next business day.",
+                    ])
+                        ->withArkesel()
+                        ->send();
+                }
+            }
 
             if ($userCart->customer->phone) {
                 $customerFirstName = explode(' ', $userCart->customer->name)[0];

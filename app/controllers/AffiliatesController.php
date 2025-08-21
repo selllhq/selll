@@ -97,35 +97,56 @@ class AffiliatesController extends Controller
         $billingProvider = billing(in_array('GHS', ['GHS', 'NGN', 'KES', 'ZAR']) ? 'paystack' : 'stripe');
 
         try {
-            $subaccount = $billingProvider->provider()->subaccounts()->create([
-                'business_name' => $data['name'],
-                'settlement_bank' => $bankCode,
-                'account_number' => $data['account_number'],
-                'percentage_charge' => 2,
-                'description' => "Selll payout account for {$data['name']}",
-                'primary_contact_email' => $data['email'],
-                'primary_contact_name' => $data['name'],
-            ]);
+            $existingAffiliateAccount = Affiliate::where('account_number', $data['account_number'])
+                ->where('account_identifier', $bankCode)
+                ->where('provider', $provider)
+                ->first();
 
-            if (!$subaccount) {
-                return response()
-                    ->withFlash('errors', ['type' => 'Unable to create subaccount. Please try again later.'])
-                    ->redirect("/affiliates/products/{$data['product']}", 303);
+            if ($existingAffiliateAccount) {
+                $affiliate = Affiliate::create([
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'phone' => $data['phone'],
+                    'type' => $data['type'],
+                    'provider' => $provider,
+                    'commission' => $data['commission'] ?? 0,
+                    'account_code' => $existingAffiliateAccount->account_code,
+                    'account_number' => $data['account_number'],
+                    'account_identifier' => $bankCode,
+                    'currency' => $existingAffiliateAccount->currency,
+                    'product_id' => $data['product'],
+                ]);
+            } else {
+                $subaccount = $billingProvider->provider()->subaccounts()->create([
+                    'business_name' => $data['name'],
+                    'settlement_bank' => $bankCode,
+                    'account_number' => $data['account_number'],
+                    'percentage_charge' => 2,
+                    'description' => "Selll payout account for {$data['name']}",
+                    'primary_contact_email' => $data['email'],
+                    'primary_contact_name' => $data['name'],
+                ]);
+
+                if (!$subaccount) {
+                    return response()
+                        ->withFlash('errors', ['type' => 'Unable to create subaccount. Please try again later.'])
+                        ->redirect("/affiliates/products/{$data['product']}", 303);
+                }
+
+                $affiliate = Affiliate::create([
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'phone' => $data['phone'],
+                    'type' => $data['type'],
+                    'provider' => $provider,
+                    'commission' => $data['commission'] ?? 0,
+                    'account_code' => $subaccount->subaccount_code,
+                    'account_number' => $data['account_number'],
+                    'account_identifier' => $bankCode,
+                    'currency' => $subaccount->currency,
+                    'product_id' => $data['product'],
+                ]);
             }
-
-            $affiliate = Affiliate::create([
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'phone' => $data['phone'],
-                'type' => $data['type'],
-                'provider' => $provider,
-                'commission' => $data['commission'] ?? 0,
-                'account_code' => $subaccount->subaccount_code,
-                'account_number' => $data['account_number'],
-                'account_identifier' => $bankCode,
-                'currency' => $subaccount->currency,
-                'product_id' => $data['product'],
-            ]);
 
             if (!$affiliate) {
                 return response()
