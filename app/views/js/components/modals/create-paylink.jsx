@@ -99,15 +99,13 @@ const PaylinkForm = ({ store }) => {
 
         if (!data.customer_id && !data.customer) {
             alert(
-                "Please select a customer or provide an email to create a paylink."
+                "Please select a customer or provide an email to create a paylink.",
             );
             return;
         }
 
         if (!data.use_amount && data.products.length === 0) {
-            alert(
-                "Please select at least one product or use a custom amount."
-            );
+            alert("Please select at least one product or use a custom amount.");
             return;
         }
 
@@ -322,7 +320,18 @@ const PaylinkForm = ({ store }) => {
                                             </span>
                                             <button
                                                 type="button"
-                                                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-neutral-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                                                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-neutral-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-50"
+                                                disabled={
+                                                    product.quantity ===
+                                                        "limited" &&
+                                                    data.products.find(
+                                                        (p) =>
+                                                            p.id === product.id,
+                                                    )?.quantity >=
+                                                        parseInt(
+                                                            product.quantity_items,
+                                                        )
+                                                }
                                                 onClick={() => {
                                                     const updatedProducts =
                                                         data.products.map(
@@ -381,7 +390,9 @@ const PaylinkForm = ({ store }) => {
             )}
 
             <div className="mt-auto">
-                <Button loading={processing} className="w-full">Create Link</Button>
+                <Button loading={processing} className="w-full">
+                    Create Link
+                </Button>
             </div>
         </form>
     );
