@@ -14,10 +14,10 @@ class PayoutsController extends Controller
 
         response()->inertia('payouts/payouts', [
             'currentStore' => $currentStore,
+            'payoutWallets' => $currentStore->wallets()->get(),
             'activePayoutWallet' => $currentStore->payout_account_id,
             'wallets' => $currentStore->wallets()->with('payouts')->get(),
             'payouts' => $currentStore->payouts()->with('wallet')->latest()->get(),
-            'payoutWallets' => $currentStore->wallets()->get(),
             'orders' => $currentStore->carts()->where('status', 'paid')->count(),
             'errors' => flash()->display('errors'),
         ]);
@@ -34,17 +34,29 @@ class PayoutsController extends Controller
 
         $billingProvider = billing(in_array($currentStore->currency, ['GHS', 'NGN', 'KES', 'ZAR']) ? 'paystack' : 'stripe');
 
-        $banks = $billingProvider->provider()->getAvailableBanks([
-            'type' => 'ghipss',
-            'country' => $currentStore->country,
-            'currency' => $currentStore->currency,
-        ]);
+        $banks = cache(
+            "wallets.banks.{$currentStore->currency}",
+            60 * 60,
+            function () use ($billingProvider, $currentStore) {
+                return $billingProvider->provider()->getAvailableBanks([
+                    'type' => 'ghipss',
+                    'country' => $currentStore->country,
+                    'currency' => $currentStore->currency,
+                ]);
+            }
+        );
 
-        $mobileMoney = $billingProvider->provider()->getAvailableBanks([
-            'type' => 'mobile_money',
-            'country' => $currentStore->country,
-            'currency' => $currentStore->currency,
-        ]);
+        $mobileMoney = cache(
+            "wallets.mobileMoney.{$currentStore->currency}",
+            60 * 60,
+            function () use ($billingProvider, $currentStore) {
+                return $billingProvider->provider()->getAvailableBanks([
+                    'type' => 'mobile_money',
+                    'country' => $currentStore->country,
+                    'currency' => $currentStore->currency,
+                ]);
+            }
+        );
 
         response()->inertia('payouts/setup', [
             'currentStore' => $currentStore,
