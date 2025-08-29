@@ -15,12 +15,9 @@ class DashboardController extends Controller
         $currentStore = StoreHelper::find();
         $data = make(AnalyticsService::class)->getDashboardStats($currentStore);
 
-        if (count($data['products']) === 0 && count($data['orders']) === 0) {
-            return response()->redirect('/dashboard/getting-started', 303);
-        }
-
         response()->inertia('dashboard', array_merge($data, [
             'currentStore' => $currentStore,
+            'wallets' => $currentStore->wallets()->get(),
             'customers' => $currentStore->customers()->get(),
             'stores' => make(StoresService::class)->getUserStores(),
             'paidOrders' => make(OrdersService::class)->getPaidOrders($currentStore),
@@ -67,13 +64,7 @@ class DashboardController extends Controller
 
     public function gettingStarted()
     {
-        $currentStore = StoreHelper::find();
-
-        response()->inertia('getting-started', [
-            'currentStore' => $currentStore,
-            'wallets' => $currentStore->wallets()->get(),
-            'products' => $currentStore->products()->get()
-        ]);
+        return response()->redirect('/dashboard', 303);
     }
 
     public function brand()

@@ -10,8 +10,12 @@ class HomeController extends Controller
     public function index()
     {
         response()->inertia('index', [
-            'activeStores' => Store::count() + 22,
-            'purchases' => Cart::count() + 37,
+            'activeStores' => cache('home.activeStores', 60 * 30, function () {
+                return Store::count() + 17;
+            }),
+            'purchases' => cache('home.purchases', 60 * 30, function () {
+                return Cart::count() + 27;
+            }),
         ]);
     }
 }

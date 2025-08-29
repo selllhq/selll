@@ -5,7 +5,7 @@ import {
     SidebarInset,
     SidebarTrigger,
 } from "../components/layout/sidebar";
-import { AppHeader } from "../components/layout/header";
+import { AppHeader, BottomNav } from "../components/layout/header";
 import { cn } from "@/utils";
 
 export default function AppLayout({
@@ -53,15 +53,19 @@ export default function AppLayout({
             onOpenChange={handleSidebarChange}
         >
             <AppHeader variant="sidebar" breadcrumbs={breadcrumbs} />
-            <SidebarInset variant="sidebar" {...props}>
-                <header className="border-sidebar-border/50 flex h-16 shrink-0 items-center gap-2 border-b px-6 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 md:px-4">
-                    <div className="flex items-center gap-2">
-                        <SidebarTrigger className="-ml-1 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0" />
-                        <Breadcrumbs breadcrumbs={breadcrumbs} />
-                    </div>
-                </header>
+            <SidebarInset variant="inset" {...props}>
+                {breadcrumbs.length > 0 && (
+                    <header className="border-sidebar-border/50 flex h-16 shrink-0 items-center gap-2 border-b px-6 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 md:px-4">
+                        <div className="flex items-center gap-2">
+                            <SidebarTrigger className="-ml-1 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0" />
+                            <Breadcrumbs breadcrumbs={breadcrumbs} />
+                        </div>
+                    </header>
+                )}
 
                 {children}
+
+                <BottomNav />
             </SidebarInset>
         </SidebarProvider>
     );

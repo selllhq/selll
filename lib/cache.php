@@ -47,7 +47,7 @@ app()->register('cacheConfig', function () {
  *   cache('foo'); // shorthand get
  *   cache('foo', 600, 'bar'); // shorthand put
  */
-function cache($key = null, $minutes = null, $value = null)
+function cache($key = null, $seconds = null, $value = null)
 {
     static $cache = null;
 
@@ -65,7 +65,7 @@ function cache($key = null, $minutes = null, $value = null)
     }
 
     // Getter only
-    if ($minutes === null) {
+    if ($seconds === null) {
         return $cache->get($key);
     }
 
@@ -76,12 +76,11 @@ function cache($key = null, $minutes = null, $value = null)
         }
 
         $result = $value();
-        $cache->put($key, $result, $minutes);
+        $cache->put($key, $result, $seconds);
 
         return $result;
     }
 
     // Setter
-    return $cache->put($key, $value, $minutes);
+    return $cache->put($key, $value, $seconds);
 }
-
