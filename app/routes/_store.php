@@ -3,6 +3,7 @@
 app()->group('/store', [
     'middleware' => ['auth.required', 'auth.verified'],
     function () {
+        app()->inertia('/', 'store/store');
         app()->get('/new', 'Store\SetupController@index');
         app()->post('/new', 'Store\SetupController@store');
         app()->get('/customize', 'Store\SetupController@showCustomize');
