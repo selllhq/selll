@@ -77,33 +77,28 @@ export default function Products({ orders = [], products, currentStore }) {
     });
 
     return (
-        <Layout
-            variant="header"
-            className="dark:bg-[#141414] p-4 pt-2"
-            breadcrumbs={[
-                {
-                    title: "Products",
-                    href: "/products",
-                },
-            ]}
-        >
+        <Layout className="dark:bg-[#141414] p-4 pt-2">
             <Head title="Products" />
 
-            <div>
+            <div className="px-4">
                 {products?.length === 0 ? (
-                    <div className="h-[calc(100vh-8rem)] flex items-center justify-center">
-                        <EmptyState
-                            icon={ShoppingBag}
-                            title="Let's get you sellling fast"
-                            description="Create your first product to start selling online, it takes less than a minute."
-                            button={{
-                                text: "Add Your First Product",
-                                icon: Package,
-                                href: "/products/new",
-                                className:
-                                    "bg-primary-orange hover:bg-primary-orange/90",
-                            }}
-                        />
+                    <div className="flex flex-col justify-center items-center max-w-5xl w-full mx-auto text-center py-24">
+                        <img src="/assets/img/dashboard/no-products.svg" className="h-96" alt="" />
+                        <h2 className="text-3xl mt-10 mb-2">
+                            Don't miss out on sales!
+                        </h2>
+                        <p className="text-muted-foreground max-w-md">
+                            Add your first product, there's an amazing reward right
+                            around the corner.
+                        </p>
+                        <Button
+                            as={Link}
+                            href="/products/new"
+                            className="mt-6 bg-primary-orange text-black hover:bg-primary-orange/90"
+                        >
+                            <ShoppingBag className="h-4 w-4" />
+                            Add your first product
+                        </Button>
                     </div>
                 ) : (
                     <div className="space-y-8 py-0 md:py-4 px-0 md:px-4">
@@ -633,7 +628,9 @@ export default function Products({ orders = [], products, currentStore }) {
                                                                             <Button
                                                                                 variant="ghost"
                                                                                 className="w-full justify-start focus-visible:ring-0"
-                                                                                onClick={(e) => {
+                                                                                onClick={(
+                                                                                    e,
+                                                                                ) => {
                                                                                     e.stopPropagation();
 
                                                                                     confirmModal.openDialog(
