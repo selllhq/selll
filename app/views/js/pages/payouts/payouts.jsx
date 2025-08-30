@@ -21,6 +21,7 @@ import {
 } from "@/components/shared/table";
 import { useDialog } from "@/components/ui/dialog";
 import { toast } from "sonner";
+import { PageHeader } from "@/components/layout/header";
 
 export default function Payouts({
     payouts = [],
@@ -55,20 +56,14 @@ export default function Payouts({
     });
 
     return (
-        <Layout variant="header" className="dark:bg-[#141414] p-4 pt-2">
+        <Layout className="dark:bg-[#141414] p-4 pt-2">
             <Head title="Payouts" />
 
-            <div className="space-y-8 py-0 md:py-4 px-0 md:px-4">
-                <div>
-                    <h2 className="text-2xl md:text-4xl font-bold md:mb-2">
-                        Payouts
-                    </h2>
-                    <p className="text-muted-foreground text-sm md:text-base">
-                        View all payouts made to your store. Payouts are
-                        automatic, so just sit back and relax while we process
-                        your earnings.
-                    </p>
-                </div>
+            <div className="px-4 lg:px-8 pt-6 pb-20 lg:pb-8 max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-275px)] lg:max-w-7xl mx-auto w-full">
+                <PageHeader
+                    title="Payouts"
+                    description="Earnings on your store."
+                />
 
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mt-8">
                     <Card>

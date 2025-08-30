@@ -11,12 +11,9 @@ import {
     DropdownMenuTrigger,
 } from "./dropdown-menu";
 import { ChevronsUpDown, ShieldCheck } from "lucide-react";
-import { useIsMobile } from "@/utils/use-mobile";
 import { UserMenuContent } from "../layout/user-menu-content";
 
-const UserProfile = ({ auth, showEmail = false }) => {
-    const isMobile = useIsMobile();
-
+const UserProfile = ({ auth }) => {
     return (
         <>
             {auth?.user && (
@@ -26,7 +23,7 @@ const UserProfile = ({ auth, showEmail = false }) => {
                             <DropdownMenuTrigger asChild>
                                 <SidebarMenuButton
                                     size="lg"
-                                    className="text-sidebar-accent-foreground data-[state=open]:bg-sidebar-accent group rounded-3xl h-14"
+                                    className="text-sidebar-accent-foreground data-[state=open]:bg-sidebar-accent group rounded-3xl h-16"
                                 >
                                     <Avatar className="h-12 w-12 overflow-hidden rounded-full">
                                         <AvatarImage

@@ -13,6 +13,7 @@ import {
 } from "@/components/shared/card";
 
 import Map from "./map";
+import { PageHeader } from "@/components/layout/header";
 
 const Delivery = ({
     auth,
@@ -47,29 +48,18 @@ const Delivery = ({
     };
 
     return (
-        <Layout
-            variant="header"
-            className="p-4 pt-2"
-            breadcrumbs={[
-                {
-                    title: "Home",
-                    href: "/dashboard",
-                },
-            ]}
-        >
+        <Layout>
             <Head title="Delivery" />
 
-            <div className="md:py-4 md:px-4">
-                <div>
-                    <h2 className="text-2xl md:text-4xl font-bold md:mb-2">
-                        Hello, {auth.user.name.split(" ")[0]}
-                    </h2>
-                    <p className="text-muted-foreground text-sm md:text-base">
-                        {!deliveryDefaults
+            <div className="px-4 lg:px-8 pt-6 pb-20 lg:pb-8 lg:max-w-7xl mx-auto w-full">
+                <PageHeader
+                    title={`Hello, ${auth.user.name.split(" ")[0]}`}
+                    description={
+                        !deliveryDefaults
                             ? `Let's setup deliveries for ${currentStore?.name}`
-                            : `You can update your delivery settings here.`}
-                    </p>
-                </div>
+                            : `Update your delivery settings here.`
+                    }
+                />
 
                 {!deliveryDefaults || isEditing ? (
                     // <Card className="text-sm rounded-3xl border border-primary-red/10">

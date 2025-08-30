@@ -35,6 +35,7 @@ import { BarChart, LineChart } from "@/components/shared/charts";
 import CreatePaylink from "@/components/modals/create-paylink";
 import UserProfile from "@/components/shared/user-profile";
 import ShareStore from "@/components/modals/share-store";
+import { PageHeader } from "@/components/layout/header";
 
 export default function Dashboard({
     auth,
@@ -64,7 +65,7 @@ export default function Dashboard({
         <Layout className="p-4 pt-2" breadcrumbs={[]}>
             <Head title="Dashboard" />
 
-            <div className="py-2 px-4 md:py-4 md:px-8 w-full max-w-7xl mx-auto">
+            <div className="py-2 px-4 md:py-4 md:px-8">
                 {stores?.length === 0 ? (
                     <EmptyState
                         title="Welcome to Selll"
@@ -76,23 +77,14 @@ export default function Dashboard({
                     />
                 ) : (
                     <div className="space-y-6 pt-4">
-                        <div className="flex justify-between items-center">
-                            <div>
-                                <h2 className="text-2xl lg:text-5xl font-bold md:font-semibold md:mb-2">
-                                    Hello, {auth.user.name.split(" ")[0]}
-                                </h2>
-                                <p className="text-muted-foreground text-sm lg:text-base">
-                                    {technicallyNewStore
-                                        ? "Welcome to your new shop on Selll"
-                                        : "Let's make some sales today 🚀"}
-                                </p>
-                            </div>
-
-                            <div>
-                                <UserProfile auth={auth} />
-                            </div>
-                        </div>
-
+                        <PageHeader
+                            title={`Hello, ${auth.user.name.split(" ")[0]}`}
+                            description={
+                                technicallyNewStore
+                                    ? "Welcome to your new shop on Selll"
+                                    : "Let's make some sales today 🚀"
+                            }
+                        />
                         {technicallyNewStore ? (
                             <div className="flex flex-col justify-center items-center max-w-5xl w-full mx-auto text-center py-24">
                                 <img

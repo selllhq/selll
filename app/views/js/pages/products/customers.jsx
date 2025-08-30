@@ -31,6 +31,7 @@ import {
 import Button from "@/components/form/button";
 import Input from "@/components/form/input";
 import dayjs from "dayjs";
+import { PageHeader } from "@/components/layout/header";
 
 export default function Customers({
     customers = [],
@@ -122,19 +123,10 @@ export default function Customers({
     };
 
     return (
-        <Layout
-            variant="header"
-            className="dark:bg-[#141414] p-4 pt-2"
-            breadcrumbs={[
-                {
-                    title: "Customers",
-                    href: "/customers",
-                },
-            ]}
-        >
+        <Layout className="dark:bg-[#141414] p-4 pt-2">
             <Head title="Customers" />
 
-            <div className="md:mt-5">
+            <div className="px-4 lg:px-8 pt-6 pb-20 lg:pb-8 max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-275px)] lg:max-w-7xl mx-auto w-full">
                 {customers?.length === 0 ? (
                     <div className="h-[calc(100vh-8rem)] flex items-center justify-center">
                         <EmptyState
@@ -152,16 +144,11 @@ export default function Customers({
                     </div>
                 ) : (
                     <div className="space-y-8 py-0 md:py-4 px-0 md:px-4">
+                        <PageHeader
+                            title="Customers"
+                            description="Track your store's customers"
+                        />
                         <div className="md:flex items-center justify-between">
-                            <div>
-                                <h2 className="text-2xl md:text-4xl font-bold md:mb-2">
-                                    Customers
-                                </h2>
-                                <p className="text-muted-foreground text-sm md:text-base">
-                                    Manage and track your store's customers
-                                </p>
-                            </div>
-
                             <div className="flex items-center gap-3 mt-2 md:mt-0">
                                 <Button
                                     as={Link}
@@ -184,7 +171,7 @@ export default function Customers({
                             </div>
                         </div>
 
-                        <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
+                        <div className="grid gap-4 grid-cols-2 xl:grid-cols-4">
                             <Card className="rounded-3xl">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 mb-2">
                                     <CardTitle>Customers</CardTitle>

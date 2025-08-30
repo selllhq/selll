@@ -62,6 +62,7 @@ import {
     useSidebar,
     SidebarGroupContent,
 } from "./sidebar";
+import UserProfile from "../shared/user-profile";
 
 const mainNavItems = [
     {
@@ -433,6 +434,27 @@ export function BottomNav() {
                 )}
             </div>
         </nav>
+    );
+}
+
+export function PageHeader({ title, description }) {
+    const auth = usePage().props.auth;
+
+    return (
+        <div className="flex justify-between items-center">
+            <div>
+                <h2 className="text-2xl lg:text-5xl font-bold md:font-semibold md:mb-2">
+                    {title}
+                </h2>
+                <p className="text-muted-foreground text-sm lg:text-base">
+                    {description}
+                </p>
+            </div>
+
+            <div>
+                <UserProfile auth={auth} />
+            </div>
+        </div>
     );
 }
 
