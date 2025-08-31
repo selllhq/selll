@@ -81,7 +81,7 @@ export default function Products({ orders = [], products, currentStore }) {
         <Layout className="dark:bg-[#141414] p-4 pt-2">
             <Head title="Products" />
 
-            <div className="px-4 pt-6 pb-16 lg:pb-8 max-w-[calc(100vw-1rem)] lg:max-w-7xl mx-auto w-full">
+            <div className="px-2 pt-4 pb-20 lg:pb-8 max-w-[calc(100vw-1rem)] lg:max-w-7xl mx-auto w-full">
                 {products?.length === 0 ? (
                     <div className="flex flex-col justify-center items-center max-w-5xl w-full mx-auto text-center py-24">
                         <img

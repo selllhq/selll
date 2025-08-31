@@ -51,7 +51,7 @@ export function UserMenuContent({ user, showEmail = false }) {
                 <DropdownMenuItem asChild>
                     <Link
                         className="block w-full"
-                        href="/dashboard/brand"
+                        href="/store/brand"
                         as="button"
                         prefetch
                         onClick={cleanup}

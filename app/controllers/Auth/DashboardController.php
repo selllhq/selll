@@ -50,10 +50,7 @@ class DashboardController extends Controller
             ->with(['store', 'store.owner'])
             ->get();
 
-        $referralCode = auth()->user()->generateVerificationToken(
-            time() + (60 * 60 * 24 * 60), // 60 days,
-            'referral'
-        );
+        $referralCode = base64_encode(auth()->user()->id);
 
         response()->inertia('referrals', [
             'referrals' => $referrals,

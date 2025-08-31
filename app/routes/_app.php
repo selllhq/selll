@@ -1,7 +1,8 @@
 <?php
 
 app()->get('/', 'HomeController@index');
-app()->inertia('/social', 'social-media');
+app()->redirect('/social', '/');
+app()->get('/invite/{code}', 'HomeController@invite');
 app()->inertia('/pricing', 'pricing');
 app()->inertia('/faqs', 'faqs');
 app()->inertia('/privacy', 'privacy');

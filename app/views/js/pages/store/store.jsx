@@ -65,7 +65,7 @@ const Store = ({ auth }) => {
                     </Button>
                     <Button
                         as={Link}
-                        href="/store/brand-assets"
+                        href="/store/brand"
                         variant="ghost"
                         className="w-full h-full p-0 whitespace-normal text-center"
                     >
@@ -85,7 +85,7 @@ const Store = ({ auth }) => {
                     </Button>
                     <Button
                         as={Link}
-                        href="/store/link"
+                        href="/store/domain"
                         variant="ghost"
                         className="w-full h-full p-0 whitespace-normal text-center"
                     >

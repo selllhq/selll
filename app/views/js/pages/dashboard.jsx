@@ -65,7 +65,7 @@ export default function Dashboard({
         <Layout className="p-4 pt-2" breadcrumbs={[]}>
             <Head title="Dashboard" />
 
-            <div className="py-2 px-4 md:py-4 md:px-8">
+            <div className="px-4 pb-20 lg:pb-8 lg:max-w-7xl mx-auto w-full">
                 {stores?.length === 0 ? (
                     <EmptyState
                         title="Welcome to Selll"

@@ -39,7 +39,7 @@ const Delivery = ({
             return;
         }
 
-        post("/deliveries/defaults", {
+        post("/store/deliveries/defaults", {
             onFinish: () => {
                 toast.success("Delivery settings saved successfully!");
                 setIsEditing(false);

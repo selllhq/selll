@@ -38,6 +38,6 @@ class DeliveriesController extends Controller
             ]
         );
 
-        return response()->redirect('/deliveries', 303);
+        return response()->redirect('/store/deliveries', 303);
     }
 }
