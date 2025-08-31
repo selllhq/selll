@@ -18,4 +18,20 @@ class HomeController extends Controller
             }),
         ]);
     }
+
+    public function invite($code)
+    {
+        $userId = base64_decode($code);
+        $user = \App\Models\User::find($userId);
+
+        if (!$user) {
+            return response()->redirect('/auth/register');
+        }
+
+        $user->code = $code;
+
+        return response()->inertia('invite', [
+            'referrer' => $user->only(['id', 'name', 'email', 'avatar', 'code']),
+        ]);
+    }
 }
