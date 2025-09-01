@@ -7,6 +7,7 @@ import {
 } from "../components/layout/sidebar";
 import { AppHeader, BottomNav } from "../components/layout/header";
 import { cn } from "@/utils";
+import AchievementModal from "@/components/modals/achievement";
 
 export default function AppLayout({
     children,
@@ -64,6 +65,8 @@ export default function AppLayout({
                 )}
 
                 {children}
+
+                <AchievementModal />
 
                 <BottomNav />
             </SidebarInset>
