@@ -24,7 +24,7 @@ class WalletHelper
         $amount = $data['total'];
         $affiliate = $data['affiliate'] ?? null;
 
-        $feeRecord = Fee::where('store_id', $store->id)->first();
+        $feeRecord = $store->fee()->first();
         $storePayoutWallet = cache(
             key: "store.{$store->id}.wallet.{$store->payout_account_id}",
             value: function () use ($store) {
@@ -90,7 +90,7 @@ class WalletHelper
 
     public static function afterTransaction($store)
     {
-        $feeRecord = Fee::where('store_id', $store->id)->first();
+        $feeRecord = $store->fee()->first();
 
         if (!$feeRecord) {
             return 0.02;

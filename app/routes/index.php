@@ -53,6 +53,10 @@ app()->register('mixpanel', function () {
     );
 });
 
+\Leaf\Inertia::share('achievement', function () {
+    return flash()->display('achievement');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Your application routes
