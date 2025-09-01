@@ -16,6 +16,7 @@ import PreviewImage from "@/components/products/preview-image";
 import ProductPreview from "@/components/products/product-preview";
 import Select from "@/components/form/creatable-select";
 import { MinimalTiptapEditor } from "@/components/ui/minimal-tiptap";
+import { PageHeader } from "@/components/layout/header";
 
 const EditProduct = ({ currentStore, product }) => {
     const [priceError, setPriceError] = useState("");
@@ -117,43 +118,35 @@ const EditProduct = ({ currentStore, product }) => {
 
     return (
         <Layout
-            variant="header"
-            className="max-h-screen h-full overflow-hidden mt-0"
-            breadcrumbs={[
-                {
-                    title: "Products",
-                    href: "/products",
-                    icon: Package,
-                },
-                {
-                    title: product?.name,
-                    href: `/products/${product.id}`,
-                },
-                {
-                    title: "Edit",
-                    href: `/products/${product.id}/edit`,
-                    icon: Package,
-                },
-            ]}
+        // breadcrumbs={[
+        //     {
+        //         title: "Products",
+        //         href: "/products",
+        //         icon: Package,
+        //     },
+        //     {
+        //         title: product?.name,
+        //         href: `/products/${product.id}`,
+        //     },
+        //     {
+        //         title: "Edit",
+        //         href: `/products/${product.id}/edit`,
+        //         icon: Package,
+        //     },
+        // ]}
         >
             <Head title={`Edit Product: ${product?.name}`} />
 
-            <div className="flex flex-col md:flex-row h-full w-full overflow-y-auto lg:overflow-hidden pt-28">
+            <div className="flex flex-col md:flex-row">
                 <div className="flex-1 min-w-0 flex flex-col order-2 md:order-1">
-                    <div className="flex-1 overflow-y-auto pb-6">
-                        <div className="max-w-2xl px-6 py-20 relative">
-                            <div className="flex items-center justify-between mb-8">
-                                <div>
-                                    <h2 className="text-4xl font-bold mb-2">
-                                        Edit Product
-                                    </h2>
-                                    <p className="text-gray-500 dark:text-gray-400">
-                                        Update your product details
-                                    </p>
-                                </div>
-                            </div>
+                    <div className="flex-1 overflow-y-auto md:h-full md:max-h-[calc(100vh-20px)] pb-6">
+                        <div className="max-w-2xl mx-auto px-6 pt-6 md:pt-12 pb-20 relative">
+                            <PageHeader
+                                title="Edit Product"
+                                description="Update product details"
+                            />
 
-                            <form onSubmit={submit} className="space-y-10 pb-8">
+                            <form onSubmit={submit} className="space-y-10 pb-8 mt-10">
                                 <div className="space-y-3">
                                     <Label htmlFor="images">
                                         Product Images

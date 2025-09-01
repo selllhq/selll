@@ -23,7 +23,7 @@ const UserProfile = ({ auth }) => {
                             <DropdownMenuTrigger asChild>
                                 <SidebarMenuButton
                                     size="lg"
-                                    className="text-sidebar-accent-foreground data-[state=open]:bg-sidebar-accent group rounded-3xl h-16"
+                                    className="text-sidebar-accent-foreground data-[state=open]:bg-sidebar-accent group rounded-3xl h-14 md:h-16 p-0 md:p-2"
                                 >
                                     <Avatar className="h-12 w-12 overflow-hidden rounded-full">
                                         <AvatarImage
