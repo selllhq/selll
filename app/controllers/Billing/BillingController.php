@@ -4,6 +4,7 @@ namespace App\Controllers\Billing;
 
 use App\Controllers\Controller;
 use App\Helpers\CustomerHelper;
+use App\Helpers\WalletHelper;
 use App\Models\Affiliate;
 use App\Models\Store;
 
@@ -62,33 +63,14 @@ class BillingController extends Controller
             'notes' => $customerData['notes'] ?? null,
         ]);
 
-        $storePayoutWallet = $store->wallets()->find($store->payout_account_id);
-
         try {
-            $billingAccountData = [
-                'subaccount' => $storePayoutWallet->account_code,
-                'bearer' => 'subaccount',
-            ];
+            $billingAccountData = WalletHelper::getBillingAccountData([
+                'store' => $store,
+                'total' => $cartTotal,
+                'affiliate' => $affiliate,
+            ]);
 
             if ($affiliate) {
-                $billingAccountData = [
-                    'split' => [
-                        'type' => 'flat',
-                        'bearer_type' => 'subaccount',
-                        'bearer_subaccount' => $affiliate->account_code,
-                        'subaccounts' => [
-                            [
-                                'subaccount' => $affiliate->account_code,
-                                'share' => (($affiliate->commission * $affiliate->quantity) * 100),
-                            ],
-                            [
-                                'subaccount' => $storePayoutWallet->account_code,
-                                'share' => ($cartTotal * 100) * 0.97,
-                            ],
-                        ],
-                    ],
-                ];
-
                 $cartTotal += ($affiliate->commission * $affiliate->quantity);
             }
 
