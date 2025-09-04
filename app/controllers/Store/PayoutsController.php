@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Store;
 
+use App\Helpers\SMSHelper;
 use App\Helpers\StoreHelper;
 use App\Models\Store;
 use App\Models\User;
@@ -123,6 +124,14 @@ class PayoutsController extends Controller
             User::find(auth()->id())->referral()->first()?->update([
                 'store_activated_at' => $currentStore->updated_at
             ]);
+
+            SMSHelper::write([
+                'recipient' => '+233504766732',
+                'senderId' => 'Selll Team',
+                'message' => "A new wallet has been added to store: {$currentStore->name} #{$currentStore->id}",
+            ])
+                ->withArkesel()
+                ->send();
 
             $geoData = request()->getUserLocation();
 

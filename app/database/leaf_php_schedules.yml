@@ -1,0 +1,12 @@
+connection: sqlite
+
+columns:
+  class: string
+  schedule: string
+  next_run: timestamp
+  last_run:
+    type: timestamp
+    nullable: true
+  run_count:
+    type: integer
+    default: 0
