@@ -85,7 +85,8 @@ COPY --from=node_modules_go_brrr /app/public /var/www/html/public-npm
 RUN rsync -ar /var/www/html/public-npm/ /var/www/html/public/ && \
     rm -rf /var/www/html/public-npm && \
     chown -R www-data:www-data /var/www/html/public && \
-    php leaf link && rm -rf public/hot
+    php leaf link && rm -rf public/hot && \
+    touch selll && php leaf db:migrate leaf_php_jobs && php leaf db:migrate leaf_php_schedules
 
 EXPOSE 8080
 
