@@ -558,7 +558,7 @@ export function AppSidebar({ showEmail }) {
                         </p>
                         <Button
                             as={Link}
-                            href="/referrals"
+                            href="/dashboard/referrals"
                             className="bg-primary-orange w-full"
                         >
                             Refer and earn
