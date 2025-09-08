@@ -13,6 +13,7 @@ import Button from "@/components/form/button";
 import { useDialog } from "@/components/ui/dialog";
 import InputError from "@/components/form/input-error";
 import { slugify, urlify } from "@/utils";
+import { PageHeader } from "@/components/layout/header";
 
 export default function Domain({ store }) {
     const confirmModal = useDialog("confirmAction");
@@ -71,28 +72,16 @@ export default function Domain({ store }) {
     };
 
     return (
-        <Layout
-            variant="header"
-            breadcrumbs={[
-                { title: "Dashboard", href: "/dashboard" },
-                { title: "Store Settings", href: "/store/customize" },
-                { title: "Change Store URL" },
-            ]}
-        >
+        <Layout>
             <Head title="Change Store URL" />
 
-            <div className="flex flex-col lg:flex-row">
-                <div className="w-full md:w-[60%] p-6 pt-20 max-w-lg md:mr-auto">
-                    <div className="mb-8">
-                        <h2 className="text-2xl font-medium mb-2 flex items-center gap-2">
-                            Change Store URL
-                        </h2>
-                        <p className="text-muted-foreground">
-                            This is the link customers will use to access your
-                            store
-                        </p>
-                    </div>
+            <div className="flex flex-col lg:flex-row px-4 lg:px-8 pt-6 pb-20 lg:pb-8 max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-275px)] lg:max-w-7xl mx-auto w-full">
+                    <PageHeader
+                        title="Store URL"
+                        description="Update your store URL"
+                    />
 
+                <div className="w-full md:w-[60%] lg:p-6 pt-10 max-w-lg md:mr-auto">
                     <Tabs.Root defaultValue="selll" className="space-y-6">
                         <Tabs.List className="flex space-x-1 border-b border-gray-800">
                             <Tabs.Trigger
@@ -169,7 +158,7 @@ export default function Domain({ store }) {
                             </form>
                         </Tabs.Content>
 
-                        <Tabs.Content value="custom" className="pt-6">
+                        <Tabs.Content value="custom">
                             <form
                                 onSubmit={handleCustomDomain}
                                 className="space-y-6"
@@ -229,7 +218,7 @@ export default function Domain({ store }) {
                     </Tabs.Root>
                 </div>
 
-                <div className="w-full lg:w-[40%] md:overflow-y-auto p-6 pt-20">
+                <div className="w-full lg:w-[40%] md:overflow-y-auto lg:p-6 pt-20">
                     <TipsSection />
                 </div>
             </div>

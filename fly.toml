@@ -40,7 +40,8 @@ ANALYTICS_DB_PORT = '5432'
 
 REDIS_SESSION = 'false'
 REDIS_PORT = '6379'
-QUEUE_CONNECTION = 'redis'
+QUEUE_CONNECTION = 'database'
+DB_QUEUE_CONNECTION = 'sqlite'
 
 MAIL_DRIVER = 'smtp'
 MAIL_HOST = 'live.smtp.mailtrap.io'

@@ -46,6 +46,7 @@ import {
     Paintbrush,
     ShoppingBasket,
     ShoppingCart,
+    Store,
     Users,
 } from "lucide-react";
 import {
@@ -61,6 +62,7 @@ import {
     useSidebar,
     SidebarGroupContent,
 } from "./sidebar";
+import UserProfile from "../shared/user-profile";
 
 const mainNavItems = [
     {
@@ -82,16 +84,12 @@ const mainNavItems = [
         title: "Customers",
         url: "/customers",
         icon: Users,
+        mobile: false,
     },
     {
-        title: "Deliveries",
-        url: "/deliveries",
-        icon: Bike,
-    },
-    {
-        title: "Customize Store",
-        url: "/store/customize",
-        icon: Paintbrush,
+        title: "Store",
+        url: "/store",
+        icon: Store,
     },
 ];
 
@@ -398,6 +396,68 @@ export function AppHeader({ breadcrumbs = [], variant = "header" }) {
     );
 }
 
+export function BottomNav() {
+    const page = usePage();
+    const { state } = useSidebar();
+    const isMobile = useIsMobile();
+
+    if (!isMobile) {
+        return null;
+    }
+
+    return (
+        <nav className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background px-8">
+            <div className="mx-auto flex h-16 w-full max-w-[300px] items-center justify-between">
+                {mainNavItems.map(
+                    (item, index) =>
+                        item.mobile !== false && (
+                            <Link
+                                key={index}
+                                href={item.url}
+                                className={cn(
+                                    "flex flex-col items-center justify-center space-y-1 text-xs text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100",
+                                    page.url.startsWith(item.url)
+                                        ? "!text-primary-orange !fill-primary-orange"
+                                        : "",
+                                )}
+                                prefetch
+                            >
+                                {item.icon && (
+                                    <Icon
+                                        name={item.icon}
+                                        className="h-5 w-5"
+                                    />
+                                )}
+                                <span>{item.title}</span>
+                            </Link>
+                        ),
+                )}
+            </div>
+        </nav>
+    );
+}
+
+export function PageHeader({ title, description }) {
+    const auth = usePage().props.auth;
+
+    return (
+        <div className="flex justify-between items-center">
+            <div>
+                <h2 className="text-2xl lg:text-5xl font-bold md:font-semibold md:mb-2">
+                    {title}
+                </h2>
+                <p className="text-muted-foreground text-sm lg:text-base">
+                    {description}
+                </p>
+            </div>
+
+            <div>
+                <UserProfile auth={auth} />
+            </div>
+        </div>
+    );
+}
+
 export function AppSidebar({ showEmail }) {
     const page = usePage();
     const { state } = useSidebar();
@@ -486,59 +546,24 @@ export function AppSidebar({ showEmail }) {
                     </SidebarGroupContent>
                 </SidebarGroup>
 
-                {page.props.auth?.user && (
-                    <SidebarMenu>
-                        <SidebarMenuItem>
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <SidebarMenuButton
-                                        size="lg"
-                                        className="text-sidebar-accent-foreground data-[state=open]:bg-sidebar-accent group"
-                                    >
-                                        <Avatar className="h-8 w-8 overflow-hidden rounded-full">
-                                            <AvatarImage
-                                                src={
-                                                    page.props.auth.user.avatar
-                                                }
-                                                alt={page.props.auth.user.name}
-                                            />
-                                            <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
-                                                {getInitials(
-                                                    page.props.auth.user.name,
-                                                )}
-                                            </AvatarFallback>
-                                        </Avatar>
-                                        <div className="grid flex-1 text-left text-sm leading-tight">
-                                            <span className="truncate font-medium">
-                                                {page.props.auth.user.name}
-                                            </span>
-                                            {showEmail && (
-                                                <span className="text-muted-foreground truncate text-xs">
-                                                    {page.props.auth.user.email}
-                                                </span>
-                                            )}
-                                        </div>
-                                        <ChevronsUpDown className="ml-auto size-4" />
-                                    </SidebarMenuButton>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent
-                                    className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-                                    align="end"
-                                    side={
-                                        isMobile
-                                            ? "bottom"
-                                            : state === "collapsed"
-                                              ? "left"
-                                              : "bottom"
-                                    }
-                                >
-                                    <UserMenuContent
-                                        user={page.props.auth?.user}
-                                    />
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        </SidebarMenuItem>
-                    </SidebarMenu>
+                {location.pathname !== "/dashboard/referrals" && (
+                    <div className="rounded-4xl dark:bg-[#1c1c1c] flex flex-col justify-center items-center p-5">
+                        <img
+                            src="/assets/img/dashboard/referral.svg"
+                            alt=""
+                            className="h-22 w-22 mt-2 select-none"
+                        />
+                        <p className="px-2 pb-6 pt-4 text-center text-sm">
+                            Refer a vendor and earn perks when they sign up
+                        </p>
+                        <Button
+                            as={Link}
+                            href="/dashboard/referrals"
+                            className="bg-primary-orange w-full"
+                        >
+                            Refer and earn
+                        </Button>
+                    </div>
                 )}
             </SidebarFooter>
         </Sidebar>

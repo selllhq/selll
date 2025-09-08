@@ -13,6 +13,10 @@ class StoresService
      */
     public function getUserStores()
     {
-        return User::find(auth()->id())->ownedStores()->get();
+        $userId = auth()->id();
+
+        return cache("user.stores.$userId", 60 * 15, function () use ($userId) {
+            return User::find($userId)->ownedStores()->get();
+        });
     }
 }

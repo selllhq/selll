@@ -15,7 +15,11 @@ class StoreHelper
      */
     public static function find()
     {
-        $currentStore = Store::find(auth()->user()->current_store_id);
+        $storeId = auth()->user()->current_store_id;
+
+        $currentStore = cache("user.store.$storeId", 60 * 15, function () use ($storeId) {
+            return Store::find($storeId);
+        });
 
         if (!$currentStore) {
             return response()->redirect('/store/new', 303);

@@ -143,4 +143,14 @@ class Store extends Model
     {
         return $this->hasMany(CustomDomain::class);
     }
+
+    public function fee()
+    {
+        return $this->hasOne(Fee::class);
+    }
+
+    public function achievements()
+    {
+        return $this->hasMany(Achievement::class);
+    }
 }

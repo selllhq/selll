@@ -7,6 +7,7 @@ import Input from "@/components/form/input";
 import Label from "@/components/form/label";
 import Button from "@/components/form/button";
 import InputError from "@/components/form/input-error";
+import { PageHeader } from "@/components/layout/header";
 
 export default function PayoutSetupPage({ banks, mobileMoney }) {
     const { data, setData, post, errors, processing } = useForm({
@@ -36,40 +37,16 @@ export default function PayoutSetupPage({ banks, mobileMoney }) {
     };
 
     return (
-        <Layout
-            variant="header"
-            className="p-4 pt-2"
-            breadcrumbs={[
-                {
-                    title: "Home",
-                    href: "/dashboard",
-                },
-                {
-                    title: "Payouts",
-                    href: "/payouts",
-                    icon: ArrowDownCircle,
-                },
-                {
-                    title: "Setup",
-                    href: "/payouts/setup",
-                    icon: CreditCard,
-                },
-            ]}
-        >
+        <Layout className="p-4 pt-2">
             <Head title="Setup Payouts" />
 
-            <div className="space-y-6 md:px-4 md:py-6 mt-8 px-0">
-                <div className="mb-10">
-                    <h2 className="text-2xl md:text-3xl font-bold mb-1">
-                        Set up we pay you
-                    </h2>
-                    <p className="text-muted-foreground text-sm">
-                        Tell us where to send your money when orders start
-                        rolling in.
-                    </p>
-                </div>
+            <div className="px-4 lg:px-8 pt-6 pb-20 lg:pb-8 max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-275px)] lg:max-w-7xl mx-auto w-full">
+                <PageHeader
+                    title="Set up payouts"
+                    description="Add your bank or momo"
+                />
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
                     <div className="md:col-span-2">
                         <form onSubmit={submit} className="space-y-5">
                             <div>

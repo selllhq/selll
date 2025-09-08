@@ -25,7 +25,6 @@ app()->group('/dashboard', [
         app()->get('/', 'Auth\DashboardController@index');
         app()->get('/referrals', 'Auth\DashboardController@referrals');
         app()->get('/getting-started', 'Auth\DashboardController@gettingStarted');
-        app()->get('/brand', 'Auth\DashboardController@brand');
     },
 ]);
 

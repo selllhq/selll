@@ -16,29 +16,32 @@ class MailCheckinCommand extends Command
      */
     protected function handle()
     {
-        foreach ($this->usersWithUnverifiedEmail() as $user) {
-            \App\Mailers\StoreMailer::checkInForUnverifiedUsers($user)->send();
-            $this->info("Check-in email sent to {$user->email}");
+        // foreach ($this->usersWithUnverifiedEmail() as $user) {
+        //     \App\Mailers\StoreMailer::checkInForUnverifiedUsers($user)->send();
+        //     $this->info("Check-in email sent to {$user->email}");
 
-            // if ($store->email) {
-            //     \App\Mailers\StoreMailer::checkInForNoProduct($store)->send();
-            //     $this->info("Check-in email sent to {$store->email}");
-            // }
+        //     // if ($store->email) {
+        //     //     \App\Mailers\StoreMailer::checkInForNoProduct($store)->send();
+        //     //     $this->info("Check-in email sent to {$store->email}");
+        //     // }
 
-            // if ($store->phone) {
-            //     SMSHelper::write([
-            //         'recipient' => $store->phone,
-            //         'senderId' => 'Selll Team',
-            //         'message' => "Hey {$store->name}! Your Selll store is ready but you haven't added any products yet. Other stores are already making sales - add yours now and start getting paid: selll.online/products/new",
-            //     ])
-            //         ->withArkesel()
-            //         ->send();
+        //     // if ($store->phone) {
+        //     //     SMSHelper::write([
+        //     //         'recipient' => $store->phone,
+        //     //         'senderId' => 'Selll Team',
+        //     //         'message' => "Hey {$store->name}! Your Selll store is ready but you haven't added any products yet. Other stores are already making sales - add yours now and start getting paid: selll.online/products/new",
+        //     //     ])
+        //     //         ->withArkesel()
+        //     //         ->send();
 
-            //     $this->info("Check-in SMS sent to {$store->phone}");
-            // }
+        //     //     $this->info("Check-in SMS sent to {$store->phone}");
+        //     // }
 
-            sleep(1);
-        }
+        //     sleep(1);
+        // }
+        dispatch(new \App\Jobs\StoreReportJob());
+
+        $this->info('Check-in emails sent successfully!');
 
         return 0;
     }

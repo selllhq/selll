@@ -44,6 +44,7 @@ import {
 import { cn } from "@/utils";
 import { useDialog } from "@/components/ui/dialog";
 import StockTopUpModal from "@/components/modals/stock-topup";
+import { PageHeader } from "@/components/layout/header";
 
 export default function Products({
     product,
@@ -94,24 +95,28 @@ export default function Products({
 
     return (
         <Layout
-            variant="header"
             className="my-4 py-0"
-            breadcrumbs={[
-                {
-                    title: "Products",
-                    href: "/products",
-                },
-                {
-                    title: product?.name,
-                    href: `/products/${product.id}`,
-                },
-            ]}
+            // breadcrumbs={[
+            //     {
+            //         title: "Products",
+            //         href: "/products",
+            //     },
+            //     {
+            //         title: product?.name,
+            //         href: `/products/${product.id}`,
+            //     },
+            // ]}
         >
             <Head title={`${product?.name} from ${currentStore?.name}`} />
 
             <StockTopUpModal />
 
-            <div className="py-6 px-4 mt-28 space-y-10 w-full">
+            <div className="pt-6 pb-12 px-4 lg:px-8 space-y-10 max-w-[calc(100vw-1rem)] lg:max-w-7xl mx-auto w-full">
+                <PageHeader
+                    title={product?.name}
+                    description="Everything about this product"
+                />
+
                 {isLowStock && (
                     <Card className="text-sm rounded-3xl border border-primary-red/10">
                         <CardHeader className="mb-2">
@@ -134,12 +139,8 @@ export default function Products({
                         </CardContent>
                     </Card>
                 )}
-
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 w-full">
                     <div>
-                        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
-                            {product?.name}
-                        </h1>
                         {product?.status === "archived" ? (
                             <p className="text-red-600 dark:text-red-200">
                                 This product is archived and not visible on your

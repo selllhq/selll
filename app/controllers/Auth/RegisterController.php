@@ -60,7 +60,7 @@ class RegisterController extends Controller
         }
 
         if ($refCode = request()->get('ref')) {
-            $referrer = auth()->verifyToken($refCode, 'referral');
+            $referrer = (strlen($refCode) > 10) ? auth()->verifyToken($refCode, 'referral') : auth()->find(base64_decode($refCode));
 
             if ($referrer) {
                 Referral::create([

@@ -4,6 +4,7 @@ namespace App\Controllers\Billing;
 
 use App\Controllers\Controller;
 use App\Helpers\SMSHelper;
+use App\Helpers\WalletHelper;
 use App\Mailers\StoreMailer;
 use App\Models\Affiliate;
 use App\Models\Cart;
@@ -93,7 +94,7 @@ class BillingCallbacksController extends Controller
                 $userCart->status = 'paid';
             }
 
-            $selllFee = 0.02;
+            $selllFee = WalletHelper::afterTransaction($userCart->store);
             $selllCommission = $userCart->total * $selllFee;
 
             if ($provider === 'paystack') {

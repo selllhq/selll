@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "07971f47fc5f01d52b6713b6e814cee4",
+    "content-hash": "65699f01fd5061ec452601d78bd15922",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -376,6 +376,71 @@
                 }
             ],
             "time": "2024-02-18T20:23:39+00:00"
+        },
+        {
+            "name": "dragonmantank/cron-expression",
+            "version": "v3.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dragonmantank/cron-expression.git",
+                "reference": "8c784d071debd117328803d86b2097615b457500"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/8c784d071debd117328803d86b2097615b457500",
+                "reference": "8c784d071debd117328803d86b2097615b457500",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8.0",
+                "webmozart/assert": "^1.0"
+            },
+            "replace": {
+                "mtdowling/cron-expression": "^1.0"
+            },
+            "require-dev": {
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan": "^1.0",
+                "phpunit/phpunit": "^7.0|^8.0|^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Cron\\": "src/Cron/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Tankersley",
+                    "email": "chris@ctankersley.com",
+                    "homepage": "https://github.com/dragonmantank"
+                }
+            ],
+            "description": "CRON for PHP: Calculate the next or previous run date and determine if a CRON expression is due",
+            "keywords": [
+                "cron",
+                "schedule"
+            ],
+            "support": {
+                "issues": "https://github.com/dragonmantank/cron-expression/issues",
+                "source": "https://github.com/dragonmantank/cron-expression/tree/v3.4.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/dragonmantank",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-10-09T13:47:03+00:00"
         },
         {
             "name": "firebase/php-jwt",
@@ -882,16 +947,16 @@
         },
         {
             "name": "illuminate/cache",
-            "version": "v12.25.0",
+            "version": "v12.28.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/cache.git",
-                "reference": "52c86ddd2300aeb4a5ac2274b738dc35584dc25b"
+                "reference": "780fc90e9cf0ac7bbfd0d2df23945645382e5d25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/cache/zipball/52c86ddd2300aeb4a5ac2274b738dc35584dc25b",
-                "reference": "52c86ddd2300aeb4a5ac2274b738dc35584dc25b",
+                "url": "https://api.github.com/repos/illuminate/cache/zipball/780fc90e9cf0ac7bbfd0d2df23945645382e5d25",
+                "reference": "780fc90e9cf0ac7bbfd0d2df23945645382e5d25",
                 "shasum": ""
             },
             "require": {
@@ -940,7 +1005,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2025-08-11T00:06:55+00:00"
+            "time": "2025-08-31T15:01:05+00:00"
         },
         {
             "name": "illuminate/collections",
@@ -2066,6 +2131,67 @@
             "time": "2025-08-08T23:15:32+00:00"
         },
         {
+            "name": "leafs/cache",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/leafsphp/cache.git",
+                "reference": "a2a56fe497ff04fc2751a15802da2349415ee06e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/leafsphp/cache/zipball/a2a56fe497ff04fc2751a15802da2349415ee06e",
+                "reference": "a2a56fe497ff04fc2751a15802da2349415ee06e",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/cache": "*",
+                "illuminate/support": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/functions.php"
+                ],
+                "psr-4": {
+                    "Leaf\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Darko",
+                    "email": "mickdd22@gmail.com",
+                    "homepage": "https://mychi.netlify.app",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Leaf PHP cache module",
+            "homepage": "https://leafphp.dev/docs/utils/cache",
+            "keywords": [
+                "cache",
+                "leafPHP"
+            ],
+            "support": {
+                "issues": "https://github.com/leafsphp/cache/issues",
+                "source": "https://github.com/leafsphp/cache/tree/v0.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/leafsphp",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/leaf",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2025-09-06T09:40:05+00:00"
+        },
+        {
             "name": "leafs/cors",
             "version": "v1.2",
             "source": {
@@ -2128,21 +2254,22 @@
         },
         {
             "name": "leafs/date",
-            "version": "v2.2",
+            "version": "v4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/date.git",
-                "reference": "5fbe69cb7f6aca51e4b9a6e34056bac1d9b58f0d"
+                "reference": "dad830976ab4f70a53ff7ef2a41dff2ed5b58f7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/date/zipball/5fbe69cb7f6aca51e4b9a6e34056bac1d9b58f0d",
-                "reference": "5fbe69cb7f6aca51e4b9a6e34056bac1d9b58f0d",
+                "url": "https://api.github.com/repos/leafsphp/date/zipball/dad830976ab4f70a53ff7ef2a41dff2ed5b58f7c",
+                "reference": "dad830976ab4f70a53ff7ef2a41dff2ed5b58f7c",
                 "shasum": ""
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.14",
-                "leafs/alchemy": "^1.0"
+                "leafs/alchemy": "^4.0",
+                "pestphp/pest": "*"
             },
             "type": "library",
             "autoload": {
@@ -2177,7 +2304,7 @@
             ],
             "support": {
                 "issues": "https://github.com/leafsphp/date/issues",
-                "source": "https://github.com/leafsphp/date/tree/v2.2"
+                "source": "https://github.com/leafsphp/date/tree/v4.0"
             },
             "funding": [
                 {
@@ -2189,7 +2316,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-02-24T17:40:14+00:00"
+            "time": "2025-03-31T12:12:24+00:00"
         },
         {
             "name": "leafs/db",
@@ -2536,16 +2663,16 @@
         },
         {
             "name": "leafs/inertia",
-            "version": "v4.2.1",
+            "version": "v4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/inertia.git",
-                "reference": "47459a2a230aa0f432065d7f3827cbb0c29f6119"
+                "reference": "4af28d53c7397f089735c0b4656673ac000dbf3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/inertia/zipball/47459a2a230aa0f432065d7f3827cbb0c29f6119",
-                "reference": "47459a2a230aa0f432065d7f3827cbb0c29f6119",
+                "url": "https://api.github.com/repos/leafsphp/inertia/zipball/4af28d53c7397f089735c0b4656673ac000dbf3a",
+                "reference": "4af28d53c7397f089735c0b4656673ac000dbf3a",
                 "shasum": ""
             },
             "require": {
@@ -2587,7 +2714,7 @@
             ],
             "support": {
                 "issues": "https://github.com/leafsphp/inertia/issues",
-                "source": "https://github.com/leafsphp/inertia/tree/v4.2.1"
+                "source": "https://github.com/leafsphp/inertia/tree/v4.3"
             },
             "funding": [
                 {
@@ -2599,7 +2726,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-04-11T19:06:43+00:00"
+            "time": "2025-09-01T22:36:20+00:00"
         },
         {
             "name": "leafs/leaf",
@@ -6422,6 +6549,64 @@
                 }
             ],
             "time": "2024-11-21T01:49:47+00:00"
+        },
+        {
+            "name": "webmozart/assert",
+            "version": "1.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webmozarts/assert.git",
+                "reference": "11cb2199493b2f8a3b53e7f19068fc6aac760991"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/11cb2199493b2f8a3b53e7f19068fc6aac760991",
+                "reference": "11cb2199493b2f8a3b53e7f19068fc6aac760991",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "php": "^7.2 || ^8.0"
+            },
+            "conflict": {
+                "phpstan/phpstan": "<0.12.20",
+                "vimeo/psalm": "<4.6.1 || 4.6.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5.13"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.10-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Webmozart\\Assert\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bernhard Schussek",
+                    "email": "bschussek@gmail.com"
+                }
+            ],
+            "description": "Assertions to validate method input/output with nice error messages.",
+            "keywords": [
+                "assert",
+                "check",
+                "validate"
+            ],
+            "support": {
+                "issues": "https://github.com/webmozarts/assert/issues",
+                "source": "https://github.com/webmozarts/assert/tree/1.11.0"
+            },
+            "time": "2022-06-03T18:03:27+00:00"
         }
     ],
     "packages-dev": [

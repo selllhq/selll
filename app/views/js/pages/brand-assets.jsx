@@ -5,6 +5,7 @@ import Button from "@/components/form/button";
 import { useState } from "react";
 import { Card } from "@/components/shared/card";
 import { slugify } from "@/utils";
+import { PageHeader } from "@/components/layout/header";
 
 const BrandAssets = ({ currentStore }) => {
     const [copied, setCopied] = useState(null);
@@ -219,20 +220,16 @@ const BrandAssets = ({ currentStore }) => {
     ];
 
     return (
-        <Layout breadcrumbs={[]} variant="header">
+        <Layout>
             <Head title={`Brand Assets - ${currentStore?.name}`} />
 
-            <div className="container mx-auto px-4 py-8 max-w-4xl">
-                <div className="mb-8">
-                    <h1 className="text-3xl font-bold mb-2">Brand Assets</h1>
-                    <p className="text-muted-foreground max-w-lg">
-                        Download and share these assets to let your customers
-                        know you're on Selll. Customize them with your store
-                        name and link.
-                    </p>
-                </div>
+            <div className="container mx-auto px-4 py-8 pb-16 md:pb-8 max-w-4xl">
+                <PageHeader
+                    title="Brand Assets"
+                    description="Download and share"
+                />
 
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid md:grid-cols-2 gap-4 mt-8">
                     {brandAssets.map((asset) => (
                         <Card
                             key={asset.id}

@@ -12,6 +12,7 @@ import PreviewImage from "@/components/products/preview-image";
 import ProductPreview from "@/components/products/product-preview";
 import Select from "@/components/form/creatable-select";
 import { MinimalTiptapEditor } from "@/components/ui/minimal-tiptap";
+import { PageHeader } from "@/components/layout/header";
 
 const Setup = ({ currentStore, categories }) => {
     const [images, setImages] = useState([]);
@@ -84,41 +85,33 @@ const Setup = ({ currentStore, categories }) => {
 
     return (
         <Layout
-            variant="header"
-            className="max-h-screen h-full overflow-hidden mt-0"
-            breadcrumbs={[
-                {
-                    title: "Products",
-                    href: "/products",
-                    icon: Package,
-                },
-                {
-                    title: "Create Product",
-                    href: "/products/setup",
-                    icon: Package,
-                },
-            ]}
+            // breadcrumbs={[
+            //     {
+            //         title: "Products",
+            //         href: "/products",
+            //         icon: Package,
+            //     },
+            //     {
+            //         title: "Create Product",
+            //         href: "/products/setup",
+            //         icon: Package,
+            //     },
+            // ]}
         >
             <Head title="Create a new product" />
 
-            <div className="flex flex-col md:flex-row h-full w-full overflow-y-auto lg:overflow-hidden pt-28">
+            <div className="flex flex-col md:flex-row">
                 <div className="flex-1 min-w-0 flex flex-col order-2 md:order-1">
-                    <div className="flex-1 overflow-y-auto pb-6">
-                        <div className="max-w-2xl px-6 pt-12 pb-20 relative">
-                            <div className="flex items-center justify-between mb-8">
-                                <div>
-                                    <h2 className="text-4xl font-bold mb-2">
-                                        Add Product
-                                    </h2>
-                                    <p className="text-gray-500 dark:text-gray-400">
-                                        Add a new product to your store
-                                    </p>
-                                </div>
-                            </div>
+                    <div className="flex-1 overflow-y-auto md:h-full md:max-h-[calc(100vh-20px)] pb-6">
+                        <div className="max-w-2xl mx-auto px-6 pt-6 md:pt-12 pb-20 relative">
+                            <PageHeader
+                                title="Add Product"
+                                description="Add a new product to your store"
+                            />
 
                             <form
                                 onSubmit={submit}
-                                className="space-y-10 pb-16 md:pb-8"
+                                className="space-y-10 pb-16 md:pb-8 mt-8"
                             >
                                 <div className="space-y-3">
                                     <Label htmlFor="images">

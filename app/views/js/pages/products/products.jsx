@@ -41,6 +41,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/shared/table";
+import { PageHeader } from "@/components/layout/header";
 
 export default function Products({ orders = [], products, currentStore }) {
     const [search, setSearch] = useState("");
@@ -77,84 +78,76 @@ export default function Products({ orders = [], products, currentStore }) {
     });
 
     return (
-        <Layout
-            variant="header"
-            className="dark:bg-[#141414] p-4 pt-2"
-            breadcrumbs={[
-                {
-                    title: "Products",
-                    href: "/products",
-                },
-            ]}
-        >
+        <Layout className="dark:bg-[#141414] p-4 pt-2">
             <Head title="Products" />
 
-            <div>
+            <div className="px-2 pt-4 pb-20 lg:pb-8 max-w-[calc(100vw-1rem)] lg:max-w-7xl mx-auto w-full">
                 {products?.length === 0 ? (
-                    <div className="h-[calc(100vh-8rem)] flex items-center justify-center">
-                        <EmptyState
-                            icon={ShoppingBag}
-                            title="Let's get you sellling fast"
-                            description="Create your first product to start selling online, it takes less than a minute."
-                            button={{
-                                text: "Add Your First Product",
-                                icon: Package,
-                                href: "/products/new",
-                                className:
-                                    "bg-primary-orange hover:bg-primary-orange/90",
-                            }}
+                    <div className="flex flex-col justify-center items-center max-w-5xl w-full mx-auto text-center py-24">
+                        <img
+                            src="/assets/img/dashboard/no-products.svg"
+                            className="h-96"
+                            alt=""
                         />
+                        <h2 className="text-3xl mt-10 mb-2">
+                            Don't miss out on sales!
+                        </h2>
+                        <p className="text-muted-foreground max-w-md">
+                            Add your first product, there's an amazing reward
+                            right around the corner.
+                        </p>
+                        <Button
+                            as={Link}
+                            href="/products/new"
+                            className="mt-6 bg-primary-orange text-black hover:bg-primary-orange/90"
+                        >
+                            <ShoppingBag className="h-4 w-4" />
+                            Add your first product
+                        </Button>
                     </div>
                 ) : (
-                    <div className="space-y-8 py-0 md:py-4 px-0 md:px-4">
-                        <div className="md:flex items-center justify-between">
-                            <div>
-                                <h2 className="text-2xl md:text-4xl font-bold md:mb-2">
-                                    Products
-                                </h2>
-                                <p className="text-muted-foreground text-sm md:text-base">
-                                    Manage and track your store's inventory
-                                </p>
-                            </div>
-
-                            <div className="flex items-center gap-3 mt-2 md:mt-0">
+                    <div className="space-y-8 py-0 md:py-4 px-0 md:px-4 w-full">
+                        <PageHeader
+                            title="Products"
+                            description="Keep your products up to date"
+                        />
+                        <div className="flex items-center gap-3 mt-2 md:mt-0">
+                            <Button
+                                variant="outline"
+                                className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] w-full md:w-auto gap-2"
+                                href={`https://${currentStore?.slug}.selll.store`}
+                                target="_blank"
+                                as="a"
+                            >
+                                <Store className="h-4 w-4" />
+                                View Store
+                            </Button>
+                            <div className="flex items-center w-full md:w-auto">
                                 <Button
-                                    variant="outline"
-                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] w-full md:w-auto gap-2"
-                                    href={`https://${currentStore?.slug}.selll.store`}
-                                    target="_blank"
-                                    as="a"
+                                    as={Link}
+                                    href="/products/new"
+                                    className="bg-primary-orange hover:bg-primary-orange/90 text-white w-full md:w-auto gap-2 rounded-r-none"
                                 >
-                                    <Store className="h-4 w-4" />
-                                    View Store
+                                    <ShoppingBag className="h-4 w-4" />
+                                    Add Product
                                 </Button>
-                                <div className="flex items-center">
-                                    <Button
-                                        as={Link}
-                                        href="/products/new"
-                                        className="bg-primary-orange hover:bg-primary-orange/90 text-white w-full md:w-auto gap-2 rounded-r-none"
-                                    >
-                                        <ShoppingBag className="h-4 w-4" />
-                                        Add Product
-                                    </Button>
-                                    <DropdownMenu>
-                                        <DropdownMenuTrigger asChild>
-                                            <Button
-                                                variant="outline"
-                                                className="rounded-l-none border-l-0 px-2 bg-primary-orange hover:bg-primary-orange/90 !ring-0 !border-0 text-white"
-                                            >
-                                                <CaretDownIcon />
-                                            </Button>
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent align="end">
-                                            <DropdownMenuItem asChild>
-                                                <Link href="/products/import">
-                                                    Import from Instagram
-                                                </Link>
-                                            </DropdownMenuItem>
-                                        </DropdownMenuContent>
-                                    </DropdownMenu>
-                                </div>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button
+                                            variant="outline"
+                                            className="rounded-l-none border-l-0 px-2 bg-primary-orange hover:bg-primary-orange/90 !ring-0 !border-0 text-white"
+                                        >
+                                            <CaretDownIcon />
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="end">
+                                        <DropdownMenuItem asChild>
+                                            <Link href="/products/import">
+                                                Import from Instagram
+                                            </Link>
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
                             </div>
                         </div>
 
@@ -633,7 +626,9 @@ export default function Products({ orders = [], products, currentStore }) {
                                                                             <Button
                                                                                 variant="ghost"
                                                                                 className="w-full justify-start focus-visible:ring-0"
-                                                                                onClick={(e) => {
+                                                                                onClick={(
+                                                                                    e,
+                                                                                ) => {
                                                                                     e.stopPropagation();
 
                                                                                     confirmModal.openDialog(

@@ -30,8 +30,12 @@ class AnalyticsService
             'products' => $products,
             'customers' => $customers,
             'productsSold' => $store->productPurchases()->sum('quantity'),
-            'revenueGraph' => AnalyticsHelper::getRevenue6Months($store->id),
-            'analytics' => AnalyticsHelper::getQuickAnalyticsThisMonth($store->id),
+            'revenueGraph' => cache("analytics.revenueGraph.{$store->id}", 60 * 15, function () use ($store) {
+                return AnalyticsHelper::getRevenue6Months($store->id);
+            }),
+            'analytics' => cache("analytics.quick.{$store->id}", 60 * 15, function () use ($store) {
+                return AnalyticsHelper::getQuickAnalyticsThisMonth($store->id);
+            }),
         ];
     }
 }

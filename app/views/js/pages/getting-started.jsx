@@ -75,7 +75,7 @@ const GetStarted = ({ currentStore, products, wallets }) => {
                         </Button>
                         <Button
                             as={Link}
-                            href="/dashboard/brand"
+                            href="/store/brand"
                             rel="noopener noreferrer"
                             variant="outline"
                         >

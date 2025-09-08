@@ -1,3 +1,4 @@
+connection: sqlite
 timestamps: false
 
 columns:

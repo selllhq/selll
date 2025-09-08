@@ -32,6 +32,7 @@ import {
 import Input from "@/components/form/input";
 import Button from "@/components/form/button";
 import CreatePaylink from "@/components/modals/create-paylink";
+import { PageHeader } from "@/components/layout/header";
 
 export default function Orders({ orders = [], currentStore }) {
     const [search, setSearch] = useState("");
@@ -125,19 +126,10 @@ export default function Orders({ orders = [], currentStore }) {
     };
 
     return (
-        <Layout
-            variant="header"
-            className="dark:bg-[#141414] p-4 pt-2"
-            breadcrumbs={[
-                {
-                    title: "Orders",
-                    href: "/orders",
-                },
-            ]}
-        >
+        <Layout className="dark:bg-[#141414] p-4 pt-2">
             <Head title="Orders" />
 
-            <div>
+            <div className="px-4 pt-6 pb-16 lg:pb-8 max-w-[calc(100vw-1rem)] lg:max-w-7xl mx-auto w-full">
                 {orders?.length === 0 ? (
                     <div className="h-[calc(100vh-8rem)] flex items-center justify-center">
                         <EmptyState
@@ -155,37 +147,30 @@ export default function Orders({ orders = [], currentStore }) {
                     </div>
                 ) : (
                     <div className="space-y-8 py-0 md:py-4 px-0 md:px-4">
-                        <div className="md:flex items-center justify-between">
-                            <div>
-                                <h2 className="text-2xl md:text-4xl font-bold md:mb-2">
-                                    Orders
-                                </h2>
-                                <p className="text-muted-foreground text-sm md:text-base">
-                                    Manage and track your store's orders
-                                </p>
-                            </div>
-
-                            <div className="flex items-center gap-3 mt-2 md:mt-0">
-                                <Button
-                                    as={Link}
-                                    href="/products"
-                                    variant="outline"
-                                    className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] hover:text-neutral-200 w-full"
-                                >
-                                    <Package className="h-4 w-4" />
-                                    View Products
-                                </Button>
-                                <CreatePaylink store={currentStore} />
-                                <Button
-                                    as="a"
-                                    href={`https://${currentStore?.slug}.selll.store`}
-                                    className="bg-primary-orange hover:bg-primary-orange/90 w-full md:w-auto hidden sm:flex"
-                                    target="_blank"
-                                >
-                                    <Store className="h-4 w-4" />
-                                    View Store
-                                </Button>
-                            </div>
+                        <PageHeader
+                            title="Orders"
+                            description="Manage and track your store's orders"
+                        />
+                        <div className="flex items-center gap-3 mt-2 md:mt-0">
+                            <Button
+                                as={Link}
+                                href="/products"
+                                variant="outline"
+                                className="bg-[#2C2C2C] border-0 text-white hover:bg-[#3C3C3C] hover:text-neutral-200 w-full md:w-auto"
+                            >
+                                <Package className="h-4 w-4" />
+                                View Products
+                            </Button>
+                            <CreatePaylink store={currentStore} />
+                            <Button
+                                as="a"
+                                href={`https://${currentStore?.slug}.selll.store`}
+                                className="bg-primary-orange hover:bg-primary-orange/90 w-full md:w-auto hidden sm:flex"
+                                target="_blank"
+                            >
+                                <Store className="h-4 w-4" />
+                                View Store
+                            </Button>
                         </div>
 
                         <div className="grid gap-4 grid-cols-2 lg:grid-cols-4 mt-8">

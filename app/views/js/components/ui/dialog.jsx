@@ -106,21 +106,17 @@ function useDialog(name) {
     const [open, setOpen] = useStore(`${name}Open`);
     const [data, setData] = useStore(`${name}Data`);
 
-    function openDialog({
-        title,
-        description,
-        cancelText,
-        confirmText,
-        onConfirm,
-        ...moreData
-    }) {
+    function openDialog(data = {}) {
+        const { title, description, cancelText, confirmText, onConfirm, ...moreData } =
+            data;
+
         setData({
             title,
             description,
             cancelText,
             confirmText,
             onConfirm,
-            ...moreData,
+            ...data,
         });
         setOpen(true);
     }

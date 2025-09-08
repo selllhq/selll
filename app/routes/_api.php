@@ -11,6 +11,6 @@ app()->post('/api/analytics', 'Api\AnalyticsController@store');
 
 app()->get('/api/locator', function () {
     return response()->json(
-        request()->getUserLocation(),
+        request()->getLocationFromIp('41.155.14.189'),
     );
 });

@@ -4,7 +4,7 @@ namespace App\Jobs;
 
 use Leaf\Job;
 
-class SendInvoiceJob extends Job
+class FollowUpOnUsersWithoutStoreJob extends Job
 {
     /**
      * Handle the job.
@@ -13,6 +13,6 @@ class SendInvoiceJob extends Job
      */
     public function handle()
     {
-        echo 'This is example output from SendInvoiceJob';
+        echo 'This is example output from FollowUpOnUsersWithoutStoreJob';
     }
 }

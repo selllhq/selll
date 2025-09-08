@@ -2,8 +2,10 @@
 
 namespace App\Controllers\Store;
 
+use App\Helpers\AchievementsHelper;
 use App\Helpers\ProductImportHelper;
 use App\Helpers\StoreHelper;
+use App\Models\Achievement;
 use App\Models\Store;
 use App\Services\InventoryService;
 use App\Services\OrdersService;
@@ -167,6 +169,8 @@ class ProductsController extends Controller
                 ->withFlash('errors', request()->errors())
                 ->redirect('/products/setup', 303);
         }
+
+        AchievementsHelper::checkForFirstProduct();
 
         return response()->redirect("/products/{$product->id}", 303);
     }

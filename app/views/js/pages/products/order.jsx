@@ -37,6 +37,7 @@ import { formatCurrency } from "@/utils/store";
 import Input from "@/components/form/input";
 import { DatePicker } from "@/components/ui/date-picker";
 import YangoWidget from "../deliveries/yango";
+import { PageHeader } from "@/components/layout/header";
 
 export default function Order({
     order,
@@ -287,113 +288,94 @@ export default function Order({
     };
 
     return (
-        <Layout
-            variant="header"
-            className="p-4 pt-2"
-            breadcrumbs={[
-                {
-                    title: "Orders",
-                    href: "/orders",
-                },
-                {
-                    title: `Order #${order?.id}`,
-                    href: `/orders/${order?.id}`,
-                },
-            ]}
-        >
+        <Layout className="p-4 pt-2">
             <Head title={`Order #${order?.id} - Order Details`} />
 
-            <div className="mt-12 md:mt-20">
-                <div className="flex flex-col gap-6">
-                    <div className="flex flex-col md:flex-row justify-between gap-4 items-start md:items-center">
-                        <div className="flex items-center gap-4">
-                            <div className="ring ring-muted-foreground/15 dark:bg-[#1A1A1A] p-3 rounded-lg hidden md:block">
-                                <ShoppingCart className="h-6 w-6 text-primary-orange" />
-                            </div>
-                            <div>
-                                <h1 className="text-2xl font-bold">
-                                    Order #{order?.id}{" "}
-                                    <StatusBadge
-                                        className="py-1 pl-1 pr-1.5 rounded-full"
-                                        status={order?.status}
-                                    />
-                                </h1>
-                                <p className="text-sm text-gray-400">
-                                    {paylink?.id
-                                        ? "Paylink Created"
-                                        : "Order Placed"}{" "}
-                                    on{" "}
-                                    {dayjs(order?.created_at).format(
-                                        "MMMM D, YYYY [at] h:mm A",
-                                    )}
-                                </p>
-                            </div>
-                        </div>
+            <div className="px-2 lg:px-8 pt-6 pb-20 lg:pb-8 max-w-[calc(100vw-1rem)] lg:max-w-7xl mx-auto w-full">
+                <PageHeader
+                    title={
+                        <span className="flex items-center gap-2">
+                            Order #{order?.id}{" "}
+                            <StatusBadge
+                                className="py-1 pl-1 pr-1.5 rounded-full"
+                                status={order?.status}
+                            />
+                        </span>
+                    }
+                    description={
+                        <>
+                            {paylink?.id ? "Paylink Created" : "Order Placed"}{" "}
+                            on{" "}
+                            {dayjs(order?.created_at).format(
+                                "MMM D [at] h:mm A",
+                            )}
+                        </>
+                    }
+                />
+                <div className="flex flex-col gap-6 mt-8">
+                    <div className="flex flex-col md:flex-row gap-3 items-start md:items-center">
+                        {order?.status !== "pending" &&
+                            order?.status !== "failed" && (
+                                <div className="flex gap-2 w-full md:w-auto">
+                                    <Button
+                                        size="sm"
+                                        className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C] hidden md:flex"
+                                        onClick={handlePrint}
+                                    >
+                                        <Printer className="h-4 w-4" />
+                                        Print
+                                    </Button>
 
-                        <div className="flex flex-col md:flex-row gap-3 items-start md:items-center">
-                            {order?.status !== "pending" &&
-                                order?.status !== "failed" && (
-                                    <div className="flex gap-2">
-                                        <Button
-                                            size="sm"
-                                            className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C] hidden md:flex"
-                                            onClick={handlePrint}
-                                        >
-                                            <Printer className="h-4 w-4" />
-                                            Print
-                                        </Button>
-
-                                        {order?.status === "paid" &&
-                                        orderItems?.some(
-                                            (item) => item.product?.physical,
-                                        ) ? (
-                                            <>
-                                                {order.address !== "PICKUP" && (
-                                                    <Button
-                                                        size="sm"
-                                                        className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
-                                                        onClick={() =>
-                                                            setDeliveryModalOpen(
-                                                                true,
-                                                            )
-                                                        }
-                                                    >
-                                                        <Package className="h-4 w-4" />
-                                                        Update Delivery
-                                                    </Button>
-                                                )}
-
+                                    {order?.status === "paid" &&
+                                    orderItems?.some(
+                                        (item) => item.product?.physical,
+                                    ) ? (
+                                        <>
+                                            {order.address !== "PICKUP" && (
                                                 <Button
                                                     size="sm"
-                                                    className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
-                                                    onClick={markAsDelivered}
+                                                    className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C] w-full md:w-auto"
+                                                    onClick={() =>
+                                                        setDeliveryModalOpen(
+                                                            true,
+                                                        )
+                                                    }
                                                 >
-                                                    <Check className="h-4 w-4" />
-                                                    {order.address === "PICKUP"
-                                                        ? "Order Picked Up"
-                                                        : "Order Delivered"}
+                                                    <Package className="h-4 w-4" />
+                                                    Update Delivery
                                                 </Button>
-                                            </>
-                                        ) : (
-                                            // <Button
-                                            //     as="a"
-                                            //     size="sm"
-                                            //     href={`${order?.store_url}/orders/${order?.id}`}
-                                            //     className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
-                                            //     target="_blank"
-                                            //     rel="noopener noreferrer"
-                                            // >
-                                            //     <Eye className="h-4 w-4" />
-                                            //     View order
-                                            // </Button>
-                                            <></>
-                                        )}
-                                    </div>
-                                )}
-                        </div>
+                                            )}
+
+                                            <Button
+                                                size="sm"
+                                                className="bg-primary-orange border-0 text-black w-full md:w-auto"
+                                                onClick={markAsDelivered}
+                                            >
+                                                <Check className="h-4 w-4" />
+                                                {order.address === "PICKUP"
+                                                    ? "Order Picked Up"
+                                                    : "Order Delivered"}
+                                            </Button>
+                                        </>
+                                    ) : (
+                                        // <Button
+                                        //     as="a"
+                                        //     size="sm"
+                                        //     href={`${order?.store_url}/orders/${order?.id}`}
+                                        //     className="dark:bg-[#2C2C2C] border-0 text-white dark:hover:bg-[#3C3C3C]"
+                                        //     target="_blank"
+                                        //     rel="noopener noreferrer"
+                                        // >
+                                        //     <Eye className="h-4 w-4" />
+                                        //     View order
+                                        // </Button>
+                                        <></>
+                                    )}
+                                </div>
+                            )}
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
                         <div className="lg:col-span-2 h-full flex flex-col">
                             {paylink?.id && order.status === "pending" && (
                                 <Card className="h-full rounded-3xl mb-6">

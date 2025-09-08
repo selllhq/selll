@@ -25,6 +25,7 @@ import {
 import dayjs from "dayjs";
 import { formatCurrency } from "@/utils/store";
 import { getInitials } from "@/utils";
+import { PageHeader } from "@/components/layout/header";
 
 export default function CustomerDetail({
     customer,
@@ -67,77 +68,52 @@ export default function CustomerDetail({
     };
 
     return (
-        <Layout
-            variant="header"
-            className="p-4 pt-2"
-            breadcrumbs={[
-                {
-                    title: "Customers",
-                    href: "/customers",
-                },
-                {
-                    title: customer?.name || "Customer Details",
-                    href: `/customers/${customer?.id}`,
-                },
-            ]}
-        >
+        <Layout className="p-4 pt-2">
             <Head
                 title={`${customer?.name || "Customer"} - Customer Details`}
             />
 
-            <div className="md:mt-20">
-                <div className="flex flex-col gap-6">
-                    <div className="flex flex-col md:flex-row gap-6 items-start">
-                        <div className="h-20 w-20 rounded-full bg-[#2C2C2C] flex items-center justify-center text-2xl font-bold text-white flex-shrink-0">
-                            {getInitials(customer?.name)}
-                        </div>
-
-                        <div className="flex flex-col gap-2">
-                            <h1 className="text-2xl font-bold">
-                                {customer?.name || "Customer"}
-                            </h1>
-                            <div className="flex flex-col md:flex-row gap-4 text-sm">
-                                {customer?.email && (
-                                    <div className="flex items-center gap-2">
-                                        <Mail className="h-4 w-4 text-gray-500" />
-                                        <span className="text-gray-400">
-                                            {customer.email}
-                                        </span>
-                                    </div>
-                                )}
-
-                                {customer?.phone && (
-                                    <div className="flex items-center gap-2">
-                                        <Phone className="h-4 w-4 text-gray-500" />
-                                        <span className="text-gray-400">
-                                            {customer.phone}
-                                        </span>
-                                    </div>
-                                )}
-
-                                {customer?.address && (
-                                    <div className="flex items-center gap-2">
-                                        <MapPin className="h-4 w-4 text-gray-500" />
-                                        <span className="text-gray-400">
-                                            {customer.address}
-                                        </span>
-                                    </div>
-                                )}
-                            </div>
-
-                            <div className="flex items-center gap-2 text-sm">
-                                <Calendar className="h-4 w-4 text-primary-orange" />
+            <div className="px-4 lg:px-8 pt-6 pb-20 lg:pb-8 max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-275px)] lg:max-w-7xl mx-auto w-full">
+                <PageHeader
+                    title={customer?.name || "Customer"}
+                    description={
+                        <>
+                            Customer since{" "}
+                            {dayjs(customer?.created_at).format("MMM D, YYYY")}
+                        </>
+                    }
+                />
+                <div className="flex flex-col gap-6 mt-8">
+                    <div className="flex flex-col lg:flex-row gap-4 text-sm">
+                        {customer?.email && (
+                            <div className="flex items-center gap-2">
+                                <Mail className="h-4 w-4 text-gray-500" />
                                 <span className="text-gray-400">
-                                    Customer since{" "}
-                                    {dayjs(customer?.created_at).format(
-                                        "MMM D, YYYY",
-                                    )}
+                                    {customer.email}
                                 </span>
                             </div>
-                        </div>
+                        )}
+
+                        {customer?.phone && (
+                            <div className="flex items-center gap-2">
+                                <Phone className="h-4 w-4 text-gray-500" />
+                                <span className="text-gray-400">
+                                    {customer.phone}
+                                </span>
+                            </div>
+                        )}
+
+                        {customer?.address && (
+                            <div className="flex items-center gap-2">
+                                <MapPin className="h-4 w-4 text-gray-500" />
+                                <span className="text-gray-400">
+                                    {customer.address}
+                                </span>
+                            </div>
+                        )}
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                         <Card>
                             <CardContent className="p-4">
                                 <div className="flex items-center justify-between">

@@ -1,0 +1,7 @@
+columns:
+  type: string
+  points: string
+  data: json
+
+relationships:
+  - Store
