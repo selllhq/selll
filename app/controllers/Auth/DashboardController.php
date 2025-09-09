@@ -15,6 +15,7 @@ class DashboardController extends Controller
         $currentStore = StoreHelper::find();
         $data = make(AnalyticsService::class)->getDashboardStats($currentStore);
 
+
         response()->inertia('dashboard', array_merge($data, [
             'currentStore' => $currentStore,
             'wallets' => $currentStore->wallets()->get(),
@@ -24,7 +25,7 @@ class DashboardController extends Controller
             'products' => $currentStore->products()
                 ->whereNot('status', 'archived')
                 ->where(function ($query) {
-                    return $query->where('quantity', '==', 'unlimited')
+                    return $query->where('quantity', '=', 'unlimited')
                         ->orWhere(function ($query) {
                             $query->where('quantity', 'limited')
                                 ->whereRaw('CAST(quantity_items AS INTEGER) >= ?', [1]);
