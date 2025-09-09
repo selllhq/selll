@@ -33,7 +33,6 @@ import Button from "@/components/form/button";
 import EmptyState from "@/components/layout/empty";
 import { BarChart, LineChart } from "@/components/shared/charts";
 import CreatePaylink from "@/components/modals/create-paylink";
-import UserProfile from "@/components/shared/user-profile";
 import ShareStore from "@/components/modals/share-store";
 import { PageHeader } from "@/components/layout/header";
 

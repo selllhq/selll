@@ -15,7 +15,6 @@ class DashboardController extends Controller
         $currentStore = StoreHelper::find();
         $data = make(AnalyticsService::class)->getDashboardStats($currentStore);
 
-
         response()->inertia('dashboard', array_merge($data, [
             'currentStore' => $currentStore,
             'wallets' => $currentStore->wallets()->get(),
