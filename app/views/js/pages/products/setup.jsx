@@ -101,9 +101,9 @@ const Setup = ({ currentStore, categories }) => {
             <Head title="Create a new product" />
 
             <div className="flex flex-col md:flex-row">
-                <div className="flex-1 min-w-0 flex flex-col order-2 md:order-1">
+                <div className="flex-1 flex flex-col order-2 md:order-1">
                     <div className="flex-1 overflow-y-auto md:h-full md:max-h-[calc(100vh-20px)] pb-6">
-                        <div className="max-w-2xl mx-auto px-6 pt-6 md:pt-12 pb-20 relative">
+                        <div className="max-w-3xl mx-auto px-6 pt-6 pb-20 relative">
                             <PageHeader
                                 title="Add Product"
                                 description="Add a new product to your store"

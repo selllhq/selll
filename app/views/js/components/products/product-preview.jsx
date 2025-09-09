@@ -3,7 +3,7 @@ import Button from "../form/button";
 
 const ProductPreview = ({ product, currentStore, newImages = {}, existingImages = {} }) => {
     return (
-        <div className="hidden lg:block w-full md:w-[40%] lg:w-[35%] xl:w-[600px] h-auto max-h-[50vh] md:max-h-screen overflow-y-auto bg-gray-50 dark:bg-[#1A1A1A] border-t md:border-t-0 md:border-l border-gray-100 dark:border-[#2C2C2C] p-4 md:p-8 order-1 md:order-2 flex-shrink-0 sticky top-0">
+        <div className="hidden lg:block w-full md:w-[40%] lg:w-[35%] xl:w-[500px] 2xl:w-[600px] h-auto max-h-[50vh] md:max-h-screen overflow-y-auto bg-gray-50 dark:bg-[#1A1A1A] border-t md:border-t-0 md:border-l border-gray-100 dark:border-[#2C2C2C] p-4 md:p-8 order-1 md:order-2 flex-shrink-0 sticky top-0">
             <div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">
                 Live Preview
             </div>

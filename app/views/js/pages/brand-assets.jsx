@@ -223,13 +223,13 @@ const BrandAssets = ({ currentStore }) => {
         <Layout>
             <Head title={`Brand Assets - ${currentStore?.name}`} />
 
-            <div className="container mx-auto px-4 py-8 pb-16 md:pb-8 max-w-4xl">
+            <div className="container mx-auto px-4 py-8 pb-16 md:pb-8 max-w-6xl">
                 <PageHeader
                     title="Brand Assets"
                     description="Download and share"
                 />
 
-                <div className="grid md:grid-cols-2 gap-4 mt-8">
+                <div className="grid lg:grid-cols-2 gap-4 mt-8">
                     {brandAssets.map((asset) => (
                         <Card
                             key={asset.id}
@@ -278,7 +278,7 @@ const BrandAssets = ({ currentStore }) => {
                                     )}
                                 </div>
                                 <div
-                                    className="border rounded-lg p-4 bg-gray-50 flex justify-center items-center max-h-[350px] overflow-hidden"
+                                    className="border rounded-lg p-4 bg-gray-50 flex justify-center items-center max-h-[450px] overflow-hidden"
                                     dangerouslySetInnerHTML={{
                                         __html: asset.svg,
                                     }}

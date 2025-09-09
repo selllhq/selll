@@ -12,8 +12,6 @@ const AchievementModal = () => {
     const dialog = useDialog("achievement");
     const achievement = usePage().props.achievement;
 
-    console.log("Achievement data:", achievement);
-
     useEffect(() => {
         if (achievement) {
             setData(achievements[achievement] || null);

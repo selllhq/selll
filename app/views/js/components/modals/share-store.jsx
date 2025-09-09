@@ -1,5 +1,6 @@
 import { toast } from "sonner";
 import { useState } from "react";
+import { Link } from "@inertiajs/react";
 import { ArrowRight } from "lucide-react";
 
 import Button from "../form/button";
@@ -18,15 +19,20 @@ import {
     SheetTitle,
 } from "../layout/sheet";
 import Input from "../form/input";
-import { Link } from "@inertiajs/react";
+import { cn } from "@/utils";
 
-const ShareStore = ({ store, onShare }) => {
+const ShareStore = ({ store, onShare, linkShared }) => {
     const [show, setShow] = useState(false);
 
     return (
         <>
             <Button
-                className="mt-4 bg-white/5 text-white hover:!text-black"
+                className={cn(
+                    "mt-4",
+                    linkShared
+                        ? "bg-white/10 text-white"
+                        : "bg-black/5 dark:bg-white/5 text-black dark:text-white hover:text-white dark:hover:!text-black",
+                )}
                 onClick={() => setShow(true)}
             >
                 Share link <ArrowRight size={16} />

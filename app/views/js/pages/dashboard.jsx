@@ -76,7 +76,7 @@ export default function Dashboard({
                         }}
                     />
                 ) : (
-                    <div className="space-y-6 pt-4">
+                    <div className="space-y-6 pt-8 md:px-4">
                         <PageHeader
                             title={`Hello, ${auth.user.name.split(" ")[0]}`}
                             description={
@@ -85,6 +85,7 @@ export default function Dashboard({
                                     : "Let's make some sales today 🚀"
                             }
                         />
+
                         {technicallyNewStore ? (
                             <div className="flex flex-col justify-center items-center max-w-5xl w-full mx-auto text-center py-24">
                                 <img
@@ -126,7 +127,13 @@ export default function Dashboard({
                                             <Button
                                                 as={Link}
                                                 href="/settings/payouts"
-                                                className="mt-4 bg-white/5 text-white hover:!text-black"
+                                                className={cn(
+                                                    "mt-4",
+                                                    wallets &&
+                                                        wallets.length > 0
+                                                        ? "bg-white/10 text-white"
+                                                        : "bg-black/10 dark:bg-white/5 text-black dark:text-white dark:hover:!text-black",
+                                                )}
                                             >
                                                 Setup Payouts{" "}
                                                 <ArrowRight size={16} />
@@ -154,6 +161,7 @@ export default function Dashboard({
                                                 your first orders
                                             </p>
                                             <ShareStore
+                                                linkShared={linkShared}
                                                 store={currentStore}
                                                 onShare={() => {
                                                     setLinkShared(true);
@@ -182,7 +190,7 @@ export default function Dashboard({
                                             <Button
                                                 as={Link}
                                                 href="/products/new"
-                                                className="mt-4 bg-white/5 text-white hover:!text-black"
+                                                className="mt-4 bg-black/5 dark:bg-white/5 text-black dark:text-white hover:text-white dark:hover:!text-black"
                                             >
                                                 Stock up{" "}
                                                 <ArrowRight size={16} />
