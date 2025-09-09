@@ -65,6 +65,8 @@ class StoreReportJob extends Job
                     ->withArkesel()
                     ->send();
             }
+
+            echo "Store Report sent to {$store->name} ({$store->phone})\n";
         }
     }
 }
