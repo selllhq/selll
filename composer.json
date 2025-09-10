@@ -21,7 +21,7 @@
         "leafs/inertia": "^4.3",
         "leafs/auth": "^4.2",
         "leafs/cors": "^1.2",
-        "leafs/mvc-core": "^4.4",
+        "leafs/mvc-core": "^4.5",
         "leafs/billing": "dev-main",
         "leafs/fs": "4.x-dev",
         "leafs/mail": "^2.2",

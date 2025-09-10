@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "65699f01fd5061ec452601d78bd15922",
+    "content-hash": "7dc5abebb9ac17ab0117d6beae701258",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1801,16 +1801,16 @@
         },
         {
             "name": "leafs/aloe",
-            "version": "4.5.1",
+            "version": "4.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/aloe.git",
-                "reference": "44df1b5c9465533208c5b83ef37adf6666de9631"
+                "reference": "231d9ccb03e8fbb364a976fdb5be01043d76b88b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/aloe/zipball/44df1b5c9465533208c5b83ef37adf6666de9631",
-                "reference": "44df1b5c9465533208c5b83ef37adf6666de9631",
+                "url": "https://api.github.com/repos/leafsphp/aloe/zipball/231d9ccb03e8fbb364a976fdb5be01043d76b88b",
+                "reference": "231d9ccb03e8fbb364a976fdb5be01043d76b88b",
                 "shasum": ""
             },
             "require": {
@@ -1855,7 +1855,7 @@
             ],
             "support": {
                 "issues": "https://github.com/leafsphp/aloe/issues",
-                "source": "https://github.com/leafsphp/aloe/tree/v4.5.1"
+                "source": "https://github.com/leafsphp/aloe/tree/v4.5.2"
             },
             "funding": [
                 {
@@ -1867,7 +1867,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-08-08T23:40:30+00:00"
+            "time": "2025-09-10T21:49:57+00:00"
         },
         {
             "name": "leafs/anchor",
@@ -2930,16 +2930,16 @@
         },
         {
             "name": "leafs/mvc-core",
-            "version": "v4.4.1",
+            "version": "v4.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafsphp/mvc-core.git",
-                "reference": "68eca1a4fba57bc3cdae14a0d370c2a1329d1ba3"
+                "reference": "ddaa7ddc9cb8f2ce0a7429cfc1cccd714bf8ba62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/mvc-core/zipball/68eca1a4fba57bc3cdae14a0d370c2a1329d1ba3",
-                "reference": "68eca1a4fba57bc3cdae14a0d370c2a1329d1ba3",
+                "url": "https://api.github.com/repos/leafsphp/mvc-core/zipball/ddaa7ddc9cb8f2ce0a7429cfc1cccd714bf8ba62",
+                "reference": "ddaa7ddc9cb8f2ce0a7429cfc1cccd714bf8ba62",
                 "shasum": ""
             },
             "require": {
@@ -2989,7 +2989,7 @@
             ],
             "support": {
                 "issues": "https://github.com/leafsphp/mvc-core/issues",
-                "source": "https://github.com/leafsphp/mvc-core/tree/v4.4.1"
+                "source": "https://github.com/leafsphp/mvc-core/tree/v4.5.1"
             },
             "funding": [
                 {
@@ -3001,7 +3001,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-08-08T22:55:56+00:00"
+            "time": "2025-09-10T21:19:14+00:00"
         },
         {
             "name": "leafs/password",
