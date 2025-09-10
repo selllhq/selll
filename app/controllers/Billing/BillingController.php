@@ -96,6 +96,8 @@ class BillingController extends Controller
             $cart->status = 'failed';
             $cart->save();
 
+            \Sentry\captureException($e);
+
             return response()->json([
                 'error' => $e->getMessage(),
                 'message' => 'Failed to create billing session. Please try again later.',
@@ -148,6 +150,8 @@ class BillingController extends Controller
         }
 
         $storePayoutWallet = $store->wallets()->find($store->payout_account_id);
+
+        dd($storePayoutWallet);
 
         try {
             $billingProvider = in_array($store->currency, ['GHS', 'NGN', 'KES', 'ZAR']) ? 'paystack' : 'stripe';

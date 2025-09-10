@@ -25,12 +25,7 @@ class WalletHelper
         $affiliate = $data['affiliate'] ?? null;
 
         $feeRecord = $store->fee()->first();
-        $storePayoutWallet = cache(
-            key: "store.{$store->id}.wallet.{$store->payout_account_id}",
-            value: function () use ($store) {
-                return $store->wallets()->find($store->payout_account_id);
-            },
-        );
+        $storePayoutWallet = $store->wallets()->find($store->payout_account_id);
 
         $billingData = !$affiliate ? [
             'subaccount' => $storePayoutWallet->account_code,
