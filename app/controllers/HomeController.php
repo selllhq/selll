@@ -11,10 +11,10 @@ class HomeController extends Controller
     {
         response()->inertia('index', [
             'activeStores' => cache('home.activeStores', 60 * 30, function () {
-                return Store::count() + 17;
+                return Store::count();
             }),
             'purchases' => cache('home.purchases', 60 * 30, function () {
-                return Cart::count() + 27;
+                return Cart::count();
             }),
         ]);
     }
