@@ -1,63 +1,23 @@
-# fly.toml app configuration file generated for selll on 2025-03-22T21:20:36Z
+# fly.toml app configuration file generated for selll on 2026-02-06T18:47:45Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
 app = 'selll'
-primary_region = 'lhr'
+primary_region = 'ams'
 
 [build]
 
 [http_service]
-internal_port = 8080
-force_https = true
-auto_stop_machines = 'stop'
-auto_start_machines = true
-min_machines_running = 1
-processes = ['app']
-
-[env]
-APP_NAME = 'Selll'
-APP_ENV = 'production'
-APP_DEBUG = 'true'
-APP_URL = 'https://selll.online/'
-APP_LOG_ENABLED = 'false'
-APP_KEY = 'base64:XqCe5Dy/i1lEzfM5zxd3+jYzDM6jr9/ZJorVmHwkb2I='
-DB_CONNECTION = 'pgsql'
-BILLING_PROVIDER = 'paystack'
-
-DB_DATABASE = 'selll'
-DB_USERNAME = 'selll_owner'
-DB_PORT = '5432'
-
-IMPORTS_DB_DATABASE = 'imports'
-IMPORTS_DB_USERNAME = 'imports_owner'
-IMPORTS_DB_PORT = '5432'
-
-ANALYTICS_DB_DATABASE = 'analytics'
-ANALYTICS_DB_USERNAME = 'analytics_owner'
-ANALYTICS_DB_PORT = '5432'
-
-REDIS_SESSION = 'false'
-REDIS_PORT = '6379'
-QUEUE_CONNECTION = 'database'
-DB_QUEUE_CONNECTION = 'sqlite'
-
-MAIL_DRIVER = 'smtp'
-MAIL_HOST = 'live.smtp.mailtrap.io'
-MAIL_PORT = '587'
-MAIL_DEBUG = 'false'
-MAIL_SENDER_NAME = 'Selll'
-MAIL_SENDER_EMAIL = 'hello@selll.online'
-MAIL_ENCRYPTION = 'STARTTLS'
-
-AWS_DEFAULT_REGION = 'weur'
-AWS_BUCKET = 'products'
-AWS_URL = 'https://cdn1.selll.online'
-AWS_USE_PATH_STYLE_ENDPOINT = 'false'
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
 
 [[vm]]
-memory = '1gb'
-cpu_kind = 'shared'
-cpus = 1
-
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
+  memory_mb = 256
